@@ -14,7 +14,7 @@
 | path to your installation.
 |
 */
-$config['base_url']	= 'http://localhost/ec';  
+$config['base_url']	= 'http://localhost/Sistema_REMO';  
 //$config['base_url']	= 'http://localhost/Prueba';
 /*
 |--------------------------------------------------------------------------
