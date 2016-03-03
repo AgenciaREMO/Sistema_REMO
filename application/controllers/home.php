@@ -5,6 +5,7 @@
 		{
 			$this->load->view("head");
 			$this->load->view("nav");
+			$this->load->view("contenido");
 			$this->load->view("footer");
 		}
 	}	

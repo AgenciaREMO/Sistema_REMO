@@ -1,3 +1,9 @@
-.estiloNav{
+.estiloNav {
 	background-color: #1171b9 !important;
+}
+.estiloNav>li>a {
+    color: #ffffff;
+}
+.margen {
+	margin-top: 70px;
 }

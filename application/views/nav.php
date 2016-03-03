@@ -16,22 +16,19 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li>
-                        <a href="#">Clientes</a>
+                        <a href="#">Conceptos</a>
                     </li>
                     <li>
-                        <a href="#">Personal</a>
+                        <a href="#">Cotizaciones</a>
+                    </li>
+                    <li>
+                        <a href="#">Portafolios</a>
                     </li>
                     <li>
                         <a href="#">Proyectos</a>
                     </li>
-                    <li>
-                        <a href="#">Empresas</a>
-                    </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a href="#">Cambiar contraseña</a> 
-                    </li>
                     <li>
                         <a href="#">Cerrar sesión </a>
                     </li>
