@@ -1,9 +1,36 @@
+.cuadro_1{
+
+margin-top:80px;
+
+	padding: 10px 10px 30px;
+
+	border: #E1DDDD 5px solid; 
+
+	border-radius: 20px; 
+
+	background-color:#FFFFFF;
+
+}
+
+.cuadro_1 h1{
+
+text-align:center;
+
+}
+
+.cuadro_1 img{
+
+display:block;
+
+margin:auto;
+
+}
+
 .estiloNav {
 	background-color: #1171b9 !important;
+	
 }
-.estiloNav>li>a {
+
+.estiloNav .navbar-nav>li>a {
     color: #ffffff;
-}
-.margen {
-	margin-top: 70px;
 }
