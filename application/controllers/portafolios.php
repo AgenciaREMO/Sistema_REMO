@@ -1,5 +1,5 @@
 <?php 
-	class Portafolio extends CI_Controller
+	class Portafolios extends CI_Controller
 	{
 		public function mostrar()
 		{

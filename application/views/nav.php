@@ -16,22 +16,20 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li>
-                        <a href="#">Clientes</a>
+                        <a href="<?= base_url()?>conceptos/mostrar">Conceptos</a>
                     </li>
                     <li>
-                        <a href="#">Personal</a>
+                        <a href="<?= base_url()?>cotizaciones/mostrar">Cotizaciones</a>
                     </li>
                     <li>
-                        <a href="<?= base_url()?>portafolio/mostrar">Portafolio</a>
+                        <a href="<?= base_url()?>portafolios/mostrar">Portafolios</a>
+
                     </li>
                     <li>
-                        <a href="#">Empresas</a>
+                        <a href="#">Proyectos</a>
                     </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a href="#">Cambiar contraseña</a> 
-                    </li>
                     <li>
                         <a href="#">Cerrar sesión </a>
                     </li>
