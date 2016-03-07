@@ -5,7 +5,15 @@
 		{
 			$this->load->view("head");
 			$this->load->view("nav");
-			$this->load->view("portafolio/list");
+			$this->load->view("portafolios/lista");
+			$this->load->view("footer");
+		}
+
+
+		public function nuevo(){
+			$this->load->view("head");
+			$this->load->view("nav");
+			$this->load->view("portafolios/nuevo");
 			$this->load->view("footer");
 		}
 	}	
