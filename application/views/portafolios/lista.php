@@ -12,7 +12,7 @@
     </div>
     <div class="row">
     <div class="col-sm-12 col-md-6">
-        	<a href="crear-portafolio.php" class="btn btn-default">Crear portafolio</a>
+        	<a href="<?= base_url() ?>portafolios/nuevo" class="btn btn-default">Crear portafolio</a>
     </div>
     <hr>
     </div>
@@ -28,15 +28,15 @@
                         <tr>
                             <td>001</td>
                             <td>Portafolio Diseño Gráfico</td>
-                            <td><div class="col-lg-2 "><a href="#"><img src="img/ver.png"></a></div></td>
+                            <td><div class="col-lg-2 "><a href="#"><span class="glyphicon glyphicon-search" hidden="true" ></span></a></div></td>
                             <!--<td><div class="col-lg-2 "><button type="button" class="btn btn-default" data-toggle="modal" data-target="#modalEnviar">Enviar</button></div></td>-->
-                            <td><div class="col-lg-2 "><a href="#"><img src="img/email.png" data-toggle="modal" data-target="#modalEnviar"></a></div></td>
+                            <td><div class="col-lg-2 "><a href="#"><span class="glyphicon glyphicon-envelope" data-toggle="modal" data-target="#modalEnviar"></span></a></div></td>
                             <div id= "modalEnviar" class="modal fade bs-example-modal-lg " tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
                                 <div class="modal-dialog modal-lg">
                                     <div class="modal-content">
                                             <div class="modal-header">
                                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                                <h4 class="modal-title" id="myModalLabel">Agregar Slider de Equipo de trabajo</h4>
+                                                <h4 class="modal-title" id="myModalLabel">Correo Electrónico</h4>
                                             </div>
                                             <div class="modal-body">
                                                  <form action="#" method="POST" enctype="multipart/form-data">
@@ -67,20 +67,20 @@
                         <tr>
                             <td>002</td>
                             <td>Portafolio Remo</td>
-                            <td><div class="col-lg-2 "><a href="#"><img src="img/ver.png"></a></div></td>
-                            <td><div class="col-lg-2 "><a href="#"><img src="img/email.png" data-toggle="modal" data-target="#modalEnviar"></a></div></td>
+                            <td><div class="col-lg-2 "><a href="#"><span class="glyphicon glyphicon-folder-open"></span></a></div></td>
+                            <td><div class="col-lg-2 "><a href="#"><span class="glyphicon glyphicon-envelope" data-toggle="modal" data-target="#modalEnviar"></span></a></div></td>
                         </tr>
                         <tr>
                             <td>003</td>
                             <td>Portafolio Multimedia</td>
-                            <td><div class="col-lg-2 "><a href="#"><img src="img/ver.png"></a></div></td>
-                            <td><div class="col-lg-2 "><a href="#"><img src="img/email.png" data-toggle="modal" data-target="#modalEnviar"></a></div></td>
+                            <td><div class="col-lg-2 "><a href="#"><span class="glyphicon glyphicon-folder-open"></span></a></div></td>
+                            <td><div class="col-lg-2 "><a href="#"><span class="glyphicon glyphicon-envelope" data-toggle="modal" data-target="#modalEnviar"></span></a></div></td>
                         </tr>
                         <tr>
                             <td>004</td>
                             <td>Portafolio Caso de Éxito 1</td>
-                            <td><div class="col-lg-2 "><a href="#"><img src="img/ver.png"></a></div></td>
-                            <td><div class="col-lg-2 "><a href="#"><img src="img/email.png" data-toggle="modal" data-target="#modalEnviar"></a></div></td>
+                            <td><div class="col-lg-2 "><a href="#"><span class="glyphicon glyphicon-folder-open"></span></a></div></td>
+                            <td><div class="col-lg-2 "><a href="#"><span class="glyphicon glyphicon-envelope" data-toggle="modal" data-target="#modalEnviar"></span></a></div></td>
                         </tr>
                    </table>
                 </div>
