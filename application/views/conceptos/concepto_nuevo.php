@@ -1,6 +1,6 @@
 <div class="container">
 	<div class="col-lg-12">
-		<h2>Crear Concepto</h2>
+		<h2>Concepto Nuevo</h2>
 		<ol class="breadcrumb" style="margin-bottom: 5px;">
 		  <li><a href="<?= base_url()?>">Inicio</a></li>
 		  <li><a href="<?= base_url()?>conceptos/mostrar">Conceptos</a></li>
@@ -21,6 +21,16 @@
 				'name' => 'nombre',
 				'class' => 'form-control'
 			);
+			$descripcion = array(
+				'name' => 'descripcion',
+				'class' => 'form-control',
+				'rows' => '2'
+			);
+			$costo = array(
+				'name' => 'costo',
+				'class' => 'form-control',
+				'placeholder' => 'Cantidad'
+			);
 			$guardar = array(
 				'class' => 'btn btn-primary',
 				'value' => 'Guardar'
@@ -34,10 +44,21 @@
 				<?= form_label('Nombre', 'nombre') ?></label>
 				<?= form_input($nombre) ?>
 			</div>
+			<div class="form-group">
+				<?= form_label('Descripción', 'descripcion') ?></label>
+				<?= form_textarea($descripcion) ?>
+			</div>
+			<div class="form-group">
+			    <?= form_label('Costo por hora', 'costo') ?></label>
+				<div class="input-group">
+			    	<div class="input-group-addon">$</div>
+					<?= form_input($costo) ?>
+			    	<div class="input-group-addon">.00</div>
+			    </div>
+			</div>
 			<?= form_submit($guardar) ?>
-			<!--<button type="button" id="e-guardar" class="btn btn-primary btn-oculto" onClick="desactivardesc()" style="display:inline">Guardar</button>
-            <button type="button" id="e-cancelar" class="btn btn-primary btn-oculto" onClick="desactivardesc()" style="display:inline">Cancelar</button>-->
+			<a href="<?= base_url('conceptos/mostrar') ?>" class="btn btn-default">Cancelar</a>
 		<?= form_close() ?>
-
+		
 	</div>
 </div>
