@@ -1,0 +1,32 @@
+<div class="container">
+	<div class="col-12">
+		<h2>Editar Concepto</h2>
+		<ol class="breadcrumb" style="margin-bottom: 5px;">
+		  <li><a href="<?= base_url()?>">Inicio</a></li>
+		  <li><a href="<?= base_url()?>conceptos/mostrar">Conceptos</a></li>
+		  <li class="active">Concepto</li>
+		</ol>
+		<hr>
+		<form action="">
+			<div class="form-group">
+				<label>Nombre</label>
+				<input type="text" class="form-control" value="<?= $nombre ?>" disabled>
+			</div>
+			<div class="form-group">
+				<label>Categoria</label>
+				<select id="i-categoria" class="form-control" disabled>
+					<?php foreach ($consulta->result() as $fila) { ?>
+					<?php if ($id_tipo == $fila->id_tipo) { ?>
+						<option value="<?= $fila->id_tipo ?>" selected><?= $fila->nombre_tipo ?></option>	
+					<?php } else { ?>
+					<option value="<?= $fila->id_tipo ?>"><?= $fila->nombre_tipo ?></option>
+					<?php } } ?>
+				</select>
+			</div>
+			<hr>
+			<button type="button" id="e-editar" class="btn btn-primary" onClick="activardesc()" style="display:inline">Editar <i class="fa fa-edit fa-lg"></i></button>
+            <a href="<?= base_url('conceptos/editarDescripcion').'/'.$id_descripcion ?>" id="e-guardar" class="btn btn-primary btn-oculto" onClick="desactivardesc()" style="display:none">Guardar</a>
+            <button type="button" id="e-cancelar" class="btn btn-primary btn-oculto" onClick="desactivardesc()" style="display:none">Cancelar</button>
+		</form>
+	</div>
+</div>

@@ -1,4 +1,3 @@
-<!--<h1>Listado</h1-->
 <div class="container">
 	<div class="row">
 		<div class="col-lg-12">
@@ -23,7 +22,7 @@
 					<td><?= $i ?></td>
 					<td><?= $fila->tipo ?></td>
 					<td><?= $fila->concepto ?></td>	
-					<td><a href="<?= base_url()?>conceptos/detalles/<?= $fila->id_descripcion?>"><?= $fila->detalles ?></a></td>
+					<td><a href="<?= base_url()?>conceptos/detalles/<?= $fila->id_descripcion ?>"><?= $fila->detalles ?></a></td>
 					<td><?= $fila->costo ?></td>
 				</tr>
 				<?php 
