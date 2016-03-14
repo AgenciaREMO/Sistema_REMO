@@ -20,7 +20,7 @@
   </div>
   <div class="row">
     <div class="col-sm-12">
-      <a href="<?= base_url() ?>portafolios/nuevo" class="btn btn-default">Crear portafolio</a>
+      <a href="<?= base_url() ?>portafolios/c_portafolios/guardarNuevo" class="btn btn-default">Crear portafolio</a>
     </div>
     <hr>
   </div>
@@ -49,7 +49,7 @@
           } //Fin de Foreach para lista los portafolios
         ?>
       </table>
-          <!-- Inicio de Modal de enviar portafolio -->
+          <!-- Inicio de Modal de enviar portafolio
           <div id= "enviar" class="modal fade bs-example-modal-lg " tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
             <div class="modal-dialog modal-lg">
               <div class="modal-content">
@@ -79,7 +79,8 @@
               </div>
             </div>
           </div>
-          <!-- Fin de Modal de enviar portafolio -->
+          
+          Fin de Modal de enviar portafolio -->
     </div>
   </div>
   <hr>

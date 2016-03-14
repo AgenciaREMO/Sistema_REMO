@@ -1,7 +1,7 @@
 
 <body>
     <!-- Navigation -->
-    <nav class="navbar navbar-fixed-top estiloNav" role="navigation" >
+    <nav class="navbar navbar-fixed-top navbar-inverse" role="navigation" >
         <div class="container">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
@@ -23,7 +23,7 @@
                         <a href="<?= base_url()?>cotizaciones/mostrar">Cotizaciones</a>
                     </li>
                     <li>
-                        <a href="<?= base_url()?>portafolios/mostrar">Portafolios</a>
+                        <a href="<?= base_url()?>portafolios/c_portafolios/mostrar">Portafolios</a>
 
                     </li>
                     <li>
