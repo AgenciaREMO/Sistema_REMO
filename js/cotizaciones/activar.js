@@ -28,6 +28,32 @@ var desactivardesc = function() {
 	guardar.style.display = 'none';
 };
 
+var activarcon = function() {
+	var categoria = document.getElementById("i-categoria");
+	var concepto = document.getElementById("i-concepto");
+	var cancelar = document.getElementById("e-cancelar");
+	var guardar = document.getElementById("e-guardar");
+	var editar = document.getElementById("e-editar");
+	categoria.disabled = false;
+	concepto.disabled = false;
+	editar.style.display = 'none';
+	cancelar.style.display = 'inline';
+	guardar.style.display = 'inline';
+};
+
+var desactivarcon = function() {
+	var categoria = document.getElementById("i-categoria");
+	var concepto = document.getElementById("i-concepto");
+	var cancelar = document.getElementById("e-cancelar");
+	var guardar = document.getElementById("e-guardar");
+	var editar = document.getElementById("e-editar");
+	categoria.disabled = true;
+	concepto.disabled = true;
+	editar.style.display = 'inline';
+	cancelar.style.display = 'none';
+	guardar.style.display = 'none';
+};
+
 /*var activarcot = function() {
 	var personal = document.getElementById("i-personal");
 	var estatus = document.getElementById("i-estatus");

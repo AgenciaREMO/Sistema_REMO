@@ -10,13 +10,15 @@
 		<?= form_open('/conceptos/recibirDatos') ?>
 		<?php
 			$i = 0;
-			$tipos = array();
 			$style = 'class="form-control"';
+			//Select
+			$tipos = array();
 			foreach ($consulta->result() as $fila) 
 			{
 				$tipos[$fila->id_tipo] = $fila->nombre;
 				$i++;
 			}
+			//Inputs
 			$nombre = array(
 				'name' => 'nombre',
 				'class' => 'form-control'
@@ -31,6 +33,7 @@
 				'class' => 'form-control',
 				'placeholder' => 'Cantidad'
 			);
+			//Botón
 			$guardar = array(
 				'class' => 'btn btn-primary',
 				'value' => 'Guardar'

@@ -27,6 +27,12 @@
 			$resultado = $this->db->query("SELECT * FROM concepto WHERE id_tipo = '". $data['tipo'] ."' AND nombre ='". $data['nombre'] ."'");
 			return $resultado->row();
 		}
+		public function editarConcepto($data)
+		{
+			$this->db->where('id_concepto', $data['id_concepto']);
+			$this->db->update('concepto', array('nombre' => $data['nombre'], 'id_tipo' => $data['tipo']));
+			echo $data['nombre'].'-'.$data['tipo'];
+		}
 
 		//DESCRIPCIONES
 		public function obtenerDescripcionPorId($Id = '')

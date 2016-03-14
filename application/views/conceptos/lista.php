@@ -23,7 +23,7 @@
 					<td><?= $i ?></td>
 					<td><?= $fila->tipo ?></td>
 					<td><?= $fila->concepto ?></td>	
-					<td><a href="<?= base_url()?>conceptos/detalles/<?= $fila->id_descripcion ?>"><?= $fila->detalles ?></a></td>
+					<td><a href="<?= base_url()?>conceptos/detallesDescripcion/<?= $fila->id_descripcion ?>"><?= $fila->detalles ?></a></td>
 					<td><?= $fila->costo ?></td>
 				</tr>
 				<?php 

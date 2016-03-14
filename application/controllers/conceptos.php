@@ -21,7 +21,7 @@
 			$this->load->view("conceptos/lista", $data);
 			$this->load->view("footer");
 		}
-		public function detalles($id = '')
+		public function detallesDescripcion($id = '')
 		{
 			$this->load->view("head"); 
 			$this->load->view("nav");
@@ -71,12 +71,37 @@
 			);
 			$this->concepto->nuevaDescripcion($data);
 
-			redirect('conceptos/mostrar');
+			redirect('conceptos/detallesConcepto/'.$fila->id_concepto);
+		}
+		public function detallesConcepto($id = '')
+		{
+			$this->load->view("head"); 
+			$this->load->view("nav");
+
+			$resultado = $this->concepto->obtenerTipos();
+			$data = array('consulta' => $resultado);
+			$fila = $this->concepto->obtenerConceptoPorId($id);
+
+			$data = array(
+				'consulta' => $resultado,
+				'id_concepto' => $fila->id_concepto,
+				'concepto' => $fila->concepto,
+				'id_tipo' => $fila->id_tipo,
+				'tipo' => $fila->tipo
+			);
+			$this->load->view("conceptos/editar_concepto", $data);
+			$this->load->view("footer");
 		}
 		public function editarConcepto($id)
 		{
-			$fila = $this->concepto->obtenerDescripcionPorId($id);
-			echo $fila->detalles;
+			$data = array(
+				'nombre' => $this->input->post('nombre'),
+				'tipo' => $this->input->post('tipo'),
+				'id_concepto' => $id
+			);
+			$this->concepto->editarConcepto($data);
+
+			//redirect('conceptos/detallesConcepto/'.$fila->id_concepto);
 		}
 	}
 ?> 
