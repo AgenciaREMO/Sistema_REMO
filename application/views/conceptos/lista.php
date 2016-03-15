@@ -14,6 +14,7 @@
 					<th>Concepto</th>
 					<th>Descripción</th>
 					<th>Costo por hora</th>
+					<th class="centrar"><i class="fa fa-times"></i></th>
 				</tr>
 				<?php 
 				$i = 1;
@@ -22,9 +23,10 @@
 				<tr>
 					<td><?= $i ?></td>
 					<td><?= $fila->tipo ?></td>
-					<td><?= $fila->concepto ?></td>	
-					<td><a href="<?= base_url()?>conceptos/detalles/<?= $fila->id_descripcion ?>"><?= $fila->detalles ?></a></td>
+					<td><a href="<?= base_url()?>conceptos/detallesConcepto/<?= $fila->id_concepto ?>"><?= $fila->concepto ?></a></td>	
+					<td><a href="<?= base_url()?>conceptos/detallesDescripcion/<?= $fila->id_descripcion ?>"><?= $fila->detalles ?></a></td>
 					<td><?= $fila->costo ?></td>
+					<td class="centrar"><a class="btn btn-danger" href="<?= base_url()?>conceptos/eliminarDescripcion/<?= $fila->id_descripcion ?>">Eliminar</a></td>
 				</tr>
 				<?php 
 				$i++;
