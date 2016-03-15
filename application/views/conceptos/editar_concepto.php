@@ -7,18 +7,18 @@
 		  <li class="active">Concepto</li>
 		</ol>
 		<hr>
-		<?= form_open(base_url('conceptos/editarConcepto').'/'.$id_concepto) ?>
+		<?= form_open('conceptos/editarConcepto/'.$id_concepto) ?>
 		<?php 
-			$i =0;
-			//Input
-			$style = 'id="i-categoria" class="form-control" disabled="disabled"';
 			//Select
+			$i = 0;
+			$otros = 'id="i-categoria" class="form-control" disabled="disabled"';
 			$tipos = array();
 			foreach ($consulta->result() as $fila) 
 			{
 				$tipos[$fila->id_tipo] = $fila->nombre;
 				$i++;
 			}
+			//Inputs
 			$nombre = array(
 				'name' => 'nombre',
 				'class' => 'form-control',
@@ -42,23 +42,22 @@
 				'content' => 'Cancelar'
 			);
 			$guardar = array(
-				'onClick' => 'desactivarcon()',
 				'style' => 'display:none',
 				'class' => 'btn btn-primary',
 				'id' => 'e-guardar',
 				'value' => 'Guardar'
 			);
 		?>
-			
 			<div class="form-group">
-				<?= form_label('Nombre', 'nombre') ?></label>
+				<?= form_label('Tipo', 'tipo') ?>
+				<?= form_dropdown('tipo', $tipos, $id_tipo, $otros) ?>	
+			</div>
+			<div class="form-group">
+				<?= form_label('Nombre', 'nombre') ?>
 				<?= form_input($nombre) ?>
 			</div>
-			<div class="form-group">
-				<?= form_label('Tipo', 'tipo') ?></label>
-				<?= form_dropdown('tipo', $tipos, $id_tipo, $style) ?>	
-			</div>
 			<?= form_button($editar) ?>
+			<a  id="e-volver" href="<?= base_url('conceptos/mostrar') ?>" class="btn btn-default">Volver</a>
 			<?= form_submit($guardar) ?>
 			<?= form_button($cancelar) ?>
 		<?= form_close() ?>

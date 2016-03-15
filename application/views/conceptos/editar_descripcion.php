@@ -7,34 +7,85 @@
 		  <li class="active">Descripción</li>
 		</ol>
 		<hr>
-		<form action="">
+		<?= form_open('conceptos/editarDescripcion/'.$id_descripcion) ?>
+		<?php 
+			//Select
+			$otros = 'id="i-concepto" class="form-control" disabled="disabled"';
+			$conceptos = array();
+			foreach ($consulta->result() as $fila) 
+			{
+				$conceptos[$fila->id_concepto] = $fila->nombre;
+			}
+			//Inputs
+			$tipo = array(
+				'name' => 'tipo',
+				'class' => 'form-control',
+				'id' => 'i-tipo',
+				'value' => $tipo,
+				'disabled' => 'disabled'
+			);
+			$descripcion = array(
+				'name' => 'descripcion',
+				'class' => 'form-control',
+				'id' => 'i-detalles',
+				'rows' => '2',
+				'value' => $detalles,
+				'disabled' => 'disabled'
+			);
+			$costo = array(
+				'name' => 'costo',
+				'class' => 'form-control',
+				'id' => 'i-costo',
+				'value' =>  $costo,
+				'disabled' => 'disabled'
+			);
+			//Botones
+			$editar = array(
+				'onClick' => 'activardesc()',
+				'style' => 'display:inline',
+				'class' => 'btn btn-primary',
+				'id' => 'e-editar',
+				'content' => 'Editar'
+			);
+			$cancelar = array(
+				'onClick' => 'desactivardesc()',
+				'style' => 'display:none',
+				'class' => 'btn btn-default',
+				'id' => 'e-cancelar',
+				'content' => 'Cancelar'
+			);
+			$guardar = array(
+				'style' => 'display:none',
+				'class' => 'btn btn-primary',
+				'id' => 'e-guardar',
+				'value' => 'Guardar'
+			);
+		?>
 			<div class="form-group">
-				<label>Concepto</label>
-				<select id="i-categoria" class="form-control" disabled>
-					<?php foreach ($consulta->result() as $fila) { ?>
-					<?php if ($concepto == $fila->nombre) { ?>
-						<option value="<?= $fila->id_concepto ?>" selected><?= $fila->nombre ?></option>	
-					<?php } else { ?>
-					<option value="<?= $fila->id_concepto ?>"><?= $fila->nombre ?></option>
-					<?php } } ?>
-				</select>
+				<?= form_label('Tipo', 'tipo') ?>
+				<?= form_input($tipo) ?>
 			</div>
 			<div class="form-group">
-				<label>Categoria</label>
-				<input type="text" class="form-control" value="<?= $categoria ?>" disabled>
+				<?= form_label('Concepto', 'concepto') ?>
+				<?= form_dropdown('concepto', $conceptos, $id_concepto, $otros) ?>	
 			</div>
 			<hr>
 			<div class="form-group">
-				<label>Detalles</label>
-				<textarea id="i-detalles" class="form-control" rows="2" disabled><?= $detalles ?></textarea>
+				<?= form_label('Descripción', 'descripcion') ?></label>
+				<?= form_textarea($descripcion) ?>
 			</div>
 			<div class="form-group">
-				<label>Importe</label>
-				<input type="text" id="i-importe" class="form-control" value="<?= $costo ?>" disabled>
+			    <?= form_label('Costo por hora', 'costo') ?></label>
+				<div class="input-group">
+			    	<div class="input-group-addon">$</div>
+					<?= form_input($costo) ?>
+			    	<div class="input-group-addon">.00</div>
+			    </div>
 			</div>
-			<button type="button" id="e-editar" class="btn btn-primary" onClick="activardesc()" style="display:inline">Editar <i class="fa fa-edit fa-lg"></i></button>
-            <a href="<?= base_url('conceptos/editarDescripcion').'/'.$id_descripcion ?>" id="e-guardar" class="btn btn-primary btn-oculto" onClick="desactivardesc()" style="display:none">Guardar</a>
-            <button type="button" id="e-cancelar" class="btn btn-primary btn-oculto" onClick="desactivardesc()" style="display:none">Cancelar</button>
-		</form>
+			<?= form_button($editar) ?>
+			<a  id="e-volver" href="<?= base_url('conceptos/mostrar') ?>" class="btn btn-default">Volver</a>
+			<?= form_submit($guardar) ?>
+			<?= form_button($cancelar) ?>
+		<?= form_close() ?>
 	</div>
 </div>

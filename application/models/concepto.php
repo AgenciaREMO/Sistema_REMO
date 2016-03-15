@@ -7,7 +7,7 @@
 		//CONCEPTOS	
 		public function obtenerConceptos()
 		{
-			return $this->db->query("SELECT tipo_proyecto.nombre AS tipo, concepto.nombre AS concepto, detalles, costo, id_descripcion FROM tipo_proyecto JOIN concepto ON tipo_proyecto.id_tipo=concepto.id_tipo JOIN descripcion ON concepto.id_concepto=descripcion.id_concepto");
+			return $this->db->query("SELECT tipo_proyecto.nombre AS tipo, concepto.nombre AS concepto, detalles, costo, id_descripcion, concepto.id_concepto AS id_concepto FROM tipo_proyecto JOIN concepto ON tipo_proyecto.id_tipo=concepto.id_tipo JOIN descripcion ON concepto.id_concepto=descripcion.id_concepto");
 		}
 		public function obtenerConcepto()
 		{
@@ -31,14 +31,18 @@
 		{
 			$this->db->where('id_concepto', $data['id_concepto']);
 			$this->db->update('concepto', array('nombre' => $data['nombre'], 'id_tipo' => $data['tipo']));
-			echo $data['nombre'].'-'.$data['tipo'];
 		}
 
 		//DESCRIPCIONES
 		public function obtenerDescripcionPorId($Id = '')
 		{
-			$resultado = $this->db->query("SELECT tipo_proyecto.nombre AS tipo, concepto.nombre AS concepto, detalles, costo, id_descripcion FROM tipo_proyecto JOIN concepto ON tipo_proyecto.id_tipo=concepto.id_tipo JOIN descripcion ON concepto.id_concepto=descripcion.id_concepto WHERE id_descripcion = '" . $Id . "' LIMIT 1");
+			$resultado = $this->db->query("SELECT tipo_proyecto.nombre AS tipo, concepto.nombre AS concepto, detalles, costo, id_descripcion, concepto.id_concepto AS id_concepto FROM tipo_proyecto JOIN concepto ON tipo_proyecto.id_tipo=concepto.id_tipo JOIN descripcion ON concepto.id_concepto=descripcion.id_concepto WHERE id_descripcion = '" . $Id . "' LIMIT 1");
 			return $resultado->row(); //Convierte el resultado de la consulta a una fila
+		}
+		public function editarDescripcion($data)
+		{
+			$this->db->where('id_descripcion', $data['id_descripcion']);
+			$this->db->update('descripcion', array('detalles' => $data['descripcion'], 'id_concepto' => $data['id_concepto'], 'costo' => $data['costo']));
 		}
 		public function nuevaDescripcion($data)
 		{

@@ -9,14 +9,12 @@
 		<hr>
 		<?= form_open('/conceptos/recibirDatos') ?>
 		<?php
-			$i = 0;
 			$style = 'class="form-control"';
 			//Select
 			$tipos = array();
 			foreach ($consulta->result() as $fila) 
 			{
 				$tipos[$fila->id_tipo] = $fila->nombre;
-				$i++;
 			}
 			//Inputs
 			$nombre = array(
@@ -40,11 +38,11 @@
 			);
 		?>
 			<div class="form-group">
-				<?= form_label('Tipo', 'tipo') ?></label>
+				<?= form_label('Tipo', 'tipo') ?>
 				<?= form_dropdown('tipo',$tipos,'1', $style) ?>
 			</div>
 			<div class="form-group">
-				<?= form_label('Nombre', 'nombre') ?></label>
+				<?= form_label('Nombre', 'nombre') ?>
 				<?= form_input($nombre) ?>
 			</div>
 			<div class="form-group">
