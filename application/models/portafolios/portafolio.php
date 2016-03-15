@@ -58,10 +58,21 @@ class Portafolio extends CI_Model
 		$this->db->join('tipo_imagen as tim', 'tipo_imagen as tim');
 		$query = $this->db->get();
 	}
-	//Función que permite enviar el portafolio a tráves de correo electrónico.
-	public function enviarPortafolio()
+	//Función que permite insertar una nueva imagen al sistema de base de datos.
+	public function insertarPortafolio($inputs)
 	{
+		 $this->db->insert('portafolio', $inputs);
+		 $id_portafolio = $this->db->insert_id();
+		 return $id_portafolio; //Recuperamos el id del último insert
 
+	}
+
+	//Función que permite enviar el portafolio a tráves de correo electrónico.
+	public function cancelarPortafolio($cancelar)
+	{	
+
+		$this->db->where('id_portafolio', $cancelar); //Decimos que obtenga el registro que sea igual el id al que recupero
+   		$this->db->delete('portafolio'); //Eliminamos el id que es igual al recuperado
 	}
 	//Función que permite eliminar portafolios de base de datos.
 	public function eliminarPortafolio()

@@ -45,7 +45,7 @@
 			$fila = $this->concepto->obtenerDescripcionPorId($id);
 			echo $fila->detalles;
 		}
-		public function agregarConcepto()
+		public function conceptoNuevo()
 		{
 			$this->load->view("head");
 			$this->load->view("nav");
@@ -53,31 +53,25 @@
 			$resultado = $this->concepto->obtenerTipos();
 			$data = array('consulta' => $resultado);
 
-			$this->load->view("conceptos/agregar_concepto"., $data);
+			$this->load->view("conceptos/concepto_nuevo", $data);
 			$this->load->view("footer");
 		}
-		public function recibirDatos($id = '')
+		public function recibirDatos()
 		{
 			$data = array(
 				'nombre' => $this->input->post('nombre'),
 				'tipo' => $this->input->post('tipo')
 			);
-			$this->concepto->agregarConcepto($data);
-			$this->load->view("head");
-			$this->load->view("nav");
-
-			$resultado = $this->concepto->obtenerTipos();
-			$fila = $this->concepto->obtenerConceptoPorId($id);
+			$this->concepto->nuevoConcepto($data);
+			$fila = $this->concepto->obtenerConceptoPorNombreTipo($data);
 			$data = array(
-				'consulta' => $resultado,
 				'id_concepto' => $fila->id_concepto,
-				'nombre' => $fila->nombre,
-				'tipo' => $fila->tipo
-
+				'detalles' => $this->input->post('descripcion'),
+				'costo' => $this->input->post('costo')
 			);
+			$this->concepto->nuevaDescripcion($data);
 
-			$this->load->view("conceptos/editar_concepto", $data);
-			$this->load->view("footer");
+			redirect('conceptos/mostrar');
 		}
 		public function editarConcepto($id)
 		{
