@@ -28,10 +28,6 @@
 
 		public function cargarFormulario($id_portafolio){ //Recuperamos de la función de insertar el último id que fue inserdado.
 			$id = array ('id_p' => $id_portafolio); //Almacenamos en un arreglo el id que se obtuvo.
-			//$result1 = $this->portafolio->cancelarPortafolio($id_p); //Almacenamos en una variable el resultado de cancelar
-			//if ($result1 == TRUE){
-				//redirect('/portafolios/c_portafolios/mostrar'); //Redirecciona al mismo controlador pero a otra función
-			//}else{
 			$this->load->view("head", $id);
 			$this->load->view("nav", $id);
 			$this->load->view("portafolios/form_portada", $id);
@@ -42,15 +38,12 @@
 			$this->load->view("portafolios/form_comentario", $id);
 			$this->load->view("portafolios/form_general", $id);
 			$this->load->view("footer", $id);
-			//}
-
-			
 		}
 
 		public function nuevo(){
 			$this->load->view("head");
 			$this->load->view("nav");
-			$this->load->view("portafolios/nuevo_portafolio"); //Se asigna a la vista el valor que se obtuvo a traves del arreglo
+			$this->load->view("portafolios/nuevo_portafolio");
 			$this->load->view("footer");
 		}	
 			
@@ -65,8 +58,8 @@
 
 		}
 
-		public function cancelar($id){
-			$this->portafolio->cancelarPortafolio($id);
+		public function cancelar($id){ //Se le pasa el valor del arreglo id
+			$this->portafolio->cancelarPortafolio($id); //A la función del modelo se le pasa el arreglo del id
 			redirect('/portafolios/c_portafolios/mostrar'); //Redirecciona al mismo controlador pero a otra función
 		}
 	}	

@@ -79,22 +79,6 @@ class Portafolio extends CI_Model
 	{
 
 	}
-	
-	//Función que permite mostrar la portada actual
-	public function mostrarPortadaActual()
-	{
-
-	}
-	//Función que permite mostrar las portadas usadas anteriormente
-	public function mostrarPortadasAnteriores()
-	{
-
-	}
-	//Función que permite insertar una nueva imagen al sistema de base de datos.
-	public function insertarPrtada()
-	{
-
-	} 
 
 }
 
