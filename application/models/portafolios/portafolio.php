@@ -68,10 +68,10 @@ class Portafolio extends CI_Model
 	}
 
 	//Función que permite enviar el portafolio a tráves de correo electrónico.
-	public function cancelarPortafolio($cancelar)
+	public function cancelarPortafolio($id_p)
 	{	
 
-		$this->db->where('id_portafolio', $cancelar); //Decimos que obtenga el registro que sea igual el id al que recupero
+		$this->db->where('id_portafolio', $id_p); //Decimos que obtenga el registro que sea igual el id al que recupero
    		$this->db->delete('portafolio'); //Eliminamos el id que es igual al recuperado
 	}
 	//Función que permite eliminar portafolios de base de datos.

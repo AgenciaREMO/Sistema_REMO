@@ -26,19 +26,25 @@
 		}
 
 
-		public function cargarFormulario($id_portafolio){
-			$cancelar = array ('consulta1' => $id_portafolio);
-			$this->load->view("head", $cancelar);
-			$this->load->view("nav", $cancelar);
-			$this->load->view("portafolios/form_portada", $cancelar);
-			$this->load->view("portafolios/form_servicio", $cancelar);
-			$this->load->view("portafolios/form_equipo", $cancelar);
-			$this->load->view("portafolios/form_experiencia", $cancelar);
-			$this->load->view("portafolios/form_contenido", $cancelar);
-			$this->load->view("portafolios/form_comentario", $cancelar);
-			$this->portafolio->cancelarPortafolio($cancelar);
-			$this->load->view("portafolios/form_general", $cancelar);
-			$this->load->view("footer", $cancelar);
+		public function cargarFormulario($id_portafolio){ //Recuperamos de la función de insertar el último id que fue inserdado.
+			$id = array ('id_p' => $id_portafolio); //Almacenamos en un arreglo el id que se obtuvo.
+			//$result1 = $this->portafolio->cancelarPortafolio($id_p); //Almacenamos en una variable el resultado de cancelar
+			//if ($result1 == TRUE){
+				//redirect('/portafolios/c_portafolios/mostrar'); //Redirecciona al mismo controlador pero a otra función
+			//}else{
+			$this->load->view("head", $id);
+			$this->load->view("nav", $id);
+			$this->load->view("portafolios/form_portada", $id);
+			$this->load->view("portafolios/form_servicio", $id);
+			$this->load->view("portafolios/form_equipo", $id);
+			$this->load->view("portafolios/form_experiencia", $id);
+			$this->load->view("portafolios/form_contenido", $id);
+			$this->load->view("portafolios/form_comentario", $id);
+			$this->load->view("portafolios/form_general", $id);
+			$this->load->view("footer", $id);
+			//}
+
+			
 		}
 
 		public function nuevo(){
@@ -59,9 +65,9 @@
 
 		}
 
-		public function cancelar(){
-			$this->portafolio->cancelarPortafolio();
-			//redirect('/portafolios/c_portafolios/mostrar'); //Redirecciona al mismo controlador pero a otra función
+		public function cancelar($id){
+			$this->portafolio->cancelarPortafolio($id);
+			redirect('/portafolios/c_portafolios/mostrar'); //Redirecciona al mismo controlador pero a otra función
 		}
 	}	
 ?>
