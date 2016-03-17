@@ -22,9 +22,16 @@
                     <li>
                         <a href="<?= base_url()?>cotizaciones/mostrar">Cotizaciones</a>
                     </li>
-                    <li>
-                        <a href="<?= base_url()?>portafolios/c_portafolios/mostrar">Portafolios</a>
-
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Portafolios<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="<?= base_url()?>portafolios/c_portafolios/mostrar">Portafolios</a>
+                            </li>
+                            <li>
+                                <a href="<?= base_url()?>c_imagenes/mostrar">Contenido gráfico</a>
+                            </li>
+                        </ul>
                     </li>
                     <li>
                         <a href="#">Proyectos</a>

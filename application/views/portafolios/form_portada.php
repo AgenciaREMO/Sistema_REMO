@@ -55,8 +55,11 @@
                         <div class="col-sm-12 col-md-6">
                           <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modalSP">Seleccionar portada</button>
                         </div>
-                        <!-- Inicio Modal seleccionar portada  
-                        <div class="modal fade" id="modalSP" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+                        <div class="col-sm-12 col-md-6">
+                          <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modalAP">Agregar portada</button>
+                        </div>
+                        <!-- Inicio Modal seleccionar portada  -->
+                        <div class="modal fade" id="modalAP" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
                           <div class="modal-dialog">
                             <div class="modal-content">
                               <div class="modal-header">
@@ -65,6 +68,19 @@
                               </div>
                               <div class="modal-body">
                                 <form action="php/subirPortada.php" method="POST" enctype="multipart/form-data">
+                                  <div class="col-lg-12">
+                                    <select class="form-control" name="id_">
+                                      <option value="">Selecciona tipo de imagen</option>
+                                      <?php //Inicio de Foreach para listar los portafolios
+                                            foreach ($consulta1->result() as $fila) { //Convertimos la consulta de base de datos en una fila
+                                          ?>
+                                        <option  value="<?= $fila->nombre?>"><?= $fila->nombre?></option>
+                                      <?php   
+                                            } //Fin de Foreach para lista los portafolios
+                                          ?>
+                                    </select>
+                                    <br>
+                                  </div>
                                   <div class="form-group">
                                     <label for="file">Selecciona imagen de portada</label>
                                     <input type="file" id="img" name="imagen">
@@ -80,7 +96,7 @@
                             </div>
                           </div> 
                         </div>
-                        Fin Modal seleccionar portada --> 
+                        <!-- Fin Modal seleccionar portada --> 
                       </div>
                     </div>
                   </div>
