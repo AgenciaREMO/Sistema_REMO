@@ -35,15 +35,21 @@
 		}	
 
 		public function insertar(){
-			
 			$inputs = array (
 				'nombre' => $this->input->post('nombre', TRUE), //Se asigna a un arreglo el valor que obtiene de los input de nueva imagen
-				'id_tipo_img' => $this->input->post('tipos')
+				'id_tipo_img' => $this->input->post('tipos',TRUE)
 				); 
 			$this->imagenes->insertarImagen($inputs); //Se le manda al método el valor que se obtuvo de los inputs
-			//$id_portafolio = $this->portafolio->insertarPortafolio($inputs); 
 			redirect('/portafolios/c_portafolios/cargarFormulario'.'/'.$id_portafolio); //Redirecciona al mismo controlador pero a otra función
 
+		}
+
+		public function prueba(){
+			$this->load->view("head");
+			$this->load->view("nav");
+			
+			$this->load->view("imagenes/upload_form"); //A tráves de la variable data le mandamos el resultado a la vista
+			$this->load->view("footer");
 		}
 
     }

@@ -31,10 +31,10 @@
 			$this->load->view("head", $id);
 			$this->load->view("nav", $id);
 			$this->load->view("portafolios/form_portada", $id);
-			$this->load->view("portafolios/form_servicio", $id);
-			$this->load->view("portafolios/form_equipo", $id);
-			$this->load->view("portafolios/form_experiencia", $id);
-			$this->load->view("portafolios/form_contenido", $id);
+			//$this->load->view("portafolios/form_servicio", $id);
+			//$this->load->view("portafolios/form_equipo", $id);
+			//$this->load->view("portafolios/form_experiencia", $id);
+			//$this->load->view("portafolios/form_contenido", $id);
 			$this->load->view("portafolios/form_comentario", $id);
 			$this->load->view("portafolios/form_general", $id);
 			$this->load->view("footer", $id);

@@ -31,6 +31,9 @@
                             <li>
                                 <a href="<?= base_url()?>c_imagenes/mostrar">Contenido gráfico</a>
                             </li>
+                             <li>
+                                <a href="<?= base_url()?>c_imagenes/prueba">Prueba</a>
+                            </li>
                         </ul>
                     </li>
                     <li>
