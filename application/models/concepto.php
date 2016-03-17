@@ -16,6 +16,8 @@
 		public function nuevoConcepto($data)
 		{
 			$this->db->insert('concepto',array('nombre' => $data['nombre'],'id_tipo' => $data['tipo']));
+			$id_insertado = $this->db->insert_id();
+			return $id_insertado;
 		}
 		public function obtenerConceptoPorId($Id = '')
 		{
@@ -51,6 +53,8 @@
 		public function nuevaDescripcion($data)
 		{
 			$this->db->insert('descripcion',array('id_concepto' => $data['id_concepto'],'detalles' => $data['detalles'],'costo' => $data['costo']));
+			$id_insertado = $this->db->insert_id();
+			return $id_insertado;
 		}
 
 		//OTROS

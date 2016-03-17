@@ -17,13 +17,6 @@
 				$conceptos[$fila->id_concepto] = $fila->nombre;
 			}
 			//Inputs
-			$tipo = array(
-				'name' => 'tipo',
-				'class' => 'form-control',
-				'id' => 'i-tipo',
-				'value' => $tipo,
-				'disabled' => 'disabled'
-			);
 			$descripcion = array(
 				'name' => 'descripcion',
 				'class' => 'form-control',
@@ -62,8 +55,9 @@
 			);
 		?>
 			<div class="form-group">
-				<?= form_label('Tipo', 'tipo') ?>
-				<?= form_input($tipo) ?>
+				<?= form_label('Tipo') ?>
+				<br>
+				<?=$tipo?>
 			</div>
 			<div class="form-group">
 				<?= form_label('Concepto', 'concepto') ?>
