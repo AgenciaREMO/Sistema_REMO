@@ -32,6 +32,10 @@
 			$this->db->where('id_concepto', $data['id_concepto']);
 			$this->db->update('concepto', array('nombre' => $data['nombre'], 'id_tipo' => $data['tipo']));
 		}
+		public function eliminarDescripcion($id)
+		{
+			$this->db->delete('descripcion', array('id_descripcion' => $id));
+		}
 
 		//DESCRIPCIONES
 		public function obtenerDescripcionPorId($Id = '')

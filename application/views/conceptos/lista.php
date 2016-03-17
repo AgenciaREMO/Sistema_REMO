@@ -14,7 +14,7 @@
 					<th>Concepto</th>
 					<th>Descripción</th>
 					<th>Costo por hora</th>
-					<th class="centrar"><i class="fa fa-times"></i></th>
+					<th></th>
 				</tr>
 				<?php 
 				$i = 1;
@@ -26,14 +26,36 @@
 					<td><a href="<?= base_url()?>conceptos/detallesConcepto/<?= $fila->id_concepto ?>"><?= $fila->concepto ?></a></td>	
 					<td><a href="<?= base_url()?>conceptos/detallesDescripcion/<?= $fila->id_descripcion ?>"><?= $fila->detalles ?></a></td>
 					<td><?= $fila->costo ?></td>
-					<td class="centrar"><a class="btn btn-danger" href="<?= base_url()?>conceptos/eliminarDescripcion/<?= $fila->id_descripcion ?>">Eliminar</a></td>
+					<td class="centrar">
+						<button type="button" data-id="<?=$fila->id_descripcion?>" class="btn btn-danger" data-toggle="modal" data-target="#descripcionModal">Eliminar</button>
+					</td>
 				</tr>
 				<?php 
 				$i++;
 				} ?>
 			</table>
 			<a href="<?= base_url('conceptos/conceptoNuevo') ?>" class="btn btn-primary">Nuevo Concepto</a>
-			<a href="#" class="btn btn-primary">Nueva Descripción</a>
+			<a href="<?= base_url('conceptos/descripcionNueva') ?>" class="btn btn-primary">Nueva Descripción</a>
 		</div>
 	</div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="descripcionModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  	<div class="modal-dialog" role="document">
+    	<div class="modal-content">
+	      	<div class="modal-header">
+	        	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        	<h4 class="modal-title" id="myModalLabel">¿Desea eliminar esta descripción?</h4>
+	      	</div>
+	      	<div class="modal-body">
+	      		....
+	      	</div>
+	      	<div class="modal-footer">
+	        	<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+	        	<a href="<?= base_url()?>conceptos/eliminarDescripcion/<?= $fila->id_descripcion ?>" class="btn btn-danger">Eliminar</a>
+	      	</div>
+    	</div>
+  	</div>
 </div>

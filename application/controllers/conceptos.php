@@ -41,6 +41,17 @@
 			$this->load->view("conceptos/editar_descripcion", $data);
 			$this->load->view("footer");
 		}
+		public function descripcionNueva()
+		{
+			$this->load->view("head");
+			$this->load->view("nav");
+
+			$resultado = $this->concepto->obtenerConcepto();
+			$data = array('consulta' => $resultado);
+
+			$this->load->view("conceptos/descripcion_nueva", $data);
+			$this->load->view("footer");
+		}
 		public function editarDescripcion($id)
 		{
 			$data = array(
@@ -53,11 +64,23 @@
 
 			redirect('conceptos/detallesDescripcion/'.$id);
 		}
-		public function eliminarDescripcion()
+		public function eliminarDescripcion($id)
 		{
+			$this->concepto->eliminarDescripcion($id);
 
 		}
-		public function recibirDatos()
+		public function recibirDatosDescripcion()
+		{
+			$data = array(
+				'id_concepto' => $this->input->post('concepto'),
+				'detalles' => $this->input->post('descripcion'),
+				'costo' => $this->input->post('costo')
+			);
+			$this->concepto->nuevaDescripcion($data);
+
+			redirect('conceptos/detallesDescripcion/'.$fila->id_concepto);
+		}
+		public function recibirDatosConcepto()
 		{
 			$data = array(
 				'nombre' => $this->input->post('nombre'),
@@ -74,6 +97,7 @@
 
 			redirect('conceptos/detallesConcepto/'.$fila->id_concepto);
 		}
+
 		public function detallesConcepto($id = '')
 		{
 			$this->load->view("head"); 

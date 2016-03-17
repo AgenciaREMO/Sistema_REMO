@@ -1,26 +1,22 @@
 <div class="container">
 	<div class="col-lg-12">
-		<h2>Concepto Nuevo</h2>
+		<h2>Descripción Nueva</h2>
 		<ol class="breadcrumb" style="margin-bottom: 5px;">
 		  <li><a href="<?= base_url()?>">Inicio</a></li>
 		  <li><a href="<?= base_url()?>conceptos/mostrar">Conceptos</a></li>
-		  <li class="active">Concepto</li>
+		  <li class="active">Descripción</li>
 		</ol>
 		<hr>
-		<?= form_open('/conceptos/recibirDatosConcepto') ?>
+		<?= form_open('/conceptos/recibirDatosDescripcion') ?>
 		<?php
-			$style = 'class="form-control"';
 			//Select
-			$tipos = array();
+			$otros = 'class="form-control"';
+			$conceptos = array();
 			foreach ($consulta->result() as $fila) 
 			{
-				$tipos[$fila->id_tipo] = $fila->nombre;
+				$conceptos[$fila->id_concepto] = $fila->nombre;
 			}
 			//Inputs
-			$nombre = array(
-				'name' => 'nombre',
-				'class' => 'form-control'
-			);
 			$descripcion = array(
 				'name' => 'descripcion',
 				'class' => 'form-control',
@@ -38,12 +34,8 @@
 			);
 		?>
 			<div class="form-group">
-				<?= form_label('Tipo', 'tipo') ?>
-				<?= form_dropdown('tipo',$tipos,'1', $style) ?>
-			</div>
-			<div class="form-group">
-				<?= form_label('Nombre', 'nombre') ?>
-				<?= form_input($nombre) ?>
+				<?= form_label('Concepto', 'concepto') ?>
+				<?= form_dropdown('concepto', $conceptos, 1,$otros) ?>	
 			</div>
 			<div class="form-group">
 				<?= form_label('Descripción', 'descripcion') ?></label>
