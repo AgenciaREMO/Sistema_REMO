@@ -3,7 +3,7 @@
 		<h2>Editar Concepto</h2>
 		<ol class="breadcrumb" style="margin-bottom: 5px;">
 		  <li><a href="<?= base_url()?>">Inicio</a></li>
-		  <li><a href="<?= base_url()?>conceptos/mostrar">Conceptos</a></li>
+		  <li><a href="<?= base_url()?>conceptos/mostrar">Conceptos y Descripciones</a></li>
 		  <li class="active">Concepto</li>
 		</ol>
 		<hr>
@@ -49,17 +49,29 @@
 			);
 		?>
 			<div class="form-group">
-				<?= form_label('Tipo', 'tipo') ?>
+				<?= form_label('Categoría', 'tipo') ?>
 				<?= form_dropdown('tipo', $tipos, $id_tipo, $otros) ?>	
 			</div>
 			<div class="form-group">
 				<?= form_label('Nombre', 'nombre') ?>
 				<?= form_input($nombre) ?>
 			</div>
+			<div class="form-group">
+				<?= form_label('Descripciones asociadas: ') ?>
+				<?php
+					echo "<ul>";
+					foreach ($descripciones->result() as $fila) 
+					{
+						echo "<li>" . $fila->detalles . "</li>";
+					}
+					echo "</ul>";
+				?>
+			</div>
 			<?= form_button($editar) ?>
-			<a  id="e-volver" href="<?= base_url('conceptos/mostrar') ?>" class="btn btn-default">Volver</a>
+			<a id="e-volver" href="<?= base_url('conceptos/mostrar') ?>" class="btn btn-default">Volver</a>
 			<?= form_submit($guardar) ?>
 			<?= form_button($cancelar) ?>
 		<?= form_close() ?>
 	</div>
 </div>
+

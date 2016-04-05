@@ -23,13 +23,13 @@
 		}
 		public function detallesDescripcion($id = '')
 		{
-			//$this->load->view("head"); 
-			//$this->load->view("nav");
+			$this->load->view("head"); 
+			$this->load->view("nav");
 
 			$fila = $this->concepto->obtenerDescripcionPorId($id);
 			$resultado = $this->concepto->obtenerConcepto();
 
-			/*$data = array(
+			$data = array(
 				'consulta' => $resultado,
 				'id_descripcion' => $fila->id_descripcion,
 				'tipo' => $fila->tipo,
@@ -37,9 +37,15 @@
 				'id_concepto' => $fila->id_concepto,
 				'detalles' => $fila->detalles,
 				'costo' => $fila->costo
-			);*/
-			//$this->load->view("conceptos/editar_descripcion", $data);
-			//$this->load->view("footer");
+			);
+			$this->load->view("conceptos/editar_descripcion", $data);
+			$this->load->view("footer");
+		}
+		public function detallesDescripcionAjax($id = '')
+		{
+			$data = $this->concepto->obtenerDescripcionPorId($id);
+
+			echo json_encode($data);
 		}
 		public function descripcionNueva()
 		{
@@ -67,7 +73,7 @@
 		public function eliminarDescripcion($id)
 		{
 			$this->concepto->eliminarDescripcion($id);
-
+			redirect('conceptos/mostrar');
 		}
 		public function recibirDatosDescripcion()
 		{
@@ -96,7 +102,12 @@
 
 			redirect('conceptos/detallesConcepto/'.$id_insertado);
 		}
-
+		public function detallesConceptoAjax($id = '')
+		{
+			$data = $this->concepto->obtenerConceptoPorId($id);
+			
+			echo json_encode($data);
+		}
 		public function detallesConcepto($id = '')
 		{
 			$this->load->view("head"); 
@@ -104,8 +115,10 @@
 
 			$resultado = $this->concepto->obtenerTipos();
 			$fila = $this->concepto->obtenerConceptoPorId($id);
+			$descripciones = $this->concepto->obtenerDescripcionesDeConcepto($id);
 			$data = array(
 				'consulta' => $resultado,
+				'descripciones' => $descripciones,
 				'id_concepto' => $fila->id_concepto,
 				'concepto' => $fila->concepto,
 				'id_tipo' => $fila->id_tipo,
@@ -135,6 +148,11 @@
 			$this->concepto->editarConcepto($data);
 
 			redirect('conceptos/detallesConcepto/'.$id);
+		}
+		public function eliminarConcepto($id)
+		{
+			$this->concepto->eliminarConcepto($id);
+			redirect('conceptos/mostrar');
 		}
 	}
 ?> 
