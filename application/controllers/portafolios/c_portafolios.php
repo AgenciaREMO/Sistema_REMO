@@ -13,6 +13,7 @@
 		{
 			parent::__construct();
 			$this->load->model('portafolios/portafolio'); //Cargamos el modelo que se usará en todo el controlador
+			$this->load->model('portafolios/comentario'); //Cargamos el modelo que se usará en todo el controlador
 		}
 
 		public function mostrar()
@@ -49,12 +50,11 @@
 			
 
 		public function insertar(){
-			
 			$inputs = array (
 				'nombre' => $this->input->post('nombre', TRUE) //Se asigna a un arreglo el valor que obtiene de los input de nuevo portafolio.
 				); 
 			$id_portafolio = $this->portafolio->insertarPortafolio($inputs); //Se le manda al método el valor que se obtuvo de los inputs
-			redirect('/portafolios/c_portafolios/cargarFormulario'.'/'.$id_portafolio); //Redirecciona al mismo controlador pero a otra función
+			//redirect('/portafolios/c_portafolios/cargarFormulario'.'/'.$id_portafolio); //Redirecciona al mismo controlador pero a otra función
 
 		}
 
@@ -62,5 +62,6 @@
 			$this->portafolio->cancelarPortafolio($id); //A la función del modelo se le pasa el arreglo del id
 			redirect('/portafolios/c_portafolios/mostrar'); //Redirecciona al mismo controlador pero a otra función
 		}
+
 	}	
 ?>

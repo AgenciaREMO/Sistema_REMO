@@ -12,11 +12,13 @@ class Comentario extends CI_Model
 	//Función que permite insertar un nuevo comentario a base de datos.
 	public function insertarComentario($inputs)
 	{	
-		$this->db->where('id_portafolio', $inputs['id_po']); //Cuando se hace una comparación sacas la variable del arreglo de esta forma
-		$this->db->update('portafolio', $inputs); //Mandas modifique lo del arreglo
-		return  $inputs['id_po']; //Recuperamos el id del último insert
-
+		$this->db->where('id_portafolio', $inputs['id_portafolio']); //Cuando se hace una comparación sacas la variable del arreglo de esta forma
+		$p = $this->db->update('portafolio', $inputs); //Mandas modifique lo del arreglo
+		return  $inputs['id_portafolio'];//Recuperamos el id del último insert
+		echo $p;
 	}
+
+
 
 
 }

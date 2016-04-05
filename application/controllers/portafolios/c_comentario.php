@@ -16,12 +16,15 @@
 		}
 
 
-		public function insertar($id){
-			$inputs = array (
-				'id_portafolio' => $id,
-				'comentario' => $this->input->post('comentario', TRUE) //Se asigna a un arreglo el valor que obtiene de los input de nuevo portafolio.
+		public function insertar($id_p){
+			//Se asigna a un arreglo el valor que obtiene de los inputs de comentario de portafolio.
+			$inputs = array(
+				'id_portafolio' => $id_p,
+				'nombre' => 'nombre',
+				'comentario' => $this->input->post('comentario'), 
 				); 
-			$this->comentario->insertarComentario($inputs); //Se le manda al método el valor que se obtuvo de los inputs
+			print_r ($inputs);
+			$id_portafolio = $this->comentario->insertarComentario($inputs); //Se le manda al método el valor que se obtuvo de los inputs
 			redirect('/portafolios/c_portafolios/cargarFormulario'.'/'.$id_portafolio); //Redirecciona al mismo controlador pero a otra función
 
 		}

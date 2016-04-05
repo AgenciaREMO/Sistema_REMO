@@ -21,7 +21,7 @@
             <li role="presentation"><a href="#equipo" aria-controls="equipo" data-toggle="tab" >Equipo de trabajo</a></li>
             <li role="presentation"><a href="#experiencia" aria-controls="experiencia" data-toggle="tab" role="tab">Experiencia</a></li>
             <li role="presentation"><a href="#portafolio" aria-controls="portafolio" data-toggle="tab" role="tab">Portafolio</a></li>
-            <li role="presentation"><a href="#comentario" aria-controls="comentario" data-toggle="tab" role="tab">Comentario</a></li>
+            <li role="presentation"><a href="#tab_comentario" aria-controls="tab_comentario" data-toggle="tab" role="tab">Comentario</a></li>
           </ul>
           <!-- Paneles de Tabs -->
           <div class="tab-content">

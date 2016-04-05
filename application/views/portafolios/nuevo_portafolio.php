@@ -12,7 +12,7 @@
 		<div class="row">
 			<div class="col-lg-12">
 				<ol class="breadcrumb">
-				  <li><a href="<?= base_url()?>portafolios/c_portafolios/mostrar">Protafolios</a></li>
+				  <li><a href="<?= base_url()?>portafolios/c_portafolios/mostrar">Portafolios</a></li>
 				  <li class="active">Crear portafolio</li>
 				</ol>
 			</div>

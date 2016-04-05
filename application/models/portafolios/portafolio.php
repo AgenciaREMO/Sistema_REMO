@@ -61,10 +61,10 @@ class Portafolio extends CI_Model
 	//Función que permite insertar una nueva imagen al sistema de base de datos.
 	public function insertarPortafolio($inputs)
 	{
-		 $this->db->insert('portafolio', $inputs);
+		 $p = $this->db->insert('portafolio', $inputs);
 		 $id_portafolio = $this->db->insert_id();
 		 return $id_portafolio; //Recuperamos el id del último insert
-
+		 echo $p ;
 	}
 
 	//Función que permite enviar el portafolio a tráves de correo electrónico.
