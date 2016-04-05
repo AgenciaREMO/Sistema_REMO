@@ -3,7 +3,7 @@
 		<h2>Concepto Nuevo</h2>
 		<ol class="breadcrumb" style="margin-bottom: 5px;">
 		  <li><a href="<?= base_url()?>">Inicio</a></li>
-		  <li><a href="<?= base_url()?>conceptos/mostrar">Conceptos</a></li>
+		  <li><a href="<?= base_url()?>conceptos/mostrar">Conceptos y Descripciones</a></li>
 		  <li class="active">Concepto</li>
 		</ol>
 		<hr>
@@ -38,7 +38,7 @@
 			);
 		?>
 			<div class="form-group">
-				<?= form_label('Tipo', 'tipo') ?>
+				<?= form_label('Categoría', 'tipo') ?>
 				<?= form_dropdown('tipo',$tipos,'1', $style) ?>
 			</div>
 			<div class="form-group">

@@ -3,7 +3,7 @@
 		<h2>Descripción Nueva</h2>
 		<ol class="breadcrumb" style="margin-bottom: 5px;">
 		  <li><a href="<?= base_url()?>">Inicio</a></li>
-		  <li><a href="<?= base_url()?>conceptos/mostrar">Conceptos</a></li>
+		  <li><a href="<?= base_url()?>conceptos/mostrar">Conceptos y Descripciones</a></li>
 		  <li class="active">Descripción</li>
 		</ol>
 		<hr>
@@ -46,7 +46,6 @@
 				<div class="input-group">
 			    	<div class="input-group-addon">$</div>
 					<?= form_input($costo) ?>
-			    	<div class="input-group-addon">.00</div>
 			    </div>
 			</div>
 			<?= form_submit($guardar) ?>
