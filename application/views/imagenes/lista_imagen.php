@@ -7,6 +7,12 @@
 //Fecha de modificación: 
 */
 ?>
+<?php 
+$subir = array(
+  'title' => 'Subir Gráfico',
+  'class' => 'btn btn-default'
+  );
+?>
 
  <!-- Contenido de la página -->
 <div class="container">
@@ -17,7 +23,7 @@
   </div>
   <div class="row">
     <div class="col-sm-12">
-      <a href="<?= base_url() ?>c_imagenes/nueva" class="btn btn-default">Subir imagen</a>
+      <?= anchor ('c_imagenes/nueva', 'Subir Gráfico', $subir); ?>
     </div>
     <hr>
   </div>
@@ -32,16 +38,16 @@
           <td><b>Eliminar</b></td>
         </tr>
         <?php //Inicio de Foreach para listar los portafolios
-          foreach ($consulta1->result() as $fila) { //Convertimos la consulta de base de datos en una fila
+         // foreach ($consulta1->result() as $fila) { //Convertimos la consulta de base de datos en una fila
         ?> 
           <tr>
-          <td><?= $fila->id_img ?></td> <!-- Accedemos al id_portafolio -->
-          <td><?= $fila->nom_img  ?></td>  <!-- Accedemos al nombre -->
+          <td>123</td> <!-- Accedemos al id_portafolio -->
+          <td>123</td>  <!-- Accedemos al nombre -->
           <td><div class="col-lg-2 "><a href="#"><span class="glyphicon glyphicon-search" hidden="true" ></span></a></div></td>
           <td><div class="col-lg-2 "><a href="#"><span class="glyphicon glyphicon-trash" hidden="true"></span></a></div></td>
         </tr>
         <?php   
-          } //Fin de Foreach para lista los portafolios
+          //} //Fin de Foreach para lista los portafolios
         ?>
       </table>
 

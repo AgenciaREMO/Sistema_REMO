@@ -20,7 +20,7 @@
           <div class="col-md-2"><div class="col-lg-2 "><a href="#"><img src="img/ver.png"></a></div></div>
             <div class="col-md-2">
               <!-- Se manda el id del portafolio actual para que al momento de cancelar elimine ese registro -->
-              <a class="btn btn-sm btn-default" href="<?= base_url('portafolios/c_portafolios/cancelar').'/'.$id_p ?>">Cancelar</a> 
+              <a class="btn btn-sm btn-default" href="<?= base_url('portafolios/c_portafolios/cancelarPortafolio').'/'.$id_portafolio ?>">Cancelar</a> 
 
             </div>
             <div class="col-md-2"><a class="btn btn-sm btn-default" href="#">Generar portafolio</a></div>

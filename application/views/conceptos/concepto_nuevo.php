@@ -39,7 +39,7 @@
 		?>
 			<div class="form-group">
 				<?= form_label('Categoría', 'tipo') ?>
-				<?= form_dropdown('tipo',$tipos,'1', $style) ?>
+				<?= form_dropdown('tipo_img',$tipos,'1') ?>
 			</div>
 			<div class="form-group">
 				<?= form_label('Nombre', 'nombre') ?>

@@ -19,9 +19,10 @@
 		{
 			$this->load->view("head");
 			$this->load->view("nav");
-			$result1 = $this->imagen->mostrarImagen(); //Asignamos a una variable la función que arroja el resultado de la consulta a base de datos.
-			$mostrar = array ('consulta1' => $result1); //Almacenamos el valor en un arreglo
-			$this->load->view("imagenes/lista_imagen", $mostrar); //A tráves de la variable data le mandamos el resultado a la vista
+			//$result1 = $this->imagen->mostrarImagen(); //Asignamos a una variable la función que arroja el resultado de la consulta a base de datos.
+			//$mostrar = array ('consulta1' => $result1); //Almacenamos el valor en un arreglo
+			//$this->load->view("imagenes/lista_imagen", $mostrar); //A tráves de la variable data le mandamos el resultado a la vista
+			$this->load->view("imagenes/lista_imagen");
 			$this->load->view("footer");
 		}
 
@@ -30,7 +31,10 @@
 			$this->load->view("nav");
 			$result1 = $this->imagen->obtenerTipoImg(); //Asignamos a una variable la función que arroja el resultado de la consulta a base de datos.
 			$tipos = array ('consulta1' => $result1);
-			$this->load->view("imagenes/nueva_imagen", $tipos); 
+			$this->load->view("imagenes/nueva_imagen", $tipos);
+			/*$resultado = $this->concepto->obtenerTipos();
+			$data = array('consulta' => $resultado);
+			$this->load->view("imagenes/nueva_imagen");*/
 			$this->load->view("footer");
 		}	
 

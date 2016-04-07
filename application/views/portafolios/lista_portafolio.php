@@ -20,7 +20,7 @@
   </div>
   <div class="row">
     <div class="col-sm-12">
-      <a href="<?= base_url() ?>portafolios/c_portafolios/nuevo" class="btn btn-default">Crear portafolio</a>
+      <a href="<?= base_url() ?>portafolios/c_portafolios/nuevoPortafolio" class="btn btn-default">Crear portafolio</a>
     </div>
     <hr>
   </div>

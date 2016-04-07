@@ -26,7 +26,7 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Portafolios<b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li>
-                                <a href="<?= base_url()?>portafolios/c_portafolios/mostrar">Portafolios</a>
+                                <a href="<?= base_url()?>portafolios/c_portafolios/mostrarPortafolio">Portafolios</a>
                             </li>
                             <li>
                                 <a href="<?= base_url()?>c_imagenes/mostrar">Contenido gráfico</a>

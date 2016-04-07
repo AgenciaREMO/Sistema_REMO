@@ -21,8 +21,7 @@
 			$inputs = array(
 				'id_portafolio' => $id_p,
 				'nombre' => 'nombre',
-				'comentario' => $this->input->post('comentario'), 
-				); 
+				'comentario' => $this->input->post('comentario')				); 
 			print_r ($inputs);
 			$id_portafolio = $this->comentario->insertarComentario($inputs); //Se le manda al método el valor que se obtuvo de los inputs
 			redirect('/portafolios/c_portafolios/cargarFormulario'.'/'.$id_portafolio); //Redirecciona al mismo controlador pero a otra función

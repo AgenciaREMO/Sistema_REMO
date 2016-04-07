@@ -8,52 +8,16 @@
 */
 ?>
 
-  <!-- Panel del Tab Comentario 
-            <div class="tabpanel tab-pane " id="comentario">
-              <div class="panel-body">
-                
-                <div class="row">
-                  <div class="col-md-12 col-lg-12">
-                    <h5>Breve comentario</h5>
-                    **<form class="navbar-form navbar-left" role="">
-                      <div class="form-group">
-                        <textarea type="text" row="4" col="160" class="form-control" name="comentario"> 
-                        </textarea>
-                        <br /><br />
-                      </div>
-                    **</form>
-                  </div>
-                </div>
-                  <div class="col-lg-1 col-lg-offset-11 ">
-                    <div class="row">
-                      <div class="col-lg-1">
-                        <a href="#"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
-                      </div>
-                      <div class="col-lg-1">
-                        **<input type="submit" class="btn btn-default" name="guardar" value="">
-                       
-                      </div>
-                    </div>
-                  </div>
-              </form>
-              </div>
-            </div>
-  Fin Panel de tab Comentario --> 
-
-
-
-  <!-- Panel del Tab Comentario-->
+  <!-- Panel del Tab Comentario -->
             <div class="tabpanel tab-pane " id="tab_comentario">
               <div class="panel-body">
-                <form action="<?= base_url('portafolios/c_comentario/insertar').'/'.$id_p ?>" method="POST">              
+                <form action="<?= base_url()?>portafolios/c_portafolios/insertarComentario/<?=$id_portafolio?>" method="POST">
                 <div class="row">
                   <div class="col-md-12 col-lg-12">
                     <h5>Breve comentario</h5>
                     <!--<form class="navbar-form navbar-left" role="">-->
-                      <div class="form-group">
-                        <textarea type="text" row="4" col="" class="form-control" name="comentario"> 
-                        </textarea>
-                        
+                      <div class="col-md-12 form-group">
+                          <input class="form-control" type="text" size="20" name="comentario" id="comentario" value="<?=$comentario?>">           
                       </div>
                     <!--</form>-->
                   </div>
@@ -64,7 +28,8 @@
                         <a href="#"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
                       </div>
                       <div class="col-lg-1">
-                        <input type="submit" class="btn btn-default" name="guardar" value="Guardar">
+                       <!--<input type="submit" class="btn btn-default" name="guardar" value="Guardar">-->
+                       <a class="btn btn-sm btn-default" href="<?= base_url('portafolios/c_portafolios/insertarComentario').'/'.$id_portafolio ?>">Guardar</a> 
                       </div>
                     </div>
                   </div>
@@ -72,3 +37,4 @@
               </div>
             </div>
   <!--Fin Panel de tab Comentario --> 
+

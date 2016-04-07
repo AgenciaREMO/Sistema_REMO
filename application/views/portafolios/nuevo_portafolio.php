@@ -7,32 +7,83 @@
 //Fecha de modificación: 
 */
 ?>
+
+<?php
+//form
+$form = array(
+	'name' => 'form_portafolio',
+	'id'   => 'form_portafolio'
+	);
+//input
+$nombre = array(
+	'name'        => 'nombre',
+    'id'          => 'nombre',
+    'value'       => '',
+    'maxlength'   => '150',
+    'size'        => '50',
+    'class'       => 'form-control',
+    'placeholder' => ' Ejemplo: Portafolio de Diseño Gráfico'
+	);
+//textarea
+$comentario = array(
+	'name'        => 'comentario',
+    'id'          => 'comentario',
+    'rows'        => '10',
+    'cols'        => '160',
+    'class'       => 'form-control',
+    'placeholder' => 'Escribe un breve comentario para el cliente sobre el portafolio'
+    );
+//botones
+$guardar = array(
+	'name'  => 'guardar',
+    'id'    => 'guardarPortafolio',
+    'class' => 'btn btn-primary',
+    'value' => 'Siguiente'
+    );
+
+$cancelar = array(
+	'name' => 'cancelar',
+	'id'   => 'cancelarPortafolio',
+	'class' => 'btn btn-default',
+	);
+//a
+$portafolio = array(
+	'title' => 'Portafolios');
+?>
+
  <!-- Contenido de la página -->
 <div class="container">
 		<div class="row">
 			<div class="col-lg-12">
 				<ol class="breadcrumb">
-				  <li><a href="<?= base_url()?>portafolios/c_portafolios/mostrar">Portafolios</a></li>
+				  <li><?= anchor('portafolios/c_portafolios/mostrarPortafolio','Portafolios', $portafolio);?></li>
 				  <li class="active">Crear portafolio</li>
 				</ol>
 			</div>
 		</div>
-	<form action="<?= base_url() ?>portafolios/c_portafolios/insertar" method="POST">
+		<?= form_open('portafolios/c_portafolios/insertarPortafolio', $form); ?>
 	    <div class="row">
 		  <div class="col-lg-12">
 			<div class="form-group">
-			    <label for="nomPortafolio">Nombre del portafolio  *</label>
-			    <input type="text" class="form-control" id="nompor" name="nombre" placeholder="Portafolio de Diseño Web">
+				 <?= form_label('Nombre del portafolio: *'); ?>
+				 <br>
+				 <?= form_input($nombre); ?>
+			</div>
+			<div class="form-group">	 
+				 <?= form_label('Comentario: *'); ?>
+				 <br>
+				 <?= form_textarea($comentario); ?>
 			</div>
 		  </div>
 	    </div>
 	    <div class="row">
 	    	<div class="col-lg-1 col-md-1 col-sm-2 col-xs-4" >
-				<a href="<?= base_url()?>portafolios/c_portafolios/mostrar" type="submit" class="btn btn-default">Cancelar</a>
+	    		<?= anchor('portafolios/c_portafolios/mostrarPortafolio','Cancelar', $cancelar);?>
 			</div>
 			<div class="col-lg-1 col-md-1 col-sm-2 col-xs-4" >
-				<input type="submit" class="btn btn-default" name="siguiente" value="Siguiente">
+				<?= form_submit($guardar)?>
 			<div>
 	    </div>
-   </form>
+	<?= form_close(); ?>
+   <!--</form>-->
 </div>
