@@ -3,7 +3,7 @@
 		<h2>Descripción Nueva</h2>
 		<ol class="breadcrumb" style="margin-bottom: 5px;">
 		  <li><a href="<?= base_url()?>">Inicio</a></li>
-		  <li><a href="<?= base_url()?>conceptos/mostrar">Conceptos y Descripciones</a></li>
+		  <li><a href="<?= base_url()?>conceptos/listaDescripciones">Conceptos y Descripciones</a></li>
 		  <li class="active">Descripción</li>
 		</ol>
 		<hr>
@@ -49,7 +49,7 @@
 			    </div>
 			</div>
 			<?= form_submit($guardar) ?>
-			<a href="<?= base_url('conceptos/mostrar') ?>" class="btn btn-default">Cancelar</a>
+			<a href="<?= base_url('conceptos/listaDescripciones') ?>" class="btn btn-default">Cancelar</a>
 		<?= form_close() ?>
 		
 	</div>

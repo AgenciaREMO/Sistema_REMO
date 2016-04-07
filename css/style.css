@@ -1,6 +1,3 @@
-.centrar {
-	text-align: center;
-}
 
 .cuadro_1{
 
@@ -29,8 +26,11 @@ display:block;
 margin:auto;
 
 }
-.i-borrar
-{
+
+.centrar {
+	text-align: center;
+}
+.i-borrar {
 	color: #d9534f;
 	padding-right: 10px;
 }
