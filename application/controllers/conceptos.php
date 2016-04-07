@@ -75,7 +75,8 @@
 		public function eliminarDescripcion($id)
 		{
 			$this->concepto->eliminarDescripcion($id);
-			redirect('conceptos/listaDescripciones');
+			print_r($id);
+			//redirect('conceptos/listaDescripciones');
 		}
 		public function recibirDatosDescripcion()
 		{

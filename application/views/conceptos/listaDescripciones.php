@@ -137,10 +137,12 @@
 			dataType: "JSON",
 			success: function(data)
 			{
+				$('[name="id_descripcion"]').val(data.id_descripcion)
 				$('[name="categoria"]').text(data.tipo);
 				$('[name="concepto"]').text(data.concepto);
 				$('[name="descripcion"]').text(data.detalles);
 				$('[name="costo"]').text(data.costo);
+				$("a").attr("href", "<?= base_url()?>conceptos/eliminarDescripcion/<?= $fila->id_descripcion ?>")
 
 				$('#modal_descripcion').modal('show');
 			},
@@ -185,6 +187,7 @@
 	      	</div>
 	      	<div class="modal-body form">
 	      		<form action="#" id="form" class="form-horizontal">
+	      			<input type="text" name="id_descripcion">
 					<p><strong>Categoría:</strong> <span name="categoria"></span></p>
 		          	<p><strong>Concepto:</strong> <span name="concepto"></span></p>
 		          	<p><strong>Descripción:</strong> <span name="descripcion"></span></p>
@@ -193,7 +196,7 @@
 	      	</div>
 	      	<div class="modal-footer">
 	        	<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-	        	<a href="<?= base_url()?>conceptos/eliminarDescripcion/<?= $fila->id_descripcion ?>" class="btn btn-danger">Eliminar</a>
+	        	<a href="#" class="btn btn-danger">Eliminar</a>
 	      	</div>
     	</div>
   	</div>

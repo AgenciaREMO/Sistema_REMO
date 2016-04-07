@@ -3,7 +3,7 @@
 		<h2>Editar Descripción</h2>
 		<ol class="breadcrumb" style="margin-bottom: 5px;">
 		  <li><a href="<?= base_url()?>">Inicio</a></li>
-		  <li><a href="<?= base_url()?>conceptos/listaDescripciones">Conceptos y Descripciones</a></li>
+		  <li><a href="<?= base_url()?>concepto/listaDescripciones">Conceptos y Descripciones</a></li>
 		  <li class="active">Descripción</li>
 		</ol>
 		<hr>

@@ -61,3 +61,37 @@ var desactivarcon = function() {
 	cancelar.style.display = 'none';
 	guardar.style.display = 'none';
 };
+
+
+
+
+
+var activarelemento = function() {
+	var seccion = document.getElementById("i-seccion");
+	var descripcion = document.getElementById("i-descripcion");
+	var cancelar = document.getElementById("e-cancelar");
+	var volver = document.getElementById("e-volver");
+	var guardar = document.getElementById("e-guardar");
+	var editar = document.getElementById("e-editar");
+	seccion.disabled = false;
+	descripcion.disabled = false;
+	editar.style.display = 'none';
+	volver.style.display = 'none';
+	cancelar.style.display = 'inline';
+	guardar.style.display = 'inline';
+};
+
+var desactivarelemento = function() {
+	var seccion = document.getElementById("i-seccion");
+	var descripcion = document.getElementById("i-descripcion");
+	var cancelar = document.getElementById("e-cancelar");
+	var volver = document.getElementById("e-volver");
+	var guardar = document.getElementById("e-guardar");
+	var editar = document.getElementById("e-editar");
+	seccion.disabled = true;
+	descripcion.disabled = true;
+	editar.style.display = 'inline';
+	volver.style.display = 'inline';
+	cancelar.style.display = 'none';
+	guardar.style.display = 'none';
+};
