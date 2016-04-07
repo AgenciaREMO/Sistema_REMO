@@ -10,15 +10,17 @@
 			$this->load->model('concepto');
 			$this->load->helper('form');
 		}
-		public function mostrar()
+		public function listaDescripciones()
 		{
 			$this->load->view("head");
 			$this->load->view("nav");
 
+			$buscar = $this->input->post("concepto");
 			$resultado = $this->concepto->obtenerConceptos();
 			$data = array('consulta' => $resultado);
-
-			$this->load->view("conceptos/lista", $data);
+			
+			$this->load->view("conceptos/listaDescripciones", $data);
+			
 			$this->load->view("footer");
 		}
 		public function detallesDescripcion($id = '')
@@ -73,7 +75,7 @@
 		public function eliminarDescripcion($id)
 		{
 			$this->concepto->eliminarDescripcion($id);
-			redirect('conceptos/mostrar');
+			redirect('conceptos/listaDescripciones');
 		}
 		public function recibirDatosDescripcion()
 		{
@@ -152,7 +154,7 @@
 		public function eliminarConcepto($id)
 		{
 			$this->concepto->eliminarConcepto($id);
-			redirect('conceptos/mostrar');
+			redirect('conceptos/listaDescripciones');
 		}
 	}
 ?> 

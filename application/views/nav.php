@@ -17,10 +17,18 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li>
-                        <a href="<?= base_url()?>conceptos/mostrar">Conceptos</a>
+                        <a href="<?= base_url()?>conceptos/listaDescripciones">Conceptos</a>
                     </li>
                     <li>
-                        <a href="<?= base_url()?>cotizaciones/mostrar">Cotizaciones</a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Cotizaciones <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="<?= base_url()?>elementos_seccion/listaElementosSeccion">Elementos de sección</a>
+                            </li>
+                            <li>
+                                <a href="#">Cotizaciones</a>
+                            </li>
+                        </ul>
                     </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Portafolios<b class="caret"></b></a>

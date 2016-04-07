@@ -3,7 +3,7 @@
 		<h2>Editar Descripción</h2>
 		<ol class="breadcrumb" style="margin-bottom: 5px;">
 		  <li><a href="<?= base_url()?>">Inicio</a></li>
-		  <li><a href="<?= base_url()?>conceptos/mostrar">Conceptos y Descripciones</a></li>
+		  <li><a href="<?= base_url()?>conceptos/listaDescripciones">Conceptos y Descripciones</a></li>
 		  <li class="active">Descripción</li>
 		</ol>
 		<hr>
@@ -76,7 +76,7 @@
 			    </div>
 			</div>
 			<?= form_button($editar) ?>
-			<a  id="e-volver" href="<?= base_url('conceptos/mostrar') ?>" class="btn btn-default">Volver</a>
+			<a  id="e-volver" href="<?= base_url('conceptos/listaDescripciones') ?>" class="btn btn-default">Volver</a>
 			<?= form_submit($guardar) ?>
 			<?= form_button($cancelar) ?>
 		<?= form_close() ?>
