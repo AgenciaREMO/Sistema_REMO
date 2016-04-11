@@ -87,6 +87,7 @@
 			{
 				$('[name="seccion"]').text(data.seccion);
 				$('[name="descripcion"]').text(data.descripcion);
+				$("a").attr("href", "<?= base_url()?>elementos_seccion/eliminarElemento/"+data.id_elemento);
 
 				$('#modal_elemento').modal('show');
 			},
@@ -114,7 +115,7 @@
 	      	</div>
 	      	<div class="modal-footer">
 	        	<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-	        	<a href="<?= base_url()?>elementos_seccion/eliminarElemento/<?= $fila->id_elemento ?>" class="btn btn-danger">Eliminar</a>
+	        	<a href="#" class="btn btn-danger">Eliminar</a>
 	      	</div>
     	</div>
   	</div>

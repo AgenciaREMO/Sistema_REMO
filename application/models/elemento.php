@@ -23,7 +23,7 @@
 		}
 		public function eliminarElemento($id)
 		{
-			//$this->db->delete('elemento_seccion', array('id_elemento' => $id));
+			$this->db->delete('elemento_seccion', array('id_elemento' => $id));
 		}
 	}
 ?> 

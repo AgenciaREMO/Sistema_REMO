@@ -68,9 +68,8 @@
 		}
 		public function eliminarElemento($id)
 		{
-			print_r($id);
 			$this->elemento->eliminarElemento($id);
-			//redirect('elementos_seccion/listaElementosSeccion');
+			redirect('elementos_seccion/listaElementosSeccion');
 		}
 	}
 ?>
