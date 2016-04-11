@@ -6,14 +6,21 @@
 //Fecha de creación: 14 de Marzo del 2016
 //Fecha de modificación: 
 */
-?>
-
-<?php
 //form
 $form = array(
   'name' => 'form_grafico',
   'id'   => 'form_grafico'
   );
+?>
+<?= form_open_multipart('/c_imagenes/subir', $form);?>
+<?php
+//select option
+$estilo = 'class="form-control"';
+$tipo_imagen = array();
+foreach ($consulta->result() as $fila) 
+{
+  $tipo_imagen[$fila->id_tipo_img] = $fila->nom_tipo;
+}
 //inputs
 $nombre = array(
   'name'        => 'nombre',
@@ -30,13 +37,7 @@ $imagen = array(
   'type'        => 'file',
   'class'       => 'form-control'
   );
-//select option
-$tipo_imagen = array('Seleccina' => 'Selecciona el tipo');
-      foreach ($consulta1->result() as $fila) 
-      {
-        $tipo_imagen[$fila->id_tipo_img] = $fila->nom_tipo;
-      }
-$estilo = 'class="form-control"';
+
 //a
 $contenido = array(
     'title' => 'Contenido Gráfico'
@@ -55,7 +56,7 @@ $subir = array(
         </ol>
       </div>
     </div>
-    <?= form_open_multipart('c_imagenes/insertar', $form);?>
+    
       <div class="row">
         <div class="col-lg-12">
           <div class="form-group">
@@ -75,7 +76,7 @@ $subir = array(
         </div>
         <div class="col-lg-12">
               <?= form_label('Tipo de Imagen') ?>
-              <?= form_dropdown('tipo',$tipo_imagen,'0', $estilo) ?>
+              <?= form_dropdown('tipo', $tipo_imagen,'1', $estilo) ?>
         </div>
       </div>
       <br>

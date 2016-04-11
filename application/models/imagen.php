@@ -25,11 +25,14 @@ class Imagen extends CI_Model
 	}
 
 	//Función que permite insertar una nueva imagen al sistema de base de datos.
-	public function insertarPortafolio($inputs)
+	public function subir($nombre, $tipo, $url)
 	{
-		 $this->db->insert('portafolio', $inputs);
-		 $id_portafolio = $this->db->insert_id();
-		 return $id_portafolio; //Recuperamos el id del último insert
+		  $data = array(
+            'nom_img' => $nombre,
+            'id_tipo_img' => $tipo,
+            'url_img' => $url
+        );
+        return $this->db->insert('imagen', $data);
 
 	}
 }

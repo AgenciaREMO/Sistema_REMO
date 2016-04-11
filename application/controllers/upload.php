@@ -6,6 +6,7 @@ class Upload extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->helper(array('form', 'url'));
+		$this->load->model('imagen'); 
 	}
 
 	function index()
@@ -13,7 +14,7 @@ class Upload extends CI_Controller {
 		$this->load->view('imagenes/upload_form', array('error' => ' ' ));
 	}
 
-	function do_upload()
+	public function do_upload()
 	{
 		$config['upload_path'] = './uploads/';
 		$config['allowed_types'] = 'gif|jpg|png';
@@ -30,11 +31,17 @@ class Upload extends CI_Controller {
 			$this->load->view('imagenes/upload_form', $error);
 		}
 		else
-		{
-			$data = array('upload_data' => $this->upload->data());
+		{   
+			$file_info = $this->upload->data();
 
+			$data = array('upload_data' => $this->upload->data());
+            $titulo = $this->input->post('titulo');
+            $imagen = $file_info['full_path'];
+            $subir = $this->imagen->subir($titulo,$imagen);     
 			$this->load->view('imagenes/upload_success', $data);
 		}
 	}
+
+
 }
 ?>
