@@ -75,8 +75,7 @@
 		public function eliminarDescripcion($id)
 		{
 			$this->concepto->eliminarDescripcion($id);
-			print_r($id);
-			//redirect('conceptos/listaDescripciones');
+			redirect('conceptos/listaDescripciones');
 		}
 		public function recibirDatosDescripcion()
 		{
@@ -89,6 +88,8 @@
 
 			redirect('conceptos/detallesDescripcion/'.$id_insertado);
 		}
+
+
 		public function recibirDatosConcepto()
 		{
 			$data = array(
@@ -156,6 +157,21 @@
 		{
 			$this->concepto->eliminarConcepto($id);
 			redirect('conceptos/listaDescripciones');
+		}
+
+
+		public function mostrarBusqueda()
+		{
+			if($this->input->is_ajax_request())
+			{
+				$buscar = $this->input->post("buscar");
+				$datos = $this->concepto->mostrarResultado($buscar);
+				echo json_encode($datos);
+			}
+			else
+			{
+				show_404;
+			}
 		}
 	}
 ?> 

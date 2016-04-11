@@ -13,26 +13,25 @@
 						'name' => 'concepto',
 						'class' => 'form-control',
 						'placeholder' => 'Concepto...',
-						'id' => 'i-concepto',
-						'onkeyup' => 'buscar_Concepto();'
+						'id' => 'b-concepto'
 					);
 					$descripcion = array(
 						'name' => 'descripcion',
 						'class' => 'form-control',
 						'placeholder' => 'Descripcion...',
-						'id' => 'i-descripcion'
+						'id' => 'b-descripcion'
 					);
 					$costo = array(
 						'name' => 'costo',
 						'class' => 'form-control',
 						'placeholder' => 'Costo...',
-						'id' => 'i-costo'
+						'id' => 'b-costo'
 					);
 					$categoria = array(
 						'name' => 'categoria',
 						'class' => 'form-control',
 						'placeholder' => 'Categoria...',
-						'id' => 'i-categoria'
+						'id' => 'b-categoria'
 					);
 				?>
 				<div class="row">
@@ -108,6 +107,14 @@
 </div>
 
 <script type="text/javascript">
+	$(document).on("ready", inicio);
+	function inicio()
+	{
+		$("#b-concepto").keyup(function(){
+			buscar = $("#buscar").val();
+			buscar_Concepto(buscar);
+		});
+	}
 	function eliminar_Concepto(id)
 	{
 		$('#form')[0].reset();
@@ -119,6 +126,7 @@
 			{
 				$('[name="categoria"]').text(data.tipo);
 				$('[name="concepto"]').text(data.concepto);
+				$("a").attr("href", "<?= base_url()?>conceptos/eliminarConcepto/"+data.id_concepto);
 
 				$('#modal_concepto').modal('show');
 			},
@@ -142,13 +150,24 @@
 				$('[name="concepto"]').text(data.concepto);
 				$('[name="descripcion"]').text(data.detalles);
 				$('[name="costo"]').text(data.costo);
-				$("a").attr("href", "<?= base_url()?>conceptos/eliminarDescripcion/<?= $fila->id_descripcion ?>")
+				$("a").attr("href", "<?= base_url()?>conceptos/eliminarDescripcion/"+data.id_descripcion);
 
 				$('#modal_descripcion').modal('show');
 			},
 			error: function(jqXHR, textStatus, errorThrown)
 			{
 				 alert('Error get data from ajax');
+			}
+		});
+	}
+	function buscar_Concepto(busqueda)
+	{
+		$.ajax({
+			url: "<?= base_url('conceptos/mostrarBusqueda') ?>", 
+			type: "POST",
+			data: {buscar:busqueda},
+			success: function(respuesta){
+				alert(respuesta);
 			}
 		});
 	}
