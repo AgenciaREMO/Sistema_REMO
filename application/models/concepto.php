@@ -68,7 +68,7 @@
 		public function mostrarResultado($busqueda)
 		{
 			//$this->db->like("nombre", $busqueda);
-			$resultado = $this->db->query("SELECT tipo_proyecto.nombre AS tipo, concepto.nombre AS concepto, detalles, costo, id_descripcion, concepto.id_concepto AS id_concepto FROM tipo_proyecto JOIN concepto ON tipo_proyecto.id_tipo=concepto.id_tipo JOIN descripcion ON concepto.id_concepto=descripcion.id_concepto ORDER BY concepto LIKE '%".$busqueda."%'");
+			$resultado = $this->db->query("SELECT tipo_proyecto.nombre AS tipo, concepto.nombre AS concepto, detalles, costo, id_descripcion, concepto.id_concepto AS id_concepto FROM tipo_proyecto JOIN concepto ON tipo_proyecto.id_tipo=concepto.id_tipo JOIN descripcion ON concepto.id_concepto=descripcion.id_concepto WHERE concepto.nombre LIKE '%".$busqueda."%' ORDER BY concepto");
 			
 			return $resultado->result();
 		}

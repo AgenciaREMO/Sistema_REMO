@@ -166,7 +166,7 @@
 			{
 				$buscar = $this->input->post("buscar");
 				$datos = $this->concepto->mostrarResultado($buscar);
-				echo json_encode($datos);
+				echo json_encode($datos, JSON_FORCE_OBJECT);
 			}
 			else
 			{
