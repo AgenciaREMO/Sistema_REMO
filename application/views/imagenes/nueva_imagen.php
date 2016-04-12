@@ -12,6 +12,9 @@ $form = array(
   'id'   => 'form_grafico'
   );
 ?>
+<?=@$error?>
+
+<?php echo validation_errors(); ?>
 <?= form_open_multipart('/c_imagenes/subir', $form);?>
 <?php
 //select option
@@ -25,14 +28,14 @@ foreach ($consulta->result() as $fila)
 $nombre = array(
   'name'        => 'nombre',
   'id'          => 'nombre',
-  'value'       => '',
+  'value'       => "<?php echo set_value('username');?>",
   'maxlength'   => '150',
   'size'        => '50',
   'class'       => 'form-control',
   'placeholder' => ' Ejemplo: Logotipo de REMO'
   );
 $imagen = array(
-  'name'        => 'imagen',
+  'name'        => 'userfile',
   'id'          => 'imagen',
   'type'        => 'file',
   'class'       => 'form-control'
@@ -60,6 +63,7 @@ $subir = array(
       <div class="row">
         <div class="col-lg-12">
           <div class="form-group">
+            <?= form_error('nombre'); ?>
             <?= form_label('Nombre de la imagen: *'); ?>
             <?= form_input($nombre);?>
           </div>
@@ -70,11 +74,13 @@ $subir = array(
         </div>
         <div class="col-lg-12">
           <div class="form-group">
+              <?= form_error('userfile'); ?>
               <?= form_label('Selecciona una imagen');?>
               <?= form_upload($imagen); ?>
           </div>
         </div>
         <div class="col-lg-12">
+
               <?= form_label('Tipo de Imagen') ?>
               <?= form_dropdown('tipo', $tipo_imagen,'1', $estilo) ?>
         </div>

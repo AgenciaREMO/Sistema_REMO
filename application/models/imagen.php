@@ -25,11 +25,11 @@ class Imagen extends CI_Model
 	}
 
 	//Función que permite insertar una nueva imagen al sistema de base de datos.
-	public function subir($nombre, $tipo, $url)
+	public function subir($nombre, $tipo_img, $url)
 	{
 		  $data = array(
             'nom_img' => $nombre,
-            'id_tipo_img' => $tipo,
+            'id_tipo_img' => $tipo_img,
             'url_img' => $url
         );
         return $this->db->insert('imagen', $data);
