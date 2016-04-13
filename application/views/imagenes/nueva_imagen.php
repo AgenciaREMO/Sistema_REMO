@@ -13,7 +13,7 @@ $form = array(
   );
 ?>
 <?=@$error?>
-
+<?php echo $error;?>
 <?php echo validation_errors(); ?>
 <?= form_open_multipart('/c_imagenes/subir', $form);?>
 <?php
