@@ -28,7 +28,7 @@ foreach ($consulta->result() as $fila)
 $nombre = array(
   'name'        => 'nombre',
   'id'          => 'nombre',
-  'value'       => "<?php echo set_value('username');?>",
+  'value'       => '',
   'maxlength'   => '150',
   'size'        => '50',
   'class'       => 'form-control',

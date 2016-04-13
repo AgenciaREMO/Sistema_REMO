@@ -34,38 +34,99 @@
         	$this->form_validation->set_message('max_length', 'El campo nombre no puede tener más de 80 carácteres');
         	//Validación userfile
 
-			
-			if(!empty($_FILES['userfile']['name']) && $this->form_validation->run() == TRUE){	
-	        	$tipo_img = $this->input->post('tipo');
-	        	$nombre = $this->input->post('nombre');
+				
+	        	$tipo = $this->input->post('tipo');
+	        	
+	        		switch ($tipo) {
+	        			case '1': 
+	        				$config['upload_path'] = './graficos/portada';
+							$config['allowed_types'] = 'gif|jpg|png|jpeg';
+							$config['max_size']	= '2000';
+							$config['max_width']  = '1980';
+							$config['max_height']  = '1020';
 
-				$config['upload_path'] = './uploads/';
-				$config['allowed_types'] = 'gif|jpg|png|jpeg';
-				$config['max_size']	= '2000';
-				$config['max_width']  = '1980';
-				$config['max_height']  = '1020';
+							$this->load->library('upload', $config);
+		
+							if ($this->upload->do_upload())
+							{
+								$file_info = $this->upload->data();
+						
+								$data = array('upload_data' => $this->upload->data()); //valores de las imagenes nombre, tipo, url, etc.
+			            		$nombre = $this->input->post('nombre');
+			            		$tipo_img = '1';
+			            		$url = $file_info['full_path'];
+			            		$subir = $this->imagen->subir($nombre, $tipo_img, $url);     
+								$this->load->view('imagenes/upload_success', $data);
+							}
+	        			break;
+	        			case '2': 
+	        				$config['upload_path'] = './graficos/equipo';
+							$config['allowed_types'] = 'gif|jpg|png|jpeg';
+							$config['max_size']	= '2000';
+							$config['max_width']  = '1980';
+							$config['max_height']  = '1020';
 
-				$this->load->library('upload', $config);
+							$this->load->library('upload', $config);
+		
+							if ($this->upload->do_upload())
+							{
+								$file_info = $this->upload->data();
+						
+								$data = array('upload_data' => $this->upload->data()); //valores de las imagenes nombre, tipo, url, etc.
+			            		$nombre = $this->input->post('nombre');
+			            		$tipo_img = '2';
+			            		$url = $file_info['full_path'];
+			            		$subir = $this->imagen->subir($nombre, $tipo_img, $url);     
+								$this->load->view('imagenes/upload_success', $data);
+							}
+	        			break;
+	        			case '3': 
+	        				$config['upload_path'] = './graficos/experiencia';
+							$config['allowed_types'] = 'gif|jpg|png|jpeg';
+							$config['max_size']	= '2000';
+							$config['max_width']  = '1980';
+							$config['max_height']  = '1020';
 
-				if ($this->upload->do_upload('userfile'))
-				{
-					$error = array('error' => $this->upload->display_errors());
+							$this->load->library('upload', $config);
+		
+							if ($this->upload->do_upload())
+							{
+								$file_info = $this->upload->data();
+						
+								$data = array('upload_data' => $this->upload->data()); //valores de las imagenes nombre, tipo, url, etc.
+			            		$nombre = $this->input->post('nombre');
+			            		$tipo_img = '3';
+			            		$url = $file_info['full_path'];
+			            		$subir = $this->imagen->subir($nombre, $tipo_img, $url);     
+								$this->load->view('imagenes/upload_success', $data);
+							}
+	        			break;
+	        			case '4': 
+	        				$config['upload_path'] = './graficos/grafico';
+							$config['allowed_types'] = 'gif|jpg|png|jpeg';
+							$config['max_size']	= '2000';
+							$config['max_width']  = '1980';
+							$config['max_height']  = '1020';
 
-					$this->load->view('upload_form', $error);
+							$this->load->library('upload', $config);
+		
+							if ($this->upload->do_upload())
+							{
+								$file_info = $this->upload->data();
+						
+								$data = array('upload_data' => $this->upload->data()); //valores de las imagenes nombre, tipo, url, etc.
+			            		$nombre = $this->input->post('nombre');
+			            		$tipo_img = '4';
+			            		$url = $file_info['full_path'];
+			            		$subir = $this->imagen->subir($nombre, $tipo_img, $url);     
+								$this->load->view('imagenes/upload_success', $data);
+							}
+	        			break;
+	        			default:
+						break;
+
+
 				}
-				else
-				{   
-					$file_info = $this->upload->data();
-					
-					$data = array('upload_data' => $this->upload->data()); //valores de las imagenes nombre, tipo, url, etc.
-		            $url = $file_info['full_path'];
-		            $subir = $this->imagen->subir($nombre, $tipo_img, $url);     
-					$this->load->view('imagenes/upload_success', $data);
-				}
-			}else{
-				$this->index();
-			}
-			
 		}
 
 		public function mostrar()
