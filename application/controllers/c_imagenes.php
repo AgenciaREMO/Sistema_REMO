@@ -48,47 +48,57 @@
 					//$this->form_validation->set_rules('name_input', 'Identificador', 'reglas de validación');
 					//$this->form_validation->set_message('regladevalidacion', 'mensajepersonalizado');
 					*/
-					$this->form_validation->set_rules('nombre', 'Nombre de la Imagen', 'trim|required|min_length[10]|max_length[80]|is_unique[imagen.nom_img]');
+					$this->form_validation->set_rules('nombre', 'nombre de la imagen', 'trim|required|min_length[10]|max_length[80]|is_unique[imagen.nom_img]');
 					$this->form_validation->set_message('required', 'El campo %s es obligatorio');
 					$this->form_validation->set_message('min_length', 'El campo %s debe tener un mínimo de %d carácteres');
 					$this->form_validation->set_message('max_length', 'El campo %s debe tener un maximo de %d carácteres');
 					$this->form_validation->set_message('is_unique', 'Existe otro campo %s registrado con ese nombre');
 					$this->form_validation->set_rules('tipo', 'Tipo de Imagen', 'trim|required');
 					$this->form_validation->set_message('required', 'El campo %s es obligatorio');
+					$this->form_validation->set_rules('userfile', 'gráfico', 'callback_handle_upload');					/*
+
 					
-					/*
 					//Es la función encargada de verificar si existe un error en las validaciones del formulario.
 					*/
 					if ($this->form_validation->run() == FALSE)
 					{
 							    $this->nueva();   
 					}
-					else
-					{
-						if ( ! $this->upload->do_upload())
-					    {
-					        $error = $this->upload->display_errors();
-					        $this->load->view('imagenes/nueva_imagen', $error);
-					    }
-						else{
-							$file_info = $this->upload->data(); //Arreglo que tiene toda la información de la imagen.
-							
-							$data = array('upload_data' => $this->upload->data()); //valores de las imagenes nombre, tipo, url, etc.
-				            $nombre = $this->input->post('nombre');
-				            $tipo_img = '1';
-				            $url = $file_info['full_path'];
-				            $subir = $this->imagen->subir($nombre, $tipo_img, $url);     
-							//$this->load->view('imagenes/upload_success', $data);
+					else{
 
-							if($subir)
-							       {
-							          redirect('/c_imagenes/mostrar', 'refresh');
-							       }
-							       else
-							       {
-							          $this->nueva();
-							       }
-						}
+						if (isset($_FILES['userfile']) && !empty($_FILES['userfile']['name']))
+      					{
+
+							if ( ! $this->upload->do_upload())
+						    {
+						        //$error = $this->upload->display_errors();
+						        //$this->load->view('imagenes/nueva_imagen', $error);
+						        $this->form_validation->set_message('handle_upload', $this->upload->display_errors());
+						        return false;
+						    }
+							else{
+								$file_info = $this->upload->data(); //Arreglo que tiene toda la información de la imagen.
+								
+								$data = array('upload_data' => $this->upload->data()); //valores de las imagenes nombre, tipo, url, etc.
+					            $nombre = $this->input->post('nombre');
+					            $tipo_img = '1';
+					            $url = $file_info['full_path'];
+					            $subir = $this->imagen->subir($nombre, $tipo_img, $url);     
+								//$this->load->view('imagenes/upload_success', $data);
+
+								if($subir)
+								       {
+								          redirect('/c_imagenes/mostrar', 'refresh');
+								       }
+								       else
+								       {
+								          $this->nueva();
+								       }
+							}
+						}else{
+								$this->form_validation->set_message('handle_upload', "Debes cargar una imagen!");
+      							return false;
+							}
 					}
 	        	break;
 	        	//Case para equipo
@@ -297,23 +307,5 @@
 			$this->imagen->eliminarImagen($id_img); //A la función del modelo se le pasa el arreglo del id
 			redirect('/c_imagenes/mostrar'); 
 		}
-
-		/*public function insertar(){
-			$inputs = array (
-				'nombre' => $this->input->post('nombre', TRUE), //Se asigna a un arreglo el valor que obtiene de los input de nueva imagen
-				'id_tipo_img' => $this->input->post('tipos',TRUE)
-				); 
-			$this->imagenes->insertarImagen($inputs); //Se le manda al método el valor que se obtuvo de los inputs
-			redirect('/portafolios/c_portafolios/cargarFormulario'.'/'.$id_portafolio); //Redirecciona al mismo controlador pero a otra función
-
-		}*/
-
-		/*public function prueba(){
-			$this->load->view("head");
-			$this->load->view("nav");
-			
-			$this->load->view("imagenes/upload_form"); //A tráves de la variable data le mandamos el resultado a la vista
-			$this->load->view("footer");
-		}*/
 
     }

@@ -46,7 +46,7 @@ $subir = array(
           <td><?= $fila->nom_img ?></td>  <!-- Accedemos al nombre -->
           <td><?= $fila->nom_tipo ?></td>
           <td><div class="col-lg-2 "><a href="#"><span class="glyphicon glyphicon-search" hidden="true" ></span></a></div></td>
-          <td><div class="col-lg-2 "><a href="<?= base_url('imagenes/c_imagenes/eliminarImagen').'/'.$id_img ?>"><span class="glyphicon glyphicon-trash" hidden="true"></span></a></div></td>
+          <td><div class="col-lg-2 "><a href="#"><span class="glyphicon glyphicon-trash" hidden="true"></span></a></div></td>
         </tr>
         <?php   
           } //Fin de Foreach para lista los portafolios

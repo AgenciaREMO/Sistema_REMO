@@ -21,11 +21,16 @@ $form = array(
 <?php
 //select option
 $estilo = 'class="form-control"';
-$tipo_imagen = array();
-foreach ($consulta->result() as $fila) 
+$tipo_imagen = array(
+  '1' => 'Portada',
+  '2' => 'Equipo',
+  '3' => 'Experiencia',
+  '4' => 'Gráfico'
+  );
+/*foreach ($consulta->result() as $fila) 
 {
   $tipo_imagen[$fila->id_tipo_img] = $fila->nom_tipo;
-}
+}*/
 //inputs
 $nombre = array(
   'name'        => 'nombre',
@@ -39,6 +44,7 @@ $nombre = array(
 $imagen = array(
   'name'        => 'userfile',
   'id'          => 'userfile',
+  'value'       => set_value('userfile'),
   'type'        => 'file',
   'class'       => 'form-control',
   'rules'       => 'required'
@@ -72,10 +78,6 @@ $subir = array(
           </div>
         </div>
         <div class="col-lg-12">
-
-          <br>
-        </div>
-        <div class="col-lg-12">
           <div class="form-group">
               <?= form_error('userfile'); ?>
               <?= form_label('Selecciona una imagen');?>
@@ -83,9 +85,8 @@ $subir = array(
           </div>
         </div>
         <div class="col-lg-12">
-
               <?= form_label('Tipo de Imagen') ?>
-              <?= form_dropdown('tipo', $tipo_imagen,'1', $estilo) ?>
+              <?= form_dropdown('tipo', $tipo_imagen,'1', $estilo, 'value' => set_value('tipo'),) ?>
         </div>
       </div>
       <br>
