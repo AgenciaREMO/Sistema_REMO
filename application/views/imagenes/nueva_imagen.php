@@ -12,9 +12,11 @@ $form = array(
   'id'   => 'form_grafico'
   );
 ?>
+
 <?=@$error?>
-<?php echo $error;?>
-<?php echo validation_errors(); ?>
+
+<?php validation_errors('<div class="alert alert-danger" role="alert">','</div>'); ?>
+
 <?= form_open_multipart('/c_imagenes/subir', $form);?>
 <?php
 //select option
@@ -28,7 +30,7 @@ foreach ($consulta->result() as $fila)
 $nombre = array(
   'name'        => 'nombre',
   'id'          => 'nombre',
-  'value'       => '',
+  'value'       => set_value('nombre'),
   'maxlength'   => '150',
   'size'        => '50',
   'class'       => 'form-control',
@@ -36,9 +38,10 @@ $nombre = array(
   );
 $imagen = array(
   'name'        => 'userfile',
-  'id'          => 'imagen',
+  'id'          => 'userfile',
   'type'        => 'file',
-  'class'       => 'form-control'
+  'class'       => 'form-control',
+  'rules'       => 'required'
   );
 
 //a

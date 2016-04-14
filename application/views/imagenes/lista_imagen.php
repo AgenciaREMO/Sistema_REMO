@@ -32,22 +32,24 @@ $subir = array(
       
       <table class="table table-hover">
         <tr>
-          <td><b>No. Portafolio</b></td>
+          <td><b>No. Imagen</b></td>
           <td><b>Nombre</b></td>
+          <td><b>Tipo de imagen</b></td>
           <td><b>Ver</b></td>
           <td><b>Eliminar</b></td>
         </tr>
         <?php //Inicio de Foreach para listar los portafolios
-         // foreach ($consulta1->result() as $fila) { //Convertimos la consulta de base de datos en una fila
+          foreach ($consulta->result() as $fila) { //Convertimos la consulta de base de datos en una fila
         ?> 
           <tr>
-          <td>123</td> <!-- Accedemos al id_portafolio -->
-          <td>123</td>  <!-- Accedemos al nombre -->
+          <td><?= $fila->id_img ?></td> <!-- Accedemos al  -->
+          <td><?= $fila->nom_img ?></td>  <!-- Accedemos al nombre -->
+          <td><?= $fila->nom_tipo ?></td>
           <td><div class="col-lg-2 "><a href="#"><span class="glyphicon glyphicon-search" hidden="true" ></span></a></div></td>
-          <td><div class="col-lg-2 "><a href="#"><span class="glyphicon glyphicon-trash" hidden="true"></span></a></div></td>
+          <td><div class="col-lg-2 "><a href="<?= base_url('imagenes/c_imagenes/eliminarImagen').'/'.$id_img ?>"><span class="glyphicon glyphicon-trash" hidden="true"></span></a></div></td>
         </tr>
         <?php   
-          //} //Fin de Foreach para lista los portafolios
+          } //Fin de Foreach para lista los portafolios
         ?>
       </table>
 
