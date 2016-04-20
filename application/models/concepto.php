@@ -64,14 +64,41 @@
 			$id_insertado = $this->db->insert_id();
 			return $id_insertado;
 		}
-
-		public function mostrarResultado($busqueda)
+		public function mostrarBusquedaDescripciones($busqueda, $tipo_bus, $costo1, $costo2)
 		{
-			//$this->db->like("nombre", $busqueda);
-			$resultado = $this->db->query("SELECT tipo_proyecto.nombre AS tipo, concepto.nombre AS concepto, detalles, costo, id_descripcion, concepto.id_concepto AS id_concepto FROM tipo_proyecto JOIN concepto ON tipo_proyecto.id_tipo=concepto.id_tipo JOIN descripcion ON concepto.id_concepto=descripcion.id_concepto WHERE concepto.nombre LIKE '%".$busqueda."%' ORDER BY concepto");
+			if($tipo_bus=="b-concepto")
+			{
+				$resultado = $this->db->query("SELECT tipo_proyecto.nombre AS tipo, concepto.nombre AS concepto, detalles, costo, id_descripcion, concepto.id_concepto AS id_concepto FROM tipo_proyecto JOIN concepto ON tipo_proyecto.id_tipo=concepto.id_tipo JOIN descripcion ON concepto.id_concepto=descripcion.id_concepto WHERE concepto.nombre LIKE '%".$busqueda."%' ORDER BY concepto");
+			}
+			else if($tipo_bus=="b-descripcion")
+			{
+				$resultado = $this->db->query("SELECT tipo_proyecto.nombre AS tipo, concepto.nombre AS concepto, detalles, costo, id_descripcion, concepto.id_concepto AS id_concepto FROM tipo_proyecto JOIN concepto ON tipo_proyecto.id_tipo=concepto.id_tipo JOIN descripcion ON concepto.id_concepto=descripcion.id_concepto WHERE detalles LIKE '%".$busqueda."%' ORDER BY concepto");
+			}
+			else if($tipo_bus=="b-costoinf")
+			{
+				$resultado = $this->db->query("SELECT tipo_proyecto.nombre AS tipo, concepto.nombre AS concepto, detalles, costo, id_descripcion, concepto.id_concepto AS id_concepto FROM tipo_proyecto JOIN concepto ON tipo_proyecto.id_tipo=concepto.id_tipo JOIN descripcion ON concepto.id_concepto=descripcion.id_concepto WHERE costo >= ".$busqueda." ORDER BY concepto");
+			}
+			else if($tipo_bus=="b-costosup")
+			{
+				$resultado = $this->db->query("SELECT tipo_proyecto.nombre AS tipo, concepto.nombre AS concepto, detalles, costo, id_descripcion, concepto.id_concepto AS id_concepto FROM tipo_proyecto JOIN concepto ON tipo_proyecto.id_tipo=concepto.id_tipo JOIN descripcion ON concepto.id_concepto=descripcion.id_concepto WHERE costo <= ".$busqueda." ORDER BY concepto");
+			}
+			else if($tipo_bus=="b-costos")
+			{
+				$resultado = $this->db->query("SELECT tipo_proyecto.nombre AS tipo, concepto.nombre AS concepto, detalles, costo, id_descripcion, concepto.id_concepto AS id_concepto FROM tipo_proyecto JOIN concepto ON tipo_proyecto.id_tipo=concepto.id_tipo JOIN descripcion ON concepto.id_concepto=descripcion.id_concepto WHERE costo <= ".$costo1." AND costo".$costo2." ORDER BY concepto");
+			}
+			else if($tipo_bus=="b-categoria")
+			{
+				$resultado = $this->db->query("SELECT tipo_proyecto.nombre AS tipo, concepto.nombre AS concepto, detalles, costo, id_descripcion, concepto.id_concepto AS id_concepto FROM tipo_proyecto JOIN concepto ON tipo_proyecto.id_tipo=concepto.id_tipo JOIN descripcion ON concepto.id_concepto=descripcion.id_concepto WHERE tipo_proyecto.nombre LIKE '%".$busqueda."%' ORDER BY concepto");
+			}
 			
 			return $resultado->result();
 		}
+		public function obtenerPaginacion($limit, $start)
+		{
+			$query = $this->db->query("SELECT * FROM descripcion LIMIT " . $start . ", " . $limit);
+      		return $query->result();
+		}
+
 
 		//OTROS
 		public function obtenerTipos()

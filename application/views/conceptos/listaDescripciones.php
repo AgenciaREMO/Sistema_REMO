@@ -7,7 +7,7 @@
 			  <li>Conceptos y Descripciones</li>
 			</ol>
 			<hr>
-			<form class="form-inline">
+			<form class="form-horizontal">
 				<?php
 					$concepto = array(
 						'name' => 'concepto',
@@ -21,11 +21,17 @@
 						'placeholder' => 'Descripcion...',
 						'id' => 'b-descripcion'
 					);
-					$costo = array(
-						'name' => 'costo',
+					$costoinf = array(
+						'name' => 'costoinf',
 						'class' => 'form-control',
-						'placeholder' => 'Costo...',
-						'id' => 'b-costo'
+						'placeholder' => 'Desde...',
+						'id' => 'b-costoinf'
+					);
+					$costosup = array(
+						'name' => 'costosup',
+						'class' => 'form-control',
+						'placeholder' => 'Hasta...',
+						'id' => 'b-costosup'
 					);
 					$categoria = array(
 						'name' => 'categoria',
@@ -42,25 +48,84 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="form-group">
-						<?= form_input($concepto) ?>
-					</div>
-					<div class="form-group">
-						<?= form_input($descripcion) ?>
-					</div>
-					<div class="form-group">
-						<?= form_input($costo) ?>
-					</div>
-					<div class="form-group">
-						<?= form_input($categoria) ?>
+					<div class="col-lg-12">
+						<div class="form-group">
+							<?= form_label('Concepto', 'concepto') ?>
+							<?= form_input($concepto) ?>
+						</div>
+						<div class="form-group">
+							<?= form_label('Descripción', 'descripcion') ?>
+							<?= form_input($descripcion) ?>
+						</div>
+						<div class="form-group">
+							<?= form_label('Costo') ?>
+							<div class="row">
+								<div class="col-lg-6">
+									<?= form_input($costoinf) ?>
+								</div>
+								<div class="col-lg-6">
+									<?= form_input($costosup) ?>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<?= form_label('Categoria', 'categoria') ?>
+							<?= form_input($categoria) ?>
+						</div>
 					</div>
 				</div>
 			</form>
 			<hr>
 
-			<div id="buscar">
-				
+			<div class="row">
+				<div class="col-lg-12" id="lista">
+					<table class="table table-striped">
+						<tr>
+							<th>#</th>	
+							<th>Concepto</th>
+							<th>Descripción</th>
+							<th>Costo por hora</th>
+							<th>Categoria</th>
+						</tr>
+						<?php 
+						$i = 1;
+						$concepto = null;
+						foreach ($consulta->result() as $fila) 
+						{ ?>
+						<tr>
+							<?php if($concepto != $fila->id_concepto) { ?>
+							<td><?= $i ?></td>
+							<td>
+								<a class="i-borrar" href="javascript:void(0)" onclick="eliminar_Concepto('<?= $fila->id_concepto ?>')"><i class="fa fa-times"></i></a>
+								<a href="<?= base_url()?>conceptos/detallesConcepto/<?= $fila->id_concepto ?>"><?= $fila->concepto ?></a>
+							</td>	
+							<?php $i++; } else{ echo "<td></td><td></td>"; } ?>
+							<td>
+								<a class="i-borrar" href="javascript:void(0)" onclick="eliminar_Descripcion('<?= $fila->id_descripcion ?>')"><i class="fa fa-times"></i></a>
+								<a href="<?= base_url()?>conceptos/detallesDescripcion/<?= $fila->id_descripcion ?>"><?= $fila->detalles ?></a>
+							</td>
+							<td><?= $fila->costo ?></td>
+							<td><?= $fila->tipo ?></td>
+						</tr>
+						<?php
+						$concepto = $fila->id_concepto; 
+						} ?>
+						<tr>
+							<td></td>
+							<td><a href="<?= base_url('conceptos/conceptoNuevo') ?>" class="btn btn-primary">Nuevo Concepto</a></td>
+							<td><a href="<?= base_url('conceptos/descripcionNueva') ?>" class="btn btn-primary">Nueva Descripción</a></td>
+							<td></td>
+							<td></td>
+						</tr>
+					</table>
+				</div>
 			</div>
+			<div class="row-">
+				<div class="col-lg-12">
+					<?php  echo $pagination ?>
+				</div>
+			</div>
+
 			
 		</div>
 	</div>
@@ -70,9 +135,48 @@
 	$(document).on("ready", inicio);
 	function inicio()
 	{
-		$("#b-concepto").keyup(function(){
-			buscar = $("#buscar").val();
-			buscar_Concepto(buscar);
+		$("#b-concepto").keyup(function()
+		{
+			busc = $("#b-concepto").val();
+			tipo_busqueda = "b-concepto";
+			buscar(busc, tipo_busqueda);
+		});
+		$("#b-descripcion").keyup(function()
+		{
+			busc = $("#b-descripcion").val();
+			tipo_busqueda = "b-descripcion";
+			buscar(busc, tipo_busqueda);
+		});
+		$("#b-costoinf").keyup(function()
+		{
+			if ($("#b-costosup").val().length < 1) 
+			{
+				busc = $("#b-costoinf").val();
+				tipo_busqueda = "b-costoinf";
+				buscar(busc, tipo_busqueda);
+			}
+			else if(($("#b-costosup").val().length > 0) && ($("#b-costoinf").val().length > 0))
+			{
+				costoinf = $("#b-costoinf").val();
+				costosup = $("#b-costosup").val();
+				tipo_busqueda = "b-costos";
+				buscar(busc, tipo_busqueda, costoinf, costosup);
+			}
+		});
+		$("#b-costosup").keyup(function()
+		{
+			if ($("#b-costoinf").val().length < 1) 
+			{
+				busc = $("#b-costosup").val();
+				tipo_busqueda = "b-costosup";
+				buscar(busc, tipo_busqueda);
+			}
+		});
+		$("#b-categoria").keyup(function()
+		{
+			busc = $("#b-categoria").val();
+			tipo_busqueda = "b-categoria";
+			buscar(busc, tipo_busqueda);
 		});
 	}
 	function eliminar_Concepto(id)
@@ -120,19 +224,41 @@
 			}
 		});
 	}
-	function buscar_Concepto(busqueda)
+	function buscar(busqueda, tipo_bus, costoinf, costosup)
 	{
 		$.ajax({
 			url: "<?= base_url('conceptos/mostrarBusqueda') ?>", 
 			type: "POST",
-			data: {buscar:busqueda},
+			data: {buscar:busqueda, tipo_busqueda:tipo_bus, costo_inf:costoinf, costo_sup: costosup},
 			success: function(respuesta){
-				var i = 0;
-				var days = '';
-				var size = respuesta.length;
-				for (i = 0; i < size; i++){
-					document.write(respuesta[i][0]);
-				}
+				var registros = eval(respuesta);
+				var concepto = null;
+				var j = 1;
+
+				html = "";
+				html += "<table class='table table-striped'><thead><tr><th>#</th><th>Concepto</th><th>Descripción</th><th>Costo por hora</th><th>Categoria</th></tr>";
+				html += "<tbody>";
+
+				for (var i = 0; i < registros.length; i++) 
+				{
+					if(concepto != registros[i]["concepto"])
+					{
+						html += "<tr><td>"+j+"</td>";
+						html += "<td><a class='i-borrar' href='javascript:void(0)' onclick='eliminar_Concepto("+registros[i]["id_concepto"]+")'><i class='fa fa-times'></i></a>"+registros[i]["concepto"]+"</td>";
+						j++;
+					}
+					else
+					{ 
+						html += "<td></td><td></td>"; 
+					}
+					html += "<td><a class='i-borrar' href='javascript:void(0)' onclick='eliminar_Descripcion("+registros[i]["id_descripcion"]+")'><i class='fa fa-times'></i></a> <a href='<?= base_url()?>conceptos/detallesDescripcion/"+registros[i]["id_descripcion"]+" ?>'>"+registros[i]["detalles"]+"</a></td>";
+					html += "</td><td>"+registros[i]["costo"]+"</td><td>"+registros[i]["tipo"]+"</td></tr>";
+					concepto = registros[i]["concepto"]; 
+				};
+
+				html += "<tr><td></td><td><a href='<?= base_url("conceptos/conceptoNuevo") ?>' class='btn btn-primary'>Nuevo Concepto</a></td><td><a href='<?= base_url("conceptos/descripcionNueva") ?>' class='btn btn-primary'>Nueva Descripción</a></td><td></td><td></td></tr>";
+				html += "</tbody></table>";
+				$("#lista").html(html);
 			}
 		});
 	}
@@ -171,7 +297,6 @@
 	      	</div>
 	      	<div class="modal-body form">
 	      		<form action="#" id="form" class="form-horizontal">
-	      			<input type="text" name="id_descripcion">
 					<p><strong>Categoría:</strong> <span name="categoria"></span></p>
 		          	<p><strong>Concepto:</strong> <span name="concepto"></span></p>
 		          	<p><strong>Descripción:</strong> <span name="descripcion"></span></p>
