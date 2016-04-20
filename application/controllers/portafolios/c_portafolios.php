@@ -12,8 +12,14 @@
 		function __construct()
 		{
 			parent::__construct();
-			$this->load->model('portafolios/portafolio'); //Cargamos el modelo que se usará en todo el controlador
-			$this->load->model('portafolios/comentario'); //Cargamos el modelo que se usará en todo el controlador
+			$this->load->helper(array('form', 'url'));
+			$this->load->model('portafolios/portafolio'); //Modelo para portafolios en general
+			$this->load->model('portafolios/portada'); //Modelo para portada
+			$this->load->model('portafolios/comentario'); //Modelo de comentario
+		}
+		public function index()
+		{
+			$this->load->view('portafolios/nuevo_portafolio');
 		}
 		/*
 		//Funciones de Portafolio en general
@@ -35,11 +41,34 @@
 			$id = array ('id_portafolio' => $id_portafolio); //Almacenamos en un arreglo el id que se obtuvo.
 			$this->load->view("head", $id);
 			$this->load->view("nav", $id);
-			$this->load->view("portafolios/form_portada", $id);
+			$query = $this->portada->portadaDefault();
+			$consulta = $this->portada->portadasDisponibles();
+			if($query != FALSE){
+				foreach ($query->result() as $row) {
+					$url_img = $row->url_img;
+					$nom_img = $row->nom_img;
+				}
+			
+				$img= array(
+					'id_portafolio' => $id_portafolio,
+					'url_img' => $url_img,
+					'nom_img' => $nom_img,
+					'consulta' => $consulta
+								);
+			}else{
+				$id_portafolio = $id_portafolio;
+				$url_img = '';
+				$nom_img = '';
+				$id_img = '';
+				$url_img2 = '';
+				$nom_img2 = '';
+				return FALSE;
+			}
+			$this->load->view("portafolios/form_portada", $img);
 			$this->load->view("portafolios/form_servicio", $id);
-			$this->load->view("portafolios/form_equipo", $id);
-			$this->load->view("portafolios/form_experiencia", $id);
-			$this->load->view("portafolios/form_contenido", $id);
+			//$this->load->view("portafolios/form_equipo", $id);
+			//$this->load->view("portafolios/form_experiencia", $id);
+			//$this->load->view("portafolios/form_contenido", $id);
 			/*
 				Código que permite obtener de base de datos
 
@@ -72,12 +101,36 @@
 			
 		//Función que permite insertar un nuevo portafolio
 		public function insertarPortafolio(){
-			$inputs = array (
-				'nombre' => $this->input->post('nombre', TRUE), //Se asigna a un arreglo el valor que obtiene de los input de nuevo portafolio.
-				'comentario' => $this->input->post('comentario', TRUE)
-				); 
-			$id_portafolio = $this->portafolio->insertarPortafolio($inputs); //Se le manda al método el valor que se obtuvo de los inputs
-			redirect('/portafolios/c_portafolios/cargarFormulario'.'/'.$id_portafolio); //Redirecciona al mismo controlador pero a otra función
+			/*
+			//Validaciones del formulario
+			//$this->form_validation->set_rules('name_input', 'Identificador', 'reglas de validación');
+			//$this->form_validation->set_message('regladevalidacion', 'mensajepersonalizado');
+			*/
+			$this->form_validation->set_rules('nombre', 'nombre del portafolio', 'trim|required|min_length[10]|max_length[100]|is_unique[portafolio.nombre]');
+			$this->form_validation->set_message('required', 'El campo %s es obligatorio');
+			$this->form_validation->set_message('min_length', 'El campo %s debe tener un mínimo de %d carácteres');
+			$this->form_validation->set_message('max_length', 'El campo %s debe tener un maximo de %d carácteres');
+			$this->form_validation->set_message('is_unique', 'Existe otro campo %s registrado con ese nombre');
+			$this->form_validation->set_rules('comentario', ' comentario del portafolio', 'trim|required|min_length[10]|max_length[100]');
+			$this->form_validation->set_message('required', 'El campo %s es obligatorio');
+			$this->form_validation->set_message('min_length', 'El campo %s debe tener un mínimo de %d carácteres');
+			$this->form_validation->set_message('max_length', 'El campo %s debe tener un maximo de %d carácteres');
+
+			//Condición que válida que haya pasado las validaciones el formulario
+			if ($this->form_validation->run() == FALSE)
+			{
+				//Si es falso, recarga la vista del formulario con los errores por corregir
+				$this->nuevoPortafolio();   
+			}
+			else{
+				//Si pasa las validaciones realiza la inserción de portafolio
+				$inputs = array (
+					'nombre' => $this->input->post('nombre', TRUE), //Se asigna a un arreglo el valor que obtiene de los input de nuevo portafolio.
+					'comentario' => $this->input->post('comentario', TRUE)
+					); 
+				$id_portafolio = $this->portafolio->insertarPortafolio($inputs); //Se le manda al método el valor que se obtuvo de los inputs
+				redirect('/portafolios/c_portafolios/cargarFormulario'.'/'.$id_portafolio); //Redirecciona al mismo controlador pero a otra función
+			}
 
 		}
 
@@ -85,43 +138,6 @@
 		public function cancelarPortafolio($id){ //Se le pasa el valor del arreglo id
 			$this->portafolio->cancelarPortafolio($id); //A la función del modelo se le pasa el arreglo del id
 			redirect('/portafolios/c_portafolios/mostrarPortafolio '); //Redirecciona al mismo controlador pero a otra función
-		}
-
-		/*
-		//Funciones de Comentario de Portafolio
-		*/
-
-		/*Función que permite obtener datos de portafolio
-		public function obtenerDatos($id_p){
-			$id = array ('id_p' => $id_p); 
-			$datos = $this->comentario->obtenerDatos($id);
-
-
-			if($datos != FALSE){
-				foreach ($datos->result() as $row) {
-					$comentario = $row->comentario;
-				}
-			
-				$data = array('id_portafolio' => $id_p,
-							  'comentario' => $comentario
-								);
-			}else{
-				$data = '';
-				return FALSE;
-			}
-			$this->load->view("portafolios/form_comentario", $data);
-		}
-		*/
-		//Función que permite insertar comentario
-
-		public function insertarComentario($id_portafolio){
-			$inputsComentario = array('id_portafolio' => $id_portafolio,
-									  'nombre' => ' nombrePrueba',
-									  'comentario' => $this->input->post('comentario', TRUE)
-									 );
-			print_r($inputsComentario);
-			$id_portafolio = $this->comentario->insertarComentario($inputsComentario);
-			//redirect('/portafolios/c_portafolios/cargarFormulario'.'/'.$id_portafolio);
 		}
 	}	
 ?>

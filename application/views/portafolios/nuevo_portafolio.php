@@ -7,8 +7,12 @@
 //Fecha de modificación: 
 */
 ?>
+<?=@$error?>
+
+<?php validation_errors('<div class="alert alert-danger" role="alert">','</div>'); ?>
 
 <?php
+
 //form
 $form = array(
 	'name' => 'form_portafolio',
@@ -18,7 +22,7 @@ $form = array(
 $nombre = array(
 	'name'        => 'nombre',
     'id'          => 'nombre',
-    'value'       => '',
+    'value'       => set_value('nombre'),
     'maxlength'   => '150',
     'size'        => '50',
     'class'       => 'form-control',
@@ -28,6 +32,7 @@ $nombre = array(
 $comentario = array(
 	'name'        => 'comentario',
     'id'          => 'comentario',
+    'value'       => set_value('comentario'),
     'rows'        => '10',
     'cols'        => '160',
     'class'       => 'form-control',
@@ -65,11 +70,13 @@ $portafolio = array(
 	    <div class="row">
 		  <div class="col-lg-12">
 			<div class="form-group">
+				 <?= form_error('nombre'); ?>
 				 <?= form_label('Nombre del portafolio: *'); ?>
 				 <br>
 				 <?= form_input($nombre); ?>
 			</div>
-			<div class="form-group">	 
+			<div class="form-group">
+			     <?= form_error('comentario'); ?>	 
 				 <?= form_label('Comentario: *'); ?>
 				 <br>
 				 <?= form_textarea($comentario); ?>

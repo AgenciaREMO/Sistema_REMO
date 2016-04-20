@@ -36,7 +36,7 @@
                     </div>
                     <div class="col-md-6 col-sm-6">
                       <a href="#">
-                        <img class="img-responsive img-portfolio img-hover img-thumbnail" src="<?= base_url()?>img/portafolios/portada/1.jpg" alt="Portada actual" title="Portada actual">
+                        <img class="img-responsive img-portfolio img-hover img-thumbnail" src="<?= base_url($url_img)?>" alt="<?= $nom_img ?>" title="Portada actual">
                       </a>
                     </div>
                     <div class="col-md-6 col-sm-6">
@@ -58,9 +58,9 @@
                         <div class="col-sm-12 col-md-6">
                           <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modalAP">Agregar portada</button>
                         </div>
-                        <!-- Inicio Modal seleccionar portada
-                        <div class="modal fade" id="modalAP" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
-                          <div class="modal-dialog">
+                        <!-- Inicio Modal seleccionar portada--> 
+                        <div class="modal fade" id="modalSP" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+                          <div class="modal-dialog modal-lg">
                             <div class="modal-content">
                               <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -68,13 +68,16 @@
                               </div>
                               <div class="modal-body">
                                 <form action="php/subirPortada.php" method="POST" enctype="multipart/form-data">
-                                  <div class="col-lg-12">
-                                  
-                                    <br>
-                                  </div>
-                                  <div class="form-group">
-                                    <label for="file">Selecciona imagen de portada</label>
-                                    <input type="file" id="img" name="imagen">
+                                 <div class="row">
+                                   <?php 
+                                   while ($fila = mysql_fetch_array($consulta, MYSQL_ASSOC)) {
+                                  ?>
+                                    <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2 img-rounded">
+                                      <img class="img-responsive img-hover img-thumbnail" src="<?= base_url()?>"."$fila->url_img"alt="<?= $fila->nom_img?>" title="<?= $fila->nom_img ?>">
+                                    </div>
+                                      <?php
+                                        }
+                                      ?>
                                   </div>
                                 </form>
                               </div>
@@ -87,7 +90,7 @@
                             </div>
                           </div> 
                         </div>
-                        Fin Modal seleccionar portada --> 
+                        <!-- Fin Modal seleccionar portada --> 
                       </div>
                     </div>
                   </div>

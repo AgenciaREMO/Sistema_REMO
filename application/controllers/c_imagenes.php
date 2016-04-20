@@ -15,20 +15,41 @@
 			$this->load->helper(array('form', 'url')); //Cargamos helper de validación de formulario y base url
 			$this->load->model('imagen'); //Cargamos el modelo que se usará en todo el controlador
 		}
-
-		public function index()
-		{
-			$this->load->view('imagenes/nueva_imagen');
-		}
-
-		public function tipo(){
-			
-		}
-
-		public function subir($tipos = '')
-		{	
-	        $tipo = $this->input->post('tipo');
-	  		/*
+		//Funci´n para direccionar a formulario
+	    public function index() 
+	    {
+	        //CARGAMOS LA VISTA DEL FORMULARIO
+	   		//	Cargar demás vistas
+	        $this->load->view('imagenes/nueva_imagen');
+	    }
+	    //Función que permite validar el formulari
+	    public function validar()
+	    {
+	    	/*
+			//Validaciones del formulario
+			//$this->form_validation->set_rules('name_input', 'Identificador', 'reglas de validación');
+			//$this->form_validation->set_message('regladevalidacion', 'mensajepersonalizado');
+			*/
+	        $this->form_validation->set_rules('nombre', 'nombre', 'required|min_length[5]|max_length[100]|trim|xss_clean');
+	        $this->form_validation->set_message('required', 'El campo %s no puede ir vacío!');
+	        $this->form_validation->set_message('min_length', 'El campo %s debe tener al menos %d carácteres');
+	        $this->form_validation->set_message('max_length', 'El campo %s no puede tener más de %d carácteres');
+	        $this->form_validation->set_rules('tipo', 'tipo', 'required|trim|xss_clean');
+	        $this->form_validation->set_message('required', 'El campo %s no puede ir vacío!');
+	        //Si el formulario pasa la validación se procesa el siguiente método
+	        if ($this->form_validation->run() == TRUE) 
+	        {
+	            $this->subirGrafico();
+	        }else{
+	        //Si el formulario no se válida se muestran los errores
+	            $this->index();
+	        }
+	    }
+	    //Función que permite subir el gráfico
+	    public function subirGrafico()
+	    {
+	    	$tipo = $this->input->post('tipo');
+	    	/*
 	  		//Inicio de Switch para elegir en que carpeta se almacenará el gráfico
 	  		*/
 	        switch ($tipo) {
@@ -36,247 +57,227 @@
 	        	//Case para portada
 	        	*/
 	        	case '1': 
-	        		$config['upload_path'] = './graficos/portada';
-					$config['allowed_types'] = 'gif|jpg|png|jpeg';
-					//$config['max_size']	= '3000';
-					//$config['max_width']  = '1980';
-					//$config['max_height']  = '1020';
-
-					$this->load->library('upload', $config);
-					/*
-					//Validaciones del formulario
-					//$this->form_validation->set_rules('name_input', 'Identificador', 'reglas de validación');
-					//$this->form_validation->set_message('regladevalidacion', 'mensajepersonalizado');
-					*/
-					$this->form_validation->set_rules('nombre', 'nombre de la imagen', 'trim|required|min_length[10]|max_length[80]|is_unique[imagen.nom_img]');
-					$this->form_validation->set_message('required', 'El campo %s es obligatorio');
-					$this->form_validation->set_message('min_length', 'El campo %s debe tener un mínimo de %d carácteres');
-					$this->form_validation->set_message('max_length', 'El campo %s debe tener un maximo de %d carácteres');
-					$this->form_validation->set_message('is_unique', 'Existe otro campo %s registrado con ese nombre');
-					$this->form_validation->set_rules('tipo', 'Tipo de Imagen', 'trim|required');
-					$this->form_validation->set_message('required', 'El campo %s es obligatorio');
-					$this->form_validation->set_rules('userfile', 'gráfico', 'callback_handle_upload');					/*
-
-					
-					//Es la función encargada de verificar si existe un error en las validaciones del formulario.
-					*/
-					if ($this->form_validation->run() == FALSE)
-					{
-							    $this->nueva();   
-					}
-					else{
-
-						if (isset($_FILES['userfile']) && !empty($_FILES['userfile']['name']))
-      					{
-
-							if ( ! $this->upload->do_upload())
-						    {
-						        //$error = $this->upload->display_errors();
-						        //$this->load->view('imagenes/nueva_imagen', $error);
-						        $this->form_validation->set_message('handle_upload', $this->upload->display_errors());
-						        return false;
-						    }
-							else{
-								$file_info = $this->upload->data(); //Arreglo que tiene toda la información de la imagen.
-								
-								$data = array('upload_data' => $this->upload->data()); //valores de las imagenes nombre, tipo, url, etc.
-					            $nombre = $this->input->post('nombre');
-					            $tipo_img = '1';
-					            $url = $file_info['full_path'];
-					            $subir = $this->imagen->subir($nombre, $tipo_img, $url);     
-								//$this->load->view('imagenes/upload_success', $data);
-
-								if($subir)
-								       {
-								          redirect('/c_imagenes/mostrar', 'refresh');
-								       }
-								       else
-								       {
-								          $this->nueva();
-								       }
-							}
-						}else{
-								$this->form_validation->set_message('handle_upload', "Debes cargar una imagen!");
-      							return false;
-							}
-					}
+	   				//Configuración para las imágenes
+			        $config['upload_path'] = './graficos/portada';
+			        $config['allowed_types'] = 'gif|jpg|png|jpeg';
+			        $config['max_size'] = '2000';
+			        $config['max_width'] = '2024';
+			        $config['max_height'] = '2008';
+			        //Cargamos la librería para subir imagenes "upload"
+        			$this->load->library('upload', $config);
+			        //Si la imagen falla al subir se muestra el error en dislay 
+			        if (!$this->upload->do_upload()) {
+			            $error = array('error' => $this->upload->display_errors());
+			            $this->load->view('imagenes/nueva_imagen', $error);
+			        } else {
+			        	//En otro caso se sube la imagen y se crea la miniatura 
+			        	//Se obtiene todas las caracteristicas de la imagen en un arreglo
+			            $file_info = $this->upload->data();
+			            //Se usa la función thumbail y se usa el nombre de la imagen
+			            $this->crearThumbnail($file_info['file_name'], $tipo);
+			            //Se envían los datos al modelo para hacer la inserción
+			            $data = array('upload_data' => $this->upload->data());
+			            $nombre = $this->input->post('nombre');
+			            $tipo_img = '1';
+			            $url_img = 'graficos/portada/'.$file_info['file_name'];
+			            $url_thu = 'graficos/portada/thumbnail/'.$file_info['file_name'];
+			            $subir = $this->imagen->subir($nombre, $tipo_img, $url_img, $url_thu);  
+			            //$this->load->view('imagen_subida_view', $data);
+			            redirect('/c_imagenes/mostrar', 'refresh');
+			        }
 	        	break;
-	        	//Case para equipo
 	        	case '2': 
-	        		$config['upload_path'] = './graficos/equipo';
-					$config['allowed_types'] = 'gif|jpg|png|jpeg';
-					//$config['max_size']	= '3000';
-					//$config['max_width']  = '1980';
-					//$config['max_height']  = '1020';
-
-					$this->load->library('upload', $config);
-					/*
-					//Validaciones del formulario
-					//$this->form_validation->set_rules('name_input', 'Identificador', 'reglas de validación');
-					//$this->form_validation->set_message('regladevalidacion', 'mensajepersonalizado');
-					*/
-					$this->form_validation->set_rules('nombre', 'Nombre de la Imagen', 'trim|required|min_length[10]|max_length[80]|is_unique[imagen.nom_img]');
-					$this->form_validation->set_message('required', 'El campo %s es obligatorio');
-					$this->form_validation->set_message('min_length', 'El campo %s debe tener un mínimo de %d carácteres');
-					$this->form_validation->set_message('max_length', 'El campo %s debe tener un maximo de %d carácteres');
-					$this->form_validation->set_message('is_unique', 'Existe otro campo %s registrado con ese nombre');
-					$this->form_validation->set_rules('tipo', 'Tipo de Imagen', 'trim|required');
-					$this->form_validation->set_message('required', 'El campo %s es obligatorio');
-					
-					/*
-					//Es la función encargada de verificar si existe un error en las validaciones del formulario.
-					*/
-					if ($this->form_validation->run() == FALSE)
-					{
-							    $this->nueva();   
-					}
-					else
-					{
-						if ( ! $this->upload->do_upload())
-					    {
-					        $error = $this->upload->display_errors();
-					        $this->load->view('imagenes/nueva_imagen', $error);
-					    }
-						else{
-							$file_info = $this->upload->data(); //Arreglo que tiene toda la información de la imagen.
-							
-							$data = array('upload_data' => $this->upload->data()); //valores de las imagenes nombre, tipo, url, etc.
-				            $nombre = $this->input->post('nombre');
-				            $tipo_img = '2';
-				            $url = $file_info['full_path'];
-				            $subir = $this->imagen->subir($nombre, $tipo_img, $url);     
-							//$this->load->view('imagenes/upload_success', $data);
-
-							if($subir)
-							       {
-							          redirect('/c_imagenes/mostrar', 'refresh');
-							       }
-							       else
-							       {
-							          $this->nueva();
-							       }
-						}
-					}
+	        		//Configuración para las imágenes
+			        $config['upload_path'] = './graficos/equipo';
+			        $config['allowed_types'] = 'gif|jpg|png|jpeg';
+			        $config['max_size'] = '2000';
+			        $config['max_width'] = '2024';
+			        $config['max_height'] = '2008';
+			        //Cargamos la librería para subir imagenes "upload"
+        			$this->load->library('upload', $config);
+			        //Si la imagen falla al subir se muestra el error en dislay 
+			        if (!$this->upload->do_upload()) {
+			            $error = array('error' => $this->upload->display_errors());
+			            $this->load->view('imagenes/nueva_imagen', $error);
+			        } else {
+			        	//En otro caso se sube la imagen y se crea la miniatura 
+			        	//Se obtiene todas las caracteristicas de la imagen en un arreglo
+			            $file_info = $this->upload->data();
+			            //Se usa la función thumbail y se usa el nombre de la imagen
+			            $this->crearThumbnail($file_info['file_name'], $tipo);
+			            //Se envían los datos al modelo para hacer la inserción
+			            $data = array('upload_data' => $this->upload->data());
+			            $nombre = $this->input->post('nombre');
+			            $tipo_img = '2';
+			            $url_img = 'graficos/equipo/'.$file_info['file_name'];
+			            $url_thu = 'graficos/equipo/thumbnail/'.$file_info['file_name'];
+			            $subir = $this->imagen->subir($nombre,$tipo_img, $url_img, $url_thu);  
+			            //$this->load->view('imagen_subida_view', $data);
+			            redirect('/c_imagenes/mostrar', 'refresh');
+			        }
 	        	break;
-	        	//Case para experiencia
 	        	case '3': 
-	        		$config['upload_path'] = './graficos/experiencia';
-					$config['allowed_types'] = 'gif|jpg|png|jpeg';
-					//$config['max_size']	= '3000';
-					//$config['max_width']  = '1980';
-					//$config['max_height']  = '1020';
-
-					$this->load->library('upload', $config);
-					/*
-					//Validaciones del formulario
-					//$this->form_validation->set_rules('name_input', 'Identificador', 'reglas de validación');
-					//$this->form_validation->set_message('regladevalidacion', 'mensajepersonalizado');
-					*/
-					$this->form_validation->set_rules('nombre', 'Nombre de la Imagen', 'trim|required|min_length[10]|max_length[80]|is_unique[imagen.nom_img]');
-					$this->form_validation->set_message('required', 'El campo %s es obligatorio');
-					$this->form_validation->set_message('min_length', 'El campo %s debe tener un mínimo de %d carácteres');
-					$this->form_validation->set_message('max_length', 'El campo %s debe tener un maximo de %d carácteres');
-					$this->form_validation->set_message('is_unique', 'Existe otro campo %s registrado con ese nombre');
-					$this->form_validation->set_rules('tipo', 'Tipo de Imagen', 'trim|required');
-					$this->form_validation->set_message('required', 'El campo %s es obligatorio');
-					
-					/*
-					//Es la función encargada de verificar si existe un error en las validaciones del formulario.
-					*/
-					if ($this->form_validation->run() == FALSE)
-					{
-							    $this->nueva();   
-					}
-					else
-					{
-						if ( ! $this->upload->do_upload())
-					    {
-					        $error = $this->upload->display_errors();
-					        $this->load->view('imagenes/nueva_imagen', $error);
-					    }
-						else{
-							$file_info = $this->upload->data(); //Arreglo que tiene toda la información de la imagen.
-							
-							$data = array('upload_data' => $this->upload->data()); //valores de las imagenes nombre, tipo, url, etc.
-				            $nombre = $this->input->post('nombre');
-				            $tipo_img = '3';
-				            $url = $file_info['full_path'];
-				            $subir = $this->imagen->subir($nombre, $tipo_img, $url);     
-							//$this->load->view('imagenes/upload_success', $data);
-
-							if($subir)
-							       {
-							          redirect('/c_imagenes/mostrar', 'refresh');
-							       }
-							       else
-							       {
-							          $this->nueva();
-							       }
-						}
-					}
+	        		//Configuración para las imágenes
+			        $config['upload_path'] = './graficos/experiencia';
+			        $config['allowed_types'] = 'gif|jpg|png|jpeg';
+			        $config['max_size'] = '2000';
+			        $config['max_width'] = '2024';
+			        $config['max_height'] = '2008';
+			        //Cargamos la librería para subir imagenes "upload"
+        			$this->load->library('upload', $config);
+			        //Si la imagen falla al subir se muestra el error en dislay 
+			        if (!$this->upload->do_upload()) {
+			            $error = array('error' => $this->upload->display_errors());
+			            $this->load->view('imagenes/nueva_imagen', $error);
+			        } else {
+			        	//En otro caso se sube la imagen y se crea la miniatura 
+			        	//Se obtiene todas las caracteristicas de la imagen en un arreglo
+			            $file_info = $this->upload->data();
+			            //Se usa la función thumbail y se usa el nombre de la imagen
+			            $this->crearThumbnail($file_info['file_name'], $tipo);
+			            //Se envían los datos al modelo para hacer la inserción
+			            $data = array('upload_data' => $this->upload->data());
+			            $nombre = $this->input->post('nombre');
+			            $tipo_img = '3';
+			            $url_img = 'graficos/experiencia/'.$file_info['file_name'];
+			            $url_thu = 'graficos/experiencia/thumbnail/'.$file_info['file_name'];
+			            $subir = $this->imagen->subir($nombre,$tipo_img, $url_img, $url_thu);  
+			            //$this->load->view('imagen_subida_view', $data);
+			            redirect('/c_imagenes/mostrar', 'refresh');
+			        }
 	        	break;
-	        	//Case para gráfico
 	        	case '4': 
-	        		$config['upload_path'] = './graficos/grafico';
-					$config['allowed_types'] = 'gif|jpg|png|jpeg';
-					//$config['max_size']	= '3000';
-					//$config['max_width']  = '1980';
-					//$config['max_height']  = '1020';
-
-					$this->load->library('upload', $config);
-					/*
-					//Validaciones del formulario
-					//$this->form_validation->set_rules('name_input', 'Identificador', 'reglas de validación');
-					//$this->form_validation->set_message('regladevalidacion', 'mensajepersonalizado');
-					*/
-					$this->form_validation->set_rules('nombre', 'Nombre de la Imagen', 'trim|required|min_length[10]|max_length[80]|is_unique[imagen.nom_img]');
-					$this->form_validation->set_message('required', 'El campo %s es obligatorio');
-					$this->form_validation->set_message('min_length', 'El campo %s debe tener un mínimo de %d carácteres');
-					$this->form_validation->set_message('max_length', 'El campo %s debe tener un maximo de %d carácteres');
-					$this->form_validation->set_message('is_unique', 'Existe otro campo %s registrado con ese nombre');
-					$this->form_validation->set_rules('tipo', 'Tipo de Imagen', 'trim|required');
-					$this->form_validation->set_message('required', 'El campo %s es obligatorio');
-					
-					/*
-					//Es la función encargada de verificar si existe un error en las validaciones del formulario.
-					*/
-					if ($this->form_validation->run() == FALSE)
-					{
-							    $this->nueva();   
-					}
-					else
-					{
-						if ( ! $this->upload->do_upload())
-					    {
-					        $error = $this->upload->display_errors();
-					        $this->load->view('imagenes/nueva_imagen', $error);
-					    }
-						else{
-							$file_info = $this->upload->data(); //Arreglo que tiene toda la información de la imagen.
-							
-							$data = array('upload_data' => $this->upload->data()); //valores de las imagenes nombre, tipo, url, etc.
-				            $nombre = $this->input->post('nombre');
-				            $tipo_img = '4';
-				            $url = $file_info['full_path'];
-				            $subir = $this->imagen->subir($nombre, $tipo_img, $url);     
-							//$this->load->view('imagenes/upload_success', $data);
-
-							if($subir)
-							       {
-							          redirect('/c_imagenes/mostrar', 'refresh');
-							       }
-							       else
-							       {
-							          $this->nueva();
-							       }
-						}
-					}
+	        		//Configuración para las imágenes
+			        $config['upload_path'] = './graficos/grafico';
+			        $config['allowed_types'] = 'gif|jpg|png|jpeg';
+			        $config['max_size'] = '2000';
+			        $config['max_width'] = '2024';
+			        $config['max_height'] = '2008';
+			        //Cargamos la librería para subir imagenes "upload"
+        			$this->load->library('upload', $config);
+			        //Si la imagen falla al subir se muestra el error en dislay 
+			        if (!$this->upload->do_upload()) {
+			            $error = array('error' => $this->upload->display_errors());
+			            $this->load->view('imagenes/nueva_imagen', $error);
+			        } else {
+			        	//En otro caso se sube la imagen y se crea la miniatura 
+			        	//Se obtiene todas las caracteristicas de la imagen en un arreglo
+			            $file_info = $this->upload->data();
+			            //Se usa la función thumbail y se usa el nombre de la imagen
+			            $this->crearThumbnail($file_info['file_name'], $tipo);
+			            //Se envían los datos al modelo para hacer la inserción
+			            $data = array('upload_data' => $this->upload->data());
+			            $nombre = $this->input->post('nombre');
+			            $tipo_img = '4';
+			            $url_img = 'graficos/grafico/'.$file_info['file_name'];
+			            $url_thu = 'graficos/grafico/thumbnail/'.$file_info['file_name'];
+			            $subir = $this->imagen->subir($nombre,$tipo_img, $url_img, $url_thu);  
+			            //$this->load->view('imagen_subida_view', $data);
+			            redirect('/c_imagenes/mostrar', 'refresh');
+			        }
 	        	break;
 	        	default:
-				break;
-				}
-		}
+	        	break;
+	    	}
+	    }
+	    //Función para crear la miniatura a la medida especificada
+	    public function crearThumbnail($filename, $tipo)
+	    {
+	    	/*
+	  		//Inicio de Switch para elegir en que carpeta se almacenará el gráfico
+	  		*/
+	        switch ($tipo) {
+	        	/*
+	        	//Case para portada
+	        	*/
+	        	case '1':
+			        //Librería utilizada [GD, GD2, ImageMagick, NetPBM]
+			        $config['image_library'] = 'gd2';
+			        //Ruta de la imagen original
+			        $config['source_image'] = 'graficos/portada/'.$filename;
+			        //Activación de la creación de miniaturas
+			        $config['create_thumb'] = TRUE;
+			        //Configuración para que mantenga la proporción
+			        $config['maintain_ratio'] = TRUE;
+			        //Ruta de la imagen miniatura
+			        $config['new_image']='graficos/portada/thumbnail/';
+			        //Tamaño
+			        $config['width'] = 150;
+			        $config['height'] = 150;
+			        //Reinicializamos los parametros de la librería
+			        $this->load->library('image_lib', $config); 
+			        //Creamos la miniatura
+			        $this->image_lib->resize();
+			        // finalmente limpiamos la cache para no saturar nuestro servidor
+			        $this->image_lib->clear();
+	        	break;
+	        	case '2':
+	        		//Librería utilizada [GD, GD2, ImageMagick, NetPBM]
+			        $config['image_library'] = 'gd2';
+			        //Ruta de la imagen original
+			        $config['source_image'] = 'graficos/equipo/'.$filename;
+			        //Activación de la creación de miniaturas
+			        $config['create_thumb'] = TRUE;
+			        //Configuración para que mantenga la proporción
+			        $config['maintain_ratio'] = TRUE;
+			        //Ruta de la imagen miniatura
+			        $config['new_image']='graficos/equipo/thumbnail/';
+			        //Tamaño
+			        $config['width'] = 150;
+			        $config['height'] = 150;
+			        //Reinicializamos los parametros de la librería
+			        $this->load->library('image_lib', $config); 
+			        //Creamos la miniatura
+			        $this->image_lib->resize();
+			        // finalmente limpiamos la cache para no saturar nuestro servidor
+			        $this->image_lib->clear();
+	        	break;
+	        	case '3':
+	        		//Librería utilizada [GD, GD2, ImageMagick, NetPBM]
+			        $config['image_library'] = 'gd2';
+			        //Ruta de la imagen original
+			        $config['source_image'] = 'graficos/experiencia/'.$filename;
+			        //Activación de la creación de miniaturas
+			        $config['create_thumb'] = TRUE;
+			        //Configuración para que mantenga la proporción
+			        $config['maintain_ratio'] = TRUE;
+			        //Ruta de la imagen miniatura
+			        $config['new_image']='graficos/experiencia/thumbnail/';
+			        //Tamaño
+			        $config['width'] = 150;
+			        $config['height'] = 150;
+			        //Reinicializamos los parametros de la librería
+			        $this->load->library('image_lib', $config); 
+			        //Creamos la miniatura
+			        $this->image_lib->resize();
+			        // finalmente limpiamos la cache para no saturar nuestro servidor
+			        $this->image_lib->clear();
+	        	break;
+	        	case '4':
+	        		//Librería utilizada [GD, GD2, ImageMagick, NetPBM]
+			        $config['image_library'] = 'gd2';
+			        //Ruta de la imagen original
+			        $config['source_image'] = 'graficos/grafico/'.$filename;
+			        //Activación de la creación de miniaturas
+			        $config['create_thumb'] = TRUE;
+			        //Configuración para que mantenga la proporción
+			        $config['maintain_ratio'] = TRUE;
+			        //Ruta de la imagen miniatura
+			        $config['new_image']='graficos/grafico/thumbnail/';
+			        //Tamaño
+			        $config['width'] = 150;
+			        $config['height'] = 150;
+			        //Reinicializamos los parametros de la librería
+			        $this->load->library('image_lib', $config); 
+			        //Creamos la miniatura
+			        $this->image_lib->resize();
+			        // finalmente limpiamos la cache para no saturar nuestro servidor
+			        $this->image_lib->clear();
+	        	break;
 
+	        }
+	    }
+	    //Función que permite listas las imagenes disponibles
 		public function mostrar()
 		{
 			$this->load->view("head");
@@ -290,8 +291,9 @@
 			//$this->load->view("imagenes/lista_imagen");
 			$this->load->view("footer");
 		}
-
-		public function nueva(){
+		//Función que carga la vista del formulario de nuevo grafico
+		public function nueva()
+		{
 			$this->load->view("head");
 			$this->load->view("nav");
 			$resultado = $this->imagen->obtenerTipoImg(); //Asignamos a una variable la función que arroja el resultado de la consulta a base de datos.
@@ -303,7 +305,8 @@
 			$this->load->view("footer");
 		}	
 
-		public function eliminar($id_img){
+		public function eliminar($id_img)
+		{
 			$this->imagen->eliminarImagen($id_img); //A la función del modelo se le pasa el arreglo del id
 			redirect('/c_imagenes/mostrar'); 
 		}

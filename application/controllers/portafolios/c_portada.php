@@ -13,6 +13,7 @@
 		{
 			parent::__construct();
 			$this->load->model('portafolios/portafolio'); //Cargamos el modelo que se usará en todo el controlador
+			$this->load->model('portafolios/portada');
 		}
 
 			
