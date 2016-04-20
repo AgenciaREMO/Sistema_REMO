@@ -41,29 +41,30 @@
 			$id = array ('id_portafolio' => $id_portafolio); //Almacenamos en un arreglo el id que se obtuvo.
 			$this->load->view("head", $id);
 			$this->load->view("nav", $id);
-			$query = $this->portada->portadaDefault();
-			$consulta = $this->portada->portadasDisponibles();
-			if($query != FALSE){
-				foreach ($query->result() as $row) {
-					$url_img = $row->url_img;
-					$nom_img = $row->nom_img;
+			$query = $this->portada->obtenerPortada($id);
+			//$query = $this->portada->portadaDefault();
+			//$consulta = $this->portada->portadasDisponibles();
+				if($query != FALSE){
+					foreach ($query->result() as $row) {
+						$url_img = $row->url_img;
+						$nom_img = $row->nom_img;
+					}
+				
+					$img= array(
+						'id_portafolio' => $id_portafolio,
+						'url_img' => $url_img,
+						'nom_img' => $nom_img,
+						//'consulta' => $consulta
+									);
+				}else{
+					$id_portafolio = $id_portafolio;
+					$url_img = '';
+					$nom_img = '';
+					$id_img = '';
+					$url_img2 = '';
+					$nom_img2 = '';
+					return FALSE;
 				}
-			
-				$img= array(
-					'id_portafolio' => $id_portafolio,
-					'url_img' => $url_img,
-					'nom_img' => $nom_img,
-					'consulta' => $consulta
-								);
-			}else{
-				$id_portafolio = $id_portafolio;
-				$url_img = '';
-				$nom_img = '';
-				$id_img = '';
-				$url_img2 = '';
-				$nom_img2 = '';
-				return FALSE;
-			}
 			$this->load->view("portafolios/form_portada", $img);
 			$this->load->view("portafolios/form_servicio", $id);
 			//$this->load->view("portafolios/form_equipo", $id);

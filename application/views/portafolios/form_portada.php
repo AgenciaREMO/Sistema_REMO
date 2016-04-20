@@ -70,13 +70,13 @@
                                 <form action="php/subirPortada.php" method="POST" enctype="multipart/form-data">
                                  <div class="row">
                                    <?php 
-                                   while ($fila = mysql_fetch_array($consulta, MYSQL_ASSOC)) {
+                                 //  while ($fila = mysql_fetch_array($consulta, MYSQL_ASSOC)) {
                                   ?>
                                     <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2 img-rounded">
-                                      <img class="img-responsive img-hover img-thumbnail" src="<?= base_url()?>"."$fila->url_img"alt="<?= $fila->nom_img?>" title="<?= $fila->nom_img ?>">
+                                      
                                     </div>
                                       <?php
-                                        }
+                                      //  }
                                       ?>
                                   </div>
                                 </form>
