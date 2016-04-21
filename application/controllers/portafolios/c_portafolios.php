@@ -42,8 +42,8 @@
 			$this->load->view("head", $id);
 			$this->load->view("nav", $id);
 			$query = $this->portada->obtenerPortada($id);
-			//$query = $this->portada->portadaDefault();
-			//$consulta = $this->portada->portadasDisponibles();
+			$consulta = $this->portada->portadasDisponibles($id);
+			$consulta1 = $this->portada->portadaAnterior($id);
 				if($query != FALSE){
 					foreach ($query->result() as $row) {
 						$url_img = $row->url_img;
@@ -54,7 +54,8 @@
 						'id_portafolio' => $id_portafolio,
 						'url_img' => $url_img,
 						'nom_img' => $nom_img,
-						//'consulta' => $consulta
+						'consulta' => $consulta,
+						'consulta1' => $consulta1
 									);
 				}else{
 					$id_portafolio = $id_portafolio;

@@ -44,12 +44,30 @@
                         <div class="col-lg-12">
                           <h5>Portadas anteriores</h5>
                         </div>
+                        <?php 
+                        if($consulta1 != FALSE){
+                          foreach ($consulta1->result() as $fila)
+                          {
+                            //Portadas cargadas de base de datos
+                        ?>
+                          <div class="col-sm-12 col-md-6">
+                            <img class="img-responsive img-portfolio img-hover img-thumbnail" src="<?= base_url($fila->url_img)?>" alt="<?= $fila->nom_img ?>" title="<?= $fila->nom_img ?>">
+                          </div> 
+                        <?php
+                          }
+                        }
+                        else{
+                          //Portadas en caso de no existir en base de datos registros
+                        ?>
                         <div class="col-sm-12 col-md-6">
                           <img class="img-responsive img-portfolio img-hover img-thumbnail" src="<?= base_url()?>img/portafolios/portada/2.jpg" alt="Portada anteriores" title="Portada anteriores">
                         </div>
                         <div class="col-sm-12 col-md-6">
                           <img class="img-responsive img-portfolio img-hover img-thumbnail" src="<?= base_url()?>img/portafolios/portada/3.jpg" alt="Portada anteriores" title="Portada anteriores">
-                        </div>                   
+                        </div>
+                        <?php
+                        }
+                        ?>                  
                       </div>
                       <div class="row">
                         <div class="col-sm-12 col-md-6">
@@ -67,17 +85,32 @@
                                 <h4 class="modal-title" id="myModalLabel">Seleccionar portada</h4>
                               </div>
                               <div class="modal-body">
+
                                 <form action="php/subirPortada.php" method="POST" enctype="multipart/form-data">
                                  <div class="row">
-                                   <?php 
-                                 //  while ($fila = mysql_fetch_array($consulta, MYSQL_ASSOC)) {
-                                  ?>
+                                    <?php 
+                                      foreach ($consulta->result() as $fila)
+                                      //  while ($fila = mysql_fetch_array($consulta, MYSQL_ASSOC)) {
+                                      {   if(){
+                                            $radioImg = array(
+                                            'name' => 'id_img',
+                                            'id' => 'id_img',
+                                            'value' => "$fila->id_img",
+                                            'checked' => FALSE,
+                                            'type' => 'radio'
+                                            );
+                                          }
+                                          
+                                    ?>
                                     <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2 img-rounded">
-                                      
+                                      <div class="checkbox">
+                                        <?= form_checkbox($radioImg);?>
+                                      <img class="img-responsive img-portfolio img-hover img-thumbnail" src="<?= base_url($fila->url_thu)?>" alt="<?= $fila->nom_img ?>" title="<?= $fila->nom_img ?>">
+                                       </div>
                                     </div>
-                                      <?php
-                                      //  }
-                                      ?>
+                                    <?php
+                                      }
+                                    ?>
                                   </div>
                                 </form>
                               </div>

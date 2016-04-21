@@ -42,7 +42,7 @@
 	            $this->subirGrafico();
 	        }else{
 	        //Si el formulario no se válida se muestran los errores
-	            $this->index();
+	            $this->nueva();
 	        }
 	    }
 	    //Función que permite subir el gráfico
@@ -67,8 +67,14 @@
         			$this->load->library('upload', $config);
 			        //Si la imagen falla al subir se muestra el error en dislay 
 			        if (!$this->upload->do_upload()) {
-			            $error = array('error' => $this->upload->display_errors());
-			            $this->load->view('imagenes/nueva_imagen', $error);
+			            $this->load->view("head");
+						$this->load->view("nav");
+						$resultado = $this->imagen->obtenerTipoImg(); //Asignamos a una variable la función que arroja el resultado de la consulta a base de datos.
+						$error = $this->upload->display_errors();
+						$tipos = array('consulta' => $resultado,
+									   'error' => $error);
+						$this->load->view("imagenes/nueva_imagen", $tipos);
+						$this->load->view("footer");
 			        } else {
 			        	//En otro caso se sube la imagen y se crea la miniatura 
 			        	//Se obtiene todas las caracteristicas de la imagen en un arreglo
@@ -97,8 +103,14 @@
         			$this->load->library('upload', $config);
 			        //Si la imagen falla al subir se muestra el error en dislay 
 			        if (!$this->upload->do_upload()) {
-			            $error = array('error' => $this->upload->display_errors());
-			            $this->load->view('imagenes/nueva_imagen', $error);
+			            $this->load->view("head");
+						$this->load->view("nav");
+						$resultado = $this->imagen->obtenerTipoImg(); //Asignamos a una variable la función que arroja el resultado de la consulta a base de datos.
+						$error = $this->upload->display_errors();
+						$tipos = array('consulta' => $resultado,
+									   'error' => $error);
+						$this->load->view("imagenes/nueva_imagen", $tipos);
+						$this->load->view("footer");
 			        } else {
 			        	//En otro caso se sube la imagen y se crea la miniatura 
 			        	//Se obtiene todas las caracteristicas de la imagen en un arreglo
@@ -127,8 +139,14 @@
         			$this->load->library('upload', $config);
 			        //Si la imagen falla al subir se muestra el error en dislay 
 			        if (!$this->upload->do_upload()) {
-			            $error = array('error' => $this->upload->display_errors());
-			            $this->load->view('imagenes/nueva_imagen', $error);
+			            $this->load->view("head");
+						$this->load->view("nav");
+						$resultado = $this->imagen->obtenerTipoImg(); //Asignamos a una variable la función que arroja el resultado de la consulta a base de datos.
+						$error = $this->upload->display_errors();
+						$tipos = array('consulta' => $resultado,
+									   'error' => $error);
+						$this->load->view("imagenes/nueva_imagen", $tipos);
+						$this->load->view("footer");
 			        } else {
 			        	//En otro caso se sube la imagen y se crea la miniatura 
 			        	//Se obtiene todas las caracteristicas de la imagen en un arreglo
@@ -157,8 +175,14 @@
         			$this->load->library('upload', $config);
 			        //Si la imagen falla al subir se muestra el error en dislay 
 			        if (!$this->upload->do_upload()) {
-			            $error = array('error' => $this->upload->display_errors());
-			            $this->load->view('imagenes/nueva_imagen', $error);
+			            $this->load->view("head");
+						$this->load->view("nav");
+						$resultado = $this->imagen->obtenerTipoImg(); //Asignamos a una variable la función que arroja el resultado de la consulta a base de datos.
+						$error = $this->upload->display_errors();
+						$tipos = array('consulta' => $resultado,
+									   'error' => $error);
+						$this->load->view("imagenes/nueva_imagen", $tipos);
+						$this->load->view("footer");
 			        } else {
 			        	//En otro caso se sube la imagen y se crea la miniatura 
 			        	//Se obtiene todas las caracteristicas de la imagen en un arreglo
@@ -299,9 +323,6 @@
 			$resultado = $this->imagen->obtenerTipoImg(); //Asignamos a una variable la función que arroja el resultado de la consulta a base de datos.
 			$tipos = array('consulta' => $resultado);
 			$this->load->view("imagenes/nueva_imagen", $tipos);
-			/*$resultado = $this->concepto->obtenerTipos();
-			$data = array('consulta' => $resultado);
-			$this->load->view("imagenes/nueva_imagen");*/
 			$this->load->view("footer");
 		}	
 

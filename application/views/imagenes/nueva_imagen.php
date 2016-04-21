@@ -24,15 +24,15 @@ $form = array(
 //select option
 $estilo = 'class="form-control"';
 $tipo_imagen = array(
-  '1' => 'Portada',
-  '2' => 'Equipo',
-  '3' => 'Experiencia',
-  '4' => 'Gráfico'
+  //'1' => 'Portada',
+  //'2' => 'Equipo',
+  //'3' => 'Experiencia',
+  //'4' => 'Gráfico'
   );
-/*foreach ($consulta->result() as $fila) 
+foreach ($consulta->result() as $fila) 
 {
   $tipo_imagen[$fila->id_tipo_img] = $fila->nom_tipo;
-}*/
+}
 //inputs
 $nombre = array(
   'name'        => 'nombre',
