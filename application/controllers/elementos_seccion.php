@@ -71,5 +71,24 @@
 			$this->elemento->eliminarElemento($id);
 			redirect('elementos_seccion/listaElementosSeccion');
 		}
+
+		public function mostrarBusqueda()
+		{
+			if($this->input->is_ajax_request())
+			{
+				$buscar = $this->input->post("buscar");
+				$tipo_bus = $this->input->post("tipo_busqueda");
+				if ($tipo_bus == "b-seccion") {
+					$datos = $this->elemento->mostrarBusquedaElementos($buscar, $tipo_bus);
+				}
+				else if ($tipo_bus == "b-descripcion") {
+					$datos = $this->elemento->mostrarBusquedaElementos($buscar, $tipo_bus);
+				}
+				echo json_encode($datos);
+			}
+			else
+			{
+				show_404;
+			}
 	}
 ?>

@@ -25,5 +25,19 @@
 		{
 			$this->db->delete('elemento_seccion', array('id_elemento' => $id));
 		}
+
+		public function mostrarBusquedaElementos($busqueda, $tipo_bus)
+		{
+			if($tipo_bus=="b-concepto")
+			{
+				$resultado = $this->db->query("SELECT * FROM elemento_seccion ORDER BY seccion WHERE concepto.nombre LIKE '%".$busqueda."%' ORDER BY concepto");
+			}
+			else if($tipo_bus=="b-descripcion")
+			{
+				$resultado = $this->db->query("SELECT tipo_proyecto.nombre AS tipo, concepto.nombre AS concepto, detalles, costo, id_descripcion, concepto.id_concepto AS id_concepto FROM tipo_proyecto JOIN concepto ON tipo_proyecto.id_tipo=concepto.id_tipo JOIN descripcion ON concepto.id_concepto=descripcion.id_concepto WHERE detalles LIKE '%".$busqueda."%' ORDER BY concepto");
+			}
+			
+			return $resultado->result();
+		}
 	}
 ?> 

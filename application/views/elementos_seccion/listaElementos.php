@@ -7,20 +7,19 @@
 			  <li>Elementos de Sección</li>
 			</ol>
 			<hr>
-			<form class="form-inline">
+			<form class="form-horizontal">
 				<?php
 					$seccion = array(
 						'name' => 'seccion',
 						'class' => 'form-control',
 						'placeholder' => 'Sección...',
-						'id' => 'i-seccion',
-						'onkeyup' => 'buscar_Seccion();'
+						'id' => 'b-seccion'
 					);
 					$descripcion = array(
 						'name' => 'descripcion',
 						'class' => 'form-control',
 						'placeholder' => 'Descripcion...',
-						'id' => 'i-descripcion'
+						'id' => 'b-descripcion'
 					);
 				?>
 				<div class="row">
@@ -31,11 +30,18 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="form-group">
-						<?= form_input($seccion) ?>
+					<div class="col-lg-5">
+						<div class="form-group">
+							<?= form_label('Sección', 'seccion') ?>
+							<?= form_input($seccion) ?>
+						</div>
 					</div>
-					<div class="form-group">
-						<?= form_input($descripcion) ?>
+					<div class="col-lg-2"></div>
+					<div class="col-lg-5">
+						<div class="form-group">
+							<?= form_label('Descripción', 'descripcion') ?>
+							<?= form_input($descripcion) ?>
+						</div>
 					</div>
 				</div>
 			</form>
@@ -76,6 +82,33 @@
 </div>
 
 <script>
+$(document).on("ready", inicio);
+	function inicio()
+	{
+		var busc = "";
+		//Evento Focus
+		$("#b-seccion").focus(function()
+		{
+			$("#b-descripcion").val("");
+		});
+		$("#b-descripcion").focus(function()
+		{
+			$("#b-seccion").val("");
+		});
+		//Evento KeyUp
+		$("#b-seccion").keyup(function()
+		{
+			busc = $("#b-seccion").val();
+			tipo_busqueda = "b-seccion";
+			buscar(busc, tipo_busqueda);
+		});
+		$("#b-descripcion").keyup(function()
+		{
+			busc = $("#b-descripcion").val();
+			tipo_busqueda = "b-descripcion";
+			buscar(busc, tipo_busqueda);
+		});
+	}
 	function eliminar_Elemento(id)
 	{
 		$('#form')[0].reset();
@@ -94,6 +127,44 @@
 			error: function(jqXHR, textStatus, errorThrown)
 			{
 				 alert('Error get data from ajax');
+			}
+		});
+	}
+	function buscar(busqueda, tipo_bus)
+	{
+		$.ajax({
+			url: "<?= base_url('elementos_seccion/mostrarBusqueda') ?>", 
+			type: "POST",
+			data: {buscar:busqueda, tipo_busqueda:tipo_bus},
+			success: function(respuesta){
+				var registros = eval(respuesta);
+				var concepto = null;
+				var j = 1;
+
+				html = "";
+				html += "<table class='table table-striped'><thead><tr><th>#</th><th>Concepto</th><th>Descripción</th><th>Costo por hora</th><th>Categoria</th></tr>";
+				html += "<tbody>";
+
+				for (var i = 0; i < registros.length; i++) 
+				{
+					if(concepto != registros[i]["concepto"])
+					{
+						html += "<tr><td>"+j+"</td>";
+						html += "<td><a class='i-borrar' href='javascript:void(0)' onclick='eliminar_Concepto("+registros[i]["id_concepto"]+")'><i class='fa fa-times'></i></a>"+registros[i]["concepto"]+"</td>";
+						j++;
+					}
+					else
+					{ 
+						html += "<td></td><td></td>"; 
+					}
+					html += "<td><a class='i-borrar' href='javascript:void(0)' onclick='eliminar_Descripcion("+registros[i]["id_descripcion"]+")'><i class='fa fa-times'></i></a> <a href='<?= base_url()?>conceptos/detallesDescripcion/"+registros[i]["id_descripcion"]+" ?>'>"+registros[i]["detalles"]+"</a></td>";
+					html += "</td><td>"+registros[i]["costo"]+"</td><td>"+registros[i]["tipo"]+"</td></tr>";
+					concepto = registros[i]["concepto"]; 
+				};
+
+				html += "<tr><td></td><td><a href='<?= base_url("conceptos/conceptoNuevo") ?>' class='btn btn-primary'>Nuevo Concepto</a></td><td><a href='<?= base_url("conceptos/descripcionNueva") ?>' class='btn btn-primary'>Nueva Descripción</a></td><td></td><td></td></tr>";
+				html += "</tbody></table>";
+				$("#lista").html(html);
 			}
 		});
 	}

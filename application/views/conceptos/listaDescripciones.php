@@ -25,13 +25,15 @@
 						'name' => 'costoinf',
 						'class' => 'form-control',
 						'placeholder' => 'Desde...',
-						'id' => 'b-costoinf'
+						'id' => 'b-costoinf',
+						'type' => 'number'
 					);
 					$costosup = array(
 						'name' => 'costosup',
 						'class' => 'form-control',
 						'placeholder' => 'Hasta...',
-						'id' => 'b-costosup'
+						'id' => 'b-costosup',
+						'type' => 'number'
 					);
 					$categoria = array(
 						'name' => 'categoria',
@@ -48,29 +50,41 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-lg-12">
+					<div class="col-lg-5">
 						<div class="form-group">
 							<?= form_label('Concepto', 'concepto') ?>
 							<?= form_input($concepto) ?>
 						</div>
+					</div>
+					<div class="col-lg-2"></div>
+					<div class="col-lg-5">
 						<div class="form-group">
 							<?= form_label('Descripción', 'descripcion') ?>
 							<?= form_input($descripcion) ?>
 						</div>
-						<div class="form-group">
-							<?= form_label('Costo') ?>
-							<div class="row">
-								<div class="col-lg-6">
-									<?= form_input($costoinf) ?>
-								</div>
-								<div class="col-lg-6">
-									<?= form_input($costosup) ?>
+					</div>
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="col-lg-5">
+								<div class="form-group">
+									<?= form_label('Categoria', 'categoria') ?>
+									<?= form_input($categoria) ?>
 								</div>
 							</div>
-						</div>
-						<div class="form-group">
-							<?= form_label('Categoria', 'categoria') ?>
-							<?= form_input($categoria) ?>
+							<div class="col-lg-2"></div>
+							<div class="col-lg-5">
+								<div class="form-group">
+									<?= form_label('Costo') ?>
+									<div class="row">
+										<div class="col-lg-6">
+											<?= form_input($costoinf) ?>
+										</div>
+										<div class="col-lg-6">
+											<?= form_input($costosup) ?>
+										</div>
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -135,6 +149,42 @@
 	$(document).on("ready", inicio);
 	function inicio()
 	{
+		var busc = "";
+		//Evento Focus
+		$("#b-concepto").focus(function()
+		{
+			$("#b-descripcion").val("");
+			$("#b-costoinf").val("");
+			$("#b-costosup").val("");
+			$("#b-categoria").val("");
+		});
+		$("#b-descripcion").focus(function()
+		{
+			$("#b-concepto").val("");
+			$("#b-costoinf").val("");
+			$("#b-costosup").val("");
+			$("#b-categoria").val("");
+		});
+		$("#b-costoinf").focus(function()
+		{
+			$("#b-concepto").val("");
+			$("#b-categoria").val("");
+			$("#b-descripcion").val("");
+		});
+		$("#b-costosup").focus(function()
+		{
+			$("#b-concepto").val("");
+			$("#b-categoria").val("");
+			$("#b-descripcion").val("");
+		});
+		$("#b-categoria").focus(function()
+		{
+			$("#b-concepto").val("");
+			$("#b-costoinf").val("");
+			$("#b-costosup").val("");
+			$("#b-descripcion").val("");
+		});
+		//Evento KeyUp
 		$("#b-concepto").keyup(function()
 		{
 			busc = $("#b-concepto").val();
@@ -149,28 +199,47 @@
 		});
 		$("#b-costoinf").keyup(function()
 		{
-			if ($("#b-costosup").val().length < 1) 
+			if ($("#b-costoinf").val().length > 0)
 			{
-				busc = $("#b-costoinf").val();
-				tipo_busqueda = "b-costoinf";
-				buscar(busc, tipo_busqueda);
-			}
-			else if(($("#b-costosup").val().length > 0) && ($("#b-costoinf").val().length > 0))
-			{
-				costoinf = $("#b-costoinf").val();
-				costosup = $("#b-costosup").val();
-				tipo_busqueda = "b-costos";
-				buscar(busc, tipo_busqueda, costoinf, costosup);
-			}
+				if ($("#b-costosup").val().length < 1) 
+				{
+					busc = $("#b-costoinf").val();
+					tipo_busqueda = "b-costoinf";
+					buscar(busc, tipo_busqueda);
+				}
+				else
+				{
+					if ($("#b-costoinf").val().length > 0)
+					{
+						costoinf = $("#b-costoinf").val();
+						costosup = $("#b-costosup").val();
+						tipo_busqueda = "b-costos";
+						buscar(busc, tipo_busqueda, costoinf, costosup);
+					}
+				}
+			};
 		});
 		$("#b-costosup").keyup(function()
 		{
-			if ($("#b-costoinf").val().length < 1) 
+			if ($("#b-costosup").val().length > 0)
 			{
-				busc = $("#b-costosup").val();
-				tipo_busqueda = "b-costosup";
-				buscar(busc, tipo_busqueda);
-			}
+				if ($("#b-costoinf").val().length < 1) 
+				{
+					busc = $("#b-costosup").val();
+					tipo_busqueda = "b-costosup";
+					buscar(busc, tipo_busqueda);
+				}
+				else
+				{
+					if ($("#b-costosup").val().length > 0)
+					{
+						costoinf = $("#b-costoinf").val();
+						costosup = $("#b-costosup").val();
+						tipo_busqueda = "b-costos";
+						buscar(busc, tipo_busqueda, costoinf, costosup);
+					}
+				}
+			};
 		});
 		$("#b-categoria").keyup(function()
 		{

@@ -201,23 +201,25 @@
 			{
 				$buscar = $this->input->post("buscar");
 				$tipo_bus = $this->input->post("tipo_busqueda");
+				$costoinf = $this->input->post("costo_inf");
+				$costosup = $this->input->post("costo_sup");
 				if ($tipo_bus == "b-concepto") {
-					$datos = $this->concepto->mostrarBusquedaDescripciones($buscar, $tipo_bus);
+					$datos = $this->concepto->mostrarBusquedaDescripciones($buscar, $tipo_bus, $costoinf, $costosup);
 				}
 				else if ($tipo_bus == "b-descripcion") {
-					$datos = $this->concepto->mostrarBusquedaDescripciones($buscar, $tipo_bus);
+					$datos = $this->concepto->mostrarBusquedaDescripciones($buscar, $tipo_bus, $costoinf, $costosup);
 				}
 				else if ($tipo_bus == "b-costoinf") {
-					$datos = $this->concepto->mostrarBusquedaDescripciones($buscar, $tipo_bus);
+					$datos = $this->concepto->mostrarBusquedaDescripciones($buscar, $tipo_bus, $costoinf, $costosup);
 				}
 				else if ($tipo_bus == "b-costosup") {
-					$datos = $this->concepto->mostrarBusquedaDescripciones($buscar, $tipo_bus);
+					$datos = $this->concepto->mostrarBusquedaDescripciones($buscar, $tipo_bus, $costoinf, $costosup);
 				}
 				else if ($tipo_bus == "b-costos") {
-					$datos = $this->concepto->mostrarBusquedaDescripciones($costoinf, $costosup, $tipo_bus);
+					$datos = $this->concepto->mostrarBusquedaDescripciones($buscar, $tipo_bus, $costoinf, $costosup);
 				}
 				else if ($tipo_bus == "b-categoria") {
-					$datos = $this->concepto->mostrarBusquedaDescripciones($buscar, $tipo_bus);
+					$datos = $this->concepto->mostrarBusquedaDescripciones($buscar, $tipo_bus, $costoinf, $costosup);
 				}
 				echo json_encode($datos);
 			}
