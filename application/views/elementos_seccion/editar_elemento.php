@@ -11,13 +11,13 @@
 		<?php 
 			//Select
 			$otros = 'id="i-seccion" class="form-control" disabled="disabled"';
-			$secciones = array(
-				'Consideraciones' => 'Consideraciones',
-				'Entregables' => 'Entregables', 
-				'Forma de pago' => 'Forma de pago', 
-				'Requerimientos' => 'Requerimientos', 
-				'Tiempo estimado de entrega' => 'Tiempo estimado de entrega'
-			);
+			$i = 0;
+			$secciones = array();
+			foreach ($consulta->result() as $fila) 
+			{
+				$secciones[$fila->id_tipo_seccion] = $fila->seccion;
+				$i++;
+			}
 			//Inputs
 			$descripcion = array(
 				'name' => 'descripcion',
@@ -51,7 +51,7 @@
 		?>
 			<div class="form-group">
 				<?= form_label('Sección', 'seccion') ?>
-				<?= form_dropdown('seccion', $secciones, $seccion, $otros) ?>	
+				<?= form_dropdown('seccion', $secciones, $id_seccion, $otros) ?>	
 			</div>
 			<hr>
 			<div class="form-group">

@@ -305,7 +305,7 @@
 				var j = 1;
 
 				html = "";
-				html += "<table class='table table-striped'><thead><tr><th>#</th><th>Concepto</th><th>Descripción</th><th>Costo por hora</th><th>Categoria</th></tr>";
+				html += "<table class='table table-striped'><thead><tr><th>#</th><th>Concepto</th><th>Descripción</th><th>Costo por hora</th><th>Categoria</th></tr></thead>";
 				html += "<tbody>";
 
 				for (var i = 0; i < registros.length; i++) 
@@ -313,14 +313,14 @@
 					if(concepto != registros[i]["concepto"])
 					{
 						html += "<tr><td>"+j+"</td>";
-						html += "<td><a class='i-borrar' href='javascript:void(0)' onclick='eliminar_Concepto("+registros[i]["id_concepto"]+")'><i class='fa fa-times'></i></a>"+registros[i]["concepto"]+"</td>";
+						html += "<td><a class='i-borrar' href='javascript:void(0)' onclick='eliminar_Concepto("+registros[i]["id_concepto"]+")'><i class='fa fa-times'></i></a> <a href='<?= base_url()?>conceptos/detallesConcepto/"+registros[i]["id_concepto"]+"'>"+registros[i]["concepto"]+"</td>";
 						j++;
 					}
 					else
 					{ 
-						html += "<td></td><td></td>"; 
+						html += "<tr><td></td><td></td>"; 
 					}
-					html += "<td><a class='i-borrar' href='javascript:void(0)' onclick='eliminar_Descripcion("+registros[i]["id_descripcion"]+")'><i class='fa fa-times'></i></a> <a href='<?= base_url()?>conceptos/detallesDescripcion/"+registros[i]["id_descripcion"]+" ?>'>"+registros[i]["detalles"]+"</a></td>";
+					html += "<td><a class='i-borrar' href='javascript:void(0)' onclick='eliminar_Descripcion("+registros[i]["id_descripcion"]+")'><i class='fa fa-times'></i></a> <a href='<?= base_url()?>conceptos/detallesDescripcion/"+registros[i]["id_descripcion"]+"'>"+registros[i]["detalles"]+"</a></td>";
 					html += "</td><td>"+registros[i]["costo"]+"</td><td>"+registros[i]["tipo"]+"</td></tr>";
 					concepto = registros[i]["concepto"]; 
 				};

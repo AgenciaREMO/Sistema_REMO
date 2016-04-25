@@ -11,14 +11,13 @@
 				<hr>
 				<?= form_open('/elementos_seccion/recibirDatosElemento') ?>
 				<?php
-					$style = 'class="form-control"';
-					$seccion = array(
-						'Consideraciones' => 'Consideraciones',
-						'Entregables' => 'Entregables', 
-						'Forma de pago' => 'Forma de pago', 
-						'Requerimientos' => 'Requerimientos', 
-						'Tiempo estimado de entrega' => 'Tiempo estimado de entrega'
-					);
+					//Select
+					$otros = 'class="form-control"';
+					$seccion = array();
+					foreach ($consulta->result() as $fila) 
+					{
+						$seccion[$fila->id_tipo_seccion] = $fila->seccion;
+					}
 					//Inputs
 					$descripcion = array(
 						'name' => 'descripcion',
@@ -33,7 +32,7 @@
 				?>
 				<div class="form-group">
 					<?= form_label('Sección', 'seccion') ?>
-					<?= form_dropdown('seccion', $seccion, '0', $style) ?>
+					<?= form_dropdown('seccion', $seccion, '0', $otros) ?>
 				</div>
 				<div class="form-group">
 					<?= form_label('Descripción del elemento', 'descripcion') ?>

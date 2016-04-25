@@ -19,7 +19,7 @@
 						'name' => 'descripcion',
 						'class' => 'form-control',
 						'placeholder' => 'Descripcion...',
-						'id' => 'b-descripcion'
+						'id' => 'b-elemento'
 					);
 				?>
 				<div class="row">
@@ -57,6 +57,7 @@
 						</tr>
 						<?php 
 						$i = 1;
+						$seccion = null;
 						foreach ($consulta->result() as $fila) 
 						{ ?>
 						<tr>
@@ -72,8 +73,14 @@
 							</td>
 						</tr>
 						<?php $seccion = $fila->seccion; } ?>
+						<tr>
+							 <td></td>
+							 <td></td>
+							 <td>	
+								<a href="<?= base_url('elementos_seccion/elementoNuevo') ?>" class="btn btn-primary">Nuevo Elemento</a>
+							 </td>
+						</tr>
 					</table>
-					<a href="<?= base_url('elementos_seccion/elementoNuevo') ?>" class="btn btn-primary">Nuevo Elemento</a>
 				</div>
 			</div>
 			
@@ -89,9 +96,9 @@ $(document).on("ready", inicio);
 		//Evento Focus
 		$("#b-seccion").focus(function()
 		{
-			$("#b-descripcion").val("");
+			$("#b-elemento").val("");
 		});
-		$("#b-descripcion").focus(function()
+		$("#b-elemento").focus(function()
 		{
 			$("#b-seccion").val("");
 		});
@@ -102,10 +109,10 @@ $(document).on("ready", inicio);
 			tipo_busqueda = "b-seccion";
 			buscar(busc, tipo_busqueda);
 		});
-		$("#b-descripcion").keyup(function()
+		$("#b-elemento").keyup(function()
 		{
-			busc = $("#b-descripcion").val();
-			tipo_busqueda = "b-descripcion";
+			busc = $("#b-elemento").val();
+			tipo_busqueda = "b-elemento";
 			buscar(busc, tipo_busqueda);
 		});
 	}
@@ -138,31 +145,30 @@ $(document).on("ready", inicio);
 			data: {buscar:busqueda, tipo_busqueda:tipo_bus},
 			success: function(respuesta){
 				var registros = eval(respuesta);
-				var concepto = null;
+				var seccion = null;
 				var j = 1;
 
 				html = "";
-				html += "<table class='table table-striped'><thead><tr><th>#</th><th>Concepto</th><th>Descripción</th><th>Costo por hora</th><th>Categoria</th></tr>";
+				html += "<table class='table table-striped'><thead><tr><th>#</th><th>Sección</th><th>Descripción</th></tr></thead>";
 				html += "<tbody>";
 
 				for (var i = 0; i < registros.length; i++) 
 				{
-					if(concepto != registros[i]["concepto"])
+					if(seccion != registros[i]["seccion"])
 					{
 						html += "<tr><td>"+j+"</td>";
-						html += "<td><a class='i-borrar' href='javascript:void(0)' onclick='eliminar_Concepto("+registros[i]["id_concepto"]+")'><i class='fa fa-times'></i></a>"+registros[i]["concepto"]+"</td>";
+						html += "<td>"+registros[i]["seccion"]+"</td>";
 						j++;
 					}
 					else
 					{ 
-						html += "<td></td><td></td>"; 
+						html += "<tr><td></td><td></td>"; 
 					}
-					html += "<td><a class='i-borrar' href='javascript:void(0)' onclick='eliminar_Descripcion("+registros[i]["id_descripcion"]+")'><i class='fa fa-times'></i></a> <a href='<?= base_url()?>conceptos/detallesDescripcion/"+registros[i]["id_descripcion"]+" ?>'>"+registros[i]["detalles"]+"</a></td>";
-					html += "</td><td>"+registros[i]["costo"]+"</td><td>"+registros[i]["tipo"]+"</td></tr>";
-					concepto = registros[i]["concepto"]; 
+					html += "<td><a class='i-borrar' href='javascript:void(0)' onclick='eliminar_Elemento("+registros[i]["id_elemento"]+")'><i class='fa fa-times'></i></a> <a href='<?= base_url()?>elementos_seccion/detallesElemento/"+registros[i]["id_elemento"]+"'>"+registros[i]["descripcion"]+"</a></td></tr>";
+					seccion = registros[i]["seccion"]; 
 				};
 
-				html += "<tr><td></td><td><a href='<?= base_url("conceptos/conceptoNuevo") ?>' class='btn btn-primary'>Nuevo Concepto</a></td><td><a href='<?= base_url("conceptos/descripcionNueva") ?>' class='btn btn-primary'>Nueva Descripción</a></td><td></td><td></td></tr>";
+				html += "<tr><td></td><td></td><td><a href='<?= base_url("elementos_seccion/elementoNuevo") ?>' class='btn btn-primary'>Nuevo Elemento</a></td></tr>";
 				html += "</tbody></table>";
 				$("#lista").html(html);
 			}
