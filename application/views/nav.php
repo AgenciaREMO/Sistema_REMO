@@ -26,7 +26,7 @@
                                 <a href="<?= base_url()?>elementos_seccion/listaElementosSeccion">Elementos de sección</a>
                             </li>
                             <li>
-                                <a href="#">Cotizaciones</a>
+                                <a href="<?= base_url()?>cotizaciones/listaCotizaciones">Cotizaciones</a>
                             </li>
                         </ul>
                     </li>
