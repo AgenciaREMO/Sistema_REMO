@@ -7,6 +7,7 @@
 			  <li>Cotizaciones</li>
 			</ol>
 			<hr>
+
 			<form class="form-horizontal">
 				<?php
 					$personal = array(
@@ -61,64 +62,79 @@
 				<div class="row">
 					<div class="col-lg-12">
 						<div class="form-group">
-							<?= form_label('Buscar por:') ?>
+							<?= form_label('Buscar por') ?> <a role="button" data-toggle="collapse" href="#collapseBuscar" aria-expanded="false" aria-controls="collapseExample"><span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span></a>
 						</div>
 					</div>
 				</div>
-				<div class="row">
-					<div class="col-lg-5">
-						<div class="form-group">
-							<?= form_label('Folio', 'folio') ?>
-							<?= form_input($folio) ?>
+				<div class="collapse" id="collapseBuscar">
+					<div class="row">
+						<div class="col-lg-5">
+							<div class="form-group">
+								<?= form_label('Folio', 'folio') ?>
+								<?= form_input($folio) ?>
+							</div>
+						</div>
+						<div class="col-lg-2"></div>
+						<div class="col-lg-5">
+							<div class="form-group">
+								<?= form_label('Expedición', 'expedicion') ?>
+								<?= form_input($expedicion) ?>
+							</div>
 						</div>
 					</div>
-					<div class="col-lg-2"></div>
-					<div class="col-lg-5">
-						<div class="form-group">
-							<?= form_label('Expedición', 'expedicion') ?>
-							<?= form_input($expedicion) ?>
+					<div class="row">
+						<div class="col-lg-5">
+							<div class="form-group">
+								<?= form_label('Proyecto', 'proyecto') ?>
+								<?= form_input($proyecto) ?>
+							</div>
+						</div>
+						<div class="col-lg-2"></div>
+						<div class="col-lg-5">
+							<div class="form-group">
+								<?= form_label('Personal', 'personal') ?>
+								<?= form_input($personal) ?>
+							</div>
 						</div>
 					</div>
-				</div>
-				<div class="row">
-					<div class="col-lg-5">
-						<div class="form-group">
-							<?= form_label('Proyecto', 'proyecto') ?>
-							<?= form_input($proyecto) ?>
+					<div class="row">
+						<div class="col-lg-5">
+							<div class="form-group">
+								<?= form_label('Estatus', 'estatus') ?>
+								<?= form_input($estatus) ?>
+							</div>
+						</div>
+						<div class="col-lg-2"></div>
+						<div class="col-lg-5">
+							<div class="form-group">
+								<?= form_label('Importe', 'importe') ?>
+								<?= form_input($importe) ?>
+							</div>
 						</div>
 					</div>
-					<div class="col-lg-2"></div>
-					<div class="col-lg-5">
-						<div class="form-group">
-							<?= form_label('Personal', 'personal') ?>
-							<?= form_input($personal) ?>
-						</div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-lg-5">
-						<div class="form-group">
-							<?= form_label('Estatus', 'estatus') ?>
-							<?= form_input($estatus) ?>
-						</div>
-					</div>
-					<div class="col-lg-2"></div>
-					<div class="col-lg-5">
-						<div class="form-group">
-							<?= form_label('Importe', 'importe') ?>
-							<?= form_input($importe) ?>
-						</div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-lg-5">
-						<div class="form-group">
-							<?= form_label('Empresa', 'empresa') ?>
-							<?= form_input($empresa) ?>
+					<div class="row">
+						<div class="col-lg-5">
+							<div class="form-group">
+								<?= form_label('Empresa', 'empresa') ?>
+								<?= form_input($empresa) ?>
+							</div>
 						</div>
 					</div>
 				</div>
 			</form>
+			<hr>
+			
+			<div class="row">
+				<div class="col-lg-12">
+					<ul class="nav nav-pills" role="tablist">
+					  <li role="presentation"><a href="#">Aceptadas <span class="badge"><?= $num_aceptadas ?></span></a></li>
+					  <li role="presentation"><a href="#">En revisión <span class="badge"><?= $num_revision ?></span></a></li>
+					  <li role="presentation"><a href="#">Expedidas <span class="badge"><?= $num_expedidas ?></span></a></li>
+					  <li role="presentation"><a href="#">Rechazadas <span class="badge"><?= $num_rechazadas ?></span></a></li>
+					  <li role="presentation"><a href="#">Vencidas <span class="badge"><?= $num_vencidas ?></span></a></li>
+					</ul>
+				</div>
+			</div>
 			<hr>
 
 			<div class="row">
@@ -156,6 +172,17 @@
 						<?php
 							$i++; 
 						} ?>
+						<tr>
+							<td></td>
+							<td><a href="<?= base_url('cotizaciones/cotizacionNueva') ?>" class="btn btn-primary">Nueva Cotización</a></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
 					</table>
 				</div>
 			</div>
