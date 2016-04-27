@@ -66,7 +66,7 @@ $portafolio = array(
 				</ol>
 			</div>
 		</div>
-		<?= form_open('portafolios/c_portafolios/insertarPortafolio', $form); ?>
+		<?= form_open('portafolios/c_portafolios/validar', $form); ?>
 	    <div class="row">
 		  <div class="col-lg-12">
 			<div class="form-group">

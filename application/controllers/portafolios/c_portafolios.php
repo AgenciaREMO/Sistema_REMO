@@ -17,14 +17,11 @@
 			$this->load->model('portafolios/portada'); //Modelo para portada
 			$this->load->model('portafolios/comentario'); //Modelo de comentario
 		}
+
 		public function index()
 		{
-			$this->load->view('portafolios/nuevo_portafolio');
+			$this->nuevoPortafolio();
 		}
-		/*
-		//Funciones de Portafolio en general
-		*/
-
 		//Función que permite mostrar los portafolios existentes.
 		public function mostrarPortafolio()
 		{
@@ -36,63 +33,6 @@
 			$this->load->view("footer");
 		}
 
-		//Función que permite cargar el formulario para crear un nuevo formulario.
-		public function cargarFormulario($id_portafolio){ //Recuperamos de la función de insertar el último id que fue inserdado.
-			$id = array ('id_portafolio' => $id_portafolio); //Almacenamos en un arreglo el id que se obtuvo.
-			$this->load->view("head", $id);
-			$this->load->view("nav", $id);
-			$query = $this->portada->obtenerPortada($id);
-			$consulta = $this->portada->portadasDisponibles($id);
-			$consulta1 = $this->portada->portadaAnterior($id);
-				if($query != FALSE){
-					foreach ($query->result() as $row) {
-						$url_img = $row->url_img;
-						$nom_img = $row->nom_img;
-					}
-				
-					$img= array(
-						'id_portafolio' => $id_portafolio,
-						'url_img' => $url_img,
-						'nom_img' => $nom_img,
-						'consulta' => $consulta,
-						'consulta1' => $consulta1
-									);
-				}else{
-					$id_portafolio = $id_portafolio;
-					$url_img = '';
-					$nom_img = '';
-					$id_img = '';
-					$url_img2 = '';
-					$nom_img2 = '';
-					return FALSE;
-				}
-			$this->load->view("portafolios/form_portada", $img);
-			$this->load->view("portafolios/form_servicio", $id);
-			//$this->load->view("portafolios/form_equipo", $id);
-			//$this->load->view("portafolios/form_experiencia", $id);
-			//$this->load->view("portafolios/form_contenido", $id);
-			/*
-				Código que permite obtener de base de datos
-
-			$datos = $this->comentario->obtenerDatos($id);
-			if($datos != FALSE){
-				foreach ($datos->result() as $row) {
-					$comentario = $row->comentario;
-				}
-			
-				$data_comentario = array('id_portafolio' => $id_portafolio,
-							  'comentario' => $comentario
-								);
-			}else{
-				$comentario = '';
-				return FALSE;
-			}
-			$this->load->view("portafolios/form_comentario", $data_comentario); */
-
-			$this->load->view("portafolios/form_general", $id);
-			$this->load->view("footer", $id);
-		}
-
 		//Función que permite cargar el formulario de nuevo portafolio
 		public function nuevoPortafolio(){
 			$this->load->view("head");
@@ -100,9 +40,8 @@
 			$this->load->view("portafolios/nuevo_portafolio");
 			$this->load->view("footer");
 		}	
-			
-		//Función que permite insertar un nuevo portafolio
-		public function insertarPortafolio(){
+		//Función que valida los campos
+		public function validar(){
 			/*
 			//Validaciones del formulario
 			//$this->form_validation->set_rules('name_input', 'Identificador', 'reglas de validación');
@@ -125,15 +64,19 @@
 				$this->nuevoPortafolio();   
 			}
 			else{
-				//Si pasa las validaciones realiza la inserción de portafolio
-				$inputs = array (
-					'nombre' => $this->input->post('nombre', TRUE), //Se asigna a un arreglo el valor que obtiene de los input de nuevo portafolio.
-					'comentario' => $this->input->post('comentario', TRUE)
-					); 
-				$id_portafolio = $this->portafolio->insertarPortafolio($inputs); //Se le manda al método el valor que se obtuvo de los inputs
-				redirect('/portafolios/c_portafolios/cargarFormulario'.'/'.$id_portafolio); //Redirecciona al mismo controlador pero a otra función
+				$this->insertarPortafolio();
 			}
-
+		}
+		//Función que permite insertar un nuevo portafolio
+		public function insertarPortafolio(){
+			
+			//Si pasa las validaciones realiza la inserción de portafolio
+			$inputs = array (
+				'nombre' => $this->input->post('nombre', TRUE), //Se asigna a un arreglo el valor que obtiene de los input de nuevo portafolio.
+				'comentario' => $this->input->post('comentario', TRUE)
+				); 
+			$id_portafolio = $this->portafolio->insertarPortafolio($inputs); //Se le manda al método el valor que se obtuvo de los inputs
+			redirect('/portafolios/c_portada/cargar'.'/'.$id_portafolio); //Redirecciona al mismo controlador pero a otra función
 		}
 
 		//Función que permite cancelar la creación de un portafolio.

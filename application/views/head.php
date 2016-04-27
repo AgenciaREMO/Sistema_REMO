@@ -7,6 +7,7 @@
 		<!--REMO CSS-->
 	    <link rel="stylesheet" href="<?= base_url() ?>css/style.css">
 	    <script type="text/javascript" src="<?= base_url('js/jquery.js')?>"></script>
+	    <script type="text/javascript" src="<?= base_url('js/jquery..min.js')?>"></script>
 		<!--BOOTSTRAP CSS-->
 		<link href="<?= base_url('css/bootstrap.min.css') ?>" rel="stylesheet" media="screen">
 		<link href="<?= base_url('css/modern-business.css') ?>" rel="stylesheet">

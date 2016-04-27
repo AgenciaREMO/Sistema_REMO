@@ -20,7 +20,7 @@
 	    {
 	        //CARGAMOS LA VISTA DEL FORMULARIO
 	   		//	Cargar demás vistas
-	        $this->load->view('imagenes/nueva_imagen');
+	        $this->nueva();
 	    }
 	    //Función que permite validar el formulari
 	    public function validar()

@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit ('No direct scripts access allowed'); //para que no puedan acceder de manera no controlada directamente al controlador
 /*
-//Documento: Controlador de contenido gráfico de portafolios
+//Documento: Controlador de portada de portafolios
 //Versión: 1.0
 //Autor: Ing. María de los Ángeles Godínez Rivas
 //Fecha de creación: 16 de Marzo del 2016
@@ -11,14 +11,35 @@
 */
 class Portada extends CI_Model
 {	
-	//Función que permite consultar si exist un registro en la tabla portafolios-imagen para evaluar
+	//Función que permite conocer si hay algun registro con portada para el id actual
+	public function consultarRegistro($id){
+		/*
+		//SELECT * FROM portafolio_imagen WHERE id_portafolio = $id_portafolio
+		*/
+		$this->db->select('*');
+		$this->db->from('portafolio_imagen');
+		$this->db->join('imagen', 'portafolio_imagen.id_img = imagen.id_img');
+		$this->db->join('tipo_imagen', 'imagen.id_tipo_img = tipo_imagen.id_tipo_img');
+		$this->db->where('portafolio_imagen.id_portafolio', $id['id_portafolio']);
+		$this->db->where('tipo_imagen.id_tipo_img', 1);
+		$query = $this->db->get();
+		if($query->num_rows()>0){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	//Función que permite consultar si existe un registro en la tabla portafolios-imagen para evaluar
 	public function obtenerPortada($id){
 		/*
 		//SELECT * FROM portafolio_imagen WHERE id_portafolio = $id_portafolio
 		*/
 		$this->db->select('*');
 		$this->db->from('portafolio_imagen');
-		$this->db->where('id_portafolio', $id['id_portafolio']);
+		$this->db->join('imagen', 'portafolio_imagen.id_img = imagen.id_img');
+		$this->db->join('tipo_imagen', 'imagen.id_tipo_img = tipo_imagen.id_tipo_img');
+		$this->db->where('portafolio_imagen.id_portafolio', $id['id_portafolio']);
+		$this->db->where('tipo_imagen.id_tipo_img', 1);
 		$query = $this->db->get();
 		if($query->num_rows()>0){
 			/*SELECT
@@ -29,7 +50,7 @@ class Portada extends CI_Model
 			//INNER JOIN tipo_imagen
 			//ON imagen.id_tipo_img = tipo_imagen.id_tipo_img
 			*/
-			$this->db->select('pi.id_por_ima, pi.id_portafolio, pi.id_img, i.id_img, i.nom_img, i.url_img, i.id_tipo_img, ti.id_tipo_img');
+			$this->db->select('pi.id_por_ima, pi.id_portafolio, pi.id_img , i.id_img, i.nom_img, i.url_img, i.id_tipo_img, ti.id_tipo_img');
 			$this->db->from('portafolio_imagen pi');
 			$this->db->join('imagen i', 'pi.id_img = i.id_img');
 			$this->db->join('tipo_imagen ti','i.id_tipo_img = ti.id_tipo_img');
@@ -62,6 +83,25 @@ class Portada extends CI_Model
 	      	echo 'Insertar';    	
       	}
 
+	}
+
+	//Función que trae el id de la de default
+	public function checkDefault(){
+         	/*
+			//$query = $this->db->query('SELECT nom_img, url_img, url_thu FROM imagen WHERE id_img = 1 AND id_tipo_img = 1');
+			*/
+			$this->db->select('*');
+			$this->db->from('imagen');
+			$this->db->where('id_img', '1');
+			$this->db->where('id_tipo_img', '1');
+			$query = $this->db->get();
+			if($query->num_rows()>0){
+	        	return $query->row();
+	      	}else{
+	        	return false;
+	      	} 
+	      	print_r($query);
+	      	echo 'Insertar'; 
 	}
 
 	//Función que permite obtener las portadas disponibles
@@ -107,6 +147,10 @@ class Portada extends CI_Model
       	}else{
         	return false;
       	}
+	}
+
+	public function insertarPortada(){
+		$this->db->insert('portafolio_imagen', $data);
 	}
 }
 
