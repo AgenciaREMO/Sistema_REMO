@@ -194,7 +194,6 @@
 			redirect('conceptos/listaDescripciones');
 		}
 
-
 		public function mostrarBusqueda()
 		{
 			if($this->input->is_ajax_request())

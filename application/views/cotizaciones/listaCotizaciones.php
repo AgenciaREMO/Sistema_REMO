@@ -13,7 +13,7 @@
 					$personal = array(
 						'name' => 'personal',
 						'class' => 'form-control',
-						'placeholder' => 'Personal...',
+						'placeholder' => 'Creada por...',
 						'id' => 'b-personal'
 					);
 					$proyecto = array(
@@ -28,29 +28,45 @@
 						'placeholder' => 'Folio...',
 						'id' => 'b-folio'
 					);
-					$expedicion = array(
-						'name' => 'expedicion',
+					$expedicioninf = array(
+						'name' => 'expedicioninf',
 						'class' => 'form-control',
-						'placeholder' => 'Fecha de expedición...',
-						'id' => 'b-expedicion'
+						'placeholder' => 'Desde...',
+						'id' => 'b-expedicioninf',
+						'type' => 'date'
 					);
-					$vigencia = array(
-						'name' => 'vigencia',
+					$expedicionsup = array(
+						'name' => 'expedicionsup',
 						'class' => 'form-control',
-						'placeholder' => 'Vigencia...',
-						'id' => 'b-vigencia'
+						'placeholder' => 'Hasta...',
+						'id' => 'b-expedicionsup',
+						'type' => 'date'
 					);
-					$importe = array(
-						'name' => 'importe',
+					$vigenciainf = array(
+						'name' => 'vigenciainf',
 						'class' => 'form-control',
-						'placeholder' => 'Importe...',
-						'id' => 'b-importe'
+						'placeholder' => 'Desde...',
+						'id' => 'b-vigenciainf'
 					);
-					$estatus = array(
-						'name' => 'estatus',
+					$vigenciasup = array(
+						'name' => 'vigenciasup',
 						'class' => 'form-control',
-						'placeholder' => 'Estatus...',
-						'id' => 'b-estatus'
+						'placeholder' => 'Hasta...',
+						'id' => 'b-vigenciasup'
+					);
+					$importeinf = array(
+						'name' => 'importeinf',
+						'class' => 'form-control',
+						'placeholder' => 'Desde...',
+						'id' => 'b-importeinf',
+						'type' => 'number'
+					);
+					$importesup = array(
+						'name' => 'importesup',
+						'class' => 'form-control',
+						'placeholder' => 'Hasta...',
+						'id' => 'b-importesup',
+						'type' => 'number'
 					);
 					$empresa = array(
 						'name' => 'empresa',
@@ -77,8 +93,15 @@
 						<div class="col-lg-2"></div>
 						<div class="col-lg-5">
 							<div class="form-group">
-								<?= form_label('Expedición', 'expedicion') ?>
-								<?= form_input($expedicion) ?>
+									<?= form_label('Expedición') ?>
+								<div class="row">
+									<div class="col-lg-6">
+										<?= form_input($expedicioninf) ?>
+									</div>
+									<div class="col-lg-6">
+										<?= form_input($expedicionsup) ?>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -92,23 +115,8 @@
 						<div class="col-lg-2"></div>
 						<div class="col-lg-5">
 							<div class="form-group">
-								<?= form_label('Personal', 'personal') ?>
+								<?= form_label('Creada por', 'personal') ?>
 								<?= form_input($personal) ?>
-							</div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-lg-5">
-							<div class="form-group">
-								<?= form_label('Estatus', 'estatus') ?>
-								<?= form_input($estatus) ?>
-							</div>
-						</div>
-						<div class="col-lg-2"></div>
-						<div class="col-lg-5">
-							<div class="form-group">
-								<?= form_label('Importe', 'importe') ?>
-								<?= form_input($importe) ?>
 							</div>
 						</div>
 					</div>
@@ -117,6 +125,35 @@
 							<div class="form-group">
 								<?= form_label('Empresa', 'empresa') ?>
 								<?= form_input($empresa) ?>
+							</div>
+						</div>
+						<div class="col-lg-2"></div>
+						<div class="col-lg-5">
+							<div class="form-group">
+									<?= form_label('Importe') ?>
+								<div class="row">
+									<div class="col-lg-6">
+										<?= form_input($importeinf) ?>
+									</div>
+									<div class="col-lg-6">
+										<?= form_input($importesup) ?>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-5">
+							<div class="form-group">
+									<?= form_label('Vigencia') ?>
+								<div class="row">
+									<div class="col-lg-6">
+										<?= form_input($vigenciainf) ?>
+									</div>
+									<div class="col-lg-6">
+										<?= form_input($vigenciasup) ?>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -136,10 +173,17 @@
 				</div>
 			</div>
 			<hr>
+			<div class="row">
+				<div class="col-lg-12">
+					<a href="<?= base_url('cotizaciones/cotizacionNueva') ?>" class="btn btn-primary">Nueva Cotización</a>
+				</div>
+			</div>
+
+			<hr>
 
 			<div class="row">
 				<div class="col-lg-12" id="lista">
-					<table class="table table-striped">
+					<table class="table table-hover">
 						<tr>
 							<th>#</th>	
 							<th>Folio</th>
@@ -172,21 +216,257 @@
 						<?php
 							$i++; 
 						} ?>
-						<tr>
-							<td></td>
-							<td><a href="<?= base_url('cotizaciones/cotizacionNueva') ?>" class="btn btn-primary">Nueva Cotización</a></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-						</tr>
 					</table>
 				</div>
 			</div>
-			
 		</div>
 	</div>
 </div>
+
+<script type="text/javascript">
+	$(document).on("ready", inicio);
+	function inicio()
+	{
+		var busc = "";
+		//Evento Focus
+		$("#b-personal").focus(function()
+		{
+			$("#b-proyecto").val("");
+			$("#b-folio").val("");
+			$("#b-expedicioninf").val("");
+			$("#b-expedicionsup").val("");
+			$("#b-vigenciainf").val("");
+			$("#b-vigenciasup").val("");
+			$("#b-empresa").val("");
+			$("#b-importeinf").val("");
+			$("#b-importesup").val("");
+			if ($("#b-personal").val().length < 1) 
+			{
+				busc = "";
+				tipo_busqueda = "b-todos";
+				buscar(busc, tipo_busqueda);
+			}
+		});
+		$("#b-proyecto").focus(function()
+		{
+			$("#b-personal").val("");
+			$("#b-folio").val("");
+			$("#b-expedicioninf").val("");
+			$("#b-expedicionsup").val("");
+			$("#b-vigenciainf").val("");
+			$("#b-vigenciasup").val("");
+			$("#b-empresa").val("");
+			$("#b-importeinf").val("");
+			$("#b-importesup").val("");
+			if ($("#b-proyecto").val().length < 1) 
+			{
+				busc = "";
+				tipo_busqueda = "b-todos";
+				buscar(busc, tipo_busqueda);
+			}
+		});
+		$("#b-folio").focus(function()
+		{
+			$("#b-personal").val("");
+			$("#b-proyecto").val("");
+			$("#b-expedicioninf").val("");
+			$("#b-expedicionsup").val("");
+			$("#b-vigenciainf").val("");
+			$("#b-vigenciasup").val("");
+			$("#b-empresa").val("");
+			$("#b-importeinf").val("");
+			$("#b-importesup").val("");
+			if ($("#b-folio").val().length < 1) 
+			{
+				busc = "";
+				tipo_busqueda = "b-todos";
+				buscar(busc, tipo_busqueda);
+			}
+		});
+		$("#b-empresa").focus(function()
+		{
+			$("#b-personal").val("");
+			$("#b-folio").val("");
+			$("#b-expedicioninf").val("");
+			$("#b-expedicionsup").val("");
+			$("#b-vigenciainf").val("");
+			$("#b-vigenciasup").val("");
+			$("#b-proyecto").val("");
+			$("#b-importeinf").val("");
+			$("#b-importesup").val("");
+			if ($("#b-empresa").val().length < 1) 
+			{
+				busc = "";
+				tipo_busqueda = "b-todos";
+				buscar(busc, tipo_busqueda);
+			}
+		});
+		$("#b-expedicioninf").focus(function()
+		{
+			$("#b-personal").val("");
+			$("#b-folio").val("");
+			$("#b-empresa").val("");
+			$("#b-vigenciainf").val("");
+			$("#b-vigenciasup").val("");
+			$("#b-proyecto").val("");
+			$("#b-importeinf").val("");
+			$("#b-importesup").val("");
+			
+		});
+		$("#b-expedicionsup").focus(function()
+		{
+			$("#b-personal").val("");
+			$("#b-folio").val("");
+			$("#b-empresa").val("");
+			$("#b-vigenciainf").val("");
+			$("#b-vigenciasup").val("");
+			$("#b-proyecto").val("");
+			$("#b-importeinf").val("");
+			$("#b-importesup").val("");
+			
+		});
+		$("#b-vigenciainf").focus(function()
+		{
+			$("#b-personal").val("");
+			$("#b-folio").val("");
+			$("#b-empresa").val("");
+			$("#b-expedicioninf").val("");
+			$("#b-expedicionsup").val("");
+			$("#b-proyecto").val("");
+			$("#b-importeinf").val("");
+			$("#b-importesup").val("");
+		});
+		$("#b-vigenciasup").focus(function()
+		{
+			$("#b-personal").val("");
+			$("#b-folio").val("");
+			$("#b-empresa").val("");
+			$("#b-expedicioninf").val("");
+			$("#b-expedicionsup").val("");
+			$("#b-proyecto").val("");
+			$("#b-importeinf").val("");
+			$("#b-importesup").val("");
+		});
+		$("#b-importeinf").focus(function()
+		{
+			$("#b-personal").val("");
+			$("#b-folio").val("");
+			$("#b-empresa").val("");
+			$("#b-expedicioninf").val("");
+			$("#b-expedicionsup").val("");
+			$("#b-proyecto").val("");
+			$("#b-vigenciainf").val("");
+			$("#b-vigenciasup").val("");
+			
+		});
+		$("#b-importesup").focus(function()
+		{
+			$("#b-personal").val("");
+			$("#b-folio").val("");
+			$("#b-empresa").val("");
+			$("#b-expedicioninf").val("");
+			$("#b-expedicionsup").val("");
+			$("#b-proyecto").val("");
+			$("#b-vigenciainf").val("");
+			$("#b-vigenciasup").val("");
+			
+		});
+
+		//Evento KeyUp
+		$("#b-personal").keyup(function()
+		{
+			busc = $("#b-personal").val();
+			tipo_busqueda = "b-personal";
+			buscar(busc, tipo_busqueda);
+		});
+		$("#b-proyecto").keyup(function()
+		{
+			busc = $("#b-proyecto").val();
+			tipo_busqueda = "b-proyecto";
+			buscar(busc, tipo_busqueda);
+		});
+		$("#b-folio").keyup(function()
+		{
+			busc = $("#b-folio").val();
+			tipo_busqueda = "b-folio";
+			buscar(busc, tipo_busqueda);
+		});
+		$("#b-empresa").keyup(function()
+		{
+			busc = $("#b-empresa").val();
+			tipo_busqueda = "b-empresa";
+			buscar(busc, tipo_busqueda);
+		});
+		$("#b-importeinf").keyup(function()
+		{
+			if ($("#b-importeinf").val().length > 0)
+			{
+				if ($("#b-importesup").val().length < 1) 
+				{
+					busc = $("#b-importeinf").val();
+					tipo_busqueda = "b-importeinf";
+					buscar(busc, tipo_busqueda);
+				}
+				else
+				{
+					if ($("#b-importeinf").val().length > 0)
+					{
+						expedicioninf = $("#b-importeinf").val();
+						expedicionsup = $("#b-importesup").val();
+						tipo_busqueda = "b-importes";
+						buscar(busc, tipo_busqueda, expedicioninf, expedicionsup);
+					}
+				}
+			};
+		});
+		$("#b-importesup").keyup(function()
+		{
+			if ($("#b-importesup").val().length > 0)
+			{
+				if ($("#b-importeinf").val().length < 1) 
+				{
+					busc = $("#b-importesup").val();
+					tipo_busqueda = "b-importesup";
+					buscar(busc, tipo_busqueda);
+				}
+				else
+				{
+					if ($("#b-importesup").val().length > 0)
+					{
+						expedicioninf = $("#b-importeinf").val();
+						expedicionsup = $("#b-importesup").val();
+						tipo_busqueda = "b-importes";
+						buscar(busc, tipo_busqueda, expedicioninf, expedicionsup);
+					}
+				}
+			};
+		});
+	}
+	function buscar(busqueda, tipo_bus, buscinf, buscsup)
+	{
+		$.ajax({
+			url: "<?= base_url('cotizaciones/mostrarBusqueda') ?>", 
+			type: "POST",
+			data: {buscar:busqueda, tipo_busqueda:tipo_bus, busqueda_inf:buscinf, busqueda_sup: buscsup},
+			success: function(respuesta){
+				var registros = eval(respuesta);
+
+				html = "";
+				html += "<table class='table table-hover'><thead><tr><th>#</th><th>Folio</th><th>Vigencia</th><th>Proyecto</th><th>Creada por</th><th>Estatus</th><th>Expedida</th><th>Empresa</th><th>Importe</th></tr></thead>";
+				html += "<tbody>";
+
+				for (var i = 0; i < registros.length; i++) 
+				{
+					html += "<tr><td>"+(i+1)+"</td>";
+					html += "<td><a class='i-borrar' href='javascript:void(0)' onclick='eliminar_Cotizacion("+registros[i]["id_cotización"]+")'><i class='fa fa-times'></i></a> <a href='<?= base_url()?>cotizaciones/detallesCotizacion/"+registros[i]["id_cotización"]+"'>"+registros[i]["folio"]+"</td>";
+					html += "<td>"+registros[i]["vigencia"]+"</td><td>"+registros[i]["proyecto"]+"</td><td>"+registros[i]["personal"]+"</td><td>"+registros[i]["estatus"]+"</td>";
+					html += "</td><td>"+registros[i]["f_expedicion"]+"</td><td>"+registros[i]["empresa"]+"</td><td>"+registros[i]["total"]+"</td></tr>";
+				};
+
+				html += "<tr><td></td><td></td><td></td><td></td><td></td></tr></td><td></td><td></td></tr>";
+				html += "</tbody></table>";
+				$("#lista").html(html);
+			}
+		});
+	}
+	</script>

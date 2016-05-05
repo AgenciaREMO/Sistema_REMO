@@ -46,5 +46,45 @@
 			$this->load->view("cotizaciones/editar_cotizacion", $data);
 			$this->load->view("footer");
 		}
+
+		public function mostrarBusqueda()
+		{
+			if($this->input->is_ajax_request())
+			{
+				$buscar = $this->input->post("buscar");
+				$tipo_bus = $this->input->post("tipo_busqueda");
+				$busquedainf = $this->input->post("busqueda_inf");
+				$busquedasup = $this->input->post("busqueda_sup");
+				if ($tipo_bus == "b-personal") {
+					$datos = $this->cotizacion->mostrarBusquedaCotizaciones($buscar, $tipo_bus, $busquedainf, $busquedasup);
+				}
+				else if ($tipo_bus == "b-proyecto") {
+					$datos = $this->cotizacion->mostrarBusquedaCotizaciones($buscar, $tipo_bus, $busquedainf, $busquedasup);
+				}
+				else if ($tipo_bus == "b-folio") {
+					$datos = $this->cotizacion->mostrarBusquedaCotizaciones($buscar, $tipo_bus, $busquedainf, $busquedasup);
+				}
+				else if ($tipo_bus == "b-empresa") {
+					$datos = $this->cotizacion->mostrarBusquedaCotizaciones($buscar, $tipo_bus, $busquedainf, $busquedasup);
+				}
+				else if ($tipo_bus == "b-importeinf") {
+					$datos = $this->cotizacion->mostrarBusquedaCotizaciones($buscar, $tipo_bus, $busquedainf, $busquedasup);
+				}
+				else if ($tipo_bus == "b-importesup") {
+					$datos = $this->cotizacion->mostrarBusquedaCotizaciones($buscar, $tipo_bus, $busquedainf, $busquedasup);
+				}
+				else if ($tipo_bus == "b-importes") {
+					$datos = $this->cotizacion->mostrarBusquedaCotizaciones($buscar, $tipo_bus, $busquedainf, $busquedasup);
+				}
+				else if ($tipo_bus == "b-todos") {
+					$datos = $this->cotizacion->mostrarBusquedaCotizaciones($buscar, $tipo_bus, $busquedainf, $busquedasup);
+				}
+				echo json_encode($datos);
+			}
+			else
+			{
+				show_404;
+			}
+		}
 	}
 ?>

@@ -49,7 +49,7 @@
 
 			<div class="row">
 				<div class="col-lg-12" id="lista">
-					<table class="table table-striped">
+					<table class="table table-hover">
 						<tr>
 							<th>#</th>	
 							<th>Sección</th>
@@ -149,7 +149,7 @@ $(document).on("ready", inicio);
 				var j = 1;
 
 				html = "";
-				html += "<table class='table table-striped'><thead><tr><th>#</th><th>Sección</th><th>Descripción</th></tr></thead>";
+				html += "<table class='table table-hover'><thead><tr><th>#</th><th>Sección</th><th>Descripción</th></tr></thead>";
 				html += "<tbody>";
 
 				for (var i = 0; i < registros.length; i++) 
