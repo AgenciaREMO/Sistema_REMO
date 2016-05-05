@@ -7,12 +7,6 @@
 //Fecha de modificación: 
 */
 ?>
-<?php 
-$subir = array(
-  'title' => 'Subir Gráfico',
-  'class' => 'btn btn-default'
-  );
-?>
 
  <!-- Contenido de la página -->
 <div class="container">
@@ -23,7 +17,7 @@ $subir = array(
   </div>
   <div class="row">
     <div class="col-sm-12">
-      <?= anchor ('c_imagenes/nueva', 'Subir Gráfico', $subir); ?>
+      <a href="<?= base_url() ?>c_imagenes/nueva" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Subir Gráfico</a>
     </div>
     <hr>
   </div>
@@ -45,8 +39,8 @@ $subir = array(
           <td><?= $fila->id_img ?></td> <!-- Accedemos al  -->
           <td><?= $fila->nom_img ?></td>  <!-- Accedemos al nombre -->
           <td><?= $fila->nom_tipo ?></td>
-          <td><div class="col-lg-2 "><a href="#"><span class="glyphicon glyphicon-search" hidden="true" ></span></a></div></td>
-          <td><div class="col-lg-2 "><a href="#"><span class="glyphicon glyphicon-trash" hidden="true"></span></a></div></td>
+          <td><div class="col-lg-2 "><a href="#"><span class="glyphicon glyphicon-new-window" hidden="true" ></span></a></div></td>
+          <td><div class="col-lg-2 "><a href="#"><span class="glyphicon glyphicon-remove" hidden="true"></span></a></div></td>
         </tr>
         <?php   
           } //Fin de Foreach para lista los portafolios

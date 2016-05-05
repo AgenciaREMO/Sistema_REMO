@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit ('No direct scripts access allowed'); //para que no puedan acceder de manera no controlada directamente al controlador
 /*
-//Documento: Controlador de portada de portafolios
+//Documento: Modelo de portada de portafolios
 //Versión: 1.0
 //Autor: Ing. María de los Ángeles Godínez Rivas
 //Fecha de creación: 16 de Marzo del 2016
@@ -14,7 +14,14 @@ class Portada extends CI_Model
 	//Función que permite conocer si hay algun registro con portada para el id actual
 	public function consultarRegistro($id){
 		/*
-		//SELECT * FROM portafolio_imagen WHERE id_portafolio = $id_portafolio
+		//SELECT *
+		//FROM portafolio_imagen
+		//INNER JOIN imagen
+		//ON portafolio_imagen.id_img = imagen.id_img
+		//INNER JOIN tipo_imagen
+		//ON imagen.id_tipo_img = tipo_imagen.id_tipo_img
+		//WHERE portafolio_imagen.id_portafolio =  $id['id_portafolio']
+		//AND tipo_imagen.id_tipo_img = 1
 		*/
 		$this->db->select('*');
 		$this->db->from('portafolio_imagen');
@@ -152,6 +159,24 @@ class Portada extends CI_Model
 	public function insertarPortada(){
 		$this->db->insert('portafolio_imagen', $data);
 	}
+
+	public function actualizarPortada($id_portafolio, $id_img){
+		$data=array(
+			'id_portafolio' => $id_portafolio,
+			'id_img' => $id_img
+			);
+		//$query = "UPDATE portafolio_imagen SET id_img = $id_img WHERE id_portafolio = $id_portafolio"
+		$this->db->where('id_portafolio', $data['id_portafolio']);
+		$this->db->update('portafolio_imagen', $data['$id_img']);
+		$query = $this->db->get();
+		if($query->num_rows()>0){
+			return true;
+		}else{
+			return false;
+		}
+
+	}
+
 }
 
 ?>

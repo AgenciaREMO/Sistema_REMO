@@ -20,7 +20,7 @@
   </div>
   <div class="row">
     <div class="col-sm-12">
-      <a href="<?= base_url() ?>portafolios/c_portafolios/nuevoPortafolio" class="btn btn-default">Crear portafolio</a>
+      <a href="<?= base_url() ?>portafolios/c_portafolios/nuevoPortafolio" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Crear portafolio</a>
     </div>
     <hr>
   </div>
@@ -40,10 +40,10 @@
           <tr>
           <td><?= $fila->id_portafolio ?></td> <!-- Accedemos al id_portafolio -->
           <td><?= $fila->nombre ?></td>  <!-- Accedemos al nombre -->
-          <td><div class="col-lg-2 "><a href="#"><span class="glyphicon glyphicon-search" hidden="true" ></span></a></div></td>
+          <td><div class="col-lg-2 "><a href="#" ><span class="glyphicon glyphicon-new-window" hidden="true" ></span></a></div></td>
           <!--<td><div class="col-lg-2 "><button type="button" class="btn btn-default" data-toggle="modal" data-target="#modalEnviar">Enviar</button></div></td>-->
-          <td><div class="col-lg-2 "><a href="#"><span class="glyphicon glyphicon-envelope" data-toggle="modal" data-target="#enviar"></span></a></div></td>
-          <td><div class="col-lg-2 "><a href="#"><span class="glyphicon glyphicon-trash" data-toggle="modal" data-target="#eliminar"></span></a></div></td>
+          <td><div class="col-lg-2 "><a href="#" ><span class="glyphicon glyphicon-envelope" data-toggle="modal" data-target="#enviar"></span></a></div></td>
+          <td><div class="col-lg-2 "><a href="#" ><span class="glyphicon glyphicon-remove" data-toggle="modal" data-target="#eliminar"></span></a></div></td>
         </tr>
         <?php   
           } //Fin de Foreach para lista los portafolios

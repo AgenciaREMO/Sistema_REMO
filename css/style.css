@@ -34,3 +34,15 @@ margin:auto;
 	color: #d9534f;
 	padding-right: 10px;
 }
+
+.glyphicon-remove{
+	color: #d9534f;
+}
+
+.glyphicon-envelope{
+	color: #337ab7;
+}
+
+.glyphicon-new-window{
+	color: #333333;
+}

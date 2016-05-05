@@ -36,6 +36,7 @@
                     </div>
                     <div class="col-md-6 col-sm-6">
                       <a href="#">
+                        
                         <img class="img-responsive img-portfolio img-hover img-thumbnail" id="<?= $id_img ?>" src="<?= base_url($url_img)?>" alt="<?= $nom_img ?>" title="Portada actual">
                       </a>
                     </div>
@@ -75,58 +76,27 @@
                       <div class="row">
                         <?php
                           if($consultar != FALSE){
-                             foreach ($consultar->result() as $fila)
-                             {
                         ?>
-                          <div class="col-sm-12 col-md-4">
-                            <a class="btn btn-primary btn-sm btn-block" href="javascript:void(0)" onclick="insertarPortada('<?= $id_portafolio , $fila->id_img?>')"><i class="fa fa-times"></i></a>
-                            <!--<button id="editar" type="button" class="btn btn-primary btn-sm btn-block" data-toggle="modal" data-target="#modalAP">Editar</button>-->
+                          <div class="col-sm-12 col-md-4 col-lg-4">
+                            <!--<a class="btn btn-primary btn-sm btn-block" href="javascript:void(0)" onclick="insertarPortada('<?= $id_portafolio , $fila->id_img?>')"><i class="fa fa-times"></i></a>-->
+                            <button id="editar" type="button" class="btn btn-primary btn-sm btn-block" data-toggle="modal" data-target="#modalSP">Editar</button>
                           </div>
                         <?php
-                            }
+                           
                           }else{
                         ?>
-                          <div class="col-sm-12 col-md-4">
-                            <button id="seleccionar" type="button" class="btn btn-info btn-sm btn-block" data-toggle="modal" data-target="#modalSP">Seleccionar</button>
+                          <div class="col-sm-6 col-md-4" col-lg-4>
+                            <button id="seleccionar" type="button" class="btn btn-info btn-sm btn-block" data-toggle="modal" data-target="#modalSP"><span class="
+glyphicon glyphicon-ok"></span>  Seleccionar</button>
                           </div>
                         <?php    
                           }
                         ?>
-                          <div class="col-sm-12 col-md-4">
-                            <button id="nueva" type="button" class="btn btn-success btn-sm btn-block" data-toggle="modal" data-target="#modalAP">Nueva</button>
+                          <div class="col-sm-6 col-md-4" col-lg-4>
+                            <button id="nueva" type="button" class="btn btn-primary btn-sm btn-block" data-toggle="modal" data-target="#modalAP"><span class="
+glyphicon glyphicon-plus"></span>  Nueva</button>
                           </div>
-
-<script type="text/javascript">
-  $(document).on("ready", inicio); //En el momento en que c argue el documento html inicie la función inicio
-  //Función inicio que permite enviar la información del formulario
-  function inicio(id_portafolio, id_img){
-    $("form").submit(function(event){ //Se ejecuta una función anonima
-      event.preventDefaul();//Previene que se ejecute la función del submit 
-      $.aja({
-        url: "<?= base_url('portafolios/c_portada/insertarPortada') ?>" + "/" + id,
-        type: "",
-        dataType: "JSON",
-        success: function (data)
-        {
-
-        }
-      });
-    });
-  }
-  function insertarPortada (id_portafolio, id_img) {
-    $('#form')[0].reset();
-    $.ajax({
-      url: "",
-      type: "",
-      dataType: "JSON",
-      success: function (data)
-      {
-
-      }
-    });
-  }
-
-</script>
+                    
 
                         <!-- Inicio Modal seleccionar portada o editar--> 
                         <div class="modal fade" id="modalSP" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
@@ -190,11 +160,8 @@
                                       <div class="form-group">
                                       	<?= form_input($id); ?>
                                       </div>
-                                      <div class="form-group">
-                                      	<?= form_input($proceso); ?>
-                                      </div>
                                       <div class="checkbox">
-                                        <?= form_checkbox($radioImg);?>
+                                        <?= form_radio($radioImg);?>
                                       <img id="imagen" class="img-responsive img-portfolio img-hover img-thumbnail" src="<?= base_url($fila->url_thu)?>" alt="<?= $fila->nom_img ?>" title="<?= $fila->nom_img ?>">
                                        </div>
                                     </div>
@@ -218,7 +185,17 @@
                         </div>
                         <!-- Fin Modal seleccionar portada --> 
                       </div>
-                    </div>
+                      <div class="col-lg-1 col-lg-offset-11 ">
+                        <div class="row">
+                          <div class="col-lg-1">
+                            <a href="#"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                          </div>
+                          <div class="col-lg-1">
+                            <a href="#"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span></a>
+                          </div>
+                        </div>
+                      </div>
+                        </div>
                   </div>
 
                 </div>

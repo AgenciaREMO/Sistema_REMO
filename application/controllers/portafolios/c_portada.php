@@ -14,6 +14,7 @@
 			parent::__construct();
 			$this->load->model('portafolios/portafolio'); //Cargamos el modelo que se usará en todo el controlador
 			$this->load->model('portafolios/portada');
+			$this->load->model('portafolios/servicio');
 		}
 		//Función que carga el formulario como index
 		public function index(){
@@ -25,7 +26,7 @@
 			$id = array ('id_portafolio' => $id_portafolio);//Almacenamos en un arreglo el id que se obtuvo.
 			$this->load->view("head", $id);
 			$this->load->view("nav", $id);
-			$consultar = $this->portada->consultarRegistro($id);
+			$consultar = $this->portada->consultarRegistro($id); 
 			$obtener= $this->portada->obtenerPortada($id);
 			$disponible = $this->portada->portadasDisponibles($id);
 			$anterior = $this->portada->portadaAnterior($id);
@@ -59,14 +60,20 @@
 					return FALSE;
 				}
 			$this->load->view("portafolios/form_portada", $img);
+			$consultarServicio = $this->servicio->consultarServicios();
+			$data = array (
+				'servicio' => $consultarServicio,
+				'id' => $id
+				);
+			$this->load->view("portafolios/form_servicio", $data);
 			$this->load->view("portafolios/form_servicio", $id);
-			//$this->load->view("portafolios/form_comentario", $id);
-
+			$this->load->view("portafolios/form_equipo", $id);
+			$this->load->view("portafolios/form_experiencia", $id);
 			$this->load->view("portafolios/form_general", $id);
 			$this->load->view("footer", $id);
 		}
 			
-		public function insertarPortada(){
+		/*public function insertarPortada(){
 			$id_portafolio = $this->input->post->('id_portafolio');
 			$id_img = $this->input->post('id_img');
 
@@ -77,6 +84,19 @@
 
 			$data = $this->portada->insertarPortada($port_img);
 			echo json_encode($data);
-		}
+		}*/
 
+	/*public function actualizarSeleccion($id_portafolio){
+			$id = array ('id_portafolio' => $id_portafolio);
+			$boton === $_POST['boton'];
+			if($boton === 'actualizarS'){
+				$id_img = $this->input->post('id_img');
+				if($this->actualizarPortada($id, $id_img)){
+					echo "Actualizado";
+				}else{
+					echo "No actualizado";
+				}
+			}
+
+		}*/
 	}
