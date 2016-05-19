@@ -79,6 +79,47 @@
 				else if ($tipo_bus == "b-todos") {
 					$datos = $this->cotizacion->mostrarBusquedaCotizaciones($buscar, $tipo_bus, $busquedainf, $busquedasup);
 				}
+				else if ($tipo_bus == "b-expedicioninf") {
+					$datos = $this->cotizacion->mostrarBusquedaCotizaciones($buscar, $tipo_bus, $busquedainf, $busquedasup);
+				}
+				else if ($tipo_bus == "b-expedicionsup") {
+					$datos = $this->cotizacion->mostrarBusquedaCotizaciones($buscar, $tipo_bus, $busquedainf, $busquedasup);
+				}
+				else if ($tipo_bus == "b-expediciones") {
+					$datos = $this->cotizacion->mostrarBusquedaCotizaciones($buscar, $tipo_bus, $busquedainf, $busquedasup);
+				}
+				else if ($tipo_bus == "b-vigenciainf") {
+					$datos = $this->cotizacion->mostrarBusquedaCotizaciones($buscar, $tipo_bus, $busquedainf, $busquedasup);
+				}
+				else if ($tipo_bus == "b-vigenciasup") {
+					$datos = $this->cotizacion->mostrarBusquedaCotizaciones($buscar, $tipo_bus, $busquedainf, $busquedasup);
+				}
+				else if ($tipo_bus == "b-vigencias") {
+					$datos = $this->cotizacion->mostrarBusquedaCotizaciones($buscar, $tipo_bus, $busquedainf, $busquedasup);
+				}
+
+				echo json_encode($datos);
+			}
+			else
+			{
+				show_404;
+			}
+		}
+		public function mostrarFiltro()
+		{
+			if($this->input->is_ajax_request())
+			{
+				$filtro = $this->input->post("filtro");
+				if ($filtro == "f-aceptada") {
+					$datos = $this->cotizacion->mostrarFiltroCotizaciones($filtro);
+				}
+				else if ($filtro == "f-expedida") {
+					$datos = $this->cotizacion->mostrarFiltroCotizaciones($filtro);
+				}
+				else if ($filtro == "f-rechazada") {
+					$datos = $this->cotizacion->mostrarFiltroCotizaciones($filtro);
+				}
+
 				echo json_encode($datos);
 			}
 			else

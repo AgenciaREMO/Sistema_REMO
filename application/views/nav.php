@@ -17,16 +17,16 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li>
-                        <a href="<?= base_url()?>conceptos/listaDescripciones">Conceptos</a>
-                    </li>
-                    <li>
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Cotizaciones <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li>
-                                <a href="<?= base_url()?>elementos_seccion/listaElementosSeccion">Elementos de sección</a>
+                                <a href="<?= base_url()?>conceptos/listaDescripciones">Gestor de Conceptos</a>
                             </li>
                             <li>
-                                <a href="<?= base_url()?>cotizaciones/listaCotizaciones">Cotizaciones</a>
+                                <a href="<?= base_url()?>cotizaciones/listaCotizaciones">Gestor de Cotizaciones</a>
+                            </li>
+                            <li>
+                                <a href="<?= base_url()?>elementos_seccion/listaElementosSeccion">Gestor de Elementos de sección</a>
                             </li>
                         </ul>
                     </li>
@@ -34,13 +34,10 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Portafolios<b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li>
-                                <a href="<?= base_url()?>portafolios/c_portafolios/mostrarPortafolio">Portafolios</a>
+                                <a href="<?= base_url()?>portafolios/c_portafolios/mostrarPortafolio">Gestor de Portafolios</a>
                             </li>
                             <li>
-                                <a href="<?= base_url()?>c_imagenes/mostrar">Contenido gráfico</a>
-                            </li>
-                             <li>
-                                <a href="<?= base_url()?>c_imagenes/prueba">Prueba</a>
+                                <a href="<?= base_url()?>c_imagenes/mostrar">Gestor de Contenido gráfico</a>
                             </li>
                         </ul>
                     </li>
