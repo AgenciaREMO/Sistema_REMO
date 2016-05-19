@@ -12,9 +12,11 @@
 		function __construct()
 		{
 			parent::__construct();
+			$this->load->helper(array('form', 'url'));
 			$this->load->model('portafolios/portafolio'); //Cargamos el modelo que se usará en todo el controlador
 			$this->load->model('portafolios/portada');
 			$this->load->model('portafolios/servicio');
+			$this->load->library('pagination');
 		}
 		//Función que carga el formulario como index
 		public function index(){
@@ -26,10 +28,38 @@
 			$id = array ('id_portafolio' => $id_portafolio);//Almacenamos en un arreglo el id que se obtuvo.
 			$this->load->view("head", $id);
 			$this->load->view("nav", $id);
-			$consultar = $this->portada->consultarRegistro($id); 
+/*
+			$config['base_url'] = base_url().'portafolios/c_portada/cargar'.'/'.$id_portafolio;
+			$config['total_rows'] = $this->portada->num_portadas(); //Número de filas que devuelve
+			$config['per_page'] = 1; //Resultados por página
+			$config['uri_segment'] = 5;
+			$config['num_links'] = 5;
+			$config['full_tag_open'] = '<ul class="pagination">';
+			$config['full_tag_close'] = '</ul>';
+			$config['first_link'] = false;
+			$config['last_link'] = false;
+			$config['first_tag_open'] = '<li>';
+			$config['first_tag_close'] = '</li>';
+			$config['prev_link'] = '&laquo';
+			$config['prev_tag_open'] = '<li class="prev">';
+			$config['prev_tag_close'] = '</li>';
+			$config['next_link'] = '&raquo';
+			$config['next_tag_open'] = '<li>';
+			$config['next_tag_close'] = '</li>';
+			$config['last_tag_open'] = '<li>';
+			$config['last_tag_close'] = '</li>';
+			$config['cur_tag_open'] = '<li class="active"><a href="#">';
+			$config['cur_tag_close'] = '</a></li>';
+			$config['num_tag_open'] = '<li>';
+			$config['num_tag_close'] = '</li>';
+
+			$this->pagination->initialize($config);*/
+
+			//$consultar = $this->portada->consultarRegistro($id); 
 			$obtener= $this->portada->obtenerPortada($id);
-			$disponible = $this->portada->portadasDisponibles($id);
-			$anterior = $this->portada->portadaAnterior($id);
+			$disponible =$this->portada->portadasDisponibles();
+			//$disponible = $this->portada->obtener_pagina($config['per_page']);
+			//$anterior = $this->portada->portadaAnterior($id);
 			$check = $this->portada->checkDefault();
 				if($obtener != FALSE){
 					foreach ($obtener->result() as $row) {
@@ -37,15 +67,16 @@
 						$nom_img = $row->nom_img;
 						$id_img = $row->id_img;
 					}
-				
+					//$pagination = $this->pagination->create_links();
 					$img= array(
 						'id_portafolio' => $id_portafolio,
 						'id_img' => $id_img,
 						'url_img' => $url_img,
 						'nom_img' => $nom_img,
 						'disponible' => $disponible,
-						'anterior' => $anterior,
-						'consultar' => $consultar,
+						//'pagination' => $pagination,
+						//'anterior' => $anterior,
+						//'consultar' => $consultar,
 						'id_d' => $check->id_img,
 						'url_img_d' =>$check->url_thu,
 						'nom_img_d' =>$check->nom_img,
@@ -72,19 +103,39 @@
 			$this->load->view("portafolios/form_general", $id);
 			$this->load->view("footer", $id);
 		}
-			
-		/*public function insertarPortada(){
-			$id_portafolio = $this->input->post->('id_portafolio');
-			$id_img = $this->input->post('id_img');
+		
+		public function validar($id_portafolio){
+			//Validación Radio button
+			$this->form_validation->set_rules('id_img','portada','trim|required');
+			$this->form_validation->set_message('required', 'Debes seleccionar una  %s , es obligatorio');
+			if($this->form_validation->run()== FALSE) 
+			{
+				$this->insertarPortada($id_portafolio); //Si no paso la validación
+			}else{
+				$this->cargar($id_portafolio);
+			}
+		}
 
+		public function insertarPortada($id_portafolio){
+			$id_portafolio = $id_portafolio;
 			$port_img = array(
 				'id_portafolio' => $id_portafolio,
-				'id_img' => $id_img
-				);
+				'id_img' => $this->input->post('id_img')
+				);//Almacenamos en un arreglo el id que se obtuvo.
+			//$this->portada->insertarPortada($port_img);
+			print_r($port_img);
+			//redirect('/portafolios/c_portada/cargar'.'/'.$id_portafolio); 
+		}
 
-			$data = $this->portada->insertarPortada($port_img);
-			echo json_encode($data);
-		}*/
+
+
+		/*public function guardar($id_portafolio){
+			$data = array ('id_portafolio' => $id_portafolio,
+						 'id_img' => $this->input->post('id_img', TRUE)
+						);//Almacenamos en un arreglo el id que se obtuvo.
+
+			$this->portafolio->insertarPortada($data);
+		}	*/
 
 	/*public function actualizarSeleccion($id_portafolio){
 			$id = array ('id_portafolio' => $id_portafolio);

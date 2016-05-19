@@ -20,19 +20,21 @@
                         foreach ($servicio->result() as $fila) {
                           $checkbox = array(
                             'name'        => 'servicio',
-                            'id'          => '"'.$fila->id_tipo.'"',
+                            'id'          => ''.$fila->id_tipo.'',
                             'value'       => '',
                             'checked'     => FALSE,
                             'style'       => 'margin:10px',
+                            'disabled'    => 'disabled'
                             );
 
                           $textarea = array(
                             'name'        => 'des',
-                            'id'          => '"'.$fila->id_tipo.'"',
-                            'value'       => '"'.$fila->descripcion.'"',
+                            'id'          => ''.$fila->id_tipo.'',
+                            'value'       => ''.$fila->descripcion.'',
                             'rows'        => '4',
                             'cols'        => '140',
                             'class'       => 'form-control',
+                            'disabled'    => 'disabled'
                           );
 
                       ?>

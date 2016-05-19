@@ -112,7 +112,7 @@ class Portada extends CI_Model
 	}
 
 	//Función que permite obtener las portadas disponibles
-	public function portadasDisponibles($id)
+	public function portadasDisponibles()
 	{
 			/*
 			//$query = $this->db->query('SELECT nom_img, url_img, url_thu FROM imagen WHERE id_tipo_img = 1');
@@ -129,10 +129,10 @@ class Portada extends CI_Model
 	      	}
 	}
 
-
+	/*
 	public function portadaAnterior($id)
 	{
-		/*
+		
 			SELECT *
 			FROM imagen
 			INNER JOIN portafolio_imagen
@@ -140,7 +140,7 @@ class Portada extends CI_Model
 			WHERE imagen.id_tipo_img = 1
 			AND portafolio_imagen.id_portafolio != 12
 			LIMIT 2
-		*/
+		
 		$this->db->select('*');
 		$this->db->from('imagen');
 		$this->db->join('portafolio_imagen','imagen.id_img = portafolio_imagen.id_img');
@@ -154,10 +154,11 @@ class Portada extends CI_Model
       	}else{
         	return false;
       	}
-	}
+	}*/
 
-	public function insertarPortada(){
-		$this->db->insert('portafolio_imagen', $data);
+	public function insertarPortada($port_img){
+		$registro_p_i = $this->db->insert('portafolio_imagen', $port_img);
+		return $registro_p_i;
 	}
 
 	public function actualizarPortada($id_portafolio, $id_img){
@@ -175,6 +176,21 @@ class Portada extends CI_Model
 			return false;
 		}
 
+	}
+
+	//Paginación
+	public function num_portadas(){
+		//SELECT count(*) as number FROM imagen INNER JOIN tipo_imagen ON imagen.id_tipo_img = tipo_imagen.id_tipo_img WHERE imagen.id_tipo_img = 1
+		$numero = $this->db->query("SELECT count(*) as number FROM imagen INNER JOIN tipo_imagen ON imagen.id_tipo_img = tipo_imagen.id_tipo_img WHERE imagen.id_tipo_img = 1")->row()->number; //Regresa el número total de filas de una tabla
+		return intval($numero);
+	}
+
+	public function obtener_pagina($numero_por_pagina){
+		//$this->db->get();
+		
+		$query = $this->db->get("imagen", $numero_por_pagina, $this->uri->segment(5));
+		//$this->db->where('id_tipo_img', 1);
+		return $query;
 	}
 
 }

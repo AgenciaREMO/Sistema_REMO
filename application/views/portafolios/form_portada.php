@@ -9,7 +9,7 @@
 ?>
 
 <div class="container">
-  <form>
+  
   <div class="row">
       <div class="col-lg-12">
         <!-- Inicio Tabs -->
@@ -34,14 +34,66 @@
                     <div class="col-lg-12">
                       <h2 class="page-header">Portada Portafolio</h2>
                     </div>
-                    <div class="col-md-6 col-sm-6">
-                      <a href="#">
-                        
-                        <img class="img-responsive img-portfolio img-hover img-thumbnail" id="<?= $id_img ?>" src="<?= base_url($url_img)?>" alt="<?= $nom_img ?>" title="Portada actual">
-                      </a>
+         
+                  <?=@$error?>
+                  <?php validation_errors('<div class="alert alert-danger" role="alert">','</div>'); ?>
+                  <form action="<?= base_url('portafolios/c_portada/insertarPortada').'/'.$id_portafolio ?>" method="POST" name="form_portada" id="form_portada">
+                    <div class="row">
+                      <?= form_error('id_img'); ?>
+                      <?php 
+                        foreach ($disponible->result() as $fila)
+                        { 
+                          
+                          $radioImg = array(
+                          'name' => 'id_img',
+                          'id' => 'id_img',
+                          'value' => ''.$fila->id_img.'',
+                          'checked' => FALSE,
+                          'type' => 'radio'
+                          );
+                        //botones
+                        $guardar = array(
+                          'name'  => 'guardar',
+                            'id'    => 'g-portada',
+                            'class' => 'btn btn-primary',
+                            'value' => 'Guardar'
+                            );
+                        $cancelar = array(
+                          'onClick' => 'desactivarelemento()',
+                          'style' => 'display:none',
+                          'class' => 'btn btn-default',
+                          'id' => 'e-cancelar',
+                          'content' => 'Cancelar'
+                        );
+                      ?>
+                          <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2 img-rounded">
+                            <?= form_radio($radioImg);?> 
+                            <img class="img-responsive img-hover img-thumbnail" src="<?= base_url($fila->url_img)?>" alt="<?= $fila->nom_img ?>" title="<?= $fila->nom_img ?>">
+                          </div>
+                      <?php
+                        }
+                      ?>
+
+                    </div>               
+                    <div class="row">
+                      <div class="col-lg-12 text-center">
+                        <?php echo $pagination;?>
+                      </div>
                     </div>
-                    <div class="col-md-6 col-sm-6">
-                      <div class="row">
+                    <div class="row">
+                      <div class="col-md-12 col-sm-12 col-sm-offset-9">
+                        <button onClick="dportada()" style="display:inline" class="btn btn-default" id="c-portada"><span class="glyphicon glyphicon-floppy-remove" aria-hidden="true"></span> Cancelar</button>
+                        <button onClick="aportada()" style="display:inline" class="btn btn-primary" id="e-portada"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Editar</button>
+                       <button type="submit" class="btn btn-default">Guardar</button>
+                       <!--<?= form_submit($guardar);?>-->
+                      
+                      </div>
+                    </form>
+                    <span></span>
+                    </div>
+                      
+                    <div class="col-md-12 col-sm-12 col-sm-offset-">
+                      <!--<div class="row">
                         <div class="col-lg-12">
                           <h5>Portadas anteriores</h5>
                         </div>
@@ -72,13 +124,13 @@
                         <?php
                         }
                         ?>                  
-                      </div>
-                      <div class="row">
+                      </div>-->
+                      <!--<div class="row">
                         <?php
                           if($consultar != FALSE){
                         ?>
                           <div class="col-sm-12 col-md-4 col-lg-4">
-                            <!--<a class="btn btn-primary btn-sm btn-block" href="javascript:void(0)" onclick="insertarPortada('<?= $id_portafolio , $fila->id_img?>')"><i class="fa fa-times"></i></a>-->
+                            //<a class="btn btn-primary btn-sm btn-block" href="javascript:void(0)" onclick="insertarPortada('<?= $id_portafolio , $fila->id_img?>')"><i class="fa fa-times"></i></a>
                             <button id="editar" type="button" class="btn btn-primary btn-sm btn-block" data-toggle="modal" data-target="#modalSP">Editar</button>
                           </div>
                         <?php
@@ -98,7 +150,7 @@ glyphicon glyphicon-plus"></span>  Nueva</button>
                           </div>
                     
 
-                        <!-- Inicio Modal seleccionar portada o editar--> 
+                        // Inicio Modal seleccionar portada o editar
                         <div class="modal fade" id="modalSP" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
                           <div class="modal-dialog modal-lg">
                             <div class="modal-content">
@@ -115,45 +167,14 @@ glyphicon glyphicon-plus"></span>  Nueva</button>
                                   );
                               ?>
                                 <?= form_open('portafolios/c_portada/validar', $form); ?>
-                                <!--<form id="insertar_editar" onsubmit="return modificarPortada();">-->
+                                //<form id="insertar_editar" onsubmit="return modificarPortada();">
                                  <div class="row">
                                     <?php 
                                       foreach ($disponible->result() as $fila)
                                       //  while ($fila = mysql_fetch_array($consulta, MYSQL_ASSOC)) {
                                                           {   
-                    									  $id = array(
-                    										'name' => 'id_img',
-                    										'id' => 'id_img',
-                    										'readonly' => 'readonly',
-                    										'style' => 'visibility: hidden; height:1px;',
-                    										'rules' => 'required'
-                                        );
-                    										$proceso = array(
-                    										'name' => 'proceso',
-                    										'id' => 'proceso',
-                    										'rules' => 'required',
-                    										'style' => 'visibility: hidden; height:1px;',
-                    										'readonly' => 'readonly',
-                    										);
-                    										$radioImg = array(
-                                        'name' => 'id_img',
-                                        'id' => 'id_img',
-                                        'value' => "$fila->id_img",
-                                        'checked' => FALSE,
-                                        'type' => 'radio'
-                                        );
-                    										$guardar = array(
-                    										'name' => 'guardar',
-                    										'id' => 'guardar',
-                    										'value' => 'Guardar',
-                    										'class' => 'btn btn-success',
-                    										);
-                    										$editar = array(
-                    										'name' => 'editar',
-                    										'id' => 'editar',
-                    										'value' => 'Editar',
-                    										'class' => 'btn btn-warning',
-                    										);
+                    									  
+
 										
                                     ?>
                                     <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2 img-rounded">
@@ -176,16 +197,16 @@ glyphicon glyphicon-plus"></span>  Nueva</button>
                               <div class="modal-footer">
                               		<?= form_submit($guardar);?>
                                     <?= form_submit($editar);?>
-                                    <!--<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                                    <input type="submit" class="btn btn-primary" name="subir" value="Guardar">-->
+                                    //<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                                    <input type="submit" class="btn btn-primary" name="subir" value="Guardar">
                                 </form>
                               </div>
                             </div>
                           </div> 
                         </div>
-                        <!-- Fin Modal seleccionar portada --> 
-                      </div>
-                      <div class="col-lg-1 col-lg-offset-11 ">
+                        // Fin Modal seleccionar portada
+                      </div>-->
+                      <!--<div class="col-lg-1 col-lg-offset-11 ">
                         <div class="row">
                           <div class="col-lg-1">
                             <a href="#"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
@@ -194,12 +215,57 @@ glyphicon glyphicon-plus"></span>  Nueva</button>
                             <a href="#"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span></a>
                           </div>
                         </div>
-                      </div>
+                      </div>-->
                         </div>
                   </div>
 
                 </div>
               </div>
             
-            <!-- Fin Panel de tab Portada -->  
-            
+            <!-- Fin Panel de tab Portada --> 
+                        <!-- Fin Panel de tab Portada 
+<script type="text/javascript">
+  $(document).on("ready", inicio);
+
+  function inicio(){
+    $("#g-portada").submit(function(event){
+        alert("Estoy aqui");
+        event.preventDefault(); //Previene que se ejecute la acción del formulario
+
+    });
+  }
+</script>
+
+ 
+            <script type="text/javascript">
+              $(document).ready(function(){
+                $('#form_portada').submit(function(e){
+                  e.preventDefault(); //Previene la ejecución del código
+                  var data = $(this).serializeArray(); //Guardamos en una variable data el formulario
+
+                  //Método AJAX para insertar portada
+                  $ajax.({
+                    url:"<?= base_url('portafolios/c_portada/guardar')?>" + "/" + id, //action
+                    type: 'POST', //method
+                    dataType: 'json', //devuelve el arreglo en json
+                    data:'data', 
+                  })
+
+                  //Cuando la función sea true
+                  .done(function(){
+                    console.log("success");
+                    $('span').html("Correcto");
+                  })
+                  //Cuando la función sea false
+                  .fail(function(){
+                    console.log("error");
+                    $('span').html("Falso");
+                  })
+                  //Siempre y cuando se termine el request sin importar si es true o false
+                  .always(function(){
+                    console.log("complete");
+                  });
+
+                })
+              });
+            </script>--> 
