@@ -6,12 +6,58 @@
 	{
 		public function obtenerCotizaciones()
 		{
-			return $this->db->query("SELECT cotizacion.id_cotizacion AS id_cotizacion, cotizacion.id_proyecto AS id_proyecto, cotizacion.id_personal AS id_personal, cotizacion.id_estatus AS id_estatus, folio, f_expedicion, vigencia, total, personal.nombre AS personal, estatus_cotizacion.estatus AS estatus, proyecto.nombre AS proyecto, empresa.nombre AS empresa FROM cotizacion JOIN personal ON cotizacion.id_personal=personal.id_personal JOIN proyecto ON cotizacion.id_proyecto=proyecto.id_proyecto JOIN estatus_cotizacion ON cotizacion.id_estatus=estatus_cotizacion.id_estatus JOIN cliente ON proyecto.id_cliente=cliente.id_cliente JOIN empresa ON cliente.id_empresa=empresa.id_empresa ORDER BY vigencia DESC");
+			return $this->db->query("SELECT cotizacion.id_cotizacion AS id_cotizacion, 
+											cotizacion.id_proyecto AS id_proyecto, 
+											cotizacion.id_personal AS id_personal, 
+											cotizacion.id_estatus AS id_estatus, 
+											folio, f_expedicion, vigencia, total, 
+											personal.nombre AS personal, 
+											estatus_cotizacion.estatus AS estatus, 
+											proyecto.nombre AS proyecto, 
+											empresa.nombre AS empresa 
+											FROM cotizacion 
+											JOIN personal ON cotizacion.id_personal=personal.id_personal 
+											JOIN proyecto ON cotizacion.id_proyecto=proyecto.id_proyecto 
+											JOIN estatus_cotizacion ON cotizacion.id_estatus=estatus_cotizacion.id_estatus 
+											JOIN cliente ON proyecto.id_cliente=cliente.id_cliente 
+											JOIN empresa ON cliente.id_empresa=empresa.id_empresa 
+											ORDER BY vigencia DESC");
 		}
 		public function obtenerCotizacionPorId($Id = '')
 		{
-			$resultado = $this->db->query("SELECT cotizacion.id_cotizacion AS id_cotizacion, cotizacion.id_proyecto AS id_proyecto, cotizacion.id_personal AS id_personal, cotizacion.id_estatus AS id_estatus, folio, f_expedicion, vigencia, total, personal.nombre AS personal, estatus_cotizacion.estatus AS estatus, proyecto.nombre AS proyecto, empresa.nombre AS empresa FROM cotizacion JOIN personal ON cotizacion.id_personal=personal.id_personal JOIN proyecto ON cotizacion.id_proyecto=proyecto.id_proyecto JOIN estatus_cotizacion ON cotizacion.id_estatus=estatus_cotizacion.id_estatus JOIN cliente ON proyecto.id_cliente=cliente.id_cliente JOIN empresa ON cliente.id_empresa=empresa.id_empresa WHERE id_cotizacion='".$Id."' LIMIT 1");
+			$resultado = $this->db->query("SELECT cotizacion.id_cotizacion AS id_cotizacion, 
+											cotizacion.id_proyecto AS id_proyecto, 
+											cotizacion.id_personal AS id_personal, 
+											cotizacion.id_estatus AS id_estatus, 
+											folio, f_expedicion, vigencia, total, 
+											personal.nombre AS personal, 
+											estatus_cotizacion.estatus AS estatus, 
+											proyecto.nombre AS proyecto, 
+											empresa.nombre AS empresa 
+											FROM cotizacion 
+											JOIN personal ON cotizacion.id_personal=personal.id_personal 
+											JOIN proyecto ON cotizacion.id_proyecto=proyecto.id_proyecto 
+											JOIN estatus_cotizacion ON cotizacion.id_estatus=estatus_cotizacion.id_estatus 
+											JOIN cliente ON proyecto.id_cliente=cliente.id_cliente 
+											JOIN empresa ON cliente.id_empresa=empresa.id_empresa 
+											WHERE id_cotizacion='".$Id."' LIMIT 1");
 			return $resultado->row(); 
+		}
+		public function obtenerCotizacionesTemp()
+		{
+			return $this->db->query("SELECT cotizacion_temp.id_cotizacion_temp AS id_cotizacion_temp, 
+											cotizacion_temp.id_proyecto AS id_proyecto, 
+											cotizacion_temp.id_personal AS id_personal,  
+											folio, total, 
+											personal.nombre AS personal, 
+											proyecto.nombre AS proyecto, 
+											empresa.nombre AS empresa 
+											FROM cotizacion_temp 
+											JOIN personal ON cotizacion_temp.id_personal=personal.id_personal 
+											JOIN proyecto ON cotizacion_temp.id_proyecto=proyecto.id_proyecto 
+											JOIN cliente ON proyecto.id_cliente=cliente.id_cliente 
+											JOIN empresa ON cliente.id_empresa=empresa.id_empresa 
+											ORDER BY f_generacion DESC");
 		}
 		public function cotizacionesAceptadas()
 		{
@@ -47,59 +93,268 @@
 		{
 			if($tipo_bus=="b-personal")
 			{
-				$resultado = $this->db->query("SELECT cotizacion.id_cotizacion AS id_cotizacion, cotizacion.id_proyecto AS id_proyecto, cotizacion.id_personal AS id_personal, cotizacion.id_estatus AS id_estatus, folio, f_expedicion, vigencia, total, personal.nombre AS personal, estatus_cotizacion.estatus AS estatus, proyecto.nombre AS proyecto, empresa.nombre AS empresa FROM cotizacion JOIN personal ON cotizacion.id_personal=personal.id_personal JOIN proyecto ON cotizacion.id_proyecto=proyecto.id_proyecto JOIN estatus_cotizacion ON cotizacion.id_estatus=estatus_cotizacion.id_estatus JOIN cliente ON proyecto.id_cliente=cliente.id_cliente JOIN empresa ON cliente.id_empresa=empresa.id_empresa WHERE personal.nombre LIKE '%".$busqueda."%' ORDER BY vigencia DESC");
+				$resultado = $this->db->query("SELECT cotizacion.id_cotizacion AS id_cotizacion, 
+												cotizacion.id_proyecto AS id_proyecto, 
+												cotizacion.id_personal AS id_personal, 
+												cotizacion.id_estatus AS id_estatus, 
+												folio, f_expedicion, vigencia, total, 
+												personal.nombre AS personal, 
+												estatus_cotizacion.estatus AS estatus, 
+												proyecto.nombre AS proyecto, 
+												empresa.nombre AS empresa 
+												FROM cotizacion 
+												JOIN personal ON cotizacion.id_personal=personal.id_personal 
+												JOIN proyecto ON cotizacion.id_proyecto=proyecto.id_proyecto 
+												JOIN estatus_cotizacion ON cotizacion.id_estatus=estatus_cotizacion.id_estatus 
+												JOIN cliente ON proyecto.id_cliente=cliente.id_cliente 
+												JOIN empresa ON cliente.id_empresa=empresa.id_empresa 
+												WHERE personal.nombre LIKE '%".$busqueda."%' ORDER BY vigencia DESC");
 			}
 			else if($tipo_bus=="b-proyecto")
 			{
-				$resultado = $this->db->query("SELECT cotizacion.id_cotizacion AS id_cotizacion, cotizacion.id_proyecto AS id_proyecto, cotizacion.id_personal AS id_personal, cotizacion.id_estatus AS id_estatus, folio, f_expedicion, vigencia, total, personal.nombre AS personal, estatus_cotizacion.estatus AS estatus, proyecto.nombre AS proyecto, empresa.nombre AS empresa FROM cotizacion JOIN personal ON cotizacion.id_personal=personal.id_personal JOIN proyecto ON cotizacion.id_proyecto=proyecto.id_proyecto JOIN estatus_cotizacion ON cotizacion.id_estatus=estatus_cotizacion.id_estatus JOIN cliente ON proyecto.id_cliente=cliente.id_cliente JOIN empresa ON cliente.id_empresa=empresa.id_empresa WHERE proyecto.nombre LIKE '%".$busqueda."%' ORDER BY vigencia DESC");
+				$resultado = $this->db->query("SELECT cotizacion.id_cotizacion AS id_cotizacion, 
+												cotizacion.id_proyecto AS id_proyecto, 
+												cotizacion.id_personal AS id_personal, 
+												cotizacion.id_estatus AS id_estatus, 
+												folio, f_expedicion, vigencia, total, 
+												personal.nombre AS personal, 
+												estatus_cotizacion.estatus AS estatus, 
+												proyecto.nombre AS proyecto, 
+												empresa.nombre AS empresa 
+												FROM cotizacion 
+												JOIN personal ON cotizacion.id_personal=personal.id_personal 
+												JOIN proyecto ON cotizacion.id_proyecto=proyecto.id_proyecto 
+												JOIN estatus_cotizacion ON cotizacion.id_estatus=estatus_cotizacion.id_estatus 
+												JOIN cliente ON proyecto.id_cliente=cliente.id_cliente 
+												JOIN empresa ON cliente.id_empresa=empresa.id_empresa 
+												WHERE proyecto.nombre LIKE '%".$busqueda."%' ORDER BY vigencia DESC");
 			}
 			else if($tipo_bus=="b-folio")
 			{
-				$resultado = $this->db->query("SELECT cotizacion.id_cotizacion AS id_cotizacion, cotizacion.id_proyecto AS id_proyecto, cotizacion.id_personal AS id_personal, cotizacion.id_estatus AS id_estatus, folio, f_expedicion, vigencia, total, personal.nombre AS personal, estatus_cotizacion.estatus AS estatus, proyecto.nombre AS proyecto, empresa.nombre AS empresa FROM cotizacion JOIN personal ON cotizacion.id_personal=personal.id_personal JOIN proyecto ON cotizacion.id_proyecto=proyecto.id_proyecto JOIN estatus_cotizacion ON cotizacion.id_estatus=estatus_cotizacion.id_estatus JOIN cliente ON proyecto.id_cliente=cliente.id_cliente JOIN empresa ON cliente.id_empresa=empresa.id_empresa WHERE folio LIKE '%".$busqueda."%' ORDER BY vigencia DESC");
+				$resultado = $this->db->query("SELECT cotizacion.id_cotizacion AS id_cotizacion, 
+												cotizacion.id_proyecto AS id_proyecto, 
+												cotizacion.id_personal AS id_personal, 
+												cotizacion.id_estatus AS id_estatus, 
+												folio, f_expedicion, vigencia, total, 
+												personal.nombre AS personal, 
+												estatus_cotizacion.estatus AS estatus, 
+												proyecto.nombre AS proyecto, 
+												empresa.nombre AS empresa 
+												FROM cotizacion 
+												JOIN personal ON cotizacion.id_personal=personal.id_personal 
+												JOIN proyecto ON cotizacion.id_proyecto=proyecto.id_proyecto 
+												JOIN estatus_cotizacion ON cotizacion.id_estatus=estatus_cotizacion.id_estatus 
+												JOIN cliente ON proyecto.id_cliente=cliente.id_cliente 
+												JOIN empresa ON cliente.id_empresa=empresa.id_empresa 
+												WHERE folio LIKE '%".$busqueda."%' ORDER BY vigencia DESC");
 			}
 			else if($tipo_bus=="b-empresa")
 			{
-				$resultado = $this->db->query("SELECT cotizacion.id_cotizacion AS id_cotizacion, cotizacion.id_proyecto AS id_proyecto, cotizacion.id_personal AS id_personal, cotizacion.id_estatus AS id_estatus, folio, f_expedicion, vigencia, total, personal.nombre AS personal, estatus_cotizacion.estatus AS estatus, proyecto.nombre AS proyecto, empresa.nombre AS empresa FROM cotizacion JOIN personal ON cotizacion.id_personal=personal.id_personal JOIN proyecto ON cotizacion.id_proyecto=proyecto.id_proyecto JOIN estatus_cotizacion ON cotizacion.id_estatus=estatus_cotizacion.id_estatus JOIN cliente ON proyecto.id_cliente=cliente.id_cliente JOIN empresa ON cliente.id_empresa=empresa.id_empresa WHERE empresa.nombre LIKE '%".$busqueda."%' ORDER BY vigencia DESC");
+				$resultado = $this->db->query("SELECT cotizacion.id_cotizacion AS id_cotizacion, 
+												cotizacion.id_proyecto AS id_proyecto, 
+												cotizacion.id_personal AS id_personal, 
+												cotizacion.id_estatus AS id_estatus, 
+												folio, f_expedicion, vigencia, total, 
+												personal.nombre AS personal, 
+												estatus_cotizacion.estatus AS estatus, proyecto.nombre AS proyecto, 
+												empresa.nombre AS empresa 
+												FROM cotizacion 
+												JOIN personal ON cotizacion.id_personal=personal.id_personal 
+												JOIN proyecto ON cotizacion.id_proyecto=proyecto.id_proyecto 
+												JOIN estatus_cotizacion ON cotizacion.id_estatus=estatus_cotizacion.id_estatus 
+												JOIN cliente ON proyecto.id_cliente=cliente.id_cliente 
+												JOIN empresa ON cliente.id_empresa=empresa.id_empresa 
+												WHERE empresa.nombre LIKE '%".$busqueda."%' ORDER BY vigencia DESC");
 			}
 			else if($tipo_bus=="b-importeinf")
 			{
-				$resultado = $this->db->query("SELECT cotizacion.id_cotizacion AS id_cotizacion, cotizacion.id_proyecto AS id_proyecto, cotizacion.id_personal AS id_personal, cotizacion.id_estatus AS id_estatus, folio, f_expedicion, vigencia, total, personal.nombre AS personal, estatus_cotizacion.estatus AS estatus, proyecto.nombre AS proyecto, empresa.nombre AS empresa FROM cotizacion JOIN personal ON cotizacion.id_personal=personal.id_personal JOIN proyecto ON cotizacion.id_proyecto=proyecto.id_proyecto JOIN estatus_cotizacion ON cotizacion.id_estatus=estatus_cotizacion.id_estatus JOIN cliente ON proyecto.id_cliente=cliente.id_cliente JOIN empresa ON cliente.id_empresa=empresa.id_empresa WHERE total >='".$busqueda."' ORDER BY vigencia DESC");
+				$resultado = $this->db->query("SELECT cotizacion.id_cotizacion AS id_cotizacion, 
+												cotizacion.id_proyecto AS id_proyecto, 
+												cotizacion.id_personal AS id_personal, 
+												cotizacion.id_estatus AS id_estatus, 
+												folio, f_expedicion, vigencia, total, 
+												personal.nombre AS personal, 
+												estatus_cotizacion.estatus AS estatus, 
+												proyecto.nombre AS proyecto, 
+												empresa.nombre AS empresa 
+												FROM cotizacion 
+												JOIN personal ON cotizacion.id_personal=personal.id_personal 
+												JOIN proyecto ON cotizacion.id_proyecto=proyecto.id_proyecto 
+												JOIN estatus_cotizacion ON cotizacion.id_estatus=estatus_cotizacion.id_estatus 
+												JOIN cliente ON proyecto.id_cliente=cliente.id_cliente 
+												JOIN empresa ON cliente.id_empresa=empresa.id_empresa 
+												WHERE total >='".$busqueda."' ORDER BY vigencia DESC");
 			}
 			else if($tipo_bus=="b-importesup")
 			{
-				$resultado = $this->db->query("SELECT cotizacion.id_cotizacion AS id_cotizacion, cotizacion.id_proyecto AS id_proyecto, cotizacion.id_personal AS id_personal, cotizacion.id_estatus AS id_estatus, folio, f_expedicion, vigencia, total, personal.nombre AS personal, estatus_cotizacion.estatus AS estatus, proyecto.nombre AS proyecto, empresa.nombre AS empresa FROM cotizacion JOIN personal ON cotizacion.id_personal=personal.id_personal JOIN proyecto ON cotizacion.id_proyecto=proyecto.id_proyecto JOIN estatus_cotizacion ON cotizacion.id_estatus=estatus_cotizacion.id_estatus JOIN cliente ON proyecto.id_cliente=cliente.id_cliente JOIN empresa ON cliente.id_empresa=empresa.id_empresa WHERE total <='".$busqueda."%' ORDER BY vigencia DESC");
+				$resultado = $this->db->query("SELECT cotizacion.id_cotizacion AS id_cotizacion, 
+												cotizacion.id_proyecto AS id_proyecto, 
+												cotizacion.id_personal AS id_personal, 
+												cotizacion.id_estatus AS id_estatus, 
+												folio, f_expedicion, vigencia, total, 
+												personal.nombre AS personal, 
+												estatus_cotizacion.estatus AS estatus, 
+												proyecto.nombre AS proyecto, 
+												empresa.nombre AS empresa 
+												FROM cotizacion 
+												JOIN personal ON cotizacion.id_personal=personal.id_personal 
+												JOIN proyecto ON cotizacion.id_proyecto=proyecto.id_proyecto 
+												JOIN estatus_cotizacion ON cotizacion.id_estatus=estatus_cotizacion.id_estatus 
+												JOIN cliente ON proyecto.id_cliente=cliente.id_cliente 
+												JOIN empresa ON cliente.id_empresa=empresa.id_empresa 
+												WHERE total <='".$busqueda."%' ORDER BY vigencia DESC");
 			}
 			else if($tipo_bus=="b-importes")
 			{
-				$resultado = $this->db->query("SELECT cotizacion.id_cotizacion AS id_cotizacion, cotizacion.id_proyecto AS id_proyecto, cotizacion.id_personal AS id_personal, cotizacion.id_estatus AS id_estatus, folio, f_expedicion, vigencia, total, personal.nombre AS personal, estatus_cotizacion.estatus AS estatus, proyecto.nombre AS proyecto, empresa.nombre AS empresa FROM cotizacion JOIN personal ON cotizacion.id_personal=personal.id_personal JOIN proyecto ON cotizacion.id_proyecto=proyecto.id_proyecto JOIN estatus_cotizacion ON cotizacion.id_estatus=estatus_cotizacion.id_estatus JOIN cliente ON proyecto.id_cliente=cliente.id_cliente JOIN empresa ON cliente.id_empresa=empresa.id_empresa WHERE total >= ".$busqueda1." AND total <= ".$busqueda2." ORDER BY vigencia DESC");
+				$resultado = $this->db->query("SELECT cotizacion.id_cotizacion AS id_cotizacion, 
+												cotizacion.id_proyecto AS id_proyecto, 
+												cotizacion.id_personal AS id_personal, 
+												cotizacion.id_estatus AS id_estatus, 
+												folio, f_expedicion, vigencia, total, 
+												personal.nombre AS personal, 
+												estatus_cotizacion.estatus AS estatus, 
+												proyecto.nombre AS proyecto, 
+												empresa.nombre AS empresa 
+												FROM cotizacion 
+												JOIN personal ON cotizacion.id_personal=personal.id_personal 
+												JOIN proyecto ON cotizacion.id_proyecto=proyecto.id_proyecto 
+												JOIN estatus_cotizacion ON cotizacion.id_estatus=estatus_cotizacion.id_estatus 
+												JOIN cliente ON proyecto.id_cliente=cliente.id_cliente 
+												JOIN empresa ON cliente.id_empresa=empresa.id_empresa 
+												WHERE total >= ".$busqueda1." AND total <= ".$busqueda2." ORDER BY vigencia DESC");
 			}
 			else if($tipo_bus=="b-todos")
 			{
-				$resultado = $this->db->query("SELECT cotizacion.id_cotizacion AS id_cotizacion, cotizacion.id_proyecto AS id_proyecto, cotizacion.id_personal AS id_personal, cotizacion.id_estatus AS id_estatus, folio, f_expedicion, vigencia, total, personal.nombre AS personal, estatus_cotizacion.estatus AS estatus, proyecto.nombre AS proyecto, empresa.nombre AS empresa FROM cotizacion JOIN personal ON cotizacion.id_personal=personal.id_personal JOIN proyecto ON cotizacion.id_proyecto=proyecto.id_proyecto JOIN estatus_cotizacion ON cotizacion.id_estatus=estatus_cotizacion.id_estatus JOIN cliente ON proyecto.id_cliente=cliente.id_cliente JOIN empresa ON cliente.id_empresa=empresa.id_empresa ORDER BY vigencia DESC");
+				$resultado = $this->db->query("SELECT cotizacion.id_cotizacion AS id_cotizacion, 
+												cotizacion.id_proyecto AS id_proyecto, 
+												cotizacion.id_personal AS id_personal, 
+												cotizacion.id_estatus AS id_estatus, 
+												folio, f_expedicion, vigencia, total, 
+												personal.nombre AS personal, 
+												estatus_cotizacion.estatus AS estatus, 
+												proyecto.nombre AS proyecto, 
+												empresa.nombre AS empresa 
+												FROM cotizacion 
+												JOIN personal ON cotizacion.id_personal=personal.id_personal 
+												JOIN proyecto ON cotizacion.id_proyecto=proyecto.id_proyecto 
+												JOIN estatus_cotizacion ON cotizacion.id_estatus=estatus_cotizacion.id_estatus 
+												JOIN cliente ON proyecto.id_cliente=cliente.id_cliente 
+												JOIN empresa ON cliente.id_empresa=empresa.id_empresa 
+												ORDER BY vigencia DESC");
 			}
 			else if($tipo_bus=="b-expedicioninf")
 			{
-				$resultado = $this->db->query("SELECT cotizacion.id_cotizacion AS id_cotizacion, cotizacion.id_proyecto AS id_proyecto, cotizacion.id_personal AS id_personal, cotizacion.id_estatus AS id_estatus, folio, f_expedicion, vigencia, total, personal.nombre AS personal, estatus_cotizacion.estatus AS estatus, proyecto.nombre AS proyecto, empresa.nombre AS empresa FROM cotizacion JOIN personal ON cotizacion.id_personal=personal.id_personal JOIN proyecto ON cotizacion.id_proyecto=proyecto.id_proyecto JOIN estatus_cotizacion ON cotizacion.id_estatus=estatus_cotizacion.id_estatus JOIN cliente ON proyecto.id_cliente=cliente.id_cliente JOIN empresa ON cliente.id_empresa=empresa.id_empresa WHERE f_expedicion >='".$busqueda."' ORDER BY vigencia DESC");
+				$resultado = $this->db->query("SELECT cotizacion.id_cotizacion AS id_cotizacion, 
+												cotizacion.id_proyecto AS id_proyecto, 
+												cotizacion.id_personal AS id_personal, 
+												cotizacion.id_estatus AS id_estatus, 
+												folio, f_expedicion, vigencia, total, 
+												personal.nombre AS personal, 
+												estatus_cotizacion.estatus AS estatus, 
+												proyecto.nombre AS proyecto, 
+												empresa.nombre AS empresa 
+												FROM cotizacion 
+												JOIN personal ON cotizacion.id_personal=personal.id_personal 
+												JOIN proyecto ON cotizacion.id_proyecto=proyecto.id_proyecto 
+												JOIN estatus_cotizacion ON cotizacion.id_estatus=estatus_cotizacion.id_estatus 
+												JOIN cliente ON proyecto.id_cliente=cliente.id_cliente 
+												JOIN empresa ON cliente.id_empresa=empresa.id_empresa 
+												WHERE f_expedicion >='".$busqueda."' ORDER BY vigencia DESC");
 			}
 			else if($tipo_bus=="b-expedicionsup")
 			{
-				$resultado = $this->db->query("SELECT cotizacion.id_cotizacion AS id_cotizacion, cotizacion.id_proyecto AS id_proyecto, cotizacion.id_personal AS id_personal, cotizacion.id_estatus AS id_estatus, folio, f_expedicion, vigencia, total, personal.nombre AS personal, estatus_cotizacion.estatus AS estatus, proyecto.nombre AS proyecto, empresa.nombre AS empresa FROM cotizacion JOIN personal ON cotizacion.id_personal=personal.id_personal JOIN proyecto ON cotizacion.id_proyecto=proyecto.id_proyecto JOIN estatus_cotizacion ON cotizacion.id_estatus=estatus_cotizacion.id_estatus JOIN cliente ON proyecto.id_cliente=cliente.id_cliente JOIN empresa ON cliente.id_empresa=empresa.id_empresa WHERE f_expedicion <='".$busqueda."' ORDER BY vigencia DESC");
+				$resultado = $this->db->query("SELECT cotizacion.id_cotizacion AS id_cotizacion, 
+												cotizacion.id_proyecto AS id_proyecto, 
+												cotizacion.id_personal AS id_personal, 
+												cotizacion.id_estatus AS id_estatus, 
+												folio, f_expedicion, vigencia, total, 
+												personal.nombre AS personal, 
+												estatus_cotizacion.estatus AS estatus, 
+												proyecto.nombre AS proyecto, 
+												empresa.nombre AS empresa 
+												FROM cotizacion 
+												JOIN personal ON cotizacion.id_personal=personal.id_personal 
+												JOIN proyecto ON cotizacion.id_proyecto=proyecto.id_proyecto 
+												JOIN estatus_cotizacion ON cotizacion.id_estatus=estatus_cotizacion.id_estatus 
+												JOIN cliente ON proyecto.id_cliente=cliente.id_cliente 
+												JOIN empresa ON cliente.id_empresa=empresa.id_empresa 
+												WHERE f_expedicion <='".$busqueda."' ORDER BY vigencia DESC");
 			}
 			else if($tipo_bus=="b-expediciones")
 			{
-				$resultado = $this->db->query("SELECT cotizacion.id_cotizacion AS id_cotizacion, cotizacion.id_proyecto AS id_proyecto, cotizacion.id_personal AS id_personal, cotizacion.id_estatus AS id_estatus, folio, f_expedicion, vigencia, total, personal.nombre AS personal, estatus_cotizacion.estatus AS estatus, proyecto.nombre AS proyecto, empresa.nombre AS empresa FROM cotizacion JOIN personal ON cotizacion.id_personal=personal.id_personal JOIN proyecto ON cotizacion.id_proyecto=proyecto.id_proyecto JOIN estatus_cotizacion ON cotizacion.id_estatus=estatus_cotizacion.id_estatus JOIN cliente ON proyecto.id_cliente=cliente.id_cliente JOIN empresa ON cliente.id_empresa=empresa.id_empresa WHERE f_expedicion BETWEEN '".$busqueda1."' AND '".$busqueda2."' ORDER BY vigencia DESC");
+				$resultado = $this->db->query("SELECT cotizacion.id_cotizacion AS id_cotizacion, 
+												cotizacion.id_proyecto AS id_proyecto, 
+												cotizacion.id_personal AS id_personal, 
+												cotizacion.id_estatus AS id_estatus, 
+												folio, f_expedicion, vigencia, total, 
+												personal.nombre AS personal, 
+												estatus_cotizacion.estatus AS estatus, 
+												proyecto.nombre AS proyecto, 
+												empresa.nombre AS empresa 
+												FROM cotizacion 
+												JOIN personal ON cotizacion.id_personal=personal.id_personal 
+												JOIN proyecto ON cotizacion.id_proyecto=proyecto.id_proyecto 
+												JOIN estatus_cotizacion ON cotizacion.id_estatus=estatus_cotizacion.id_estatus 
+												JOIN cliente ON proyecto.id_cliente=cliente.id_cliente 
+												JOIN empresa ON cliente.id_empresa=empresa.id_empresa 
+												WHERE f_expedicion BETWEEN '".$busqueda1."' AND '".$busqueda2."' ORDER BY vigencia DESC");
 			}
 			else if($tipo_bus=="b-vigenciainf")
 			{
-				$resultado = $this->db->query("SELECT cotizacion.id_cotizacion AS id_cotizacion, cotizacion.id_proyecto AS id_proyecto, cotizacion.id_personal AS id_personal, cotizacion.id_estatus AS id_estatus, folio, f_expedicion, vigencia, total, personal.nombre AS personal, estatus_cotizacion.estatus AS estatus, proyecto.nombre AS proyecto, empresa.nombre AS empresa FROM cotizacion JOIN personal ON cotizacion.id_personal=personal.id_personal JOIN proyecto ON cotizacion.id_proyecto=proyecto.id_proyecto JOIN estatus_cotizacion ON cotizacion.id_estatus=estatus_cotizacion.id_estatus JOIN cliente ON proyecto.id_cliente=cliente.id_cliente JOIN empresa ON cliente.id_empresa=empresa.id_empresa WHERE vigencia >='".$busqueda."' ORDER BY vigencia DESC");
+				$resultado = $this->db->query("SELECT cotizacion.id_cotizacion AS id_cotizacion, 
+												cotizacion.id_proyecto AS id_proyecto, 
+												cotizacion.id_personal AS id_personal, 
+												cotizacion.id_estatus AS id_estatus, 
+												folio, f_expedicion, vigencia, total, 
+												personal.nombre AS personal, 
+												estatus_cotizacion.estatus AS estatus, 
+												proyecto.nombre AS proyecto, 
+												empresa.nombre AS empresa 
+												FROM cotizacion 
+												JOIN personal ON cotizacion.id_personal=personal.id_personal 
+												JOIN proyecto ON cotizacion.id_proyecto=proyecto.id_proyecto 
+												JOIN estatus_cotizacion ON cotizacion.id_estatus=estatus_cotizacion.id_estatus 
+												JOIN cliente ON proyecto.id_cliente=cliente.id_cliente 
+												JOIN empresa ON cliente.id_empresa=empresa.id_empresa 
+												WHERE vigencia >='".$busqueda."' ORDER BY vigencia DESC");
 			}
 			else if($tipo_bus=="b-vigenciasup")
 			{
-				$resultado = $this->db->query("SELECT cotizacion.id_cotizacion AS id_cotizacion, cotizacion.id_proyecto AS id_proyecto, cotizacion.id_personal AS id_personal, cotizacion.id_estatus AS id_estatus, folio, f_expedicion, vigencia, total, personal.nombre AS personal, estatus_cotizacion.estatus AS estatus, proyecto.nombre AS proyecto, empresa.nombre AS empresa FROM cotizacion JOIN personal ON cotizacion.id_personal=personal.id_personal JOIN proyecto ON cotizacion.id_proyecto=proyecto.id_proyecto JOIN estatus_cotizacion ON cotizacion.id_estatus=estatus_cotizacion.id_estatus JOIN cliente ON proyecto.id_cliente=cliente.id_cliente JOIN empresa ON cliente.id_empresa=empresa.id_empresa WHERE vigencia <='".$busqueda."' ORDER BY vigencia DESC");
+				$resultado = $this->db->query("SELECT cotizacion.id_cotizacion AS id_cotizacion, 
+												cotizacion.id_proyecto AS id_proyecto, 
+												cotizacion.id_personal AS id_personal, 
+												cotizacion.id_estatus AS id_estatus, 
+												folio, f_expedicion, vigencia, total, 
+												personal.nombre AS personal, 
+												estatus_cotizacion.estatus AS estatus, 
+												proyecto.nombre AS proyecto, 
+												empresa.nombre AS empresa 
+												FROM cotizacion 
+												JOIN personal ON cotizacion.id_personal=personal.id_personal 
+												JOIN proyecto ON cotizacion.id_proyecto=proyecto.id_proyecto 
+												JOIN estatus_cotizacion ON cotizacion.id_estatus=estatus_cotizacion.id_estatus 
+												JOIN cliente ON proyecto.id_cliente=cliente.id_cliente 
+												JOIN empresa ON cliente.id_empresa=empresa.id_empresa 
+												WHERE vigencia <='".$busqueda."' ORDER BY vigencia DESC");
 			}
 			else if($tipo_bus=="b-vigencias")
 			{
-				$resultado = $this->db->query("SELECT cotizacion.id_cotizacion AS id_cotizacion, cotizacion.id_proyecto AS id_proyecto, cotizacion.id_personal AS id_personal, cotizacion.id_estatus AS id_estatus, folio, f_expedicion, vigencia, total, personal.nombre AS personal, estatus_cotizacion.estatus AS estatus, proyecto.nombre AS proyecto, empresa.nombre AS empresa FROM cotizacion JOIN personal ON cotizacion.id_personal=personal.id_personal JOIN proyecto ON cotizacion.id_proyecto=proyecto.id_proyecto JOIN estatus_cotizacion ON cotizacion.id_estatus=estatus_cotizacion.id_estatus JOIN cliente ON proyecto.id_cliente=cliente.id_cliente JOIN empresa ON cliente.id_empresa=empresa.id_empresa WHERE vigencia BETWEEN '".$busqueda1."' AND '".$busqueda2."' ORDER BY vigencia DESC");
+				$resultado = $this->db->query("SELECT cotizacion.id_cotizacion AS id_cotizacion, 
+												cotizacion.id_proyecto AS id_proyecto, 
+												cotizacion.id_personal AS id_personal, 
+												cotizacion.id_estatus AS id_estatus, 
+												folio, f_expedicion, vigencia, total, 
+												personal.nombre AS personal, 
+												estatus_cotizacion.estatus AS estatus, 
+												proyecto.nombre AS proyecto, 
+												empresa.nombre AS empresa 
+												FROM cotizacion 
+												JOIN personal ON cotizacion.id_personal=personal.id_personal 
+												JOIN proyecto ON cotizacion.id_proyecto=proyecto.id_proyecto 
+												JOIN estatus_cotizacion ON cotizacion.id_estatus=estatus_cotizacion.id_estatus 
+												JOIN cliente ON proyecto.id_cliente=cliente.id_cliente 
+												JOIN empresa ON cliente.id_empresa=empresa.id_empresa 
+												WHERE vigencia BETWEEN '".$busqueda1."' AND '".$busqueda2."' ORDER BY vigencia DESC");
 			}
 
 			return $resultado->result();
@@ -108,15 +363,59 @@
 		{
 			if($filtro=="f-aceptada")
 			{
-				$resultado = $this->db->query("SELECT cotizacion.id_cotizacion AS id_cotizacion, cotizacion.id_proyecto AS id_proyecto, cotizacion.id_personal AS id_personal, cotizacion.id_estatus AS id_estatus, folio, f_expedicion, vigencia, total, personal.nombre AS personal, estatus_cotizacion.estatus AS estatus, proyecto.nombre AS proyecto, empresa.nombre AS empresa FROM cotizacion JOIN personal ON cotizacion.id_personal=personal.id_personal JOIN proyecto ON cotizacion.id_proyecto=proyecto.id_proyecto JOIN estatus_cotizacion ON cotizacion.id_estatus=estatus_cotizacion.id_estatus JOIN cliente ON proyecto.id_cliente=cliente.id_cliente JOIN empresa ON cliente.id_empresa=empresa.id_empresa WHERE cotizacion.id_estatus='1' ORDER BY vigencia DESC");
+				$resultado = $this->db->query("SELECT cotizacion.id_cotizacion AS id_cotizacion, 
+												cotizacion.id_proyecto AS id_proyecto, 
+												cotizacion.id_personal AS id_personal, 
+												cotizacion.id_estatus AS id_estatus, 
+												folio, f_expedicion, vigencia, total, 
+												personal.nombre AS personal, 
+												estatus_cotizacion.estatus AS estatus, 
+												proyecto.nombre AS proyecto, 
+												empresa.nombre AS empresa 
+												FROM cotizacion JOIN personal ON cotizacion.id_personal=personal.id_personal 
+												JOIN proyecto ON cotizacion.id_proyecto=proyecto.id_proyecto 
+												JOIN estatus_cotizacion ON cotizacion.id_estatus=estatus_cotizacion.id_estatus 
+												JOIN cliente ON proyecto.id_cliente=cliente.id_cliente 
+												JOIN empresa ON cliente.id_empresa=empresa.id_empresa 
+												WHERE cotizacion.id_estatus='1' ORDER BY vigencia DESC");
 			}
 			else if($filtro=="f-expedida")
 			{
-				$resultado = $this->db->query("SELECT cotizacion.id_cotizacion AS id_cotizacion, cotizacion.id_proyecto AS id_proyecto, cotizacion.id_personal AS id_personal, cotizacion.id_estatus AS id_estatus, folio, f_expedicion, vigencia, total, personal.nombre AS personal, estatus_cotizacion.estatus AS estatus, proyecto.nombre AS proyecto, empresa.nombre AS empresa FROM cotizacion JOIN personal ON cotizacion.id_personal=personal.id_personal JOIN proyecto ON cotizacion.id_proyecto=proyecto.id_proyecto JOIN estatus_cotizacion ON cotizacion.id_estatus=estatus_cotizacion.id_estatus JOIN cliente ON proyecto.id_cliente=cliente.id_cliente JOIN empresa ON cliente.id_empresa=empresa.id_empresa WHERE cotizacion.id_estatus='2' ORDER BY vigencia DESC");
+				$resultado = $this->db->query("SELECT cotizacion.id_cotizacion AS id_cotizacion, 
+												cotizacion.id_proyecto AS id_proyecto, 
+												cotizacion.id_personal AS id_personal, 
+												cotizacion.id_estatus AS id_estatus, 
+												folio, f_expedicion, vigencia, total, 
+												personal.nombre AS personal, 
+												estatus_cotizacion.estatus AS estatus, 
+												proyecto.nombre AS proyecto, 
+												empresa.nombre AS empresa 
+												FROM cotizacion 
+												JOIN personal ON cotizacion.id_personal=personal.id_personal 
+												JOIN proyecto ON cotizacion.id_proyecto=proyecto.id_proyecto 
+												JOIN estatus_cotizacion ON cotizacion.id_estatus=estatus_cotizacion.id_estatus 
+												JOIN cliente ON proyecto.id_cliente=cliente.id_cliente 
+												JOIN empresa ON cliente.id_empresa=empresa.id_empresa 
+												WHERE cotizacion.id_estatus='2' ORDER BY vigencia DESC");
 			}
 			else if($filtro=="f-rechazada")
 			{
-				$resultado = $this->db->query("SELECT cotizacion.id_cotizacion AS id_cotizacion, cotizacion.id_proyecto AS id_proyecto, cotizacion.id_personal AS id_personal, cotizacion.id_estatus AS id_estatus, folio, f_expedicion, vigencia, total, personal.nombre AS personal, estatus_cotizacion.estatus AS estatus, proyecto.nombre AS proyecto, empresa.nombre AS empresa FROM cotizacion JOIN personal ON cotizacion.id_personal=personal.id_personal JOIN proyecto ON cotizacion.id_proyecto=proyecto.id_proyecto JOIN estatus_cotizacion ON cotizacion.id_estatus=estatus_cotizacion.id_estatus JOIN cliente ON proyecto.id_cliente=cliente.id_cliente JOIN empresa ON cliente.id_empresa=empresa.id_empresa WHERE cotizacion.id_estatus='3' ORDER BY vigencia DESC");
+				$resultado = $this->db->query("SELECT cotizacion.id_cotizacion AS id_cotizacion, 
+												cotizacion.id_proyecto AS id_proyecto, 
+												cotizacion.id_personal AS id_personal, 
+												cotizacion.id_estatus AS id_estatus, 
+												folio, f_expedicion, vigencia, total, 
+												personal.nombre AS personal, 
+												estatus_cotizacion.estatus AS estatus, 
+												proyecto.nombre AS proyecto, 
+												empresa.nombre AS empresa 
+												FROM cotizacion 
+												JOIN personal ON cotizacion.id_personal=personal.id_personal 
+												JOIN proyecto ON cotizacion.id_proyecto=proyecto.id_proyecto 
+												JOIN estatus_cotizacion ON cotizacion.id_estatus=estatus_cotizacion.id_estatus 
+												JOIN cliente ON proyecto.id_cliente=cliente.id_cliente 
+												JOIN empresa ON cliente.id_empresa=empresa.id_empresa 
+												WHERE cotizacion.id_estatus='3' ORDER BY vigencia DESC");
 			}
 			return $resultado->result();
 		}
