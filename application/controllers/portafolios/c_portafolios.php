@@ -62,9 +62,11 @@
 			{
 				//Si es falso, recarga la vista del formulario con los errores por corregir
 				$this->nuevoPortafolio();   
+				echo 'fail';
 			}
 			else{
 				$this->insertarPortafolio();
+				echo 'successful';
 			}
 		}
 		//Función que permite insertar un nuevo portafolio

@@ -23,15 +23,15 @@ class Portada extends CI_Model
 		//WHERE portafolio_imagen.id_portafolio =  $id['id_portafolio']
 		//AND tipo_imagen.id_tipo_img = 1
 		*/
-		$this->db->select('*');
+		$this->db->select('imagen.id_img as id_img');
 		$this->db->from('portafolio_imagen');
 		$this->db->join('imagen', 'portafolio_imagen.id_img = imagen.id_img');
 		$this->db->join('tipo_imagen', 'imagen.id_tipo_img = tipo_imagen.id_tipo_img');
 		$this->db->where('portafolio_imagen.id_portafolio', $id['id_portafolio']);
 		$this->db->where('tipo_imagen.id_tipo_img', 1);
-		$query = $this->db->get();
-		if($query->num_rows()>0){
-			return true;
+		$id_img_checked = $this->db->get();
+		if($id_img_checked->num_rows()>0){
+			return $id_img_checked->row();
 		}else{
 			return false;
 		}
@@ -97,13 +97,13 @@ class Portada extends CI_Model
          	/*
 			//$query = $this->db->query('SELECT nom_img, url_img, url_thu FROM imagen WHERE id_img = 1 AND id_tipo_img = 1');
 			*/
-			$this->db->select('*');
+			$this->db->select('id_img');
 			$this->db->from('imagen');
 			$this->db->where('id_img', '1');
 			$this->db->where('id_tipo_img', '1');
-			$query = $this->db->get();
-			if($query->num_rows()>0){
-	        	return $query->row();
+			$id_img_checked_default = $this->db->get();
+			if($id_img_checked_default->num_rows()>0){
+	        	return $id_img_checked_default->row();
 	      	}else{
 	        	return false;
 	      	} 
