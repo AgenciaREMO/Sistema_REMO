@@ -58,21 +58,27 @@
 
 			$this->pagination->initialize($config);
 
-			$id_img_checked = $this->portada->consultarRegistro($id); 
+			//$consultar = $this->portada->consultarRegistro($id); 
 			$obtener= $this->portada->obtenerPortada($id);
 			//$disponible =$this->portada->portadasDisponibles();
 			$disponible = $this->portada->obtener_pagina($config['per_page']);
 			//$anterior = $this->portada->portadaAnterior($id);
-			$check = $this->portada->checkDefault();
+			//$check = $this->portada->checkDefault();
 				if($obtener != FALSE){
 					/*foreach ($obtener->result() as $row) {
 						$url_img = $row->url_img;
 						$nom_img = $row->nom_img;
 						$id_img = $row->id_img;
+					}
+					foreach ($consultar->result() as $row) {
+						$id_img_checked = $row->id_img;
+					}
+					foreach ($check->result() as $row) {
+						$id_img_checked_default = $row->id_img;
 					}*/
-					//foreach ($consultar->result() as $row) {
-						//$id_img_checked = $row->id_img;
-					//}
+					foreach ($obtener->result() as $row) {
+						$check = $row->id_img;
+					}
 
 					$pagination = $this->pagination->create_links();
 					$img= array(
@@ -82,10 +88,11 @@
 						//'nom_img' => $nom_img,
 						'disponible' => $disponible,
 						'pagination' => $pagination,
+						'check' => $check
 						//'anterior' => $anterior,
-						'id_img_checked' => $id_img_checked,
-						'id_img_checked_default' => $check,
-						'id_d' => $check->id_img,
+						//'id_img_checked' => $id_img_checked,
+						//'id_img_checked_default' => $id_img_checked_default,
+						//'id_d' => $check->id_img,
 						//'url_img_d' =>$check->url_thu,
 						//'nom_img_d' =>$check->nom_img,
 									);
@@ -98,6 +105,8 @@
 					$nom_img2 = '';
 					return FALSE;
 				}
+				//echo $id_img_checked;
+				//echo $id_img_checked_default;
 			$this->load->view("portafolios/form_portada", $img);
 			$consultarServicio = $this->servicio->consultarServicios();
 			$data = array (
@@ -113,7 +122,8 @@
 		}
 
 
-		public function insertarPortada($id_portafolio){
+		public function insertarPortada($id_portafolio)
+		{
 			//Validación Radio button
 			$this->form_validation->set_rules('id_img','portada','required');
 			$this->form_validation->set_message('required', 'Debes seleccionar una  %s , es obligatorio');
@@ -134,4 +144,27 @@
 				echo 'successful';
 			}
 		}
+
+		public function actualizarPortada($id_portafolio)     
+           {   
+           			//Validación Radio button
+			$this->form_validation->set_rules('id_img','portada','required');
+			$this->form_validation->set_message('required', 'Debes seleccionar una  %s , es obligatorio');
+			if ($this->form_validation->run() == FALSE) 
+			{
+				$this->cargar($id_portafolio);
+				echo 'fail';
+			}else{
+				$id_portafolio = $id_portafolio;
+				$port_img = array(
+					'id_portafolio' => $id_portafolio,
+					'id_img' => $this->input->post('id_img')
+					);//Almacenamos en un arreglo el id que se obtuvo.
+				$editarPortada = $this->portada->actualizarPortada($port_img);
+				redirect('/portafolios/c_portada/cargar'.'/'.$id_portafolio); 
+			}      
+               
+ 
+               
+    }
 	}

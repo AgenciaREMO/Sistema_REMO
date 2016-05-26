@@ -34,38 +34,86 @@
                 </div>
                 <?=@$error?>
                 <?php validation_errors('<div class="alert alert-danger" role="alert">','</div>'); ?>
-                <?= form_open('portafolios/c_portada/insertarPortada'.'/'.$id_portafolio);?>
+                <?= form_open('portafolios/c_portada/actualizarPortada'.'/'.$id_portafolio);?>
                 
                 <?php 
                   
                   foreach ($disponible->result() as $fila)
                   { 
 
-                    if($id_img_checked == $fila->id_img){
+                    if($check == $fila->id_img){
                       $radioImg = array(
-                      'name'     => 'id_img',
-                      'id'       => 'id_img',
-                      'value'    => ''.$fila->id_img.'',
-                      'checked'  => FALSE,
-                      'type'     => 'radio',
-                      'disabled' => 'disabled',
-                      'checked'  => TRUE
-                      );
+                        'name'     => 'id_img',
+                        'id'       => 'id_img',
+                        'value'    => ''.$fila->id_img.'',
+                        'type'     => 'radio',
+                        'disabled' => 'disabled',
+                        'checked'  => TRUE
+                        );
                     }else{
-                      if($id_img_checked_default == $fila->id_img){}
-                      $radioImg = array(
-                      'name'     => 'id_img',
-                      'id'       => 'id_img',
-                      'value'    => ''.$fila->id_img.'',
-                      'checked'  => FALSE,
-                      'type'     => 'radio',
-                      'disabled' => 'disabled',
-                      'checked'  => TRUE
+                        $radioImg = array(
+                        'name'     => 'id_img',
+                        'id'       => 'id_img',
+                        'value'    => ''.$fila->id_img.'',
+                        'type'     => 'radio',
+                        'disabled' => 'disabled',
+                        'checked'  => FALSE
+                        );
+                    }
+
+                    /*
+                    if($id_img_checked != FALSE){
+                      if($id_img_checked == $fila->id_img){
+                        $radioImg = array(
+                        'name'     => 'id_img',
+                        'id'       => 'id_img',
+                        'value'    => ''.$fila->id_img.'',
+                        'type'     => 'radio',
+                        'disabled' => 'disabled',
+                        'checked'  => TRUE
+                        );
+                        echo 'check relacionado';
+                      }else{
+                        $radioImg = array(
+                          'name'     => 'id_img',
+                          'id'       => 'id_img',
+                          'value'    => ''.$fila->id_img.'',
+                          'type'     => 'radio',
+                          'disabled' => 'disabled',
+                          'checked'  => FALSE
+                          );
+                           echo 'check false';
+                      }
+                    }else{
+                      if($id_img_checked_default == $fila->id_img){
+                          $radioImg = array(
+                          'name'     => 'id_img',
+                          'id'       => 'id_img',
+                          'value'    => ''.$fila->id_img.'',
+                          'type'     => 'radio',
+                          'disabled' => 'disabled',
+                          'checked'  => TRUE
+                          );
+                          echo 'check default';
+                        }else{
+                          $radioImg = array(
+                          'name'     => 'id_img',
+                          'id'       => 'id_img',
+                          'value'    => ''.$fila->id_img.'',
+                          'type'     => 'radio',
+                          'disabled' => 'disabled',
+                          'checked'  => FALSE
+                          );
+                           echo 'check false';
+                      }*/
+                      
+                    
+                    
+                    
 
                       //Si quito el if funciona que checked la que esta relacionada con el id de portafolio
                       //Luego quiero checked por default una pero no sale
-                      );
-                    }
+                     
                     //input
                     form_error('id_img');
                     /*$radioImg = array(

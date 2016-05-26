@@ -31,7 +31,7 @@ class Portada extends CI_Model
 		$this->db->where('tipo_imagen.id_tipo_img', 1);
 		$id_img_checked = $this->db->get();
 		if($id_img_checked->num_rows()>0){
-			return $id_img_checked->row();
+			return $id_img_checked;
 		}else{
 			return false;
 		}
@@ -57,7 +57,7 @@ class Portada extends CI_Model
 			//INNER JOIN tipo_imagen
 			//ON imagen.id_tipo_img = tipo_imagen.id_tipo_img
 			*/
-			$this->db->select('pi.id_por_ima, pi.id_portafolio, pi.id_img , i.id_img, i.nom_img, i.url_img, i.id_tipo_img, ti.id_tipo_img');
+			$this->db->select('pi.id_por_ima, pi.id_portafolio, pi.id_img , i.id_img as id_img, i.nom_img, i.url_img, i.id_tipo_img, ti.id_tipo_img');
 			$this->db->from('portafolio_imagen pi');
 			$this->db->join('imagen i', 'pi.id_img = i.id_img');
 			$this->db->join('tipo_imagen ti','i.id_tipo_img = ti.id_tipo_img');
@@ -76,7 +76,7 @@ class Portada extends CI_Model
          	/*
 			//$query = $this->db->query('SELECT nom_img, url_img, url_thu FROM imagen WHERE id_img = 1 AND id_tipo_img = 1');
 			*/
-			$this->db->select('*');
+			$this->db->select('id_img');
 			$this->db->from('imagen');
 			$this->db->where('id_img', '1');
 			$this->db->where('id_tipo_img', '1');
@@ -103,7 +103,7 @@ class Portada extends CI_Model
 			$this->db->where('id_tipo_img', '1');
 			$id_img_checked_default = $this->db->get();
 			if($id_img_checked_default->num_rows()>0){
-	        	return $id_img_checked_default->row();
+	        	return $id_img_checked_default;
 	      	}else{
 	        	return false;
 	      	} 
@@ -157,28 +157,42 @@ class Portada extends CI_Model
 	}*/
 
 	public function insertarPortada($port_img){
+		//Comentar insert
 		$registro_p_i = $this->db->insert('portafolio_imagen', $port_img);
-		return $registro_p_i;
 	}
 
-	public function actualizarPortada($id_portafolio, $id_img){
-		$data=array(
-			'id_portafolio' => $id_portafolio,
-			'id_img' => $id_img
-			);
-		//$query = "UPDATE portafolio_imagen SET id_img = $id_img WHERE id_portafolio = $id_portafolio"
-		$this->db->where('id_portafolio', $data['id_portafolio']);
-		$this->db->update('portafolio_imagen', $data['$id_img']);
+	public function editarPortada($port_img){
+		//Comentar update
+		$this->db->where('id_portafolio', $port_img['id_portafolio']);
+		$this->db->update('portafolio_imagen', array('id_img' => $port_img['id_img']));
+	}
+
+
+	public function actualizarPortada($port_img){
+		/*select *
+		from portafolio_imagen
+		inner join imagen
+		on portafolio_imagen.id_img = imagen.id_img
+		inner join tipo_imagen
+		on imagen.id_tipo_img = tipo_imagen.id_tipo_img
+		where tipo_imagen.id_tipo_img = 1 and portafolio_imagen.id_portafolio = 9
+		*/
+		//Consulta si existe un registro de un portafolio relacionado con una imagen tipo portada
+		$this->db->select('portafolio_imagen.id_portafolio');
+		$this->db->from('portafolio_imagen');
+		$this->db->join('imagen', 'portafolio_imagen.id_img = imagen.id_img');
+		$this->db->join('tipo_imagen', 'imagen.id_tipo_img = tipo_imagen.id_tipo_img');
+		$this->db->where('tipo_imagen.id_tipo_img', 1);
+		$this->db->where('portafolio_imagen.id_portafolio', $port_img['id_portafolio']);
 		$query = $this->db->get();
-		if($query->num_rows()>0){
-			return true;
-		}else{
-			return false;
+		if($query->num_rows()>0){	//Si existe hace un update
+			$this->editarPortada($port_img);
+		}else{ //Si no existe hace un insert
+			$this->insertarPortada($port_img);
 		}
-
 	}
 
-	//Paginación
+	//Paginación portada
 	public function num_portadas(){
 		//SELECT count(*) as number FROM imagen INNER JOIN tipo_imagen ON imagen.id_tipo_img = tipo_imagen.id_tipo_img WHERE imagen.id_tipo_img = 1
 		$numero = $this->db->query("SELECT count(*) as number FROM imagen INNER JOIN tipo_imagen ON imagen.id_tipo_img = tipo_imagen.id_tipo_img WHERE imagen.id_tipo_img = 1")->row()->number; //Regresa el número total de filas de una tabla
