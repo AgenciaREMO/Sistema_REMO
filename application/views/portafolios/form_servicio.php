@@ -19,6 +19,7 @@
                       <?php  
 
                         foreach ($servicio->result() as $fila) {
+                          $servicio = array();
                           $checkbox = array(
                             'name'        => 'servicio[]',
                             'id'          => 'servicio[]',

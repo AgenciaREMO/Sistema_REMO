@@ -321,7 +321,7 @@
 			$this->load->view("head");
 			$this->load->view("nav");
 			$resultado = $this->imagen->obtenerTipoImg(); //Asignamos a una variable la función que arroja el resultado de la consulta a base de datos.
-			$tipos = array('consulta' => $resultado);
+			$tipos = array('resultado' => $resultado);
 			$this->load->view("imagenes/nueva_imagen", $tipos);
 			$this->load->view("footer");
 		}	
