@@ -116,7 +116,7 @@
                       //Luego quiero checked por default una pero no sale
                      
                     //input
-                    form_error('id_img');
+                    
                     /*$radioImg = array(
                       'name'     => 'id_img',
                       'id'       => 'id_img',
@@ -163,7 +163,8 @@
                       'data-toggle' => 'modal',
                       'data-target' => '#cargarPortada'
                       );
-                ?>
+                ?>  
+                    <?= form_error('id_img'); ?>
                     <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2 img-rounded">
                       <?= form_radio($radioImg);?> 
                       <img class="img-responsive img-hover img-thumbnail" src="<?= base_url($fila->url_img)?>" alt="<?= $fila->nom_img ?>" title="<?= $fila->nom_img ?>">

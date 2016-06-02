@@ -1,6 +1,9 @@
 var activarSer = function() {
-	var servicio = document.getElementById("servicio[]");
-	var descripcion = document.getElementById("descripcion[]");
+	var servicio = document.getElementById("servicio");
+	for (var i = 0; i < registros.length; i++) {
+		
+	}
+	var descripcion = document.getElementById("descripcion");
 	var cancelar = document.getElementById("s-cancelar");
 	var guardar = document.getElementById("s-guardar");
 	var editar = document.getElementById("s-editar");
@@ -12,8 +15,8 @@ var activarSer = function() {
 };
 
 var desactivarSer = function() {
-	var servicio = document.getElementById("servicio[]");
-	var descripcion = document.getElementById("descripcion[]");
+	var servicio = document.getElementById("servicio");
+	var descripcion = document.getElementById("descripcion");
 	var cancelar = document.getElementById("s-cancelar");
 	var guardar = document.getElementById("s-guardar");
 	var editar = document.getElementById("s-editar");

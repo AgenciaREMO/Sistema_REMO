@@ -11,32 +11,33 @@
           
             <div class="tabpanel tab-pane " id="servicio">Servicios
               <div class="panel-body">
-               <!-- <form action"#" method="#" name="form_servicio">-->
                 <div class="row">
                   <div class="col-lg-12">
-                    <?= form_open('portafolios/c_portada/insertarServicio'.'/'.$id_portafolio);?>
-                    <!--<form class="" role="" action"#" method="#" name="form_servicio">-->
+                    <?php echo validation_errors(); ?>
+                    <?= form_open('portafolios/c_servicio/validarServicio'.'/'.$id_portafolio);?>
                       <?php  
-
+                        $count = 1;
                         foreach ($servicio->result() as $fila) {
-                          $servicio = array();
-                          $checkbox = array(
+                         // $servicio = array();
+                          
+
+                          /*$checkbox = array(
                             'name'        => 'servicio[]',
                             'id'          => 'servicio[]',
                             'value'       => ''.$fila->id_tipo.'',
                             'checked'     => FALSE,
                             'style'       => 'margin:10px',
                             'disabled'    => 'disabled'
-                            );
+                            );*/
 
                           $textarea = array(
-                            'name'        => 'descripcion[]',
-                            'id'          => 'descripcion[]',
+                            'name'        => 'descripcion'.$count++,
+                            'id'          => 'descripcion',
                             'value'       => ''.$fila->descripcion.'',
                             'rows'        => '4',
                             'cols'        => '140',
-                            'class'       => 'form-control',
-                            'disabled'    => 'disabled'
+                            'class'       => 'form-control'/*,
+                            'disabled'    => 'disabled'*/
                           );
                           //Botones
                           $editar = array(
@@ -60,7 +61,7 @@
                             'value' => 'Guardar'
                           );
                       ?>
-                            <?= form_checkbox($checkbox);?>
+                            <?php echo form_checkbox("servicio[]", ''.$fila->id_tipo.'', set_checkbox("servicio[]", ''.$fila->id_tipo.''));?>
                             <?= form_label($fila->nombre);?><br>
                             <?= form_textarea($textarea);?>
                             
@@ -77,6 +78,7 @@
                         <div class="col-lg-3 col-lg-offset-9 ">
                           <?= form_button($cancelar) ?>
                           <?= form_submit($guardar) ?>
+
                         </div>
                       </div>
                         <?= form_close() ?>
