@@ -1,10 +1,11 @@
 <div class="container">
 	<div class="row">
 		<div class="col-lg-12">
-			<h2>Conceptos y Descripciones</h2>
+			<h2>Gestor de Conceptos</h2>
 			<ol class="breadcrumb" style="margin-bottom: 5px;">
 			  <li><a href="<?= base_url()?>">Inicio</a></li>
-			  <li>Conceptos y Descripciones</li>
+			  <li>Cotizaciones</li>
+			  <li><a href="#">Gestor de Conceptos</a></li>
 			</ol>
 			<hr>
 			<form class="form-horizontal">

@@ -2,9 +2,10 @@
 	<div class="col-12">
 		<h2>Editar Concepto</h2>
 		<ol class="breadcrumb" style="margin-bottom: 5px;">
-		  <li><a href="<?= base_url()?>">Inicio</a></li>
-		  <li><a href="<?= base_url()?>conceptos/listaDescripciones">Conceptos y Descripciones</a></li>
-		  <li class="active">Concepto</li>
+		  	<li><a href="<?= base_url()?>">Inicio</a></li>
+			<li>Cotizaciones</li>
+		  	<li><a href="<?= base_url()?>conceptos/listaDescripciones">Gestor de Conceptos</a></li>
+		  	<li class="active">Concepto</li>
 		</ol>
 		<hr>
 		<?= form_open('conceptos/editarConcepto/'.$id_concepto) ?>

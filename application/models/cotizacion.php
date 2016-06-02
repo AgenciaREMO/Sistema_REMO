@@ -419,5 +419,17 @@
 			}
 			return $resultado->result();
 		}
+
+		public function obtenerPersonal()
+		{
+			return $this->db->query("SELECT id_personal, nombre FROM personal");
+		}
+		public function obtenerProyectos()
+		{
+			return $this->db->query("SELECT id_proyecto, proyecto.nombre AS nombre, empresa.nombre AS empresa  
+										FROM proyecto 
+										JOIN cliente ON proyecto.id_cliente=cliente.id_cliente
+										JOIN empresa ON cliente.id_empresa=empresa.id_empresa");
+		}
 	}
 ?>

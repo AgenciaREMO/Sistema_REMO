@@ -5,7 +5,8 @@
 				<h2>Elemento de Sección Nuevo</h2>
 				<ol class="breadcrumb" style="margin-bottom: 5px;">
 					<li><a href="<?= base_url()?>">Inicio</a></li>
-					<li><a href="<?= base_url()?>elementos_seccion/listaElementosSeccion">Elementos de Sección</a></li>
+					<li>Cotizaciones</li>
+					<li><a href="<?= base_url()?>elementos_seccion/listaElementosSeccion">Gestor de Elementos de Sección</a></li>
 					<li>Elemento Nuevo</li>
 				</ol>
 				<hr>

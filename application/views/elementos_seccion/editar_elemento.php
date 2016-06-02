@@ -3,7 +3,8 @@
 		<h2>Editar Elemento de Sección</h2>
 		<ol class="breadcrumb" style="margin-bottom: 5px;">
 		  <li><a href="<?= base_url()?>">Inicio</a></li>
-		  <li><a href="<?= base_url()?>elementos_seccion/listaElementosSeccion">Elementos de Sección</a></li>
+		  <li>Cotizaciones</li>
+		  <li><a href="<?= base_url()?>elementos_seccion/listaElementosSeccion">Gestor de Elementos de Sección</a></li>
 		  <li class="active">Elemento</li>
 		</ol>
 		<hr>

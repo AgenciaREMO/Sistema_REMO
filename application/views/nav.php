@@ -26,7 +26,7 @@
                                 <a href="<?= base_url()?>cotizaciones/listaCotizaciones">Gestor de Cotizaciones</a>
                             </li>
                             <li>
-                                <a href="<?= base_url()?>elementos_seccion/listaElementosSeccion">Gestor de Elementos de sección</a>
+                                <a href="<?= base_url()?>elementos_seccion/listaElementosSeccion">Gestor de Elementos de Sección</a>
                             </li>
                         </ul>
                     </li>

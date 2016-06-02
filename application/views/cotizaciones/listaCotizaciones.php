@@ -5,6 +5,7 @@
 			<ol class="breadcrumb" style="margin-bottom: 5px;">
 			  <li><a href="<?= base_url()?>">Inicio</a></li>
 			  <li>Cotizaciones</li>
+			  <li><a href="#">Gestor de Cotizaciones</a></li>
 			</ol>
 			<hr>
 

@@ -46,6 +46,21 @@
 			$this->load->view("cotizaciones/editar_cotizacion", $data);
 			$this->load->view("footer");
 		}
+		public function cotizacionNueva()
+		{
+			$this->load->view("head"); 
+			$this->load->view("nav");
+
+			$resultado = $this->cotizacion->obtenerPersonal();
+			$datos = $this->cotizacion->obtenerProyectos();
+			$data = array(
+				'consulta' => $resultado,
+				'proyectos' => $datos
+			);
+
+			$this->load->view("cotizaciones/cotizacion_nueva", $data);
+			$this->load->view("footer");
+		}
 
 		public function mostrarBusqueda()
 		{
@@ -120,6 +135,19 @@
 					$datos = $this->cotizacion->mostrarFiltroCotizaciones($filtro);
 				}
 
+				echo json_encode($datos);
+			}
+			else
+			{
+				show_404;
+			}
+		}
+
+		public function buscarProyectoAjax()
+		{
+			if($this->input->is_ajax_request())
+			{
+				
 				echo json_encode($datos);
 			}
 			else

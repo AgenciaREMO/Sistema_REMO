@@ -4,7 +4,8 @@
 			<h2>Elementos de Sección</h2>
 			<ol class="breadcrumb" style="margin-bottom: 5px;">
 			  <li><a href="<?= base_url()?>">Inicio</a></li>
-			  <li>Elementos de Sección</li>
+			  <li>Cotizaciones</li>
+			  <li><a href="#">Gestor de Elementos de Sección</li>
 			</ol>
 			<hr>
 			<form class="form-horizontal">
