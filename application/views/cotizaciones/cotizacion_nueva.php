@@ -100,7 +100,7 @@
 	      	</div>
 	      	<div class="modal-footer">
 	        	<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-	        	<a href="" class="btn btn-danger">Eliminar</a>
+	        	<a href="" class="btn btn-danger">Seleccionar</a>
 	      	</div>
     	</div>
   	</div>

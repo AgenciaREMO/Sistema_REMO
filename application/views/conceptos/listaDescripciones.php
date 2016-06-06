@@ -150,6 +150,18 @@
 	$(document).on("ready", inicio);
 	function inicio()
 	{
+		//Se resetea la modal cuando esta oculta
+		$(document).ready(function() {
+			$(".modal").on("hidden.bs.modal", function() {
+				$('[name="id_descripcion"]').val(data.id_descripcion)
+				$('[name="categoria"]').text(data.tipo);
+				$('[name="concepto"]').text(data.concepto);
+				$('[name="descripcion"]').text(data.detalles);
+				$('[name="costo"]').text(data.costo);
+				$("a").attr("href", "<?= base_url()?>conceptos/eliminarDescripcion/"+data.id_descripcion);
+		  	});
+		});
+
 		var busc = "";
 		//Evento Focus
 		$("#b-concepto").focus(function()
@@ -279,7 +291,7 @@
 			dataType: "JSON",
 			success: function(data)
 			{
-				$('[name="id_descripcion"]').val(data.id_descripcion)
+				$('[name=" "]').val(data.id_descripcion)
 				$('[name="categoria"]').text(data.tipo);
 				$('[name="concepto"]').text(data.concepto);
 				$('[name="descripcion"]').text(data.detalles);
