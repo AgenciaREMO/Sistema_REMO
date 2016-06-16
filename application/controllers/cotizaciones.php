@@ -134,7 +134,12 @@
 				else if ($filtro == "f-rechazada") {
 					$datos = $this->cotizacion->mostrarFiltroCotizaciones($filtro);
 				}
-
+				else if ($filtro == "f-revision") {
+					$datos = $this->cotizacion->mostrarFiltroCotizaciones($filtro);
+				}
+				else if ($filtro == "f-vencida") {
+					$datos = $this->cotizacion->mostrarFiltroCotizaciones($filtro);
+				}
 				echo json_encode($datos);
 			}
 			else
@@ -143,17 +148,11 @@
 			}
 		}
 
-		public function buscarProyectoAjax()
+		public function mostrarProyecto($id = '')
 		{
-			if($this->input->is_ajax_request())
-			{
-				
-				echo json_encode($datos);
-			}
-			else
-			{
-				show_404;
-			}
+			$data = $this->cotizacion->mostrarProyecto($id);
+
+			echo json_encode($data);
 		}
 	}
 ?>

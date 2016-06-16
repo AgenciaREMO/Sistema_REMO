@@ -85,7 +85,7 @@
 		}
 		public function cotizacionesVencidas($fecha_actual)
 		{
-			$consulta = $this->db->query("SELECT * FROM cotizacion WHERE vigencia < '".$fecha_actual."'");
+			$consulta = $this->db->query("SELECT * FROM cotizacion WHERE id_estatus=4");
 			$num_vencidas = $consulta->num_rows();
 			return $num_vencidas;
 		}
@@ -417,7 +417,57 @@
 												JOIN empresa ON cliente.id_empresa=empresa.id_empresa 
 												WHERE cotizacion.id_estatus='3' ORDER BY vigencia DESC");
 			}
+			else if($filtro=="f-revision")
+			{
+				$resultado = $this->db->query("SELECT cotizacion_temp.id_cotizacion_temp AS id_cotizacion, 
+												cotizacion_temp.id_proyecto AS id_proyecto, 
+												cotizacion_temp.id_personal AS id_personal, 
+												folio, total, f_generacion,
+												personal.nombre AS personal,
+												proyecto.nombre AS proyecto, 
+												empresa.nombre AS empresa 
+												FROM cotizacion_temp 
+												JOIN personal ON cotizacion_temp.id_personal=personal.id_personal 
+												JOIN proyecto ON cotizacion_temp.id_proyecto=proyecto.id_proyecto  
+												JOIN cliente ON proyecto.id_cliente=cliente.id_cliente 
+												JOIN empresa ON cliente.id_empresa=empresa.id_empresa 
+												ORDER BY f_generacion ASC");
+			}
+			else if($filtro=="f-vencida")
+			{
+				//$fecha_actual = date('Y-m-d');
+				$resultado = $this->db->query("SELECT cotizacion.id_cotizacion AS id_cotizacion, 
+												cotizacion.id_proyecto AS id_proyecto, 
+												cotizacion.id_personal AS id_personal, 
+												cotizacion.id_estatus AS id_estatus, 
+												folio, f_expedicion, vigencia, total, 
+												personal.nombre AS personal, 
+												estatus_cotizacion.estatus AS estatus, 
+												proyecto.nombre AS proyecto, 
+												empresa.nombre AS empresa 
+												FROM cotizacion 
+												JOIN personal ON cotizacion.id_personal=personal.id_personal 
+												JOIN proyecto ON cotizacion.id_proyecto=proyecto.id_proyecto 
+												JOIN estatus_cotizacion ON cotizacion.id_estatus=estatus_cotizacion.id_estatus 
+												JOIN cliente ON proyecto.id_cliente=cliente.id_cliente 
+												JOIN empresa ON cliente.id_empresa=empresa.id_empresa 
+												WHERE cotizacion.id_estatus=4 ORDER BY vigencia DESC");
+			}
 			return $resultado->result();
+		}
+
+		public function mostrarProyecto($id)
+		{
+			$resultado = $this->db->query("SELECT id_proyecto,
+										proyecto.nombre AS nombre, 
+										empresa.nombre AS empresa,
+										cliente.nombre AS cliente,
+										cliente.puesto AS puesto  
+										FROM proyecto 
+										JOIN cliente ON proyecto.id_cliente=cliente.id_cliente
+										JOIN empresa ON cliente.id_empresa=empresa.id_empresa
+										WHERE id_proyecto = '" . $id . "' LIMIT 1");
+			return $resultado->row();
 		}
 
 		public function obtenerPersonal()

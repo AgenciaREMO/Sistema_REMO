@@ -62,9 +62,8 @@
 					<?= form_label('Elaborada por', 'personal') ?>
 					<?= form_dropdown('personal',$personal,'1', $style) ?>
 				</div>
-				<div class="form-group">
+				<div class="form-group" id="divproyecto">
 					<a href="" data-toggle="modal" data-target="#modal_proyecto">Proyecto</a>
-					
 				</div>
 				<?= form_submit($guardar) ?>
 				<a href="<?= base_url('conceptos/listaDescripciones') ?>" class="btn btn-default">Cancelar</a>
@@ -100,7 +99,7 @@
 	      	</div>
 	      	<div class="modal-footer">
 	        	<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-	        	<a href="" class="btn btn-danger">Seleccionar</a>
+	        	<a href="" class="btn btn-danger" id="seleccionar">Seleccionar</a>
 	      	</div>
     	</div>
   	</div>
@@ -108,8 +107,30 @@
 
 <script type="text/javascript">
 	$(document).ready(function() {
-    $('#proys').find('tr').click(function() {
-    	$(this).find('input').prop("checked", true);
-    });
-});
+    	$('#proys').find('tr').click(function() {
+    		$(this).find('input').prop("checked", true);
+    		var id = $('input:radio[name=proyecto]:checked').val();
+    		$('#seleccionar').attr("onClick", "cargarProyecto('"+id+"')");
+
+    	});
+	});
+	function cargarProyecto(id)
+	{
+		$.ajax({
+			url: "<?= base_url('cotizaciones/mostrarProyecto') ?>" + "/" + id, 
+			type: "GET",
+			dataType: "JSON",
+			success: function(data){
+				var registro = eval(data);
+				//alert(registro);
+				html = "<p>Prueba</p>";
+				alert(html);
+				$("#divproyecto").html(html);
+			},
+			error: function(jqXHR, textStatus, errorThrown)
+			{
+				 alert('Error get data from ajax');
+			}
+		});
+	}
 </script>
