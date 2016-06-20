@@ -16,6 +16,7 @@
 			$this->load->view("nav");
 
 			$cotizaciones = $this->cotizacion->obtenerCotizaciones();
+			$num_total = $this->cotizacion->cotizacionesTotales();
 			$num_aceptadas = $this->cotizacion->cotizacionesAceptadas();
 			$num_revision = $this->cotizacion->cotizacionesRevision();
 			$num_expedidas = $this->cotizacion->cotizacionesExpedidas();
@@ -24,7 +25,8 @@
 			$num_vencidas= $this->cotizacion->cotizacionesVencidas($fecha_actual);
 			$data = array(
 				'consulta' => $cotizaciones,
-				'num_aceptadas' => $num_aceptadas,
+				'num_total' => $num_total,
+				'num_aceptadas' => $num_aceptadas, 
 				'num_revision' => $num_revision,
 				'num_expedidas' => $num_expedidas,
 				'num_rechazadas' => $num_rechazadas,
@@ -138,6 +140,9 @@
 					$datos = $this->cotizacion->mostrarFiltroCotizaciones($filtro);
 				}
 				else if ($filtro == "f-vencida") {
+					$datos = $this->cotizacion->mostrarFiltroCotizaciones($filtro);
+				}
+				else if ($filtro == "f-total") {
 					$datos = $this->cotizacion->mostrarFiltroCotizaciones($filtro);
 				}
 				echo json_encode($datos);

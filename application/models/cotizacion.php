@@ -59,6 +59,12 @@
 											JOIN empresa ON cliente.id_empresa=empresa.id_empresa 
 											ORDER BY f_generacion DESC");
 		}
+		public function cotizacionesTotales()
+		{
+			$consulta = $this->db->query("SELECT * FROM cotizacion");
+			$num_total = $consulta->num_rows();
+			return $num_total;
+		}
 		public function cotizacionesAceptadas()
 		{
 			$consulta = $this->db->query("SELECT * FROM cotizacion WHERE id_estatus='1'");
@@ -435,7 +441,6 @@
 			}
 			else if($filtro=="f-vencida")
 			{
-				//$fecha_actual = date('Y-m-d');
 				$resultado = $this->db->query("SELECT cotizacion.id_cotizacion AS id_cotizacion, 
 												cotizacion.id_proyecto AS id_proyecto, 
 												cotizacion.id_personal AS id_personal, 
@@ -453,6 +458,25 @@
 												JOIN empresa ON cliente.id_empresa=empresa.id_empresa 
 												WHERE cotizacion.id_estatus=4 ORDER BY vigencia DESC");
 			}
+			else if($filtro=="f-total")
+			{
+				$resultado = $this->db->query("SELECT cotizacion.id_cotizacion AS id_cotizacion, 
+												cotizacion.id_proyecto AS id_proyecto, 
+												cotizacion.id_personal AS id_personal, 
+												cotizacion.id_estatus AS id_estatus, 
+												folio, f_expedicion, vigencia, total, 
+												personal.nombre AS personal, 
+												estatus_cotizacion.estatus AS estatus, 
+												proyecto.nombre AS proyecto, 
+												empresa.nombre AS empresa 
+												FROM cotizacion 
+												JOIN personal ON cotizacion.id_personal=personal.id_personal 
+												JOIN proyecto ON cotizacion.id_proyecto=proyecto.id_proyecto 
+												JOIN estatus_cotizacion ON cotizacion.id_estatus=estatus_cotizacion.id_estatus 
+												JOIN cliente ON proyecto.id_cliente=cliente.id_cliente 
+												JOIN empresa ON cliente.id_empresa=empresa.id_empresa 
+												ORDER BY vigencia DESC");
+			}
 			return $resultado->result();
 		}
 
@@ -467,7 +491,7 @@
 										JOIN cliente ON proyecto.id_cliente=cliente.id_cliente
 										JOIN empresa ON cliente.id_empresa=empresa.id_empresa
 										WHERE id_proyecto = '" . $id . "' LIMIT 1");
-			return $resultado->row();
+			return $resultado->result();
 		}
 
 		public function obtenerPersonal()

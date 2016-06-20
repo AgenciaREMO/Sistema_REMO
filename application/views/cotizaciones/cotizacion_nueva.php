@@ -19,10 +19,36 @@
 					$personal[$fila->id_personal] = $fila->nombre;
 				}
 				//Inputs
-				$proyecto = array(
-					'name' => 'proyecto',
-					'onclick' => 'buscar_Proyecto()',
-					'class' => 'form-control'
+				$cantidad0 = array(
+					'name' => 'cantidad0',
+					'class' => 'form-control',
+					'placeholder' => '0',
+					'id' => 'b-cantidad'
+				);
+				$concepto0 = array(
+					'name' => 'concepto0',
+					'class' => 'form-control',
+					'placeholder' => '---',
+					'id' => 'b-concepto'
+				);
+				$descripcion0 = array(
+					'name' => 'descripcion0',
+					'class' => 'form-control',
+					'placeholder' => '---',
+					'id' => 'b-descripcion',
+					'disabled' => 'disabled'
+				);
+				$horas0 = array(
+					'name' => 'horas0',
+					'class' => 'form-control',
+					'placeholder' => '0',
+					'id' => 'b-horas'
+				);
+				$importe0 = array(
+					'name' => 'importe0',
+					'class' => 'form-control',
+					'placeholder' => '0',
+					'id' => 'b-importe'
 				);
 				//Botón
 				$guardar = array(
@@ -63,17 +89,56 @@
 					<?= form_dropdown('personal',$personal,'1', $style) ?>
 				</div>
 				<div class="form-group" id="divproyecto">
-					<a href="" data-toggle="modal" data-target="#modal_proyecto">Proyecto</a>
+					<label><a href="" data-toggle="modal" data-target="#modal_proyecto"> Proyecto <i class="fa fa-search" aria-hidden="true"></i></a></label>
 				</div>
-				<?= form_submit($guardar) ?>
-				<a href="<?= base_url('conceptos/listaDescripciones') ?>" class="btn btn-default">Cancelar</a>
+				<h3>Descripción del proyecto</h3>
+				<div class="form-group" id="divconceptos">
+					<table class="table table-hover">
+						<tr>
+							<th></th>
+							<th class="col-cantidad">Cant.</th>	
+							<th>Concepto</th>
+							<th>Descripción</th>
+							<th class="col-horas">Horas</th>
+							<th class="col-importe">Importe</th>
+						</tr>
+						<tr>
+							<td><a class="i-borrar" href="#" onclick=""><i class="fa fa-times"></i></a></td>
+							<td class="col-cantidad"><?= form_input($cantidad0) ?></td>
+							<td class="col-concepto">
+								<div class="input-group">
+									<?= form_input($concepto0) ?>
+							    	<div class="input-group-addon">
+							    		<a href="" data-toggle="modal" data-target="#modal_concepto">
+							    			<i class="fa fa-search" aria-hidden="true"></i>
+							    		</a>
+							    	</div>
+							    </div>
+							</td>
+							<td class="col-descripcion"><?= form_input($descripcion0) ?></td>
+							<td class="col-horas">
+								<div class="input-group">
+									<?= form_input($horas0) ?>
+							    	<div class="input-group-addon"> x $<span id="importe0">0.00</span></div>
+							    </div>
+							</td>
+							<td class="col-importe"><?= form_input($importe0) ?></td>
+						</tr>
+						<tr>
+							<td colspan="5">
+								<a href="" data-toggle="modal" data-target="#modal_proyecto">Agregar Concepto <i class="fa fa-plus" aria-hidden="true"></i></a>
+							</td>
+						</tr>
+					</table>				
+				</div>
 			<?= form_close() ?>
-			
+			<?= form_submit($guardar) ?>
+			<a href="<?= base_url('cotizaciones/listaCotizaciones') ?>" class="btn btn-default">Cancelar</a>
 		</div>
 	</div>
 </div>
 
-<!-- Modal concepto -->
+<!-- Modal proyecto -->
 <div class="modal fade" id="modal_proyecto" role="dialog">
   	<div class="modal-dialog" role="document">
     	<div class="modal-content">
@@ -83,13 +148,13 @@
 	      	</div>
 	      	<div class="modal-body form">
 	      		<form action="#" id="form" class="form-horizontal">
-					<table id="proys" class="table table-hover"><thead><tr><th>#</th><th>Proyecto</th><th>Empresa</th></tr></thead><tbody>
+					<table id="proys" class="table table-hover"><thead><tr><th></th><th>Proyecto</th><th>Empresa</th></tr></thead><tbody>
 					<?php 
 						$i = 1;
 						foreach ($proyectos->result() as $fila) 
 						{ ?>
 							<tr>
-								<td><?php echo form_radio("proyecto", $fila->id_proyecto, FALSE) . " " . $i ?></td>
+								<td><?php echo form_radio("proyecto", $fila->id_proyecto, FALSE) ?></td>
 								<td><?= $fila->nombre ?></td>
 								<td><?= $fila->empresa ?></td>
 							</tr>
@@ -99,7 +164,39 @@
 	      	</div>
 	      	<div class="modal-footer">
 	        	<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-	        	<a href="" class="btn btn-danger" id="seleccionar">Seleccionar</a>
+	        	<a href="#" class="btn btn-danger" id="seleccionar" data-dismiss="modal">Seleccionar</a>
+	      	</div>
+    	</div>
+  	</div>
+</div>
+
+<!-- Modal concepto -->
+<div class="modal fade" id="modal_concepto" role="dialog">
+  	<div class="modal-dialog" role="document">
+    	<div class="modal-content">
+	      	<div class="modal-header">
+	        	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        	<h4 class="modal-title">Selecciona el proyecto</h4>
+	      	</div>
+	      	<div class="modal-body form">
+	      		<form action="#" id="form" class="form-horizontal">
+					<table id="proys" class="table table-hover"><thead><tr><th></th><th>Proyecto</th><th>Empresa</th></tr></thead><tbody>
+					<?php 
+						$i = 1;
+						foreach ($proyectos->result() as $fila) 
+						{ ?>
+							<tr>
+								<td><?php echo form_radio("proyecto", $fila->id_proyecto, FALSE) ?></td>
+								<td><?= $fila->nombre ?></td>
+								<td><?= $fila->empresa ?></td>
+							</tr>
+						<?php $i++; } ?>
+					</tbody></table>
+		        </form>
+	      	</div>
+	      	<div class="modal-footer">
+	        	<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+	        	<a href="#" class="btn btn-danger" id="seleccionar" data-dismiss="modal">Seleccionar</a>
 	      	</div>
     	</div>
   	</div>
@@ -122,9 +219,10 @@
 			dataType: "JSON",
 			success: function(data){
 				var registro = eval(data);
-				//alert(registro);
-				html = "<p>Prueba</p>";
-				alert(html);
+				html = "<label><a href='' data-toggle='modal' data-target='#modal_proyecto'>Proyecto</a></label><br>";
+				html += "<div class='row'><div class='col-lg-12'><p><label>Nombre del Proyecto:</label> "+registro[0]["nombre"]+"</p></div></div>";
+				html += "<div class='row'><div class='col-lg-6'><p><label>Cliente:</label> "+registro[0]["cliente"]+" ("+registro[0]["puesto"]+")</p></div>";
+				html += "<div class='col-lg-6'><p><label>Empresa:</label> "+registro[0]["empresa"]+"</p></div></div>";
 				$("#divproyecto").html(html);
 			},
 			error: function(jqXHR, textStatus, errorThrown)

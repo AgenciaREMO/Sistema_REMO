@@ -27,13 +27,6 @@ margin:auto;
 
 }
 
-.centrar {
-	text-align: center;
-}
-.i-borrar {
-	color: #d9534f;
-	padding-right: 10px;
-}
 
 .glyphicon-remove{
 	color: #d9534f;
@@ -45,4 +38,22 @@ margin:auto;
 
 .glyphicon-new-window{
 	color: #333333;
+}
+
+//Modulo cotizaciones Style 
+.centrar {
+	text-align: center;
+}
+.i-borrar {
+	color: #d9534f;
+	padding-right: 10px;
+}
+.col-cantidad{
+	width: 10%;
+}
+.col-horas, .col-importe {
+	width: 15%;
+}
+.col-concepto, .col-descripcion {
+	width: 35%;
 }

@@ -161,14 +161,16 @@
 			</form>
 			<hr>
 			
+			<!-- Sección de filtro-->
 			<div class="row">
 				<div class="col-lg-12">
 					<ul class="nav nav-pills" role="tablist">
-					  <li role="presentation"><a href="#" id="f-aceptada">Aceptadas <span class="badge"><?= $num_aceptadas ?></span></a></li>
-					  <li role="presentation"><a href="#" id="f-revision">En revisión <span class="badge"><?= $num_revision ?></span></a></li>
-					  <li role="presentation"><a href="#" id="f-expedida">Expedidas <span class="badge"><?= $num_expedidas ?></span></a></li>
-					  <li role="presentation"><a href="#" id="f-rechazada">Rechazadas <span class="badge"><?= $num_rechazadas ?></span></a></li>
-					  <li role="presentation"><a href="#" id="f-vencida">Vencidas <span class="badge"><?= $num_vencidas ?></span></a></li>
+						<li role="presentation"><a href="#" id="f-total">Todas <span class="badge"><?= $num_total ?></span></a></li>
+					  	<li role="presentation"><a href="#" id="f-aceptada">Aceptadas <span class="badge"><?= $num_aceptadas ?></span></a></li>
+					  	<li role="presentation"><a href="#" id="f-revision">En revisión <span class="badge"><?= $num_revision ?></span></a></li>
+					  	<li role="presentation"><a href="#" id="f-expedida">Expedidas <span class="badge"><?= $num_expedidas ?></span></a></li>
+					  	<li role="presentation"><a href="#" id="f-rechazada">Rechazadas <span class="badge"><?= $num_rechazadas ?></span></a></li>
+					  	<li role="presentation"><a href="#" id="f-vencida">Vencidas <span class="badge"><?= $num_vencidas ?></span></a></li>
 					</ul>
 				</div>
 			</div>
@@ -619,6 +621,10 @@
 		});
 
 		//Evento onclick
+		$("#f-total").click(function(){
+			tipo_filtro = "f-total";
+			filtrar(tipo_filtro);
+		});
 		$("#f-aceptada").click(function()
 		{
 			tipo_filtro = "f-aceptada";
