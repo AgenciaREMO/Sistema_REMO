@@ -22,8 +22,8 @@
 				$cantidad0 = array(
 					'name' => 'cantidad0',
 					'class' => 'form-control',
-					'placeholder' => '0',
-					'id' => 'b-cantidad'
+					'value' => '1',
+					'id' => 'cantidad0'
 				);
 				$concepto0 = array(
 					'name' => 'concepto0',
@@ -41,8 +41,8 @@
 				$horas0 = array(
 					'name' => 'horas0',
 					'class' => 'form-control',
-					'placeholder' => '0',
-					'id' => 'b-horas'
+					'value' => '1',
+					'id' => 'horas0'
 				);
 				$importe0 = array(
 					'name' => 'importe0',
@@ -92,7 +92,7 @@
 					<label><a href="" data-toggle="modal" data-target="#modal_proyecto"> Proyecto <i class="fa fa-search" aria-hidden="true"></i></a></label>
 				</div>
 				<h3>Descripción del proyecto</h3>
-				<div class="form-group" id="divconceptos">
+				<div class="form-group" id="divdescrip">
 					<table class="table table-hover">
 						<tr>
 							<th></th>
@@ -119,14 +119,18 @@
 							<td class="col-horas">
 								<div class="input-group">
 									<?= form_input($horas0) ?>
-							    	<div class="input-group-addon"> x $<span id="importe0">0.00</span></div>
+							    	<div class="input-group-addon"> x $<span name="costo0" id="costo0">0.00</span></div>
 							    </div>
 							</td>
-							<td class="col-importe"><?= form_input($importe0) ?></td>
+							<td class="col-importe">
+								<div class="input-group">
+									<span name="importe0"></span>
+								</div>
+							</td>
 						</tr>
 						<tr>
-							<td colspan="5">
-								<a href="" data-toggle="modal" data-target="#modal_proyecto">Agregar Concepto <i class="fa fa-plus" aria-hidden="true"></i></a>
+							<td colspan="6">
+								<a href="" data-toggle="modal" data-target="#modal_concepto">Agregar Concepto <i class="fa fa-plus" aria-hidden="true"></i></a>
 							</td>
 						</tr>
 					</table>				
@@ -150,7 +154,7 @@
 	      		<form action="#" id="form" class="form-horizontal">
 					<table id="proys" class="table table-hover"><thead><tr><th></th><th>Proyecto</th><th>Empresa</th></tr></thead><tbody>
 					<?php 
-						$i = 1;
+						//$i = 1;
 						foreach ($proyectos->result() as $fila) 
 						{ ?>
 							<tr>
@@ -158,19 +162,19 @@
 								<td><?= $fila->nombre ?></td>
 								<td><?= $fila->empresa ?></td>
 							</tr>
-						<?php $i++; } ?>
+						<?php /*$i++;*/ } ?>
 					</tbody></table>
 		        </form>
 	      	</div>
 	      	<div class="modal-footer">
 	        	<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-	        	<a href="#" class="btn btn-danger" id="seleccionar" data-dismiss="modal">Seleccionar</a>
+	        	<a href="#" class="btn btn-danger" id="seleccionarProy" data-dismiss="modal">Seleccionar</a>
 	      	</div>
     	</div>
   	</div>
 </div>
 
-<!-- Modal concepto -->
+<!-- Modal conceptos y descripciones -->
 <div class="modal fade" id="modal_concepto" role="dialog">
   	<div class="modal-dialog" role="document">
     	<div class="modal-content">
@@ -180,23 +184,25 @@
 	      	</div>
 	      	<div class="modal-body form">
 	      		<form action="#" id="form" class="form-horizontal">
-					<table id="proys" class="table table-hover"><thead><tr><th></th><th>Proyecto</th><th>Empresa</th></tr></thead><tbody>
+					<table id="concep" class="table table-hover"><thead><tr><th></th><th>Concepto</th><th>Descripción</th><th>Costo por hora</th><th>Categoría</th></tr></thead><tbody>
 					<?php 
-						$i = 1;
-						foreach ($proyectos->result() as $fila) 
+						//$i = 1;
+						foreach ($descripciones->result() as $fila) 
 						{ ?>
 							<tr>
-								<td><?php echo form_radio("proyecto", $fila->id_proyecto, FALSE) ?></td>
-								<td><?= $fila->nombre ?></td>
-								<td><?= $fila->empresa ?></td>
+								<td><?php echo form_radio("descripcion", $fila->id_descripcion, FALSE) ?></td>
+								<td><?= $fila->concepto ?></td>
+								<td><?= $fila->detalles ?></td>
+								<td><?= $fila->costo ?></td>
+								<td><?= $fila->tipo ?></td>
 							</tr>
-						<?php $i++; } ?>
+						<?php /*$i++;*/ } ?>
 					</tbody></table>
 		        </form>
 	      	</div>
 	      	<div class="modal-footer">
 	        	<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-	        	<a href="#" class="btn btn-danger" id="seleccionar" data-dismiss="modal">Seleccionar</a>
+	        	<a href="#" class="btn btn-danger" id="seleccionarDescrip" data-dismiss="modal">Seleccionar</a>
 	      	</div>
     	</div>
   	</div>
@@ -207,8 +213,19 @@
     	$('#proys').find('tr').click(function() {
     		$(this).find('input').prop("checked", true);
     		var id = $('input:radio[name=proyecto]:checked').val();
-    		$('#seleccionar').attr("onClick", "cargarProyecto('"+id+"')");
+    		$('#seleccionarProy').attr("onClick", "cargarProyecto('"+id+"')");
 
+    	});
+    	$('#concep').find('tr').click(function() {
+    		$(this).find('input').prop("checked", true);
+    		var id = $('input:radio[name=descripcion]:checked').val();
+    		$('#seleccionarDescrip').attr("onClick", "cargarDescrip('"+id+"')");
+    	});
+    	$('#cantidad0').focusout(function(){
+    		recalcularImporte();
+    	});
+    	$('#horas0').focusout(function(){
+    		recalcularImporte();
     	});
 	});
 	function cargarProyecto(id)
@@ -230,5 +247,38 @@
 				 alert('Error get data from ajax');
 			}
 		});
+	}
+	function cargarDescrip(id)
+	{
+		$.ajax({
+			url: "<?= base_url('cotizaciones/mostrarDescripcion') ?>" + "/" + id, 
+			type: "GET",
+			dataType: "JSON",
+			success: function(data){
+				var registro = eval(data);
+				$('[name="concepto0"]').val(registro[0]["concepto"]);
+				$('[name="descripcion0"]').val(registro[0]["detalles"]);
+				$('[name="costo0"]').text(registro[0]["costo"]);
+				var cantidad = parseInt($("#cantidad0").val());
+				var horas = parseInt($("#horas0").val());
+				var costo = parseInt($("#costo0").text());
+				var importe = cantidad * costo * horas;
+				$('[name="importe0"]').text(importe);
+
+				//$("#divdescrip").html(html);
+			},
+			error: function(jqXHR, textStatus, errorThrown)
+			{
+				 alert('Error get data from ajax');
+			}
+		});
+	}
+	function recalcularImporte()
+	{
+		var cantidad = parseInt($("#cantidad0").val());
+		var horas = parseInt($("#horas0").val());
+		var costo = parseInt($("#costo0").text());
+		var importe = cantidad * costo * horas;
+		$('[name="importe0"]').text(importe);
 	}
 </script>

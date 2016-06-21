@@ -8,6 +8,7 @@
 		{
 			parent::__construct();
 			$this->load->model('cotizacion');
+			$this->load->model('concepto');
 			$this->load->helper('form');
 		}
 		public function listaCotizaciones()
@@ -55,9 +56,11 @@
 
 			$resultado = $this->cotizacion->obtenerPersonal();
 			$datos = $this->cotizacion->obtenerProyectos();
+			$descrip = $this->concepto->obtenerConceptos();
 			$data = array(
 				'consulta' => $resultado,
-				'proyectos' => $datos
+				'proyectos' => $datos,
+				'descripciones' => $descrip
 			);
 
 			$this->load->view("cotizaciones/cotizacion_nueva", $data);
@@ -156,6 +159,13 @@
 		public function mostrarProyecto($id = '')
 		{
 			$data = $this->cotizacion->mostrarProyecto($id);
+
+			echo json_encode($data);
+		}
+		public function mostrarDescripcion($id = '')
+		{
+			$tipo = "cotizacion";
+			$data = $this->concepto->obtenerDescripcionPorId($id, $tipo);
 
 			echo json_encode($data);
 		}
