@@ -135,13 +135,6 @@
 					</table>
 				</div>
 			</div>
-			<div class="row-">
-				<div class="col-lg-12">
-					<?php  echo $pagination ?>
-				</div>
-			</div>
-
-			
 		</div>
 	</div>
 </div>

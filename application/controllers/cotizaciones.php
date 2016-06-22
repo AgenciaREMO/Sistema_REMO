@@ -8,6 +8,7 @@
 		{
 			parent::__construct();
 			$this->load->model('cotizacion');
+			$this->load->model('concepto');
 			$this->load->helper('form');
 		}
 		public function listaCotizaciones()
@@ -16,6 +17,7 @@
 			$this->load->view("nav");
 
 			$cotizaciones = $this->cotizacion->obtenerCotizaciones();
+			$num_total = $this->cotizacion->cotizacionesTotales();
 			$num_aceptadas = $this->cotizacion->cotizacionesAceptadas();
 			$num_revision = $this->cotizacion->cotizacionesRevision();
 			$num_expedidas = $this->cotizacion->cotizacionesExpedidas();
@@ -24,7 +26,8 @@
 			$num_vencidas= $this->cotizacion->cotizacionesVencidas($fecha_actual);
 			$data = array(
 				'consulta' => $cotizaciones,
-				'num_aceptadas' => $num_aceptadas,
+				'num_total' => $num_total,
+				'num_aceptadas' => $num_aceptadas, 
 				'num_revision' => $num_revision,
 				'num_expedidas' => $num_expedidas,
 				'num_rechazadas' => $num_rechazadas,
@@ -53,9 +56,11 @@
 
 			$resultado = $this->cotizacion->obtenerPersonal();
 			$datos = $this->cotizacion->obtenerProyectos();
+			$descrip = $this->concepto->obtenerConceptos();
 			$data = array(
 				'consulta' => $resultado,
-				'proyectos' => $datos
+				'proyectos' => $datos,
+				'descripciones' => $descrip
 			);
 
 			$this->load->view("cotizaciones/cotizacion_nueva", $data);
@@ -134,7 +139,15 @@
 				else if ($filtro == "f-rechazada") {
 					$datos = $this->cotizacion->mostrarFiltroCotizaciones($filtro);
 				}
-
+				else if ($filtro == "f-revision") {
+					$datos = $this->cotizacion->mostrarFiltroCotizaciones($filtro);
+				}
+				else if ($filtro == "f-vencida") {
+					$datos = $this->cotizacion->mostrarFiltroCotizaciones($filtro);
+				}
+				else if ($filtro == "f-total") {
+					$datos = $this->cotizacion->mostrarFiltroCotizaciones($filtro);
+				}
 				echo json_encode($datos);
 			}
 			else
@@ -143,17 +156,18 @@
 			}
 		}
 
-		public function buscarProyectoAjax()
+		public function mostrarProyecto($id = '')
 		{
-			if($this->input->is_ajax_request())
-			{
-				
-				echo json_encode($datos);
-			}
-			else
-			{
-				show_404;
-			}
+			$data = $this->cotizacion->mostrarProyecto($id);
+
+			echo json_encode($data);
+		}
+		public function mostrarDescripcion($id = '')
+		{
+			$tipo = "cotizacion";
+			$data = $this->concepto->obtenerDescripcionPorId($id, $tipo);
+
+			echo json_encode($data);
 		}
 	}
 ?>
