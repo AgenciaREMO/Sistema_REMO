@@ -93,7 +93,7 @@
 				</div>
 				<h3>Descripción del proyecto</h3>
 				<div class="form-group" id="divdescrip">
-					<table class="table table-hover">
+					<table id="tabla-conceptos" class="table table-hover">
 						<tr>
 							<th></th>
 							<th class="col-cantidad">Cant.</th>	
@@ -128,16 +128,13 @@
 								</div>
 							</td>
 						</tr>
-						<tr>
-							<td colspan="6">
-								<a href="" data-toggle="modal" data-target="#modal_concepto">Agregar Concepto <i class="fa fa-plus" aria-hidden="true"></i></a>
-							</td>
-						</tr>
 					</table>				
+					<a href="#" class="btn btn-default" onClick="agregarConcepto()">Agregar Concepto <i class="fa fa-plus" aria-hidden="true"></i></a>
 				</div>
+				<hr>
+				<?= form_submit($guardar) ?>
+				<a href="<?= base_url('cotizaciones/listaCotizaciones') ?>" class="btn btn-default">Cancelar</a>
 			<?= form_close() ?>
-			<?= form_submit($guardar) ?>
-			<a href="<?= base_url('cotizaciones/listaCotizaciones') ?>" class="btn btn-default">Cancelar</a>
 		</div>
 	</div>
 </div>
@@ -151,7 +148,7 @@
 	        	<h4 class="modal-title">Selecciona el proyecto</h4>
 	      	</div>
 	      	<div class="modal-body form">
-	      		<form action="#" id="form" class="form-horizontal">
+	      		<form action="#" id="formproy" class="form-horizontal">
 					<table id="proys" class="table table-hover"><thead><tr><th></th><th>Proyecto</th><th>Empresa</th></tr></thead><tbody>
 					<?php 
 						//$i = 1;
@@ -183,7 +180,7 @@
 	        	<h4 class="modal-title">Selecciona el proyecto</h4>
 	      	</div>
 	      	<div class="modal-body form">
-	      		<form action="#" id="form" class="form-horizontal">
+	      		<form action="#" id="formconcep" class="form-horizontal">
 					<table id="concep" class="table table-hover"><thead><tr><th></th><th>Concepto</th><th>Descripción</th><th>Costo por hora</th><th>Categoría</th></tr></thead><tbody>
 					<?php 
 						//$i = 1;
@@ -209,6 +206,9 @@
 </div>
 
 <script type="text/javascript">
+	//Variables globales
+	var num_concep = 1;
+	
 	$(document).ready(function() {
     	$('#proys').find('tr').click(function() {
     		$(this).find('input').prop("checked", true);
@@ -227,7 +227,14 @@
     	$('#horas0').focusout(function(){
     		recalcularImporte();
     	});
-	});
+    	//Limpia la modales cuando se ocultan
+		$(document.body).on('hidden.bs.modal', function () {
+			$('#formproy')[0].reset();
+			$('#formconcep')[0].reset();
+
+		});
+
+    });
 	function cargarProyecto(id)
 	{
 		$.ajax({
@@ -280,5 +287,19 @@
 		var costo = parseInt($("#costo0").text());
 		var importe = cantidad * costo * horas;
 		$('[name="importe0"]').text(importe);
+	}
+	function agregarConcepto()
+	{
+		<?php 
+
+			$importe = array(
+				'name' => 'importe',
+				'class' => 'form-control',
+				'placeholder' => '0',
+				'id' => 'b-importe'
+			);
+		?>
+		html = "<tr><td><a class='i-borrar' href='#' onclick=''><i class='fa fa-times'></i></a></td><td class='col-cantidad'><input type='text' name='cantidad"+num_concep+"' class='form-control' value='1' id='cantidad"+num_concep+"'></td><td class='col-concepto'><div class='input-group'><input type='text' name='concepto"+num_concep+"' class='form-control'	placeholder='---' id='b-concepto'><div class='input-group-addon'><a href='' data-toggle='modal' data-target='#modal_concepto'><i class='fa fa-search' aria-hidden='true'></i></a></div></div></td><td class='col-descripcion'><input type='text' name='descripcion"+num_concep+"' class='form-control' placeholder='---' id='b-descripcion' disabled='disabled'></td><td class='col-horas'><div class='input-group'><input type='text' name='horas"+num_concep+"' class='form-control' value='1' id='horas"+num_concep+"'><div class='input-group-addon'> x $<span name='costo' id='costo"+num_concep+"'>0.00</span></div></div></td><td class='col-importe'><div class='input-group'><span name='importe'></span></div></td></tr>";
+		$("#tabla-conceptos tr:last").after(html);
 	}
 </script>
