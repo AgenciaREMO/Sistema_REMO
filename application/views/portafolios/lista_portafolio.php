@@ -35,16 +35,17 @@
           <td><b>Eliminar</b></td>
         </tr>
         <?php //Inicio de Foreach para listar los portafolios
+          $cont = 1;
           foreach ($consulta1->result() as $fila) { //Convertimos la consulta de base de datos en una fila
         ?> 
           <tr>
-          <td><?= $fila->id_portafolio ?></td> <!-- Accedemos al id_portafolio -->
-          <td><?= $fila->nombre ?></td>  <!-- Accedemos al nombre -->
-          <td><div class="col-lg-2 "><a href="#" ><span class="glyphicon glyphicon-new-window" hidden="true" ></span></a></div></td>
-          <!--<td><div class="col-lg-2 "><button type="button" class="btn btn-default" data-toggle="modal" data-target="#modalEnviar">Enviar</button></div></td>-->
-          <td><div class="col-lg-2 "><a href="#" ><span class="glyphicon glyphicon-envelope" data-toggle="modal" data-target="#enviar"></span></a></div></td>
-          <td><div class="col-lg-2 "><a href="#" ><span class="glyphicon glyphicon-remove" data-toggle="modal" data-target="#eliminar"></span></a></div></td>
-        </tr>
+            <td><?= $cont++ ?></td>
+            <td><?= $fila->nombre ?></td>  <!-- Accedemos al nombre -->
+            <td><div class="col-lg-2 "><a href="#" ><span class="glyphicon glyphicon-new-window" hidden="true" ></span></a></div></td>
+            <!--<td><div class="col-lg-2 "><button type="button" class="btn btn-default" data-toggle="modal" data-target="#modalEnviar">Enviar</button></div></td>-->
+            <td><div class="col-lg-2 "><a href="#" ><span class="glyphicon glyphicon-envelope" data-toggle="modal" data-target="#enviar"></span></a></div></td>
+            <td><div class="col-lg-2 "><a href="#" ><span class="glyphicon glyphicon-remove" data-toggle="modal" data-target="#eliminar"></span></a></div></td>
+          </tr>
         <?php   
           } //Fin de Foreach para lista los portafolios
         ?>

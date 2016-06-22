@@ -23,32 +23,55 @@ public function consultarServicios()
 		}
 }
 
-public function insertarServicio($data, $descripcion, $tipo){
-	/*$tipo = $tipo;
-	$id_po = $id_po;
-	$descripcion = $descripcion;*/
-	echo "<br><br>";
-	echo "Este es el array que busco contar para el for:";
-	echo "<br><br>";
-	print_r($tipo);
-	echo "<br><br>";
-	echo "  Aqui deberia arrojar el numero de elementos en el arreglo que debería ser por ahora 4 y sale: " . count($tipo);
-	echo "<br><br>";
-	print_r($data);
-	echo "<br><br>";
-	print_r($descripcion);
-	echo "<br><br>";
-	echo "  Aqui deberia arrojar el numero de elementos en el arreglo que debería ser por ahora 4 y sale: " . count($descripcion);
-	echo "<br><br>";
-	
-	$sqlq="";
+public function insertarServicio($data, $descripcion, $tipo, $cont){
+	$arrayCont = explode (", " , $cont['id_tipo']);
+	for($i=0; $i <= count($arrayCont) ;$i++) {
+		if(!empty($tipo['id_tipo'][$i])){
+			$sql = " INSERT INTO portafolio_tipo (id_por_tip, id_tipo, id_portafolio, desc_ser) 
+				     VALUES ('',".$tipo['id_tipo'][$i].",".$data['id_portafolio'].",'".$descripcion['descripcion'][$i]."')";
+			$this->db->query($sql);
+			echo '<br><br>';
+		}else{
+		}
+	  echo $sql;
+	  echo "<br><br>";   
+	}
+}
+
+public function actualizarServicio($data, $descripcion, $tipo, $cont){
+	/*
+	UPDATE portafolio_tipo
+	SET desc_ser='Probando una nueva descripcion'
+	WHERE id_portafolio = 9 AND id_tipo = 2;
+	*/
+	$arrayCont = explode (", " , $cont['id_tipo']);
+	for($i=0; $i <= count($arrayCont) ;$i++) {
+		if(!empty($tipo['id_tipo'][$i])){
+			/*
+			$sql = " UPDATE portafolio_tipo 
+				     SET id_tipo = ".$tipo['id_tipo'][$i].", desc_ser= '".$descripcion['descripcion'][$i]."'".
+				     "WHERE id_portafolio = ".$data['id_portafolio']" and ";
+				     $this->db->query($sql);
+			*/
+
+			$this->db->where('id_portafolio', $port_img['id_portafolio']);
+			$this->db->where('id_tipo', $tipo['id_tipo'][$i]);
+			$sql = $this->db->update('portafolio_tipo', array('desc_ser' => $descripcion['descripcion'][$i]));
+			
+			echo '<br><br>';
+		}else{
+		}
+	  echo $sql;
+	  echo "<br><br>";   
+	}
+}
+
+
+	//$sqlq="";
 
   	//for($i=0; $i < count($tipo) ;$i++) {
-	for($i=0; $i <= 3 ;$i++) {
-		$sql1 = "INSERT INTO portafolio_tipo (id_por_tip, id_tipo, id_portafolio, desc_ser) 
-				 VALUES ('',".$tipo['id_tipo'][$i].",".$data['id_portafolio'].",'".$descripcion['descripcion'][$i]."')";
-		$this->db->query($sql1);
-		echo '<br><br>';
+	
+		
 	      /* $sqlq.="INSERT INTO portafolio_tipo (id_por_tip, id_tipo, id_portafolio, descripcion) VALUES ";
 	       $sqlq.="('', ".serialize($tipo).",".$data['id_portafolio'].", '".serialize($descripcion)."');";
 	       //$sqlq.="('', ".serialize($tipo['id_tipo']).",".$data['id_portafolio'].", '".serialize($descripcion['descripcion'])."');";
@@ -63,13 +86,8 @@ public function insertarServicio($data, $descripcion, $tipo){
 	       }else{
 	       	echo "No se subió";
 	       }*/
-	       echo $sql1;
-	       
-	}	
+	      
 
-		
-
-}
 
 
 public function insertarServicios($data){
@@ -84,7 +102,7 @@ public function insertarServicios($data){
 	}
 
 
-	public function actualizarServicio($port_img){
+	public function actualizarServiciosw($port_img){
 		/*select *
 		from portafolio_imagen
 		inner join imagen

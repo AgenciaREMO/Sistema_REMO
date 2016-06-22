@@ -15,38 +15,31 @@
                 <form action"#" method="#" name="form_equipo">
                 <div class="row">
                   <div class="col-md-12">
-                    <table class="table table-hover">
-                      <tr>
-                        <td>Colaborador</td>
-                        <td>Puesto</td>
-                        <td>Resaltar</td>
-                        <td>Seleccionar</td>
-                      </tr>
-                      <tr>
-                        <td>Carlos Reyes</td>
-                        <td>Director de Estrategias o Innovación</td>
-                        <td><div class="checkbox" style="text-align:center"><input type="checkbox" value="" checked></div></td>
-                        <td><div class="checkbox" style="text-align:center"><input type="checkbox" value="" checked></div></td>
-                      </tr>
-                      <tr>
-                        <td>Rozendo Mondragón</td>
-                        <td>Coordinador de Desarrollo Web</td>
-                        <td><div class="checkbox" style="text-align:center"><input type="checkbox" value="" checked></div></td>
-                        <td><div class="checkbox" style="text-align:center"><input type="checkbox" value="" checked></div></td>
-                      </tr>
-                      <tr>
-                        <td>Xóchitl Ramírez</td>
-                        <td>Coordinadora de Diseño y Empaque</td>
-                        <td><div class="checkbox" style="text-align:center"><input type="checkbox" value="" checked></div></td>
-                        <td><div class="checkbox" style="text-align:center"><input type="checkbox" value="" ></div></td>
-                      </tr>
-                      <tr>
-                        <td>Gabriel Mccormic</td>
-                        <td>Coordinador Multimedia</td>
-                        <td><div class="checkbox" style="text-align:center"><input type="checkbox" value="" checked></div></td>
-                        <td><div class="checkbox" style="text-align:center"><input type="checkbox" value="" ></div></td>
-                      </tr>
-                    </table>
+                    <?php //form_open('portafolios/c_equipo/validarEquipo'.'/'.$id_portafolio);?>
+                      <table class="table table-hover">
+                        <tr>
+                          <td><b>No.</b></td>
+                          <td><b>Colaborador</b></td>
+                          <td><b>Puesto</b></td>
+                          <td><b>Resaltar</b></td>
+                          <td><b>Seleccionar</b></td>
+                        </tr>
+                        <?php //Inicio de Foreach para listar los portafolios
+                            $cont = 1;
+                            foreach ($resultado->result() as $fila) { //Convertimos la consulta de base de datos en una fila
+                        ?>
+                          <tr>
+                            <td><?= $cont++ ?></td>
+                            <td><?= $fila->nombre ?></td> 
+                            <td><?= $fila->puesto ?></td>
+                            <td><div class="checkbox" style="text-align:center"><input type="checkbox" value="" checked></div></td>
+                            <td><div class="checkbox" style="text-align:center"><input type="checkbox" value="" checked></div></td>
+                          </tr>
+                        <?php   
+                          } //Fin de Foreach para lista los portafolios
+                        ?>
+                      </table>
+                    <?php //form_close(); ?>
                   </div>
               </div>
               <hr>
@@ -59,15 +52,9 @@
                     <div class="modal-content">
                       <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title" id="myModalLabel">Agregar Slider de Equipo de trabajo</h4>
+                        <h4 class="modal-title" id="myModalLabel">Selección de slider</h4>
                       </div>
                       <div class="modal-body">
-                        <div class="row">
-                          <div class="col-md-12">
-                            <h4>   Selecciona la imagen de equipo de trabajo</h4>
-                          </div>
-                        </div>
-                        <hr>
                         <div class="row">
                           <div class="col-xs-6 col-sm-6 col-md-2">
                           <img class="img-responsive" src="img/personal/1.jpg" alt="Equipo" title="Equipo">

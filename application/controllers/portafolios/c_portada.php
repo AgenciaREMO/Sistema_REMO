@@ -64,8 +64,7 @@
 				$this->load->view("nav");
 				$resultado = $this->imagen->obtenerTipoImg(); //Asignamos a una variable la función que arroja el resultado de la consulta a base de datos.
 				$error = $this->upload->display_errors();
-				$tipos = array('consulta' => $resultado,
-							   'error' => $error);
+				$tipos = array('consulta' => $resultado,'error' => $error);
 				$this->load->view('/portafolios/c_portada/cargar'.'/'.$id_portafolio, $tipos); //Aqui se tendrá que modificar
 				$this->load->view("footer");
 			} else {
@@ -122,10 +121,7 @@
 			}else{
 				
 				$id_portafolio = $id_portafolio;
-				$port_img = array(
-					'id_portafolio' => $id_portafolio,
-					'id_img' => implode(",",$this->input->post('id_img'))
-					);//Almacenamos en un arreglo el id que se obtuvo.
+				$port_img = array('id_portafolio' => $id_portafolio,'id_img' => implode(",",$this->input->post('id_img')));
 				$this->portada->insertarPortada($port_img);
 				print_r($port_img);
 				redirect('/portafolios/c_portada/cargar'.'/'.$id_portafolio); 
@@ -134,8 +130,8 @@
 		}
 
 		public function actualizarPortada($id_portafolio)     
-           {   
-           			//Validación Radio button
+        {   
+           	//Validación Radio button
 			$this->form_validation->set_rules('id_img','portada','required');
 			$this->form_validation->set_message('required', 'Debes seleccionar una  %s , es obligatorio');
 			if ($this->form_validation->run() == FALSE) 
@@ -144,13 +140,10 @@
 				echo 'fail';
 			}else{
 				$id_portafolio = $id_portafolio;
-				$port_img = array(
-					'id_portafolio' => $id_portafolio,
-					'id_img' => $this->input->post('id_img')
-					);//Almacenamos en un arreglo el id que se obtuvo.
+				$port_img = array('id_portafolio' => $id_portafolio,'id_img' => $this->input->post('id_img'));
 				$editarPortada = $this->portada->actualizarPortada($port_img);
 				redirect('/portafolios/c_portada/cargar'.'/'.$id_portafolio); 
-			}      
+		}      
                
  
                

@@ -21,44 +21,10 @@
                     <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2 img-rounded">
                       <img class="img-responsive img-hover img-thumbnail" src="img/experiencia/cuatrdos.jpg" alt="Experiencia" title="Experiencia">
                     </div>
-                    <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2">
-                      <img class="img-responsive img-hover img-thumbnail" src="img/experiencia/dulzuraQueretana.jpg" alt="Experiencia" title="Experiencia">
-                    </div>
-                    <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2">
-                      <img class="img-responsive img-hover img-thumbnail" src="img/experiencia/incusa.jpg" alt="Experiencia" title="Experiencia">
-                    </div>
-                    <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2">
-                      <img class="img-responsive img-hover img-thumbnail" src="img/experiencia/sazonConmadre.jpg" alt="Experiencia" title="Experiencia">
-                    </div> 
-                    <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2">
-                      <img class="img-responsive img-hover img-thumbnail" src="img/experiencia/sika.jpg" alt="Experiencia" title="Experiencia">
-                    </div>
-                    <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2">
-                      <img class="img-responsive img-hover img-thumbnail" src="img/experiencia/sika_academy.jpg" alt="Experiencia" title="Experiencia">
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2 img-rounded">
-                      <img class="img-responsive img-hover img-thumbnail" src="img/experiencia/tec100.jpg" alt="Experiencia" title="Experiencia">
-                    </div>
-                    <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2">
-                      <img class="img-responsive img-hover img-thumbnail" src="img/experiencia/tecno.jpg" alt="Experiencia" title="Experiencia">
-                    </div>
-                    <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2">
-                      <img class="img-responsive img-hover img-thumbnail" src="img/experiencia/temploSanta.jpg" alt="Experiencia" title="Experiencia">
-                    </div>
-                    <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2">
-                      <img class="img-responsive img-hover img-thumbnail" src="img/experiencia/tranco.jpg" alt="Experiencia" title="Experiencia">
-                    </div> 
-                    <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2">
-                      <img class="img-responsive img-hover img-thumbnail" src="img/experiencia/uaq.jpg" alt="Experiencia" title="Experiencia">
-                    </div>
-                    <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2">
-                      <img class="img-responsive img-hover img-thumbnail" src="img/experiencia/umest.jpg" alt="Experiencia" title="Experiencia">
-                    </div>
                   </div>
                   <br />
                   <div class="row">
+                    <!-- Inicio de modal -->
                     <div class="col-lg-2">
                       <button type="button" class="btn btn-default" data-toggle="modal" data-target="#basicModal2">Agregar slider</button>
                     </div><br />

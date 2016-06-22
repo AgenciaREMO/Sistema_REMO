@@ -46,7 +46,7 @@ class Portada extends CI_Model
 		$this->db->join('imagen', 'portafolio_imagen.id_img = imagen.id_img');
 		$this->db->join('tipo_imagen', 'imagen.id_tipo_img = tipo_imagen.id_tipo_img');
 		$this->db->where('portafolio_imagen.id_portafolio', $id['id_portafolio']);
-		$this->db->where('tipo_imagen.id_tipo_img', 1);
+		//$this->db->where('tipo_imagen.id_tipo_img', 1);
 		$query = $this->db->get();
 		if($query->num_rows()>0){
 			/*SELECT
@@ -78,8 +78,8 @@ class Portada extends CI_Model
 			*/
 			$this->db->select('id_img');
 			$this->db->from('imagen');
-			$this->db->where('id_img', '1');
-			$this->db->where('id_tipo_img', '1');
+			$this->db->where('id_img', 1);
+			$this->db->where('id_tipo_img', 1);
 			$query = $this->db->get();
 			if($query->num_rows()>0){
 	        	return $query;
@@ -201,11 +201,27 @@ class Portada extends CI_Model
 
 	public function obtener_pagina($numero_por_pagina){
 		//$this->db->get();
+		$this->db->where('id_tipo_img', 1);
+		$query = $this->db->get("imagen", $numero_por_pagina, $this->uri->segment(5));
+		
+		return $query;
+	}
+
+	/*
+	//Paginación gráficos de equipo
+	public function num_equipo(){
+		//SELECT count(*) as number FROM imagen INNER JOIN tipo_imagen ON imagen.id_tipo_img = tipo_imagen.id_tipo_img WHERE imagen.id_tipo_img = 1
+		$numero = $this->db->query("SELECT count(*) as number FROM imagen INNER JOIN tipo_imagen ON imagen.id_tipo_img = tipo_imagen.id_tipo_img WHERE imagen.id_tipo_img = 2")->row()->number; //Regresa el número total de filas de una tabla
+		return intval($numero);
+	}
+
+	public function obtener_pagina($numero_por_pagina){
+		//$this->db->get();
 		
 		$query = $this->db->get("imagen", $numero_por_pagina, $this->uri->segment(5));
 		//$this->db->where('id_tipo_img', 1);
 		return $query;
-	}
+	}*/
 
 }
 

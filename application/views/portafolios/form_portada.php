@@ -39,10 +39,10 @@
                 <div class="row">
                 <?php 
                   
-                  foreach ($disponible->result() as $fila)
+                  foreach ($disponiblePortada->result() as $fila)
                   { 
 
-                    if($check == $fila->id_img){
+                    if($checkPortada == $fila->id_img){
                       $radioImg = array(
                         'name'     => 'id_img',
                         'id'       => 'id_img',
@@ -176,7 +176,7 @@
                   </div>          
                   <div class="row">
                     <div class="col-lg-12 text-center">
-                      <?php echo $pagination;?>
+                      <?php echo $paginationPortada;?>
                     </div>
                   </div>
                   <div class="row">

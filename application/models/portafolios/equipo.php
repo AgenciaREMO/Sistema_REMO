@@ -1,9 +1,9 @@
 <?php if ( ! defined('BASEPATH')) exit ('No direct scripts access allowed'); //para que no puedan acceder de manera no controlada directamente al controlador
 /*
-//Documento: Modelo de portada de portafolios
+//Documento: Modelo de portada de equipo de traabjo
 //Versión: 1.0
 //Autor: Ing. María de los Ángeles Godínez Rivas
-//Fecha de creación: 16 de Marzo del 2016
+//Fecha de creación: 20 de junio del 2016
 //Fecha de modificación: 
 */
 /**
@@ -11,5 +11,11 @@
 */
 class Equipo extends CI_Model
 {	
+	//Función que permite mostrar el personal disponible para insertar en el portafolio.
+	public function mostrarPersonal()
+	{
+		//SELECT * FROM personal
+		return $this->db->get('personal');
+	}
 
 }

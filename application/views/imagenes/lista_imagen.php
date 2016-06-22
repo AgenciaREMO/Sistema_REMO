@@ -32,11 +32,12 @@
           <td><b>Ver</b></td>
           <td><b>Eliminar</b></td>
         </tr>
-        <?php //Inicio de Foreach para listar los portafolios
+        <?php //Inicio de Foreach para listar los gráficos
+          $cont = 1;
           foreach ($consulta->result() as $fila) { //Convertimos la consulta de base de datos en una fila
         ?> 
           <tr>
-          <td><?= $fila->id_img ?></td> <!-- Accedemos al  -->
+          <td><?= $cont++ ?></td>
           <td><?= $fila->nom_img ?></td>  <!-- Accedemos al nombre -->
           <td><?= $fila->nom_tipo ?></td>
           <td><div class="col-lg-2 "><a href="#"><span class="glyphicon glyphicon-new-window" hidden="true" ></span></a></div></td>

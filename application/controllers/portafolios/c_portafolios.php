@@ -7,21 +7,14 @@
 //Fecha de modificación: 
 */
 
-	class C_portafolios extends CI_Controller
+	class C_portafolios extends MY_Controller
 	{
-		function __construct()
-		{
-			parent::__construct();
-			$this->load->helper(array('form', 'url'));
-			$this->load->model('portafolios/portafolio'); //Modelo para portafolios en general
-			$this->load->model('portafolios/portada'); //Modelo para portada
-			$this->load->model('portafolios/comentario'); //Modelo de comentario
-		}
-
+		//Función que permite cargar la vista de nuevo portafolio.
 		public function index()
 		{
 			$this->nuevoPortafolio();
 		}
+
 		//Función que permite mostrar los portafolios existentes.
 		public function mostrarPortafolio()
 		{
@@ -40,6 +33,7 @@
 			$this->load->view("portafolios/nuevo_portafolio");
 			$this->load->view("footer");
 		}	
+
 		//Función que valida los campos
 		public function validar(){
 			/*
@@ -69,6 +63,7 @@
 				echo 'successful';
 			}
 		}
+		
 		//Función que permite insertar un nuevo portafolio
 		public function insertarPortafolio(){
 			

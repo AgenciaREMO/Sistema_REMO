@@ -62,7 +62,7 @@ class C_servicio extends MY_Controller
 			//$this->portada->insertarPortada($port_img);
 			//print_r($data);
 			//redirect('/portafolios/c_portada/cargar'.'/'.$id_portafolio); 
-			echo 'successful';
+			//echo 'successful';
 		    $this->insertarServicio($id_portafolio);
 		}
 	}
@@ -77,16 +77,17 @@ class C_servicio extends MY_Controller
 				$data = array('id_portafolio' => $id_portafolio);
 				$descripcion = array('descripcion' => $this->input->post('descripcion'));
 				$tipo = array('id_tipo' => $this->input->post('servicio'));
-				//$tipo = array('id_tipo' => implode(", ", $this->input->post('servicio')));
-				//$descripcion = array('descripcion' => implode(", ", $this->input->post('descripcion')));
+				$cont = array('id_tipo' => implode(", ", $this->input->post('servicio')));
+				/*$tipo = array('id_tipo' => implode(", ", $this->input->post('servicio')));
+				$descripcion = array('descripcion' => implode(", ", $this->input->post('descripcion')));
 				print_r($tipo);
 				print_r($descripcion);
-				//$array = implode(",", $tipo);
-				//$cont = count($array);
-				$this->servicio->insertarServicio($data, $descripcion, $tipo);
-
-				//redirect('/portafolios/c_portada/cargar'.'/'.$id_portafolio); 
-				echo 'successful';
+				$array = implode(",", $tipo);
+				$cont = count($array);
+				*/
+				$this->servicio->insertarServicio($data, $descripcion, $tipo, $cont);
+				redirect('/portafolios/c_servicio/cargar'.'/'.$id_portafolio); 
+				//echo 'successful';
 	}
 
 
