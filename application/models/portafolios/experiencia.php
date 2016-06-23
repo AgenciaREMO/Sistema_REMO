@@ -14,8 +14,13 @@ class Experiencia extends CI_Model
 	//Función que permite consultar si existe un registro en la tabla portafolios-imagen para evaluar
 	public function obtenerExperiencia($id){
 		/*
-		//SELECT * FROM portafolio_imagen WHERE id_portafolio = $id_portafolio
-		Consulta que arroja datos de todas las imagenes de la tabla portafolio imagen que estan relacionadas con cierto portafolio
+		//Select * 
+		From portafolio_imagen
+		inner join imagen
+		on portafolio_imagen.id_img = imagen.id_img
+		inner join tipo_imagen
+		on imagen.id_tipo_img = tipo_imagen.id_tipo_img
+		where portafolio_imagen.id_portafolio = $id['id_portafolio']
 		*/
 		$this->db->select('*');
 		$this->db->from('portafolio_imagen');
@@ -25,13 +30,14 @@ class Experiencia extends CI_Model
 		//$this->db->where('tipo_imagen.id_tipo_img', 3);
 		$query = $this->db->get();
 		if($query->num_rows()>0){
-			/*SELECT
-			//SELECT portafolio_imagen.id_por_ima, portafolio_imagen.id_portafolio, portafolio_imagen.id_img, imagen.nom_img, imagen.id_img, imagen.url_img, imagen.id_tipo_img, tipo_imagen.id_tipo_img 
-			//FROM portafolio_imagen 
-			//INNER JOIN imagen
-			//ON portafolio_imagen.id_img = imagen.id_img
-			//INNER JOIN tipo_imagen
-			//ON imagen.id_tipo_img = tipo_imagen.id_tipo_img
+			/*
+			select pi.id_por_ima, pi.id_portafolio, pi.id_img, i.id_img as id_img, i.nom_img, i.url_img, i.id_tipo_img, ti.id_tipo_img
+			from portafolio_imagen pi
+			inner join imagen i
+			on pi.id_img = i.id_img
+			inner join tipo_imagen ti
+			on i.id_tipo_img = ti.id_tipo_img
+			where i.id_tipo_img = 3 and pi.id_portafolio = $id['id_portafolio']
 
 			Esta consulta verifica que si existen registro estos coincidan con el tipo de gráfico experiencia
 			*/

@@ -8,7 +8,6 @@
 */
 ?>
  <!-- Panel del Tab Experiencia -->
-            
               <div class="tabpanel tab-pane " id="experiencia">
                 <div class="panel-body">
                   <form action"#" method="#" name="form_experiencia">
@@ -17,12 +16,84 @@
                       <h5>Elige las imagénes que deseas incluir  como experiencia</h5>
                     </div>
                   </div>
-                  <div class="row">
-                    <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2 img-rounded">
-                      <img class="img-responsive img-hover img-thumbnail" src="img/experiencia/cuatrdos.jpg" alt="Experiencia" title="Experiencia">
-                    </div>
-                  </div>
-                  <br />
+                  <?=@$error?>
+                  <?php validation_errors('<div class="alert alert-danger" role="alert">','</div>'); ?>
+                  <?= form_open();?>
+                    <div class="row">
+                    <?php 
+                      
+                      foreach ($disponibleExperiencia->result() as $fila)
+                      { 
+
+                        if($checkExperiencia == $fila->id_img){
+                          $radioImg = array(
+                            'name'     => 'id_img',
+                            'id'       => 'id_img',
+                            'value'    => ''.$fila->id_img.'',
+                            'type'     => 'checkbox',
+                            'disabled' => 'disabled',
+                            'checked'  => TRUE
+                            );
+                        }else{
+                            $radioImg = array(
+                            'name'     => 'id_img',
+                            'id'       => 'id_img',
+                            'value'    => ''.$fila->id_img.'',
+                            'type'     => 'checkbox',
+                            'disabled' => 'disabled',
+                            'checked'  => FALSE
+                            );
+                        }
+
+                        //botones
+                        $editar = array(
+                          'onClick' => 'activarPor()',
+                          'style'   => 'display:inline',
+                          'class'   => 'btn btn-primary',
+                          'id'      => 'p-editar',
+                          'content' => 'Editar'
+                        );
+                        $cancelar = array(
+                          'onClick' => 'desactivarPor()',
+                          'style'   => 'display:none',
+                          'class'   => 'btn btn-default',
+                          'id'      => 'p-cancelar',
+                          'content' => 'Cancelar'
+                        );
+                        $guardar = array(
+                          'style' => 'display:none',
+                          'class' => 'btn btn-primary',
+                          'id'    => 'p-guardar',
+                          'value' => 'Guardar'
+                        );
+                        $cargar = array(
+                          'style' => 'display:inline',
+                          'class' => 'btn btn-primary',
+                          'id'    => 'p-nueva-s',
+                          'content' => 'Nueva portada',
+                          'data-toggle' => 'modal',
+                          'data-target' => '#cargarPortada'
+                          );
+                        $cargar2 = array(
+                          'style' => 'display:none',
+                          'class' => 'btn btn-primary',
+                          'id'    => 'p-nueva-n',
+                          'content' => 'Nueva portada',
+                          'data-toggle' => 'modal',
+                          'data-target' => '#cargarPortada'
+                          );
+                    ?>  
+                        <?= form_error('id_img'); ?>
+                        <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2 img-rounded">
+                          <?= form_checkbox($radioImg);?> 
+                          <img class="img-responsive img-hover img-thumbnail" src="<?= base_url($fila->url_img)?>" alt="<?= $fila->nom_img ?>" title="<?= $fila->nom_img ?>">
+                        </div>
+                      
+                    <?php
+                      }
+                    ?>  
+                      </div>    
+
                   <div class="row">
                     <!-- Inicio de modal -->
                     <div class="col-lg-2">
