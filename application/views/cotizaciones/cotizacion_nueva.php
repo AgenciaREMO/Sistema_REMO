@@ -21,7 +21,7 @@
 				//Inputs
 				$cantidad0 = array(
 					'name' => 'cantidad0',
-					'class' => 'form-control',
+					'class' => 'form-control input-recal',
 					'value' => '1',
 					'id' => 'cantidad0'
 				);
@@ -29,18 +29,18 @@
 					'name' => 'concepto0',
 					'class' => 'form-control',
 					'placeholder' => '---',
-					'id' => 'b-concepto'
+					'id' => 'concepto0'
 				);
 				$descripcion0 = array(
 					'name' => 'descripcion0',
 					'class' => 'form-control',
 					'placeholder' => '---',
-					'id' => 'b-descripcion',
+					'id' => 'descripcion0',
 					'disabled' => 'disabled'
 				);
 				$horas0 = array(
 					'name' => 'horas0',
-					'class' => 'form-control',
+					'class' => 'form-control input-recal',
 					'value' => '1',
 					'id' => 'horas0'
 				);
@@ -48,7 +48,7 @@
 					'name' => 'importe0',
 					'class' => 'form-control',
 					'placeholder' => '0',
-					'id' => 'b-importe'
+					'id' => 'importe0'
 				);
 				//Botón
 				$guardar = array(
@@ -109,9 +109,7 @@
 								<div class="input-group">
 									<?= form_input($concepto0) ?>
 							    	<div class="input-group-addon">
-							    		<a href="" data-toggle="modal" data-target="#modal_concepto">
-							    			<i class="fa fa-search" aria-hidden="true"></i>
-							    		</a>
+							    			<i class="fa fa-search" aria-hidden="true" onclick="identificar_Concepto('0')"></i>
 							    	</div>
 							    </div>
 							</td>
@@ -124,7 +122,7 @@
 							</td>
 							<td class="col-importe">
 								<div class="input-group">
-									<span name="importe0"></span>
+									<span id="importe0"name="importe0"></span>
 								</div>
 							</td>
 						</tr>
@@ -199,7 +197,7 @@
 	      	</div>
 	      	<div class="modal-footer">
 	        	<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-	        	<a href="#" class="btn btn-danger" id="seleccionarDescrip" data-dismiss="modal">Seleccionar</a>
+	        	<a href="#" class="btn btn-danger" id="seleccionarDescrip" data-dismiss="modal">Seleccionar</a> <input type="hidden" value="" id="inputs" name="inputs">
 	      	</div>
     	</div>
   	</div>
@@ -219,13 +217,18 @@
     	$('#concep').find('tr').click(function() {
     		$(this).find('input').prop("checked", true);
     		var id = $('input:radio[name=descripcion]:checked').val();
-    		$('#seleccionarDescrip').attr("onClick", "cargarDescrip('"+id+"')");
+    		var num_input = $("#inputs").val();
+    		$('#seleccionarDescrip').attr("onClick", "cargarDescrip('"+id+"','"+num_input+"')");
     	});
-    	$('#cantidad0').focusout(function(){
-    		recalcularImporte();
+    	$("body").on("keyup", "input[name*='cantidad']", function() {
+    		var txt = $(this).attr("id");
+			var id_input = txt.replace(/\D/g,'');
+			recalcularImporte(id_input);
     	});
-    	$('#horas0').focusout(function(){
-    		recalcularImporte();
+    	$("body").on("keyup", "input[name*='horas']", function() {
+    		var txt = $(this).attr("id");
+			var id_input = txt.replace(/\D/g,'');
+			recalcularImporte(id_input);
     	});
     	//Limpia la modales cuando se ocultan
 		$(document.body).on('hidden.bs.modal', function () {
@@ -255,7 +258,7 @@
 			}
 		});
 	}
-	function cargarDescrip(id)
+	function cargarDescrip(id, num)
 	{
 		$.ajax({
 			url: "<?= base_url('cotizaciones/mostrarDescripcion') ?>" + "/" + id, 
@@ -263,14 +266,17 @@
 			dataType: "JSON",
 			success: function(data){
 				var registro = eval(data);
-				$('[name="concepto0"]').val(registro[0]["concepto"]);
-				$('[name="descripcion0"]').val(registro[0]["detalles"]);
-				$('[name="costo0"]').text(registro[0]["costo"]);
-				var cantidad = parseInt($("#cantidad0").val());
-				var horas = parseInt($("#horas0").val());
-				var costo = parseInt($("#costo0").text());
+				var num = parseInt($("#inputs").val());
+				//var id = this.id;
+				//$('#' + id).hide();
+				$("#concepto" + num).val(registro[0]["concepto"]);
+				$("#descripcion" + num).val(registro[0]["detalles"]);
+				$("#costo" + num).text(registro[0]["costo"]);
+				var cantidad = parseInt($("#cantidad" + num).val());
+				var horas = parseInt($("#horas" + num).val());
+				var costo = parseInt($("#costo" + num).text());
 				var importe = cantidad * costo * horas;
-				$('[name="importe0"]').text(importe);
+				$("#importe" + num).text(importe);
 
 				//$("#divdescrip").html(html);
 			},
@@ -280,26 +286,32 @@
 			}
 		});
 	}
-	function recalcularImporte()
+	function recalcularImporte(id)
 	{
-		var cantidad = parseInt($("#cantidad0").val());
-		var horas = parseInt($("#horas0").val());
-		var costo = parseInt($("#costo0").text());
+		if ($("#horas" + id).val().length < 1) 
+		{
+			$("#horas" + id).val("0");
+		}
+		else if($("#cantidad" + id).val().length < 1)
+		{
+			$("#cantidad" + id).val("0");
+		}
+		var cantidad = parseInt($("#cantidad" + id).val());
+		var horas = parseInt($("#horas" + id).val());
+		var costo = parseInt($("#costo" + id).text());
 		var importe = cantidad * costo * horas;
-		$('[name="importe0"]').text(importe);
+		$("#importe" + id).text(importe);
+		alert("cant:" + cantidad + "costo:" + costo + "horas:" + horas + "importe:" + importe);
+	}
+	function identificar_Concepto(num)
+	{
+		$("#inputs").val(num);
+		$('#modal_concepto').modal('show');
 	}
 	function agregarConcepto()
 	{
-		<?php 
-
-			$importe = array(
-				'name' => 'importe',
-				'class' => 'form-control',
-				'placeholder' => '0',
-				'id' => 'b-importe'
-			);
-		?>
-		html = "<tr><td><a class='i-borrar' href='#' onclick=''><i class='fa fa-times'></i></a></td><td class='col-cantidad'><input type='text' name='cantidad"+num_concep+"' class='form-control' value='1' id='cantidad"+num_concep+"'></td><td class='col-concepto'><div class='input-group'><input type='text' name='concepto"+num_concep+"' class='form-control'	placeholder='---' id='b-concepto'><div class='input-group-addon'><a href='' data-toggle='modal' data-target='#modal_concepto'><i class='fa fa-search' aria-hidden='true'></i></a></div></div></td><td class='col-descripcion'><input type='text' name='descripcion"+num_concep+"' class='form-control' placeholder='---' id='b-descripcion' disabled='disabled'></td><td class='col-horas'><div class='input-group'><input type='text' name='horas"+num_concep+"' class='form-control' value='1' id='horas"+num_concep+"'><div class='input-group-addon'> x $<span name='costo' id='costo"+num_concep+"'>0.00</span></div></div></td><td class='col-importe'><div class='input-group'><span name='importe'></span></div></td></tr>";
+		html = "<tr><td><a class='i-borrar' href='#' onclick=''><i class='fa fa-times'></i></a></td><td class='col-cantidad'><input type='text' name='cantidad"+num_concep+"' class='form-control input-recal' value='1' id='cantidad"+num_concep+"'></td><td class='col-concepto'><div class='input-group'><input type='text' name='concepto"+num_concep+"' class='form-control'	placeholder='---' id='concepto"+num_concep+"'><div class='input-group-addon'><i onClick='identificar_Concepto("+num_concep+")' class='fa fa-search' aria-hidden='true'></i></div></div></td><td class='col-descripcion'><input type='text' name='descripcion"+num_concep+"' class='form-control' placeholder='---' id='descripcion"+num_concep+"' disabled='disabled'></td><td class='col-horas'><div class='input-group'><input type='text' name='horas"+num_concep+"' class='form-control input-recal' value='1' id='horas"+num_concep+"'><div class='input-group-addon'> x $<span name='costo' id='costo"+num_concep+"'>0.00</span></div></div></td><td class='col-importe'><div class='input-group'><span id='importe"+num_concep+"' name='importe"+num_concep+"'></span></div></td></tr>";
 		$("#tabla-conceptos tr:last").after(html);
+		num_concep++;
 	}
 </script>
