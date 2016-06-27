@@ -105,7 +105,7 @@
 						<?php 
 						$i = 1;
 						$concepto = null;
-						foreach ($consulta->result() as $fila) 
+						foreach ($descripciones->result() as $fila) 
 						{ ?>
 						<tr>
 							<?php if($concepto != $fila->id_concepto) { ?>
@@ -137,6 +137,11 @@
 			</div>
 		</div>
 	</div>
+	<div class="row">
+     	<div class="col-lg-12 text-center">
+        	<?php echo $paginationDescripcion;?>
+      	</div>
+    </div>
 </div>
 
 <script type="text/javascript">
