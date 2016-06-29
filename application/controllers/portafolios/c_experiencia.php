@@ -9,6 +9,58 @@
 
 class C_experiencia extends MY_Controller
 {
+	public function cargarExperiencia($id_portafolio){
+		$id = array('id_portafolio' => $id_portafolio);
+		$this->load->view("head", $id);
+		$this->load->view("nav", $id);
+		$this->load->view("portafolios/port");
+		//Sección de paginación
+		$config['base_url'] = base_url().'portafolios/c_experiencia/cargarExperiencia'.'/'.$id_portafolio;
+		$config['total_rows'] = $this->experiencia->num_experiencia(); //Número de filas que devuelve
+		$config['per_page'] = 10; //Resultados por página
+		$config['uri_segment'] = 5; //uri->id de la imagen
+		$config['num_links'] = 5;
+		//Aplicación de diseño con bootstrap!
+		$config['full_tag_open'] = '<ul class="pagination">';
+		$config['full_tag_close'] = '</ul>';
+		$config['first_link'] = false;
+		$config['last_link'] = false;
+		$config['first_tag_open'] = '<li>';
+		$config['first_tag_close'] = '</li>';
+		$config['prev_link'] = '&laquo';
+		$config['prev_tag_open'] = '<li class="prev">';
+		$config['prev_tag_close'] = '</li>';
+		$config['next_link'] = '&raquo';
+		$config['next_tag_open'] = '<li>';
+		$config['next_tag_close'] = '</li>';
+		$config['last_tag_open'] = '<li>';
+		$config['last_tag_close'] = '</li>';
+		$config['cur_tag_open'] = '<li class="active"><a href="#">';
+		$config['cur_tag_close'] = '</a></li>';
+		$config['num_tag_open'] = '<li>';
+		$config['num_tag_close'] = '</li>';
+
+		$this->pagination->initialize($config);
+
+		$obtenerExperiencia= $this->experiencia->obtenerExperiencia($id);
+
+		$disponibleExperiencia = $this->experiencia->obtener_pagina($config['per_page']);
+
+		if($obtenerExperiencia != FALSE){
+			foreach ($obtenerExperiencia->result() as $row) {$checkExperiencia = $row->id_img;}
+			$paginationExperiencia = $this->pagination->create_links();
+			$dataExperiencia= array('id_portafolio' => $id_portafolio,
+								'disponibleExperiencia' => $disponibleExperiencia,
+								'paginationExperiencia' => $paginationExperiencia,
+								'checkExperiencia' => $checkExperiencia);
+		}else{
+			$id_portafolio = $id_portafolio;
+			return FALSE;
+		}
+		$this->load->view("portafolios/seccion_experiencia", $dataExperiencia);
+		$this->load->view("portafolios/form_general", $id);
+		$this->load->view("footer", $id);
+	}
 	//Función que se carga pór default al estar sobre el controlador de experiencia
 	public function index(){
 			$this->cargar();
@@ -25,7 +77,7 @@ class C_experiencia extends MY_Controller
 	    $this->form_validation->set_message('min_length', 'El campo %s debe tener al menos %d carácteres');
 	    $this->form_validation->set_message('max_length', 'El campo %s no puede tener más de %d carácteres');
 	    $this->form_validation->set_rules('tipo', 'tipo', 'required|trim|xss_clean');
-	    $this->form_validation->set_message('required', 'El campo %s no puede ir vacío!')
+	    $this->form_validation->set_message('required', 'El campo %s no puede ir vacío!');
 	    //Si el formulario pasa la validación se procesa el siguiente método para subir el gráfico de experiencia
 	    if ($this->form_validation->run() == TRUE) 
 	    {

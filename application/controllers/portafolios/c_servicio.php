@@ -91,5 +91,19 @@ class C_servicio extends MY_Controller
 	}
 
 
+	public function cargarServicio($id_portafolio){
+		$id = array ('id_portafolio' => $id_portafolio);
+		$this->load->view("head", $id);
+		$this->load->view("nav", $id);
+		$this->load->view("portafolios/port");
+		$consultarServicio = $this->servicio->consultarServicios();
+		$dataServicio = array('dataServicio' => $consultarServicio, 
+							  'id' => $id);
+		$this->load->view("portafolios/seccion_servicio", $dataServicio);
+		$this->load->view("portafolios/form_general", $id);
+		$this->load->view("footer", $id);
+	}
+
+
 }
 ?>

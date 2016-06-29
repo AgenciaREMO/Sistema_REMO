@@ -66,14 +66,13 @@
 		
 		//Función que permite insertar un nuevo portafolio
 		public function insertarPortafolio(){
-			
 			//Si pasa las validaciones realiza la inserción de portafolio
 			$inputs = array (
 				'nombre' => $this->input->post('nombre', TRUE), //Se asigna a un arreglo el valor que obtiene de los input de nuevo portafolio.
 				'comentario' => $this->input->post('comentario', TRUE)
 				); 
 			$id_portafolio = $this->portafolio->insertarPortafolio($inputs); //Se le manda al método el valor que se obtuvo de los inputs
-			redirect('/portafolios/c_portada/cargar'.'/'.$id_portafolio); //Redirecciona al mismo controlador pero a otra función
+			redirect('/portafolios/c_portada/cargarPortada'.'/'.$id_portafolio); //Redirecciona al mismo controlador pero a otra función
 		}
 
 		//Función que permite cancelar la creación de un portafolio.

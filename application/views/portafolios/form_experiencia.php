@@ -92,8 +92,8 @@
                     <?php
                       }
                     ?>  
-                      </div>    
-
+                      </div>
+                  
                   <div class="row">
                     <!-- Inicio de modal -->
                     <div class="col-lg-2">

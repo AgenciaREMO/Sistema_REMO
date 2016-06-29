@@ -11,18 +11,26 @@
 * 
 */
 class C_equipo extends MY_Controller
-{
+{	
+	//Función que permite cargar el formulario de equipo de trabajo de remo
+	public function cargarEquipo($id_portafolio){
+		$id = array('id_portafolio' => $id_portafolio);
+		$this->load->view("head", $id);
+		$this->load->view("nav", $id);
+		$this->load->view("portafolios/port");
 
-//Función que permite mostrar el personal disponible
-		public function mostrarPersonal($id_portafolio)
-		{
-			$this->load->view("head");
-			$this->load->view("nav");
-			$consulta = $this->equipo->mostrarPersonal();
-			$mostrar = array('resultado' => $consulta,'id_portafolio' => $id_portafolio);
-			$this->load->view("portafolios/form_equipo", $mostrar);
-			$this->load->view("footer");
-		}
+		$consulta = $this->equipo->mostrarPersonal(); 
+		$dataEquipo = array('dataEquipo'=> $consulta,'id_portafolio'=>$id_portafolio);
+
+		$this->load->view("portafolios/seccion_equipo", $dataEquipo);
+		$this->load->view("portafolios/form_general", $id);
+		$this->load->view("footer", $id);
+	}
+
+
+
+
+
 
 
 

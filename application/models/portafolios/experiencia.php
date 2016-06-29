@@ -63,7 +63,7 @@ class Experiencia extends CI_Model
 			*/
 			$this->db->select('id_img');
 			$this->db->from('imagen');
-			$this->db->where('id_img', 3);//id de impagenes que van por default
+			$this->db->where('id_img', 4);//id de impagenes que van por default
 			$this->db->where('id_tipo_img', 3); 
 			$query = $this->db->get();
 			if($query->num_rows()>0){

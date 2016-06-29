@@ -64,7 +64,7 @@ class My_Controller extends CI_Controller
 				}
 			}
 		} */
-
+/*
 	//Sección de paginación
 	$config['base_url'] = base_url().'portafolios/c_portada/cargar'.'/'.$id_portafolio;
 	$config['total_rows'] = $this->portada->num_portadas(); //Número de filas que devuelve
@@ -90,7 +90,7 @@ class My_Controller extends CI_Controller
 	$config['cur_tag_close'] = '</a></li>';
 	$config['num_tag_open'] = '<li>';
 	$config['num_tag_close'] = '</li>';
-
+*/
 	$experiencia['base_url'] = base_url().'portafolios/c_portada/cargar'.'/'.$id_portafolio;
 	$experiencia['total_rows'] = $this->portada->num_portadas(); //Número de filas que devuelve
 	$experiencia['per_page'] = 3; //Resultados por página
@@ -150,7 +150,7 @@ class My_Controller extends CI_Controller
 		if($obtenerExperiencia != FALSE){
 			foreach ($obtenerExperiencia->result() as $row) {$checkExperiencia = $row->id_img;}
 			$paginationExperiencia = $this->pagination->create_links();
-			$dataExperiencia= array('id_portafolio' => $id_portafolio,
+			$dataPortada= array('id_portafolio' => $id_portafolio,
 								'disponibleExperiencia' => $disponibleExperiencia,
 								'paginationExperiencia' => $paginationExperiencia,
 								'checkExperiencia' => $checkExperiencia);
@@ -159,11 +159,15 @@ class My_Controller extends CI_Controller
 			return FALSE;
 		}
 
-		$this->load->view("portafolios/form_experiencia", $dataExperiencia);
+		$this->load->view("portafolios/form_experiencia", $dataPortada);
 		$this->load->view("portafolios/form_contenido", $id);
 		$this->load->view("portafolios/form_general", $id);
 		$this->load->view("footer", $id);
 		}
+
+
+
+
 
 }
 
