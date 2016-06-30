@@ -1,13 +1,13 @@
 <div class="container">
   <div class="row">
     <div class="col-lg-12">
-      <h4 class="page-header">Experiencia</h4>
+      <h4 class="page-header">Contenido gráfico</h4>
     </div>
   </div>
   <form action"#" method="#" name="form_experiencia">
     <div class="row">
         <div class="col-md-12 col-sm-6">
-            <h5>Selecciona las imagenes que se incluirán como experiencia en el portafolio</h5>
+            <h5>Selecciona las imagenes que se incluirán como contenido gráfico en el portafolio</h5>
         </div>
     </div>
     <?=@$error?>
@@ -15,9 +15,9 @@
     <?= form_open();?>
     <div class="row">
         <?php 
-            foreach ($disponibleExperiencia->result() as $fila)
+            foreach ($disponibleContenido->result() as $fila)
             { 
-				if($checkExperiencia == $fila->id_img){
+				if($checkContenido == $fila->id_img){
                     $checkImg = array('name'=>'id_img','id'=>'id_img','value'=>''.$fila->id_img.'','type'=>'checkbox','disabled'=>'disabled','checked'=>TRUE);
                 }else{
                     $checkImg = array('name'=>'id_img','id'=>'id_img','value'=>''.$fila->id_img.'','type'=>'checkbox','disabled'=>'disabled','checked'=>FALSE);
@@ -40,7 +40,7 @@
     </div> 
     <div class="row">
        <div class="col-lg-12 text-center">
-         <?php echo $paginationExperiencia;?>
+         <?php echo $paginationContenido;?>
        </div>
     </div>
      <hr>
@@ -67,7 +67,7 @@
                         <div class="modal-content">
                           <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                            <h4 class="modal-title" id="myModalLabel">Agregar logotipo de experiencia</h4>
+                            <h4 class="modal-title" id="myModalLabel">Agregar logotipo de contenido</h4>
                           </div>
                           <div class="modal-body">
                             <form action="php/subirExperiencia.php" method="POST" enctype="multipart/form-data">

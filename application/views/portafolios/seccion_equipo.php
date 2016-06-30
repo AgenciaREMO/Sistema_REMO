@@ -1,4 +1,5 @@
 <div class="container">
+  <div id="form1">
 	<form action"#" method="#" name="form_equipo">
         <div class="row">
             <div class="col-md-12">
@@ -81,7 +82,7 @@
         <hr>
         <div class="row">
             <div class="col-lg-2 ">
-                <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modalPersonal">Seleecionar slider</button>
+                <button id="btn2" src="<?= base_url('portafolios/c_equipo/cargarEquipo').'/'.$id_portafolio.'#form2' ?>" type="button" class="btn btn-default" data-toggle="modal" data-target="#modalPersonal">Seleecionar slider</button>
            	</div>
             <div id= "modalPersonal" class="modal fade bs-example-modal-lg " tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
                 <div class="modal-dialog modal-lg">
@@ -158,5 +159,20 @@
                 </div>
             </div>
         </div>
+        <a id="btn2" href="<?= base_url('portafolios/c_equipo/cargarEquipo').'/'.$id_portafolio.'#form2' ?>">Equipo de trabajo</a>
     </form>
+  </div>
+  <div id="form2" style="hidden:true;">
+    Este sera el contenido dos paginado
+  </div>
 </div>
+
+
+<script type="text/javascript">
+ $(document).ready(function(){
+    $("#btn2").click(function(){
+        $("#form2").toggle();
+    });
+});
+
+</script>

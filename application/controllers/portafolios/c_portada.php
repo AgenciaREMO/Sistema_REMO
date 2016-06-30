@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit ('No direct scripts access allowed'); //para que no puedan acceder de manera no controlada directamente al controlador
 /*
-//Documento: Controlador de la sección de portada de portafolios personalizados
+//Documento: Controlador de sección portada de portafolios
 //Versión: 1.0
 //Autor: Ing. María de los Ángeles Godínez Rivas
 //Fecha de creación: 03 de Marzo del 2016

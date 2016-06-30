@@ -1,6 +1,6 @@
 <?php
 /*
-//Documento: Modelo del módulo de portafolios personalizados
+//Documento: Modelo del módulo comentario de portafolios personalizados
 //Versión: 1.0
 //Autor: Ing. María de los Ángeles Godínez Rivas
 //Fecha de creación: 09 de Marzo del 2016

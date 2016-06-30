@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit ('No direct scripts access allowed'); //para que no puedan acceder de manera no controlada directamente al controlador
 /*
-//Documento: Modelo de portada de equipo de traabjo
+//Documento: Modelo de seccion de equipo de portafolios
 //Versión: 1.0
 //Autor: Ing. María de los Ángeles Godínez Rivas
 //Fecha de creación: 20 de junio del 2016

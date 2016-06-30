@@ -1,10 +1,10 @@
 <?php if ( ! defined('BASEPATH')) exit ('No direct scripts access allowed'); //para que no puedan acceder de manera no controlada directamente al controlador
 /*
-//Documento: Controlador de la sección de experiencia de portafolios personalizados
+//Documento: Controlador de sección experiencia de portafolios
 //Versión: 1.0
 //Autor: Ing. María de los Ángeles Godínez Rivas
-//Fecha de creación: 22 de Junio del 2016
-//Fecha de modificación: 05 de Mayo del 2016
+//Fecha de creación: 29 de Junio del 2016
+//Fecha de modificación: 
 */
 
 class C_experiencia extends MY_Controller

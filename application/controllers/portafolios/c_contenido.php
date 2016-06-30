@@ -1,8 +1,15 @@
-<?php
+<?php if ( ! defined('BASEPATH')) exit ('No direct scripts access allowed'); //para que no puedan acceder de manera no controlada directamente al controlador
+/*
+//Documento: Controlador de sección contenido de portafolios
+//Versión: 1.0
+//Autor: Ing. María de los Ángeles Godínez Rivas
+//Fecha de creación: 30 de Junio del 2016
+//Fecha de modificación: 
+*/
 
 /**
- * 
- */
+* 
+*/
  class C_contenido extends MY_Controller
  {
  	//Función que permite cargar el formulario de la sección de contenido gráfico de portafolio.
@@ -12,8 +19,8 @@
 		$this->load->view("nav", $id);
 		$this->load->view("portafolios/port");
 		//Sección de paginación
-		$config['base_url'] = base_url().'portafolios/c_experiencia/cargarContenido'.'/'.$id_portafolio;
-		$config['total_rows'] = $this->experiencia->num_experiencia(); //Número de filas que devuelve
+		$config['base_url'] = base_url().'portafolios/c_contenido/cargarContenido'.'/'.$id_portafolio;
+		$config['total_rows'] = $this->grafico->num_contenido(); //Número de filas que devuelve
 		$config['per_page'] = 10; //Resultados por página
 		$config['uri_segment'] = 5; //uri->id de la imagen
 		$config['num_links'] = 5;
@@ -39,22 +46,22 @@
 
 		$this->pagination->initialize($config);
 
-		$obtenerExperiencia= $this->experiencia->obtenerExperiencia($id);
+		$obtenerContenido= $this->grafico->obtenerContenido($id);
 
-		$disponibleExperiencia = $this->experiencia->obtener_pagina($config['per_page']);
+		$disponibleContenido = $this->grafico->obtener_pagina($config['per_page']);
 
-		if($obtenerExperiencia != FALSE){
-			foreach ($obtenerExperiencia->result() as $row) {$checkExperiencia = $row->id_img;}
-			$paginationExperiencia = $this->pagination->create_links();
-			$dataExperiencia= array('id_portafolio' => $id_portafolio,
-								'disponibleExperiencia' => $disponibleExperiencia,
-								'paginationExperiencia' => $paginationExperiencia,
-								'checkExperiencia' => $checkExperiencia);
+		if($obtenerContenido != FALSE){
+			foreach ($obtenerContenido->result() as $row) {$checkContenido = $row->id_img;}
+			$paginationContenido = $this->pagination->create_links();
+			$dataContenido= array('id_portafolio' => $id_portafolio,
+								'disponibleContenido' => $disponibleContenido,
+								'paginationContenido' => $paginationContenido,
+								'checkContenido' => $checkContenido);
 		}else{
 			$id_portafolio = $id_portafolio;
 			return FALSE;
 		}
-		$this->load->view("portafolios/seccion_experiencia", $dataExperiencia);
+		$this->load->view("portafolios/seccion_contenido", $dataContenido);
 		$this->load->view("portafolios/form_general", $id);
 		$this->load->view("footer", $id);
 	}
