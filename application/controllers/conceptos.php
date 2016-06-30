@@ -24,7 +24,7 @@
 			$config['total_rows'] = $this->concepto->num_descripciones(); //Número de filas que devuelve
 			$config['per_page'] = 2; //Resultados por página
 			$config['uri_segment'] = 3; //uri->id de la imagen
-			$config['num_links'] = 5;
+			$config['num_links'] = 3;
 			//Aplicación de diseño con bootstrap!
 			$config['full_tag_open'] = '<ul class="pagination">';
 			$config['full_tag_close'] = '</ul>';
@@ -198,6 +198,32 @@
 
 		public function mostrarBusqueda()
 		{
+			//Sección de paginación
+			$config['base_url'] = base_url().'conceptos/listaDescripciones/';
+			$config['total_rows'] = $this->concepto->num_descripciones(); //Número de filas que devuelve
+			$config['per_page'] = 2; //Resultados por página
+			$config['uri_segment'] = 3; //uri->id de la imagen
+			$config['num_links'] = 3;
+			//Aplicación de diseño con bootstrap!
+			$config['full_tag_open'] = '<ul class="pagination">';
+			$config['full_tag_close'] = '</ul>';
+			$config['first_link'] = false;
+			$config['last_link'] = false;
+			$config['first_tag_open'] = '<li>';
+			$config['first_tag_close'] = '</li>';
+			$config['prev_link'] = '&laquo';
+			$config['prev_tag_open'] = '<li class="prev">';
+			$config['prev_tag_close'] = '</li>';
+			$config['next_link'] = '&raquo';
+			$config['next_tag_open'] = '<li>';
+			$config['next_tag_close'] = '</li>';
+			$config['last_tag_open'] = '<li>';
+			$config['last_tag_close'] = '</li>';
+			$config['cur_tag_open'] = '<li class="active"><a href="#">';
+			$config['cur_tag_close'] = '</a></li>';
+			$config['num_tag_open'] = '<li>';
+			$config['num_tag_close'] = '</li>';
+			
 			if($this->input->is_ajax_request())
 			{
 				$buscar = $this->input->post("buscar");
@@ -205,22 +231,22 @@
 				$costoinf = $this->input->post("costo_inf");
 				$costosup = $this->input->post("costo_sup");
 				if ($tipo_bus == "b-concepto") {
-					$datos = $this->concepto->mostrarBusquedaDescripciones($buscar, $tipo_bus, $costoinf, $costosup);
+					$datos = $this->concepto->mostrarBusquedaDescripciones($buscar, $tipo_bus, $costoinf, $costosup,$config['per_page']);
 				}
 				else if ($tipo_bus == "b-descripcion") {
-					$datos = $this->concepto->mostrarBusquedaDescripciones($buscar, $tipo_bus, $costoinf, $costosup);
+					$datos = $this->concepto->mostrarBusquedaDescripciones($buscar, $tipo_bus, $costoinf, $costosup,$config['per_page']);
 				}
 				else if ($tipo_bus == "b-costoinf") {
-					$datos = $this->concepto->mostrarBusquedaDescripciones($buscar, $tipo_bus, $costoinf, $costosup);
+					$datos = $this->concepto->mostrarBusquedaDescripciones($buscar, $tipo_bus, $costoinf, $costosup,$config['per_page']);
 				}
 				else if ($tipo_bus == "b-costosup") {
-					$datos = $this->concepto->mostrarBusquedaDescripciones($buscar, $tipo_bus, $costoinf, $costosup);
+					$datos = $this->concepto->mostrarBusquedaDescripciones($buscar, $tipo_bus, $costoinf, $costosup,$config['per_page']);
 				}
 				else if ($tipo_bus == "b-costos") {
-					$datos = $this->concepto->mostrarBusquedaDescripciones($buscar, $tipo_bus, $costoinf, $costosup);
+					$datos = $this->concepto->mostrarBusquedaDescripciones($buscar, $tipo_bus, $costoinf, $costosup,$config['per_page']);
 				}
 				else if ($tipo_bus == "b-categoria") {
-					$datos = $this->concepto->mostrarBusquedaDescripciones($buscar, $tipo_bus, $costoinf, $costosup);
+					$datos = $this->concepto->mostrarBusquedaDescripciones($buscar, $tipo_bus, $costoinf, $costosup,$config['per_page']);
 				}
 				echo json_encode($datos);
 			}
