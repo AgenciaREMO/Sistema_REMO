@@ -7,7 +7,7 @@
 //Fecha de modificación: 
 */
 
-	class C_imagenes extends CI_Controller
+	class C_imagenes extends MY_Controller
 	{
 		function __construct()
 		{
@@ -15,7 +15,7 @@
 			$this->load->helper(array('form', 'url')); //Cargamos helper de validación de formulario y base url
 			$this->load->model('imagen'); //Cargamos el modelo que se usará en todo el controlador
 		}
-		//Funci´n para direccionar a formulario
+		//Función para direccionar a formulario
 	    public function index() 
 	    {
 	        //CARGAMOS LA VISTA DEL FORMULARIO
@@ -326,10 +326,53 @@
 			$this->load->view("footer");
 		}	
 
+		public function cargarListaImagenes(){
+			$this->load->view("head");
+			$this->load->view("nav");
+			//Sección de paginación
+			$config['base_url'] = base_url().'c_imagenes/cargarListaImagenes';
+			$config['total_rows'] = $this->imagen->num_imagenes(); //Número de filas que devuelve
+			$config['per_page'] = 10; //Resultados por página
+			$config['uri_segment'] = 3; //uri->id de la imagen
+			$config['num_links'] = 3;
+			//Aplicación de diseño con bootstrap!
+			$config['full_tag_open'] = '<ul class="pagination">';
+			$config['full_tag_close'] = '</ul>';
+			$config['first_link'] = false;
+			$config['last_link'] = false;
+			$config['first_tag_open'] = '<li>';
+			$config['first_tag_close'] = '</li>';
+			$config['prev_link'] = '&laquo';
+			$config['prev_tag_open'] = '<li class="prev">';
+			$config['prev_tag_close'] = '</li>';
+			$config['next_link'] = '&raquo';
+			$config['next_tag_open'] = '<li>';
+			$config['next_tag_close'] = '</li>';
+			$config['last_tag_open'] = '<li>';
+			$config['last_tag_close'] = '</li>';
+			$config['cur_tag_open'] = '<li class="active"><a href="#">';
+			$config['cur_tag_close'] = '</a></li>';
+			$config['num_tag_open'] = '<li>';
+			$config['num_tag_close'] = '</li>';
+			//Inicializamos la paginación de acuerdo al arreglo de config
+			$this->pagination->initialize($config);
+			//Despliega las imagenes filtradas si son portadas, y de acuerdo a la configuración de la paginación
+			$disponibleImagenes = $this->imagen->obtener_pagina($config['per_page']);
+			//Se crean los links de paginación para portada correspondientes
+			$paginationImagen = $this->pagination->create_links();
+			//Arreglo que envía "arreglos" a la vista para manejarlos.
+			$dataImagen= array('disponibleImagenes' => $disponibleImagenes,
+								'paginationImagen' => $paginationImagen);
+			$this->load->view("imagenes/lista_imagen", $dataImagen);
+			$this->load->view("footer");
+		}
+
 		public function eliminar($id_img)
 		{
 			$this->imagen->eliminarImagen($id_img); //A la función del modelo se le pasa el arreglo del id
 			redirect('/c_imagenes/mostrar'); 
 		}
+
+
 
     }

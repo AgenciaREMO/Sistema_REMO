@@ -8,7 +8,7 @@
 */
 class Imagen extends CI_Model
 {
-	//Función que permite mostrar en una vista los portafolios existentes.
+	//Función que permite mostrar en una vista las imagenes existentes
 	public function mostrarImagen()
 	{
 		/*
@@ -56,5 +56,32 @@ class Imagen extends CI_Model
         );
         return $this->db->insert('imagen', $data);
 
+	}
+
+	//Paginación imagenes
+	public function num_imagenes(){
+		//SELECT 	i.id_img id_img, i.nom_img nom_img, i.url_img url_img, i.id_tipo_img id_tipo_img1, t.id_tipo_img id_tipo_img2, t.nom_tipo nom_tipo 
+		//FROM imagen i
+		//INNER JOIN tipo_imagen t
+		//ON t.id_tipo_img = i.id_tipo_img
+		//SELECT count(*) as number FROM imagen INNER JOIN tipo_imagen ON imagen.id_tipo_img = tipo_imagen.id_tipo_img 
+		$numero = $this->db->query("SELECT count(*) as number FROM imagen INNER JOIN tipo_imagen ON imagen.id_tipo_img = tipo_imagen.id_tipo_img ")->row()->number; //Regresa el número total de filas de una tabla
+		return intval($numero);
+	}
+
+	public function obtener_pagina($numero_por_pagina){
+		//$this->db->get();
+		$this->db->select(
+			'i.id_img id_img, 
+			 i.nom_img nom_img, 
+			 i.url_img url_img, 
+			 i.id_tipo_img id_tipo_img1, 
+			 t.id_tipo_img id_tipo_img2, 
+			 t.nom_tipo nom_tipo'
+			 );
+		$this->db->from('imagen i');
+		$this->db->join('tipo_imagen t', 't.id_tipo_img = i.id_tipo_img');
+		$query = $this->db->get("imagen", $numero_por_pagina, $this->uri->segment(3));
+		return $query;
 	}
 }

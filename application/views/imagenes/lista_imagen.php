@@ -34,7 +34,7 @@
         </tr>
         <?php //Inicio de Foreach para listar los gráficos
           $cont = 1;
-          foreach ($consulta->result() as $fila) { //Convertimos la consulta de base de datos en una fila
+          foreach ($disponibleImagenes->result() as $fila) { //Convertimos la consulta de base de datos en una fila
         ?> 
           <tr>
           <td><?= $cont++ ?></td>
@@ -47,7 +47,11 @@
           } //Fin de Foreach para lista los portafolios
         ?>
       </table>
-
+      <div class="row">
+        <div class="col-lg-12 text-center">
+          <?php echo $paginationImagen;?>
+        </div>
+      </div>
     </div>
   </div>
   <hr>

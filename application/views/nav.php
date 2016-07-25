@@ -37,7 +37,7 @@
                                 <a href="<?= base_url()?>portafolios/c_portafolios/mostrarPortafolio">Gestor de Portafolios</a>
                             </li>
                             <li>
-                                <a href="<?= base_url()?>c_imagenes/mostrar">Gestor de Contenido gráfico</a>
+                                <a href="<?= base_url()?>c_imagenes/cargarListaImagenes">Gestor de Contenido gráfico</a>
                             </li>
                         </ul>
                     </li>

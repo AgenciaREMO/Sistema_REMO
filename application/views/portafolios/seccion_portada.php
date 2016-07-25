@@ -18,11 +18,11 @@
               $radioImg = array('name'=>'id_img','id'=>'id_img','value'=>''.$fila->id_img.'','type'=>'radio','disabled'=>'disabled','checked'=>FALSE);
             }
               //botones
-              $editar   = array('onClick'=>'activarPor()','style'=>'display:inline','class'=>'btn btn-primary','id'=>'p-editar','content'=>'Editar');
-              $cancelar = array('onClick'=>'desactivarPor()','style'=>'display:none','class'=>'btn btn-default','id'=>'p-cancelar','content'=>'Cancelar');
+              $editar   = array('onClick'=>'activarPor()','style'=>'display:inline','class'=>'btn btn-primary','id'=>'p-editar','content'=>'<span class="glyphicon glyphicon-edit"></span>  Editar');
+              $cancelar = array('onClick'=>'desactivarPor()','style'=>'display:none','class'=>'btn btn-default','id'=>'p-cancelar','content'=>'<span class="glyphicon glyphicon-floppy-remove"></span> Cancelar');
               $guardar  = array('style'=>'display:none','class'=>'btn btn-primary','id'=>'p-guardar','value'=>'Guardar');
-              $cargar   = array('style'=>'display:inline','class'=>'btn btn-primary','id'=>'p-nueva-s','content'=>'Nueva portada','data-toggle'=>'modal','data-target'=>'#cargarPortada');
-              $cargar2  = array('style'=>'display:none','class'=>'btn btn-primary','id'=>'p-nueva-n','content'=>'Nueva portada','data-toggle'=>'modal','data-target'=>'#cargarPortada');
+              $cargar   = array('style'=>'display:inline','class'=>'btn btn-primary','id'=>'p-nueva-s','content'=>'<span class="glyphicon glyphicon-plus"></span> Portada','data-toggle'=>'modal','data-target'=>'#cargarPortada');
+              $cargar2  = array('style'=>'display:none','class'=>'btn btn-primary','id'=>'p-nueva-n','content'=>'<span class="glyphicon glyphicon-plus"></span> Portada','data-toggle'=>'modal','data-target'=>'#cargarPortada');
 
         ?>  
         <?= form_error('id_img'); ?>
@@ -81,7 +81,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">Modal Header</h4>
+            <h4 class="modal-title">Subir portada</h4>
           </div>
           <div class="modal-body">
             <?=form_open_multipart(base_url()."portafolios/c_portada/validarPortada"."/".$id_portafolio)?>
@@ -106,18 +106,18 @@
             </div>
             <br>
             <div class="row">
-              <div class="col-lg-1 col-md-1 col-sm-2 col-xs-4" >
-                <a href="<?= base_url()?>portafolios/c_portada/cargar/<?= $id_portafolio?>"  class="btn btn-default">Cancelar</a>
+              <div class="col-lg-offset-8 col-lg-2 col-md-3 col-sm-4 col-xs-6" >
+                <a href="<?= base_url()?>portafolios/c_portada/cargarPortada/<?= $id_portafolio?>"  class="btn btn-default">Cancelar</a>
               </div>
-              <div class="col-lg-1 col-md-1 col-sm-2 col-xs-4" >
+              <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6" >
                 <?= form_submit($guardar)?>
               </div>
             </div>
             <?=form_close()?>
           </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          </div>
+         <!-- <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+          </div> -->
         </div>
       </div>
     </div>

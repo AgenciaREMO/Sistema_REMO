@@ -22,131 +22,10 @@
 		}*/
 		//Función que carga el formulario como index
 		public function index(){
-			$this->cargar();
+			$this->cargarPortada();
 		}
 
-		public function validarPortada($id_portafolio){
-			/*
-			//Validaciones del formulario
-			//$this->form_validation->set_rules('name_input', 'Identificador', 'reglas de validación');
-			//$this->form_validation->set_message('regladevalidacion', 'mensajepersonalizado');
-			*/
-	        $this->form_validation->set_rules('nombre', 'nombre', 'required|min_length[5]|max_length[100]|trim|xss_clean');
-	        $this->form_validation->set_message('required', 'El campo %s no puede ir vacío!');
-	        $this->form_validation->set_message('min_length', 'El campo %s debe tener al menos %d carácteres');
-	        $this->form_validation->set_message('max_length', 'El campo %s no puede tener más de %d carácteres');
-	        $this->form_validation->set_rules('tipo', 'tipo', 'required|trim|xss_clean');
-	        $this->form_validation->set_message('required', 'El campo %s no puede ir vacío!');
-	        //Si el formulario pasa la validación se procesa el siguiente método
-	        if ($this->form_validation->run() == TRUE) 
-	        {
-	            $this->subirPortada($id_portafolio);
-	        }else{
-	        //Si el formulario no se válida se muestran los errores
-	            $this->cargar($id_portafolio); //Se modificará para que cargue los alert en el modal
-	        }
-		}
-
-		public function subirPortada($id_portafolio){
-			$id_portafolio = $id_portafolio;
-			$tipo = $this->input->post('tipo');
-			//Configuración para las imágenes
-			$config['upload_path'] = './graficos/portada';
-			$config['allowed_types'] = 'gif|jpg|png|jpeg';
-			$config['max_size'] = '2000';
-			$config['max_width'] = '2024';
-			$config['max_height'] = '2008';
-			//Cargamos la librería para subir imagenes "upload"
-        	$this->load->library('upload', $config);
-			//Si la imagen falla al subir se muestra el error en dislay 
-			if (!$this->upload->do_upload()) {
-			    $this->load->view("head");
-				$this->load->view("nav");
-				$resultado = $this->imagen->obtenerTipoImg(); //Asignamos a una variable la función que arroja el resultado de la consulta a base de datos.
-				$error = $this->upload->display_errors();
-				$tipos = array('consulta' => $resultado,'error' => $error);
-				$this->load->view('/portafolios/c_portada/cargar'.'/'.$id_portafolio, $tipos); //Aqui se tendrá que modificar
-				$this->load->view("footer");
-			} else {
-			    //En otro caso se sube la imagen y se crea la miniatura 
-			    //Se obtiene todas las caracteristicas de la imagen en un arreglo
-			    $file_info = $this->upload->data();
-			    //Se usa la función thumbail y se usa el nombre de la imagen
-			    $this->crearThumbnailPortada($file_info['file_name'], $tipo);
-			    //Se envían los datos al modelo para hacer la inserción
-			    $data = array('upload_data' => $this->upload->data());
-			    $nombre = $this->input->post('nombre');
-			    $tipo_img = '1';
-			    $url_img = 'graficos/portada/'.$file_info['file_name'];
-			    $url_thu = 'graficos/portada/thumbnail/'.$file_info['file_name'];
-			    $subir = $this->imagen->subir($nombre, $tipo_img, $url_img, $url_thu);  
-			    //$this->load->view('imagen_subida_view', $data);
-			    redirect('/portafolios/c_portada/cargar'.'/'.$id_portafolio); 
-			}
-		}
-
-		//Función para crear la miniatura a la medida especificada
-	    public function crearThumbnailPortada($filename, $tipo)
-	    {
-	    	 //Librería utilizada [GD, GD2, ImageMagick, NetPBM]
-			        $config['image_library'] = 'gd2';
-			        //Ruta de la imagen original
-			        $config['source_image'] = 'graficos/portada/'.$filename;
-			        //Activación de la creación de miniaturas
-			        $config['create_thumb'] = TRUE;
-			        //Configuración para que mantenga la proporción
-			        $config['maintain_ratio'] = TRUE;
-			        //Ruta de la imagen miniatura
-			        $config['new_image']='graficos/portada/thumbnail/';
-			        //Tamaño
-			        $config['width'] = 150;
-			        $config['height'] = 150;
-			        //Reinicializamos los parametros de la librería
-			        $this->load->library('image_lib', $config); 
-			        //Creamos la miniatura
-			        $this->image_lib->resize();
-			        // finalmente limpiamos la cache para no saturar nuestro servidor
-			        $this->image_lib->clear();
-	    }
-
-		public function insertarPortada($id_portafolio)
-		{
-			//Validación Radio button
-			$this->form_validation->set_rules('id_img','portada','required');
-			$this->form_validation->set_message('required', 'Debes seleccionar una  %s , es obligatorio');
-			if ($this->form_validation->run() == FALSE) 
-			{
-				$this->cargar($id_portafolio);
-				echo 'fail';
-			}else{
-				
-				$id_portafolio = $id_portafolio;
-				$port_img = array('id_portafolio' => $id_portafolio,'id_img' => implode(",",$this->input->post('id_img')));
-				$this->portada->insertarPortada($port_img);
-				print_r($port_img);
-				redirect('/portafolios/c_portada/cargar'.'/'.$id_portafolio); 
-				echo 'successful';
-			}
-		}
-
-		public function actualizarPortada($id_portafolio)     
-        {   
-           	//Validación Radio button
-			$this->form_validation->set_rules('id_img','portada','required');
-			$this->form_validation->set_message('required', 'Debes seleccionar una  %s , es obligatorio');
-			if ($this->form_validation->run() == FALSE) 
-			{
-				$this->cargar($id_portafolio);
-				echo 'fail';
-			}else{
-				$id_portafolio = $id_portafolio;
-				$port_img = array('id_portafolio' => $id_portafolio,'id_img' => $this->input->post('id_img'));
-				$editarPortada = $this->portada->actualizarPortada($port_img);
-				redirect('/portafolios/c_portada/cargarPortada'.'/'.$id_portafolio); 
-			}         
-    	}
-
-    	public function cargarPortada($id_portafolio){
+		public function cargarPortada($id_portafolio){
 			$id = array ('id_portafolio' => $id_portafolio);
 			$this->load->view("head", $id);
 			$this->load->view("nav", $id);
@@ -204,4 +83,127 @@
 			$this->load->view("portafolios/form_general", $id);
 			$this->load->view("footer", $id);
 		}
+
+		public function validarPortada($id_portafolio){
+			/*
+			//Validaciones del formulario
+			//$this->form_validation->set_rules('name_input', 'Identificador', 'reglas de validación');
+			//$this->form_validation->set_message('regladevalidacion', 'mensajepersonalizado');
+			*/
+	        $this->form_validation->set_rules('nombre', 'nombre', 'required|min_length[5]|max_length[100]|trim|xss_clean');
+	        $this->form_validation->set_message('required', 'El campo %s no puede ir vacío!');
+	        $this->form_validation->set_message('min_length', 'El campo %s debe tener al menos %d carácteres');
+	        $this->form_validation->set_message('max_length', 'El campo %s no puede tener más de %d carácteres');
+	        $this->form_validation->set_rules('tipo', 'tipo', 'required|trim|xss_clean');
+	        $this->form_validation->set_message('required', 'El campo %s no puede ir vacío!');
+	        //Si el formulario pasa la validación se procesa el siguiente método
+	        if ($this->form_validation->run() == TRUE) 
+	        {
+	            $this->subirPortada($id_portafolio);
+	        }else{
+	        //Si el formulario no se válida se muestran los errores
+	            $this->cargarPortada($id_portafolio); //Se modificará para que cargue los alert en el modal
+	        }
+		}
+
+		public function subirPortada($id_portafolio){
+			$id_portafolio = $id_portafolio;
+			$tipo = $this->input->post('tipo');
+			//Configuración para las imágenes
+			$config['upload_path'] = './graficos/portada';
+			$config['allowed_types'] = 'gif|jpg|png|jpeg';
+			$config['max_size'] = '2000';
+			$config['max_width'] = '2024';
+			$config['max_height'] = '2008';
+			//Cargamos la librería para subir imagenes "upload"
+        	$this->load->library('upload', $config);
+			//Si la imagen falla al subir se muestra el error en dislay 
+			if (!$this->upload->do_upload()) {
+			    $this->load->view("head");
+				$this->load->view("nav");
+				$resultado = $this->imagen->obtenerTipoImg(); //Asignamos a una variable la función que arroja el resultado de la consulta a base de datos.
+				$error = $this->upload->display_errors();
+				$tipos = array('consulta' => $resultado,'error' => $error);
+				$this->load->view('/portafolios/c_portada/cargarPortada'.'/'.$id_portafolio, $tipos); //Aqui se tendrá que modificar
+				$this->load->view("footer");
+			} else {
+			    //En otro caso se sube la imagen y se crea la miniatura 
+			    //Se obtiene todas las caracteristicas de la imagen en un arreglo
+			    $file_info = $this->upload->data();
+			    //Se usa la función thumbail y se usa el nombre de la imagen
+			    $this->crearThumbnailPortada($file_info['file_name'], $tipo);
+			    //Se envían los datos al modelo para hacer la inserción
+			    $data = array('upload_data' => $this->upload->data());
+			    $nombre = $this->input->post('nombre');
+			    $tipo_img = '1';
+			    $url_img = 'graficos/portada/'.$file_info['file_name'];
+			    $url_thu = 'graficos/portada/thumbnail/'.$file_info['file_name'];
+			    $subir = $this->imagen->subir($nombre, $tipo_img, $url_img, $url_thu);  
+			    //$this->load->view('imagen_subida_view', $data);
+			    redirect('/portafolios/c_portada/cargarPortada'.'/'.$id_portafolio); 
+			}
+		}
+
+		//Función para crear la miniatura a la medida especificada
+	    public function crearThumbnailPortada($filename, $tipo)
+	    {
+	    	 //Librería utilizada [GD, GD2, ImageMagick, NetPBM]
+			        $config['image_library'] = 'gd2';
+			        //Ruta de la imagen original
+			        $config['source_image'] = 'graficos/portada/'.$filename;
+			        //Activación de la creación de miniaturas
+			        $config['create_thumb'] = TRUE;
+			        //Configuración para que mantenga la proporción
+			        $config['maintain_ratio'] = TRUE;
+			        //Ruta de la imagen miniatura
+			        $config['new_image']='graficos/portada/thumbnail/';
+			        //Tamaño
+			        $config['width'] = 150;
+			        $config['height'] = 150;
+			        //Reinicializamos los parametros de la librería
+			        $this->load->library('image_lib', $config); 
+			        //Creamos la miniatura
+			        $this->image_lib->resize();
+			        // finalmente limpiamos la cache para no saturar nuestro servidor
+			        $this->image_lib->clear();
+	    }
+
+		public function insertarPortada($id_portafolio)
+		{
+			//Validación Radio button
+			$this->form_validation->set_rules('id_img','portada','required');
+			$this->form_validation->set_message('required', 'Debes seleccionar una  %s , es obligatorio');
+			if ($this->form_validation->run() == FALSE) 
+			{
+				$this->cargarPortada($id_portafolio);
+				echo 'fail';
+			}else{
+				
+				$id_portafolio = $id_portafolio;
+				$port_img = array('id_portafolio' => $id_portafolio,'id_img' => implode(",",$this->input->post('id_img')));
+				$this->portada->insertarPortada($port_img);
+				print_r($port_img);
+				redirect('/portafolios/c_portada/cargarPortada'.'/'.$id_portafolio); 
+				echo 'successful';
+			}
+		}
+
+		public function actualizarPortada($id_portafolio)     
+        {   
+           	//Validación Radio button
+			$this->form_validation->set_rules('id_img','portada','required');
+			$this->form_validation->set_message('required', 'Debes seleccionar una  %s , es obligatorio');
+			if ($this->form_validation->run() == FALSE) 
+			{
+				$this->cargarPortada($id_portafolio);
+				echo 'fail';
+			}else{
+				$id_portafolio = $id_portafolio;
+				$port_img = array('id_portafolio' => $id_portafolio,'id_img' => $this->input->post('id_img'));
+				$editarPortada = $this->portada->actualizarPortada($port_img);
+				redirect('/portafolios/c_portada/cargarPortada'.'/'.$id_portafolio); 
+			}         
+    	}
+
+    	
 	}

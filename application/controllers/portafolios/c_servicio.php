@@ -12,17 +12,21 @@
 */
 class C_servicio extends MY_Controller
 {
-	/*
-	function __construct()
-	{
-		$this->load->helper(array('form', 'url'));
-		$this->load->model('portafolios/portafolio'); 
-		$this->load->model('portafolios/portada');
-		$this->load->model('portafolios/servicio');
+	//Función que permite cargar la vista de servicio
+	public function cargarServicio($id_portafolio){
+		$id = array ('id_portafolio' => $id_portafolio);
+		$this->load->view("head", $id);
+		$this->load->view("nav", $id);
+		$this->load->view("portafolios/port");
+		$consultarServicio = $this->servicio->consultarServicios();
+		$dataServicio = array('dataServicio' => $consultarServicio, 
+							  'id' => $id);
+		$this->load->view("portafolios/seccion_servicio", $dataServicio);
+		$this->load->view("portafolios/form_general", $id);
+		$this->load->view("footer", $id);
 	}
-	*/
 
-
+	//Función que permite validar el formulario para insertar los servicios con cierto portafolio
 	public function validarServicio($id_portafolio)
 	{
 		/*
@@ -49,60 +53,39 @@ class C_servicio extends MY_Controller
 		if ($this->form_validation->run() == FALSE) 
 		{
 			//Si el formulario no se válida se muestran los errores
-	        $this->cargar($id_portafolio); //Se modificará para que cargue los alert en el modal
-	        echo 'fail';
+	        $this->cargarServicio($id_portafolio);
+	        //echo 'fail';
 		}else
 		{
-			/*
-			$id_portafolio = $id_portafolio;
-			$data  = array('id_portafolio' => $id_portafolio,
-				 		   'id_tipo' => implode(", ", $this->input->post('servicio')),
-				 		   'descripcion' => $this->input->post('descripcion')
-				 		   );*/
-			//$this->portada->insertarPortada($port_img);
-			//print_r($data);
-			//redirect('/portafolios/c_portada/cargar'.'/'.$id_portafolio); 
-			//echo 'successful';
+			//Si es válido se realiza la función de insertar
 		    $this->insertarServicio($id_portafolio);
+		    //echo 'successful';
 		}
 	}
 
+	//Función que permite insertar servicios relacionados con cierto id de portafolio
 	public function insertarServicio($id_portafolio){
 				$id_portafolio = $id_portafolio;
-				/*$data  = array(
-					'id_portafolio' => $id_portafolio,
-				 	array('descripcion' => $this->input->post('descripcion')),
-					array('id_tipo' => implode(", ", $this->input->post('servicio')))
-					); */
 				$data = array('id_portafolio' => $id_portafolio);
 				$descripcion = array('descripcion' => $this->input->post('descripcion'));
 				$tipo = array('id_tipo' => $this->input->post('servicio'));
 				$cont = array('id_tipo' => implode(", ", $this->input->post('servicio')));
-				/*$tipo = array('id_tipo' => implode(", ", $this->input->post('servicio')));
+				$this->servicio->insertarServicio($data, $descripcion, $tipo, $cont);
+				redirect('/portafolios/c_servicio/cargarServicio'.'/'.$id_portafolio); 
+				//echo 'successful';
+	}
+
+
+/*
+//$data  = array('id_portafolio' => $id_portafolio,array('descripcion' => $this->input->post('descripcion')),array('id_tipo' => implode(", ", $this->input->post('servicio')))); 
+//$tipo = array('id_tipo' => implode(", ", $this->input->post('servicio')));
 				$descripcion = array('descripcion' => implode(", ", $this->input->post('descripcion')));
 				print_r($tipo);
 				print_r($descripcion);
 				$array = implode(",", $tipo);
 				$cont = count($array);
-				*/
-				$this->servicio->insertarServicio($data, $descripcion, $tipo, $cont);
-				redirect('/portafolios/c_servicio/cargar'.'/'.$id_portafolio); 
-				//echo 'successful';
-	}
-
-
-	public function cargarServicio($id_portafolio){
-		$id = array ('id_portafolio' => $id_portafolio);
-		$this->load->view("head", $id);
-		$this->load->view("nav", $id);
-		$this->load->view("portafolios/port");
-		$consultarServicio = $this->servicio->consultarServicios();
-		$dataServicio = array('dataServicio' => $consultarServicio, 
-							  'id' => $id);
-		$this->load->view("portafolios/seccion_servicio", $dataServicio);
-		$this->load->view("portafolios/form_general", $id);
-		$this->load->view("footer", $id);
-	}
+				//
+*/
 
 
 }

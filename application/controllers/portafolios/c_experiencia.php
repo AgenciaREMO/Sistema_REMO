@@ -84,7 +84,7 @@ class C_experiencia extends MY_Controller
 	        $this->subirExperiencia($id_portafolio);
 	    }else{
 	    //Si el formulario no se válida se muestran los errores del porque no se subieron
-	        $this->cargar($id_portafolio); //Se modificará para que cargue los alert en el modal
+	        $this->cargarExperiencia($id_portafolio); //Se modificará para que cargue los alert en el modal
 	    }
 	}
 
@@ -158,7 +158,7 @@ class C_experiencia extends MY_Controller
 		$this->form_validation->set_message('required', 'Debes seleccionar una  %s , es obligatorio');
 		if ($this->form_validation->run() == FALSE) 
 		{
-			$this->cargar($id_portafolio);
+			$this->cargarExperiencia($id_portafolio);
 			echo 'fail';
 		}else{
 			$id_portafolio = $id_portafolio;

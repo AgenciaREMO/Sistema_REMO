@@ -108,7 +108,7 @@ $subir = array(
       <br>
       <div class="row">
         <div class="col-lg-1 col-md-1 col-sm-2 col-xs-4" >
-          <a href="<?= base_url()?>c_imagenes/mostrar" type="submit" class="btn btn-default">Cancelar</a>
+          <a href="<?= base_url()?>c_imagenes/cargarListaImagenes" type="submit" class="btn btn-default">Cancelar</a>
         </div>
         <div class="col-lg-1 col-md-1 col-sm-2 col-xs-4" >
           <?= form_submit($guardar)?>

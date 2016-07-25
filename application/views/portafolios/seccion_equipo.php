@@ -1,5 +1,10 @@
 <div class="container">
   <div id="form1">
+  <div class="row">
+    <div class="col-lg-12">
+      <h4 class="page-header">Equipo REMO </h4>
+    </div>
+  </div>
 	<form action"#" method="#" name="form_equipo">
         <div class="row">
             <div class="col-md-12">
@@ -38,17 +43,17 @@
 		                      'style' => 'display:inline',
 		                      'class' => 'btn btn-primary',
 		                      'id'    => 'eq-nueva-s',
-		                      'content' => 'Nueva portada',
+		                      'content' => '<span class="glyphicon glyphicon-plus"></span> Slider',
 		                      'data-toggle' => 'modal',
-		                      'data-target' => '#cargarPortada'
+		                      'data-target' => '#cargarSlideEquipo'
 		                      );
 		                    $cargar2 = array(
 		                      'style' => 'display:none',
 		                      'class' => 'btn btn-primary',
 		                      'id'    => 'eq-nueva-n',
-		                      'content' => 'Nueva portada',
+		                      'content' => '<b>Nuevo slider de equipo</b>',
 		                      'data-toggle' => 'modal',
-		                      'data-target' => '#cargarPortada'
+		                      'data-target' => '#cargarSlideEquipo'
 		                      );
                             $cont = 1;
                             foreach ($dataEquipo->result() as $fila) { //Convertimos la consulta de base de datos en una fila
@@ -80,93 +85,80 @@
             </div>
         </div>
         <hr>
-        <div class="row">
-            <div class="col-lg-2 ">
-                <button id="btn2" src="<?= base_url('portafolios/c_equipo/cargarEquipo').'/'.$id_portafolio.'#form2' ?>" type="button" class="btn btn-default" data-toggle="modal" data-target="#modalPersonal">Seleecionar slider</button>
-           	</div>
-            <div id= "modalPersonal" class="modal fade bs-example-modal-lg " tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                      	<div class="modal-header">
-                        	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        	<h4 class="modal-title" id="myModalLabel">Selección de slider</h4>
-                      	</div>
-                        <div class="modal-body">
-	                        <div class="row">
-	                            <div class="col-xs-6 col-sm-6 col-md-2">
-	                            	<img class="img-responsive" src="img/personal/1.jpg" alt="Equipo" title="Equipo">
-	                            </div>
-	                            <div class="col-xs-6 col-sm-6 col-md-2">
-	                            	<img class="img-responsive" src="img/personal/2.jpg" alt="Equipo" title="Equipo">
-	                            </div>
-	                            <div class="col-xs-6 col-sm-6 col-md-2">
-	                            	<img class="img-responsive" src="https://placeholdit.imgix.net/~text?txtsize=66&txt=150×130&w=100&h=100" alt="Equipo" title="Equipo">
-	                            </div>
-	                            <div class="col-xs-6 col-sm-6 col-md-2">
-	                            	<img class="img-responsive" src="https://placeholdit.imgix.net/~text?txtsize=66&txt=150×130&w=100&h=100" alt="Equipo" title="Equipo">
-	                            </div>
-	                            <div class="col-xs-6 col-sm-6 col-md-2">
-	                            	<img class="img-responsive" src="https://placeholdit.imgix.net/~text?txtsize=66&txt=150×130&w=100&h=100" alt="Equipo" title="Equipo">
-	                            </div>
-	                            <div class="col-xs-6 col-sm-6 col-md-2">
-	                            	<img class="img-responsive" src="https://placeholdit.imgix.net/~text?txtsize=66&txt=150×130&w=100&h=100" alt="Equipo" title="Equipo">
-	                            </div>
-	                        </div>
-                        </div>
-                        <div class="modal-footer">
-	                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-	                        <button type="button" class="btn btn-primary">Guardar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-2">
-                <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modalPersonal2">Agregar slider</button>
-            </div>
-            <br/>
-            <div class="modal fade" id="modalPersonal2" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                      	<div class="modal-header">
-	                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-	                        <h4 class="modal-title" id="myModalLabel">Agregar Slider de Equipo de trabajo</h4>
-                      	</div>
-                      	<div class="modal-body">
-	                        <form action="php/subirPersonal.php" method="POST" enctype="multipart/form-data">
-		                        <div class="form-group">
-		                            <label for="file">Selecciona slider</label>
-		                            <input type="file" id="img" name="imagen">
-		                        </div>
-	                        </form>
-                      	</div>
-	                    <div class="modal-footer">
-	                        <form action="php/subirPersonal.php" method="POST" enctype="multipart/form-data">
-		                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-		                        <input type="submit" class="btn btn-primary" name="subir" value="Guardar">
-	                        </form>
-	                    </div>
-                    </div>
-                </div>
-            </div>
-       </div>
-       <div class="col-lg-1 col-lg-offset-11 ">
-            <div class="row">
-                <div class="col-lg-1">
-                    <a href="#"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
-                </div>
-                <div class="col-lg-1">
-                    <a href="#"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span></a>
-                </div>
-            </div>
-        </div>
-        <a id="btn2" href="<?= base_url('portafolios/c_equipo/cargarEquipo').'/'.$id_portafolio.'#form2' ?>">Equipo de trabajo</a>
-    </form>
-  </div>
-  <div id="form2" style="hidden:true;">
-    Este sera el contenido dos paginado
-  </div>
-</div>
+         <?= form_close() ?>
 
+        <!-- Modal carga slider de equipo-->
+    <!--<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#cargarPortada">Large modal</button>-->
+    <?=@$error?>
+    <?php
+    //form
+    $form = array('name'=>'form_grafico','id'=>'form_grafico');
+    //select option
+    $estilo = 'class="form-control"';
+    $tipo_imagen = array('2'=>'Equipo');
+    /*foreach ($consulta->result() as $fila) 
+    {
+      $tipo_imagen[$fila->id_tipo_img] = $fila->nom_tipo;
+    }*/
+    //inputs
+    $nombre    = array('name'=>'nombre','id'=>'nombre','value'=>set_value('nombre'),'maxlength'=>'150','size'=> '50','class'=> 'form-control','placeholder'=>' Ejemplo: Logotipo de REMO');
+    $imagen    = array('name'=>'userfile','id'=>'userfile','value'=> set_value('userfile'),'type'=>'file','class'=>'form-control','rules'=>'required');
+    //botones
+    $guardar   = array('name'=>'guardar','id'=>'guardarGrafico','class'=>'btn btn-primary','value'=>'Guardar');
+    $cancelar  = array('name'=>'cancelar','id'=>'cancelarCarga','class'=>'btn btn-default','value'=>'Cancelar');
+    //a
+    $contenido = array('title'=>'Contenido Gráfico');
+    $subir     = array('title' => 'Subir Gráfico');
+    ?>
+    <div id="cargarSlideEquipo"class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+      <div class="modal-dialog modal-lg">
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Subir slider de equipo de REMO</h4>
+          </div>
+          <div class="modal-body">
+            <?=form_open_multipart(base_url()."portafolios/c_equipo/validarSlider"."/".$id_portafolio)?>
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="form-group">
+                  <?= form_error('nombre'); ?>
+                  <?= form_label('Nombre de la imagen: *'); ?>
+                  <?= form_input($nombre);?>
+                </div>
+              </div>
+              <div class="col-lg-12">
+                <div class="form-group">
+                  <?= form_label('Selecciona una imagen');?>
+                  <?= form_upload($imagen); ?>
+                </div>
+              </div>
+              <div class="col-lg-12">
+                <?= form_label('Tipo de Imagen') ?>
+                <?= form_dropdown('tipo', $tipo_imagen,'1', $estilo, array('value'=>set_value('tipo'),'disabled'=>'disabled')) ?>
+              </div>
+            </div>
+            <br>
+            <div class="row">
+              <div class="col-lg-offset-8 col-lg-2 col-md-3 col-sm-4 col-xs-6" >
+                <a href="<?= base_url()?>portafolios/c_equipo/cargarEquipo/<?= $id_portafolio?>"  class="btn btn-default">Cancelar</a>
+              </div>
+              <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6" >
+                <?= form_submit($guardar)?>
+              </div>
+            </div>
+            <?=form_close()?>
+          </div>
+         <!-- <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+          </div> -->
+        </div>
+      </div>
+    </div>
+</div>
+</div>
+        <!-- Fin del modal-->
 
 <script type="text/javascript">
  $(document).ready(function(){

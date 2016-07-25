@@ -26,8 +26,8 @@
                 $editar   = array('onClick'=>'activarPor()','style'=>'display:inline','class'=>'btn btn-primary','id'=>'p-editar','content'=>'Editar');
                 $cancelar = array('onClick'=>'desactivarPor()','style'=>'display:none','class'=>'btn btn-default','id'=>'p-cancelar','content'=>'Cancelar');
                 $guardar  = array('style'=>'display:none','class'=>'btn btn-primary','id'=>'p-guardar','value'=>'Guardar');
-                $cargar   = array('style'=>'display:inline','class'=>'btn btn-primary','id'=>'p-nueva-s','content'=>'Nueva portada','data-toggle'=>'modal','data-target'=>'#cargarPortada');
-                $cargar2  = array('style'=>'display:none','class'=>'btn btn-primary','id'=>'p-nueva-n','content'=>'Nueva portada','data-toggle'=>'modal','data-target'=>'#cargarPortada');
+                $cargar   = array('style'=>'display:inline','class'=>'btn btn-primary','id'=>'ex-nueva-s','content'=>'<span class="glyphicon glyphicon-plus"></span> Logo','data-toggle'=>'modal','data-target'=>'#cargarExperiencia');
+                $cargar2  = array('style'=>'display:none','class'=>'btn btn-primary','id'=>'ex-nueva-n','content'=>'<span class="glyphicon glyphicon-plus"></span> Logo','data-toggle'=>'modal','data-target'=>'#cargarExperiencia');
         ?>  
         <?= form_error('id_img'); ?>
         <div class="col-lg-2 col-xs-6 col-sm-4 col-md-3 img-rounded text-center">
@@ -55,47 +55,74 @@
           <?= form_button($cargar2) ?>
         </div>
       </div>
-      <hr>   
-    <div class="row">
-        <!-- Inicio de modal -->
-        <div class="col-lg-2">
-            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#basicModal2">Agregar slider</button>
+      <hr> 
+       <?= form_close() ?>
+    <!--<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#cargarPortada">Large modal</button>-->
+    <?=@$error?>
+    <?php
+    //form
+    $form = array('name'=>'form_grafico','id'=>'form_grafico');
+    //select option
+    $estilo = 'class="form-control"';
+    $tipo_imagen = array('1'=>'Portada');
+    /*foreach ($consulta->result() as $fila) 
+    {
+      $tipo_imagen[$fila->id_tipo_img] = $fila->nom_tipo;
+    }*/
+    //inputs
+    $nombre    = array('name'=>'nombre','id'=>'nombre','value'=>set_value('nombre'),'maxlength'=>'150','size'=> '50','class'=> 'form-control','placeholder'=>' Ejemplo: Logotipo de REMO');
+    $imagen    = array('name'=>'userfile','id'=>'userfile','value'=> set_value('userfile'),'type'=>'file','class'=>'form-control','rules'=>'required');
+    //botones
+    $guardar   = array('name'=>'guardar','id'=>'guardarGrafico','class'=>'btn btn-primary','value'=>'Guardar');
+    $cancelar  = array('name'=>'cancelar','id'=>'cancelarCarga','class'=>'btn btn-default','value'=>'Cancelar');
+    //a
+    $contenido = array('title'=>'Contenido Gráfico');
+    $subir     = array('title' => 'Subir Gráfico');
+    ?>
+    <div id="cargarExperiencia"class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+      <div class="modal-dialog modal-lg">
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Subir portada</h4>
+          </div>
+          <div class="modal-body">
+            <?=form_open_multipart(base_url()."portafolios/c_portada/validarPortada"."/".$id_portafolio)?>
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="form-group">
+                  <?= form_error('nombre'); ?>
+                  <?= form_label('Nombre de la imagen: *'); ?>
+                  <?= form_input($nombre);?>
+                </div>
+              </div>
+              <div class="col-lg-12">
+                <div class="form-group">
+                  <?= form_label('Selecciona una imagen');?>
+                  <?= form_upload($imagen); ?>
+                </div>
+              </div>
+              <div class="col-lg-12">
+                <?= form_label('Tipo de Imagen') ?>
+                <?= form_dropdown('tipo', $tipo_imagen,'1', $estilo, array('value'=>set_value('tipo'),'disabled'=>'disabled')) ?>
+              </div>
+            </div>
+            <br>
+            <div class="row">
+              <div class="col-lg-offset-8 col-lg-2 col-md-3 col-sm-4 col-xs-6" >
+                <a href="<?= base_url()?>portafolios/c_experiencia/cargarExperiencia/<?= $id_portafolio?>"  class="btn btn-default">Cancelar</a>
+              </div>
+              <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6" >
+                <?= form_submit($guardar)?>
+              </div>
+            </div>
+            <?=form_close()?>
+          </div>
+         <!-- <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+          </div> -->
         </div>
-        <br/>
-        <div class="modal fade" id="basicModal2" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
-                      <div class="modal-dialog">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                            <h4 class="modal-title" id="myModalLabel">Agregar logotipo de experiencia</h4>
-                          </div>
-                          <div class="modal-body">
-                            <form action="php/subirExperiencia.php" method="POST" enctype="multipart/form-data">
-                              <div class="form-group">
-                                <label for="file">Selecciona logotipo</label>
-                                <input type="file" id="img" name="imagen">
-                              </div>
-                            </form>
-                          </div>
-                          <div class="modal-footer">
-                            <form action="php/subirExperiencia.php" method="POST" enctype="multipart/form-data">
-                              <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                              <input type="submit" class="btn btn-primary" name="subir" value="Guardar">
-                            </form>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-lg-1 col-lg-offset-11 ">
-                    <div class="row">
-                      <div class="col-lg-1">
-                        <a href="#"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
-                      </div>
-                      <div class="col-lg-1">
-                        <a href="#"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span></a>
-                      </div>
-                    </div>
-                  </div>
-              </form>
+      </div>
+    </div>
 </div>

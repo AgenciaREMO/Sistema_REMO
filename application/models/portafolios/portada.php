@@ -207,21 +207,7 @@ class Portada extends CI_Model
 		return $query;
 	}
 
-	/*
-	//Paginación gráficos de equipo
-	public function num_equipo(){
-		//SELECT count(*) as number FROM imagen INNER JOIN tipo_imagen ON imagen.id_tipo_img = tipo_imagen.id_tipo_img WHERE imagen.id_tipo_img = 1
-		$numero = $this->db->query("SELECT count(*) as number FROM imagen INNER JOIN tipo_imagen ON imagen.id_tipo_img = tipo_imagen.id_tipo_img WHERE imagen.id_tipo_img = 2")->row()->number; //Regresa el número total de filas de una tabla
-		return intval($numero);
-	}
 
-	public function obtener_pagina($numero_por_pagina){
-		//$this->db->get();
-		
-		$query = $this->db->get("imagen", $numero_por_pagina, $this->uri->segment(5));
-		//$this->db->where('id_tipo_img', 1);
-		return $query;
-	}*/
 
 }
 
