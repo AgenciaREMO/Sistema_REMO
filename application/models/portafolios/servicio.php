@@ -12,7 +12,7 @@
 class Servicio extends CI_Model
 {
 
-public function consultarServicios()
+public function consultarServicio()
 {
 	//	SELECT * FROM tipo_proyecto
 	$this->db->select('*');
@@ -22,6 +22,55 @@ public function consultarServicios()
 			return $query;
 		}
 }
+
+
+	//Función que permite consultar si existe un registro en la tabla portafolios-tipo para evaluar
+	public function obtenerServicio($id){
+		/*
+		//SELECT * FROM portafolio_tipo INNER JOIN tipo_proyecto ON portafolio_tipo.id_tipo = tipo_proyecto.id_tipo	WHERE portafolio_tipo.id_portafolio = $id['id_portafolio']
+		*/
+		$this->db->select('*');
+		$this->db->from('portafolio_tipo');
+		$this->db->join('tipo_proyecto', 'portafolio_tipo.id_tipo = tipo_proyecto.id_tipo');
+		$this->db->where('portafolio_tipo.id_portafolio', $id['id_portafolio']);
+		$query = $this->db->get();
+		if($query->num_rows()>0){
+			/*
+			SELECT pt.id_portafolio, pt.id_tipo FROM portafolio_tipo pt INNER JOIN tipo_proyecto tp ON pt.id_tipo = tp.id_tipo WHERE pt.id_portafolio = $id['id_portafolio']
+			*/
+			$this->db->select('*');
+			$this->db->from('portafolio_tipo');
+			$this->db->join('tipo_proyecto', 'portafolio_tipo.id_tipo = tipo_proyecto.id_tipo');
+			$this->db->where('portafolio_tipo.id_portafolio', $id['id_portafolio']);
+			$query = $this->db->get();
+			if($query->num_rows()>0){
+	        	return $query;
+	      	}else{
+	        	return false;
+	      	} 
+	      	print_r($query);
+	      	echo 'Modificar';
+      	}else{
+      	
+         	/*
+			//$query = $this->db->query('select * from tipo_proyecto ORDER BY `id_tipo` ASC');
+			*/
+			$this->db->select('id_tipo');
+			$this->db->from('tipo_proyecto');
+			$query = $this->db->get();
+			if($query->num_rows()>0){
+	        	return $query;
+	      	}else{
+	        	return false;
+	      	} 
+	      	print_r($query);
+	      	echo 'Insertar';    	
+      	}
+
+	}
+
+
+
 
 public function insertarServicio($data, $descripcion, $tipo, $cont){
 	$arrayCont = explode (", " , $cont['id_tipo']);

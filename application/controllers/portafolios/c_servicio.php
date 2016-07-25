@@ -13,14 +13,28 @@
 class C_servicio extends MY_Controller
 {
 	//Función que permite cargar la vista de servicio
-	public function cargarServicio($id_portafolio){
+	public function cargarServicio($id_portafolio){	
 		$id = array ('id_portafolio' => $id_portafolio);
 		$this->load->view("head", $id);
 		$this->load->view("nav", $id);
 		$this->load->view("portafolios/port");
-		$consultarServicio = $this->servicio->consultarServicios();
-		$dataServicio = array('dataServicio' => $consultarServicio, 
-							  'id' => $id);
+		$consultarServicio = $this->servicio->consultarServicio();
+		$obtenerServicio= $this->servicio->obtenerServicio($id);
+		if($obtenerServicio != FALSE){
+				//Se hace la consulta si existen portadas relacionadas con el id actual y dependiendo de eso checked el radio
+				foreach ($obtenerServicio->result() as $row) {
+					$checkServicio = $row->id_tipo;
+				}
+				//Arreglo que envía "arreglos" a la vista para manejarlos.
+				$dataServicio= array('id_portafolio' => $id_portafolio,
+									'checkServicio' => $checkServicio,
+									'consultarServicio' => $consultarServicio);
+			//Si no existe devuelte valores falsos
+			}else{
+				$id_portafolio = $id_portafolio;
+				return FALSE;
+			}
+
 		$this->load->view("portafolios/seccion_servicio", $dataServicio);
 		$this->load->view("portafolios/form_general", $id);
 		$this->load->view("footer", $id);

@@ -10,7 +10,7 @@
         <?= form_open('portafolios/c_servicio/validarServicio'.'/'.$id_portafolio);?>
           <?php  
             $count = 0;
-            foreach ($dataServicio->result() as $fila) {
+            foreach ($consultarServicio->result() as $fila) {
               //Botones
               $editar = array(
                 'onClick' => 'activarSer()',
@@ -48,13 +48,35 @@
                 'id' => 'servicio[]',
                // 'disabled'    => 'disabled'
                 );*/
+
+              //radioButton
+            if($checkServicio == $fila->id_tipo){
           ?>
-          <div class="checkbox">
+              <div class="checkbox">
+                <?php 
+                //form_checkbox('name', 'id', 'value', 'checked', 'style');
+                echo form_checkbox("servicio[]", ''.$fila->id_tipo.'', set_checkbox("servicio[]", ''.$fila->id_tipo.''), TRUE);
+                echo "TRUE";
+                ?>
+              </div>
+          <?php
+            }else{
+          ?>
+              <div class="checkbox">
+                <?php 
+                echo form_checkbox("servicio[]", ''.$fila->id_tipo.'', set_checkbox("servicio[]", ''.$fila->id_tipo.''), FALSE);
+                echo "FALSE";
+                ?>
+              </div>
+        <?php
+          }
+        ?>
+         <!-- <div class="checkbox">
             <?php
             //echo form_checkbox($checkbox);
-            echo form_checkbox("servicio[]", ''.$fila->id_tipo.'', set_checkbox("servicio[]", ''.$fila->id_tipo.''));
+            //echo form_checkbox("servicio[]", ''.$fila->id_tipo.'', set_checkbox("servicio[]", ''.$fila->id_tipo.''));
             ?>
-          </div>
+          </div> -->
           <div class="form-group">
             <?= form_label($fila->nombre);?><br>
             <?= form_textarea($textarea);?>
