@@ -14,9 +14,10 @@ class Servicio extends CI_Model
 
 public function consultarServicio()
 {
-	//	SELECT * FROM tipo_proyecto
+	//	SELECT * FROM portafolio_tipo RIGHT JOIN tipo_proyecto ON portafolio_tipo.id_tipo =tipo_proyecto.id_tipo
 	$this->db->select('*');
-	$this->db->from('tipo_proyecto');
+	$this->db->from('portafolio_tipo');
+	$this->db->join('tipo_proyecto', 'portafolio_tipo.id_tipo = tipo_proyecto.id_tipo', 'right');
 	$query = $this->db->get();
 		if($query->num_rows()>0){
 			return $query;
@@ -35,12 +36,13 @@ public function consultarServicio()
 		$this->db->where('portafolio_tipo.id_portafolio', $id['id_portafolio']);
 		$query = $this->db->get();
 		if($query->num_rows()>0){
+			return $query;
 			/*
 			SELECT pt.id_portafolio, pt.id_tipo FROM portafolio_tipo pt INNER JOIN tipo_proyecto tp ON pt.id_tipo = tp.id_tipo WHERE pt.id_portafolio = $id['id_portafolio']
-			*/
+			
 			$this->db->select('*');
 			$this->db->from('portafolio_tipo');
-			$this->db->join('tipo_proyecto', 'portafolio_tipo.id_tipo = tipo_proyecto.id_tipo');
+			$this->db->join('tipo_proyecto', 'portafolio_tipo.id_tipo = tipo_proyecto.id_tipo','inner');
 			$this->db->where('portafolio_tipo.id_portafolio', $id['id_portafolio']);
 			$query = $this->db->get();
 			if($query->num_rows()>0){
@@ -49,22 +51,23 @@ public function consultarServicio()
 	        	return false;
 	      	} 
 	      	print_r($query);
-	      	echo 'Modificar';
+	      	echo 'Modificar';*/
       	}else{
-      	
+      		return false;
          	/*
 			//$query = $this->db->query('select * from tipo_proyecto ORDER BY `id_tipo` ASC');
-			*/
-			$this->db->select('id_tipo');
-			$this->db->from('tipo_proyecto');
+			
+			$this->db->select('*');
+			$this->db->from('portafolio_tipo');
+			$this->db->join('tipo_proyecto', 'portafolio_tipo.id_tipo = tipo_proyecto.id_tipo', 'right');
 			$query = $this->db->get();
-			if($query->num_rows()>0){
-	        	return $query;
-	      	}else{
+				if($query->num_rows()>0){
+					return $query;
+				}else{
 	        	return false;
 	      	} 
 	      	print_r($query);
-	      	echo 'Insertar';    	
+	      	echo 'Insertar';  */  	
       	}
 
 	}

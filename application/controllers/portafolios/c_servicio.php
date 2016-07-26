@@ -20,20 +20,27 @@ class C_servicio extends MY_Controller
 		$this->load->view("portafolios/port");
 		$consultarServicio = $this->servicio->consultarServicio();
 		$obtenerServicio= $this->servicio->obtenerServicio($id);
-		if($obtenerServicio != FALSE){
+		//Arreglo que envía "arreglos" a la vista para manejarlos.
+		$dataServicio= array('id_portafolio' => $id_portafolio,
+							 'obtenerServicio' => $obtenerServicio,
+							 'consultarServicio' => $consultarServicio);
+
+		/*if($obtenerServicio != FALSE){
 				//Se hace la consulta si existen portadas relacionadas con el id actual y dependiendo de eso checked el radio
 				foreach ($obtenerServicio->result() as $row) {
 					$checkServicio = $row->id_tipo;
+					print_r($checkServicio);
 				}
 				//Arreglo que envía "arreglos" a la vista para manejarlos.
 				$dataServicio= array('id_portafolio' => $id_portafolio,
 									'checkServicio' => $checkServicio,
 									'consultarServicio' => $consultarServicio);
+				
 			//Si no existe devuelte valores falsos
 			}else{
 				$id_portafolio = $id_portafolio;
 				return FALSE;
-			}
+			}*/
 
 		$this->load->view("portafolios/seccion_servicio", $dataServicio);
 		$this->load->view("portafolios/form_general", $id);
