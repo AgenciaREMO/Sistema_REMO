@@ -165,7 +165,7 @@
 			<div class="row">
 				<div class="col-lg-12">
 					<ul class="nav nav-pills" role="tablist">
-						<li role="presentation"><a href="#" id="f-total">Todas <span class="badge"><?= $num_total ?></span></a></li>
+						<li role="presentation"><a href="#" id="f-total" data-toggle="tooltip" title="Cotizaciónes que ya pasarón por revisión.">Todas <span class="badge"><?= $num_total ?></span></a></li>
 					  	<li role="presentation"><a href="#" id="f-aceptada">Aceptadas <span class="badge"><?= $num_aceptadas ?></span></a></li>
 					  	<li role="presentation"><a href="#" id="f-revision">En revisión <span class="badge"><?= $num_revision ?></span></a></li>
 					  	<li role="presentation"><a href="#" id="f-expedida">Expedidas <span class="badge"><?= $num_expedidas ?></span></a></li>
@@ -230,6 +230,9 @@
 	function inicio()
 	{
 		var busc = "";
+
+		$('[data-toggle="tooltip"]').tooltip(); 
+		
 		//Evento Focus
 		$("#b-personal").focus(function()
 		{

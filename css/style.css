@@ -57,3 +57,6 @@ margin:auto;
 .col-concepto, .col-descripcion {
 	width: 35%;
 }
+.totales {
+	margin-right: 0px;
+}

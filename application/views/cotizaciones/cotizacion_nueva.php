@@ -29,7 +29,8 @@
 					'name' => 'concepto0',
 					'class' => 'form-control',
 					'placeholder' => '---',
-					'id' => 'concepto0'
+					'id' => 'concepto0',
+					'disabled' => 'disabled'
 				);
 				$descripcion0 = array(
 					'name' => 'descripcion0',
@@ -103,31 +104,42 @@
 							<th class="col-importe">Importe</th>
 						</tr>
 						<tr>
-							<td><a class="i-borrar" href="#" onclick=""><i class="fa fa-times"></i></a></td>
+							<td><!--<a class="i-borrar" href="#" onclick=""><i class="fa fa-times"></i></a>--></td>
 							<td class="col-cantidad"><?= form_input($cantidad0) ?></td>
 							<td class="col-concepto">
 								<div class="input-group">
 									<?= form_input($concepto0) ?>
 							    	<div class="input-group-addon">
-							    			<i class="fa fa-search" aria-hidden="true" onclick="identificar_Concepto('0')"></i>
+							    			<i class="fa fa-search" aria-hidden="true" onclick="identificarConcepto('0')"></i>
 							    	</div>
 							    </div>
 							</td>
-							<td class="col-descripcion"><?= form_input($descripcion0) ?></td>
+							<td class="col-descripcion">
+								<span id="descripcion0" name="descripcion0"></span>
+							</td>
 							<td class="col-horas">
 								<div class="input-group">
 									<?= form_input($horas0) ?>
-							    	<div class="input-group-addon"> x $<span name="costo0" id="costo0">0.00</span></div>
+							    	<div class="input-group-addon"> x $ <span name="costo0" id="costo0">0.00</span></div>
 							    </div>
 							</td>
 							<td class="col-importe">
 								<div class="input-group">
-									<span id="importe0"name="importe0"></span>
+									<span id="importe0"name="importe0">$ 0.00</span>
 								</div>
 							</td>
 						</tr>
-					</table>				
-					<a href="#" class="btn btn-default" onClick="agregarConcepto()">Agregar Concepto <i class="fa fa-plus" aria-hidden="true"></i></a>
+					</table>
+					<div class="col-lg-4">
+						<a href="#" class="btn btn-default" onClick="agregarConcepto()">Agregar Concepto <i class="fa fa-plus" aria-hidden="true"></i></a>
+					</div>
+					<div class="col-lg-5"></div>
+					<div class="col-lg-3">
+						<label for="">SUBTOTAL:</label><span name="subtotal" id="subtotal" class="totales">$ 0.00</span><br>
+						<label for="">IVA:</label><span name="iva" id="iva" class="totales">$ 0.00</span><br>
+						<label for="">*TOTAL:</label><span name="total" id="total" class="totales">$ 0.00</span>
+					</div>				
+					
 				</div>
 				<hr>
 				<?= form_submit($guardar) ?>
@@ -269,16 +281,26 @@
 				var num = parseInt($("#inputs").val());
 				//var id = this.id;
 				//$('#' + id).hide();
+				//SE ACTUALIZAN LOS CAMPOS VACIOS CON LA INFORMACION DEL CONCEPTO SELECCIONADO EN LA MODAL
 				$("#concepto" + num).val(registro[0]["concepto"]);
-				$("#descripcion" + num).val(registro[0]["detalles"]);
+				$("#descripcion" + num).text(registro[0]["detalles"]);
 				$("#costo" + num).text(registro[0]["costo"]);
 				var cantidad = parseInt($("#cantidad" + num).val());
 				var horas = parseInt($("#horas" + num).val());
 				var costo = parseInt($("#costo" + num).text());
 				var importe = cantidad * costo * horas;
 				$("#importe" + num).text(importe);
-
-				//$("#divdescrip").html(html);
+				//SE RECALCULA EL IMPORTE, SUBTOTAL, TOTAL E IVA CADA QUE SE ACTUALIZA LA CANTIDAD O LAS HORAS DEL CONCEPTO
+				var subtotal = 0;
+				for (var i = 0; i < num_concep; i++) {
+					imp = parseInt($("#importe" + i).text());
+					subtotal = subtotal + imp;
+					iva = (subtotal * 16)/100;
+					total = subtotal + iva;
+				};
+				$("#subtotal").text(subtotal);
+				$("#iva").text(iva);
+				$("#total").text(total);
 			},
 			error: function(jqXHR, textStatus, errorThrown)
 			{
@@ -301,16 +323,66 @@
 		var costo = parseInt($("#costo" + id).text());
 		var importe = cantidad * costo * horas;
 		$("#importe" + id).text(importe);
-		alert("cant:" + cantidad + "costo:" + costo + "horas:" + horas + "importe:" + importe);
+		//SE RECALCULA EL IMPORTE, SUBTOTAL, TOTAL E IVA CADA QUE SE ACTUALIZA LA CANTIDAD O LAS HORAS DEL CONCEPTO
+		var subtotal = 0;
+		for (var i = 0; i < num_concep; i++) {
+			imp = parseInt($("#importe" + i).text());
+			subtotal = subtotal + imp;
+			iva = (subtotal * 16)/100;
+			total = subtotal + iva;
+		};
+		$("#subtotal").text(subtotal);
+		$("#iva").text(iva);
+		$("#total").text(total);
 	}
-	function identificar_Concepto(num)
+	function identificarConcepto(num)
 	{
 		$("#inputs").val(num);
 		$('#modal_concepto').modal('show');
 	}
+	function eliminarConcepto(num)
+	{
+		$('#row' + num).remove();
+		//SE RENOMBRAN TODOS LOS IDS DE LOS ROWS PARA QUE TENGAN SECUENCIA
+		for (var i = num; i < num_concep; i++) {
+			//SE OBTIENE EL NUMERO DEL ROW CUYO ID VA A SER MODIFICADO
+			var modificar = i+1;
+			//SE ASIGNAN LOS NUEVOS IDS AL ROW POR MODIFICAR Y A LOS ELEMENTOS DEL ROW 
+			$('#row' + modificar).attr("id","row"+i);
+			$('#a' + modificar).attr("id","a"+i);
+			$('#a' + modificar).attr("onclick","eliminarConcepto("+i+")");
+			/*id='a"+num_concep+"'
+			onclick='eliminarConcepto("+num_concep+")
+			cantidad"+num_concep+"
+			cantidad"+num_concep+"
+			concepto"+num_concep+"
+			concepto"+num_concep+"
+			onClick='identificarConcepto("+num_concep+")
+			name='descripcion"+num_concep+
+			descripcion"+num_concep+
+			horas"+num_concep+
+			horas"+num_concep+
+			name='costo
+			id='costo"+num_concep+
+			id='importe"+num_concep+
+			name='importe"+num_concep*/
+		};
+		num_concep--;
+		//SE RECALCULA EL IMPORTE, SUBTOTAL, TOTAL E IVA CADA QUE SE ACTUALIZA LA CANTIDAD O LAS HORAS DEL CONCEPTO
+		var subtotal = 0;
+		for (var i = 0; i < num_concep; i++) {
+			imp = parseInt($("#importe" + i).text());
+			subtotal = subtotal + imp;
+			iva = (subtotal * 16)/100;
+			total = subtotal + iva;
+		};
+		$("#subtotal").text(subtotal);
+		$("#iva").text(iva);
+		$("#total").text(total);
+	}
 	function agregarConcepto()
 	{
-		html = "<tr><td><a class='i-borrar' href='#' onclick=''><i class='fa fa-times'></i></a></td><td class='col-cantidad'><input type='text' name='cantidad"+num_concep+"' class='form-control input-recal' value='1' id='cantidad"+num_concep+"'></td><td class='col-concepto'><div class='input-group'><input type='text' name='concepto"+num_concep+"' class='form-control'	placeholder='---' id='concepto"+num_concep+"'><div class='input-group-addon'><i onClick='identificar_Concepto("+num_concep+")' class='fa fa-search' aria-hidden='true'></i></div></div></td><td class='col-descripcion'><input type='text' name='descripcion"+num_concep+"' class='form-control' placeholder='---' id='descripcion"+num_concep+"' disabled='disabled'></td><td class='col-horas'><div class='input-group'><input type='text' name='horas"+num_concep+"' class='form-control input-recal' value='1' id='horas"+num_concep+"'><div class='input-group-addon'> x $<span name='costo' id='costo"+num_concep+"'>0.00</span></div></div></td><td class='col-importe'><div class='input-group'><span id='importe"+num_concep+"' name='importe"+num_concep+"'></span></div></td></tr>";
+		html = "<tr id='row"+num_concep+"'><td><a class='i-borrar' id='a"+num_concep+"' href='#' onclick='eliminarConcepto("+num_concep+")'><i class='fa fa-times'></i></a></td><td class='col-cantidad'><input type='text' name='cantidad"+num_concep+"' class='form-control input-recal' value='1' id='cantidad"+num_concep+"'></td><td class='col-concepto'><div class='input-group'><input type='text' name='concepto"+num_concep+"' class='form-control'	placeholder='---' id='concepto"+num_concep+"' disabled='disabled'><div class='input-group-addon'><i onClick='identificarConcepto("+num_concep+")' class='fa fa-search' aria-hidden='true'></i></div></div></td><td class='col-descripcion'><span name='descripcion"+num_concep+"' id='descripcion"+num_concep+"'></span></td><td class='col-horas'><div class='input-group'><input type='text' name='horas"+num_concep+"' class='form-control input-recal' value='1' id='horas"+num_concep+"'><div class='input-group-addon'> x $<span name='costo' id='costo"+num_concep+"'>0.00</span></div></div></td><td class='col-importe'><div class='input-group'><span id='importe"+num_concep+"' name='importe"+num_concep+"'></span></div></td></tr>";
 		$("#tabla-conceptos tr:last").after(html);
 		num_concep++;
 	}
