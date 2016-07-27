@@ -350,7 +350,23 @@
 			//SE ASIGNAN LOS NUEVOS IDS AL ROW POR MODIFICAR Y A LOS ELEMENTOS DEL ROW 
 			$('#row' + modificar).attr("id","row"+i);
 			$('#a' + modificar).attr("id","a"+i);
-			$('#a' + modificar).attr("onclick","eliminarConcepto("+i+")");
+			//$('#a' + modificar).attr("onclick","eliminarConcepto("+i+")");
+			$('#a' + i).off('click');
+			$('#a' + i).on('click', 'eliminarConcepto(i)');
+			$('#cantidad' + modificar).attr("name","cantidad"+i);
+			$('#cantidad' + modificar).attr("id","cantidad"+i);
+			$('#concepto' + modificar).attr("name","concepto"+i);
+			$('#concepto' + modificar).attr("id","concepto"+i);
+			//$('#concepto' + modificar).attr("onclick","eliminarConcepto("+i+")");
+			$('#descripcion' + modificar).attr("name","descripcion"+i);
+			$('#descripcion' + modificar).attr("id","descripcion"+i);
+			$('#horas' + modificar).attr("name","horas"+i);
+			$('#horas' + modificar).attr("id","horas"+i);
+			$('#costo' + modificar).attr("name","costo"+i);
+			$('#costo' + modificar).attr("id","costo"+i);
+			$('#importe' + modificar).attr("name","importe"+i);
+			$('#importe' + modificar).attr("id","importe"+i);
+
 			/*id='a"+num_concep+"'
 			onclick='eliminarConcepto("+num_concep+")
 			cantidad"+num_concep+"
@@ -358,7 +374,7 @@
 			concepto"+num_concep+"
 			concepto"+num_concep+"
 			onClick='identificarConcepto("+num_concep+")
-			name='descripcion"+num_concep+
+			descripcion"+num_concep+
 			descripcion"+num_concep+
 			horas"+num_concep+
 			horas"+num_concep+
