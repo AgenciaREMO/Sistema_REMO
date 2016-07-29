@@ -56,11 +56,22 @@
 
 			$resultado = $this->cotizacion->obtenerPersonal();
 			$datos = $this->cotizacion->obtenerProyectos();
+			$consid = $this->cotizacion->obtenerElemento(1);
+			$entreg = $this->cotizacion->obtenerElemento(2);
+			$for_pago = $this->cotizacion->obtenerElemento(3);
+			$tiempo_entrega = $this->cotizacion->obtenerElemento(4);
+			$reque = $this->cotizacion->obtenerElemento(5);
 			$descrip = $this->concepto->obtenerConceptos();
+
 			$data = array(
 				'consulta' => $resultado,
 				'proyectos' => $datos,
-				'descripciones' => $descrip
+				'descripciones' => $descrip,
+				'consideraciones' => $consid, 
+				'entregables' => $entreg,
+				'forma_pago' => $for_pago,
+				'tiempo_entrega' => $tiempo_entrega,
+				'requerimientos' => $reque
 			);
 
 			$this->load->view("cotizaciones/cotizacion_nueva", $data);
@@ -166,7 +177,6 @@
 		{
 			$tipo = "cotizacion";
 			$data = $this->concepto->obtenerDescripcionPorId($id, $tipo);
-
 			echo json_encode($data);
 		}
 	}

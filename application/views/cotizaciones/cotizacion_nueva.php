@@ -18,6 +18,7 @@
 				{
 					$personal[$fila->id_personal] = $fila->nombre;
 				}
+
 				//Inputs
 				$cantidad0 = array(
 					'name' => 'cantidad0',
@@ -109,8 +110,8 @@
 							<td class="col-concepto">
 								<div class="input-group">
 									<?= form_input($concepto0) ?>
-							    	<div class="input-group-addon">
-							    			<i class="fa fa-search" aria-hidden="true" onclick="identificarConcepto('0')"></i>
+							    	<div class="input-group-addon" id="addon0" onclick="identificarConcepto(0)">
+							    			<i class="fa fa-search" aria-hidden="true"></i>
 							    	</div>
 							    </div>
 							</td>
@@ -125,7 +126,7 @@
 							</td>
 							<td class="col-importe">
 								<div class="input-group">
-									<span id="importe0"name="importe0">$ 0.00</span>
+									<span id="importe0"name="importe0">0.00</span>
 								</div>
 							</td>
 						</tr>
@@ -139,7 +140,72 @@
 						<label for="">IVA:</label><span name="iva" id="iva" class="totales">$ 0.00</span><br>
 						<label for="">*TOTAL:</label><span name="total" id="total" class="totales">$ 0.00</span>
 					</div>				
-					
+				</div>
+				<hr>
+				<<!-->ELEMENTO DE SECCIÓN CONSIDERACIONES-->
+				<div class="row"> 
+					<h3>Consideraciones</h3>
+					<div class="col-lg-12">
+						<?php 
+						foreach ($consideraciones->result() as $fila) 
+						{ ?>
+							<div class="checkbox">
+							<input type="checkbox" name="check<?= $fila->id_elemento ?>" id="check<?= $fila->id_elemento ?>" value="$fila->id_elemento"><?php echo $fila->descripcion ?>
+						</div>
+						<?php } ?>
+					</div>
+				</div>
+				<<!-->ELEMENTO DE SECCIÓN ENTREGABLES-->
+				<div class="row">
+					<h3>Entregables</h3>
+					<div class="col-lg-12">
+						<?php 
+						foreach ($entregables->result() as $fila) 
+						{ ?>
+							<div class="checkbox">
+							<input type="checkbox" name="check<?= $fila->id_elemento ?>" id="check<?= $fila->id_elemento ?>" value="$fila->id_elemento"><?php echo $fila->descripcion ?>
+						</div>
+						<?php } ?>
+					</div>
+				</div>
+				<<!-->ELEMENTO DE SECCIÓN FORMA DE PAGO-->
+				<div class="row">
+					<h3>Forma de pago</h3>
+					<div class="col-lg-12">
+						<?php 
+						foreach ($forma_pago->result() as $fila) 
+						{ ?>
+							<div class="checkbox">
+							<input type="checkbox" name="check<?= $fila->id_elemento ?>" id="check<?= $fila->id_elemento ?>" value="$fila->id_elemento"><?php echo $fila->descripcion ?>
+						</div>
+						<?php } ?>
+					</div>
+				</div>
+				<<!-->ELEMENTO DE SECCIÓN FECHAS DE ENTREGA-->
+				<div class="row">
+					<h3>Tiempo estimado de entrega</h3>
+					<div class="col-lg-12">
+						<?php 
+						foreach ($tiempo_entrega->result() as $fila) 
+						{ ?>
+							<div class="checkbox">
+							<input type="checkbox" name="check<?= $fila->id_elemento ?>" id="check<?= $fila->id_elemento ?>" value="$fila->id_elemento"><?php echo $fila->descripcion ?>
+						</div>
+						<?php } ?>
+					</div>
+				</div>
+				<<!-->ELEMENTO DE SECCIÓN REQUERIMIENTOS-->
+				<div class="row">
+					<h3>Requerimientos</h3>
+					<div class="col-lg-12">
+						<?php 
+						foreach ($requerimientos->result() as $fila) 
+						{ ?>
+							<div class="checkbox">
+							<input type="checkbox" name="check<?= $fila->id_elemento ?>" id="check<?= $fila->id_elemento ?>" value="$fila->id_elemento"><?php echo $fila->descripcion ?>
+						</div>
+						<?php } ?>
+					</div>
 				</div>
 				<hr>
 				<?= form_submit($guardar) ?>
@@ -248,7 +314,6 @@
 			$('#formconcep')[0].reset();
 
 		});
-
     });
 	function cargarProyecto(id)
 	{
@@ -350,38 +415,29 @@
 			//SE ASIGNAN LOS NUEVOS IDS AL ROW POR MODIFICAR Y A LOS ELEMENTOS DEL ROW 
 			$('#row' + modificar).attr("id","row"+i);
 			$('#a' + modificar).attr("id","a"+i);
-			//$('#a' + modificar).attr("onclick","eliminarConcepto("+i+")");
-			$('#a' + i).off('click');
-			$('#a' + i).on('click', 'eliminarConcepto(i)');
+			$('#a' + i).attr("onclick","eliminarConcepto("+i+")");
+
 			$('#cantidad' + modificar).attr("name","cantidad"+i);
 			$('#cantidad' + modificar).attr("id","cantidad"+i);
+
+			//alert("row"+i+"-> concepto"+ modificar +"-> identificarconcepto("+i+")");
+			$('#addon' + modificar).attr("onclick","identificarConcepto("+i+")");
+			$('#addon' + modificar).attr("id","addon"+i);
+
 			$('#concepto' + modificar).attr("name","concepto"+i);
 			$('#concepto' + modificar).attr("id","concepto"+i);
-			//$('#concepto' + modificar).attr("onclick","eliminarConcepto("+i+")");
+
 			$('#descripcion' + modificar).attr("name","descripcion"+i);
 			$('#descripcion' + modificar).attr("id","descripcion"+i);
+
 			$('#horas' + modificar).attr("name","horas"+i);
 			$('#horas' + modificar).attr("id","horas"+i);
+
 			$('#costo' + modificar).attr("name","costo"+i);
 			$('#costo' + modificar).attr("id","costo"+i);
+
 			$('#importe' + modificar).attr("name","importe"+i);
 			$('#importe' + modificar).attr("id","importe"+i);
-
-			/*id='a"+num_concep+"'
-			onclick='eliminarConcepto("+num_concep+")
-			cantidad"+num_concep+"
-			cantidad"+num_concep+"
-			concepto"+num_concep+"
-			concepto"+num_concep+"
-			onClick='identificarConcepto("+num_concep+")
-			descripcion"+num_concep+
-			descripcion"+num_concep+
-			horas"+num_concep+
-			horas"+num_concep+
-			name='costo
-			id='costo"+num_concep+
-			id='importe"+num_concep+
-			name='importe"+num_concep*/
 		};
 		num_concep--;
 		//SE RECALCULA EL IMPORTE, SUBTOTAL, TOTAL E IVA CADA QUE SE ACTUALIZA LA CANTIDAD O LAS HORAS DEL CONCEPTO
@@ -398,7 +454,7 @@
 	}
 	function agregarConcepto()
 	{
-		html = "<tr id='row"+num_concep+"'><td><a class='i-borrar' id='a"+num_concep+"' href='#' onclick='eliminarConcepto("+num_concep+")'><i class='fa fa-times'></i></a></td><td class='col-cantidad'><input type='text' name='cantidad"+num_concep+"' class='form-control input-recal' value='1' id='cantidad"+num_concep+"'></td><td class='col-concepto'><div class='input-group'><input type='text' name='concepto"+num_concep+"' class='form-control'	placeholder='---' id='concepto"+num_concep+"' disabled='disabled'><div class='input-group-addon'><i onClick='identificarConcepto("+num_concep+")' class='fa fa-search' aria-hidden='true'></i></div></div></td><td class='col-descripcion'><span name='descripcion"+num_concep+"' id='descripcion"+num_concep+"'></span></td><td class='col-horas'><div class='input-group'><input type='text' name='horas"+num_concep+"' class='form-control input-recal' value='1' id='horas"+num_concep+"'><div class='input-group-addon'> x $<span name='costo' id='costo"+num_concep+"'>0.00</span></div></div></td><td class='col-importe'><div class='input-group'><span id='importe"+num_concep+"' name='importe"+num_concep+"'></span></div></td></tr>";
+		html = "<tr id='row"+num_concep+"'><td><a class='i-borrar' id='a"+num_concep+"' href='#' onclick='eliminarConcepto("+num_concep+")'><i class='fa fa-times'></i></a></td><td class='col-cantidad'><input type='text' name='cantidad"+num_concep+"' class='form-control input-recal' value='1' id='cantidad"+num_concep+"'></td><td class='col-concepto'><div class='input-group'><input type='text' name='concepto"+num_concep+"' class='form-control'	placeholder='---' id='concepto"+num_concep+"' disabled='disabled'><div id='addon"+num_concep+"' onClick='identificarConcepto("+num_concep+")' class='input-group-addon'><i class='fa fa-search' aria-hidden='true'></i></div></div></td><td class='col-descripcion'><span name='descripcion"+num_concep+"' id='descripcion"+num_concep+"'></span></td><td class='col-horas'><div class='input-group'><input type='text' name='horas"+num_concep+"' class='form-control input-recal' value='1' id='horas"+num_concep+"'><div class='input-group-addon'> x $<span name='costo' id='costo"+num_concep+"'>0.00</span></div></div></td><td class='col-importe'><div class='input-group'><span id='importe"+num_concep+"' name='importe"+num_concep+"'>0.00</span></div></td></tr>";
 		$("#tabla-conceptos tr:last").after(html);
 		num_concep++;
 	}

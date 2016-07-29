@@ -64,6 +64,7 @@
 			$consulta = $this->db->query("SELECT * FROM cotizacion");
 			$num_total = $consulta->num_rows();
 			return $num_total;
+			
 		}
 		public function cotizacionesAceptadas()
 		{
@@ -492,6 +493,15 @@
 										JOIN empresa ON cliente.id_empresa=empresa.id_empresa
 										WHERE id_proyecto = '" . $id . "' LIMIT 1");
 			return $resultado->result();
+		}
+
+
+		public function obtenerElemento($elem)
+		{
+			return $this->db->query("SELECT * FROM elemento_seccion 
+										JOIN tipo_seccion 
+										ON elemento_seccion.id_tipo_seccion=tipo_seccion.id_tipo_seccion 
+										WHERE tipo_seccion.id_tipo_seccion=".$elem);
 		}
 
 		public function obtenerPersonal()
