@@ -18,11 +18,11 @@ class C_servicio extends MY_Controller
 		$this->load->view("head", $id);
 		$this->load->view("nav", $id);
 		$this->load->view("portafolios/port");
-		$consultarServicio = $this->servicio->consultarServicio();
-		$obtenerServicio= $this->servicio->obtenerServicio($id);
+		$consultarServicio = $this->servicio->consultarServicio($id);
+		//$obtenerServicio= $this->servicio->obtenerServicio($id);
 		//Arreglo que envía "arreglos" a la vista para manejarlos.
-		$dataServicio= array('id_portafolio' => $id_portafolio,
-							 'obtenerServicio' => $obtenerServicio,
+		$dataServicio= array('id_portafolio' => $id_portafolio,/*
+							 'obtenerServicio' => $obtenerServicio,*/
 							 'consultarServicio' => $consultarServicio);
 
 		/*if($obtenerServicio != FALSE){
@@ -79,19 +79,19 @@ class C_servicio extends MY_Controller
 		}else
 		{
 			//Si es válido se realiza la función de insertar
-		    $this->insertarServicio($id_portafolio);
+		    $this->actualizarServicio($id_portafolio);
 		    //echo 'successful';
 		}
 	}
 
 	//Función que permite insertar servicios relacionados con cierto id de portafolio
-	public function insertarServicio($id_portafolio){
+	public function actualizarServicio($id_portafolio){
 				$id_portafolio = $id_portafolio;
 				$data = array('id_portafolio' => $id_portafolio);
 				$descripcion = array('descripcion' => $this->input->post('descripcion'));
 				$tipo = array('id_tipo' => $this->input->post('servicio'));
 				$cont = array('id_tipo' => implode(", ", $this->input->post('servicio')));
-				$this->servicio->insertarServicio($data, $descripcion, $tipo, $cont);
+				$this->servicio->actualizarServicio($data, $descripcion, $tipo, $cont);
 				redirect('/portafolios/c_servicio/cargarServicio'.'/'.$id_portafolio); 
 				//echo 'successful';
 	}

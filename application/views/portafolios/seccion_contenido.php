@@ -18,9 +18,9 @@
             foreach ($disponibleContenido->result() as $fila)
             { 
 				if($checkContenido == $fila->id_img){
-                    $checkImg = array('name'=>'id_img','id'=>'id_img','value'=>''.$fila->id_img.'','type'=>'checkbox','disabled'=>'disabled','checked'=>TRUE);
+                    $checkImg = array('name'=>'id_img','id'=>'id_img','value'=>''.$fila->id_img.'','type'=>'checkbox',/*'disabled'=>'disabled',*/'checked'=>TRUE);
                 }else{
-                    $checkImg = array('name'=>'id_img','id'=>'id_img','value'=>''.$fila->id_img.'','type'=>'checkbox','disabled'=>'disabled','checked'=>FALSE);
+                    $checkImg = array('name'=>'id_img','id'=>'id_img','value'=>''.$fila->id_img.'','type'=>'checkbox',/*'disabled'=>'disabled',*/'checked'=>FALSE);
                 }
 				//botones
                 $editar   = array('onClick'=>'activarPor()','style'=>'display:inline','class'=>'btn btn-primary','id'=>'p-editar','content'=>'Editar');
@@ -40,7 +40,7 @@
     </div> 
     <div class="row">
        <div class="col-lg-12 text-center">
-         <?php echo $paginationContenido;?>
+         <?php //echo $paginationContenido;?>
        </div>
     </div>
      <hr>

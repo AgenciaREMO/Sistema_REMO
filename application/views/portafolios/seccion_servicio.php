@@ -19,51 +19,69 @@
 
 
             foreach ($consultarServicio->result() as $fila) {
-              //checkBox
-              if($obtenerServicio != FALSE){
-                foreach ($obtenerServicio->result() as $row) {
-                  $checkServicio = $row->id_tipo;
-                  print_r($checkServicio);
-                  if($checkServicio == $fila->id_tipo){
-                    $textarea = array('name'=>'descripcion[]',
-                                      'id'=>'descripcion[]',
-                                      'value'=>''.$fila->desc_ser.'',
-                                      'rows'=>'3',
-                                      'cols'=>'140',
-                                      'class'=>'form-control'/*,
-                                      'disabled'=>'disabled'*/);
-                  ?>
+              $id_tipoP =$fila->id_tipoP;
+              $id_porta= $fila->id_porta;
+              $desc_ser = $fila->desc_ser;
+              $id_tipoT = $fila->id_tipoT;
+              $nombre = $fila->nombre;
+              $descripcion = $fila->descripcion;
+
+              if($id_porta == '' OR $id_porta == NULL OR $id_porta != $id_portafolio){
+                $textarea = array('name'=>'descripcion[]',
+                                    'id'=>'descripcion[]',
+                                    'value'=>''.$descripcion.'',
+                                    'rows'=>'3',
+                                    'cols'=>'140',
+                                    'class'=>'form-control'/*,
+                                    'disabled'=>'disabled'*/);
+                ?>
                   <div class="checkbox">
-                    <?= form_checkbox("servicio[]", ''.$fila->id_tipo.'', set_checkbox("servicio[]", ''.$fila->id_tipo.'', TRUE)); ?>
+                    <?= form_checkbox("servicio[]", ''.$id_tipoT.'', set_checkbox("servicio[]", ''.$id_tipoT.'', FALSE)); ?>
                   </div>
                   <div class="form-group">
-                    <?= form_label($fila->nombre);?><br>
+                    <?= form_label($nombre);?><br>
                     <?= form_textarea($textarea);?>
                   </div>
-                  <?php
-                  }else{
-                    $textarea = array('name'=>'descripcion[]',
+                <?php
+              }else{
+                if($id_porta == $id_portafolio){
+                  $textarea = array('name'=>'descripcion[]',
                                       'id'=>'descripcion[]',
-                                      'value'=>''.$fila->descripcion.'',
+                                      'value'=>''.$desc_ser.'',
                                       'rows'=>'3',
                                       'cols'=>'140',
                                       'class'=>'form-control'/*,
                                       'disabled'=>'disabled'*/);
-                  ?>
-                    <div class="checkbox">
-                      <?= form_checkbox("servicio[]", ''.$fila->id_tipo.'', set_checkbox("servicio[]", ''.$fila->id_tipo.'', FALSE)); ?>
-                    </div>
-                    <div class="form-group">
-                      <?= form_label($fila->nombre);?><br>
-                      <?= form_textarea($textarea);?>
-                    </div>
-                  <?php
-                  }
+                    ?>
+                      <div class="checkbox">
+                        <?= form_checkbox("servicio[]", ''.$id_tipoP.'', set_checkbox("servicio[]", ''.$id_tipoP.'', TRUE)); ?>
+                      </div>
+                      <div class="form-group">
+                        <?= form_label($nombre);?><br>
+                        <?= form_textarea($textarea);?>
+                      </div>
+                    <?php
+                }else{
+                    $textarea = array('name'=>'descripcion[]',
+                                      'id'=>'descripcion[]',
+                                      'value'=>''.$descripcion.'',
+                                      'rows'=>'3',
+                                      'cols'=>'140',
+                                      'class'=>'form-control'/*,
+                                      'disabled'=>'disabled'*/);
+                    ?>
+                      <div class="checkbox">
+                        <?= form_checkbox("servicio[]", ''.$id_tipoT.'', set_checkbox("servicio[]", ''.$id_tipoT.'', FALSE)); ?>
+                      </div>
+                      <div class="form-group">
+                        <?= form_label($nombre);?><br>
+                        <?= form_textarea($textarea);?>
+                      </div>
+                    <?php
                 }
-              }else{
-                  
               }
-            $count++; }
+            $count++; 
+          }
             ?>
           <input type="text" hidden="true" value="<?= $count ?>" id="c" name="cont">
           <br>
