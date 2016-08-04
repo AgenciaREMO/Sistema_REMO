@@ -85,10 +85,38 @@ class Grafico extends CI_Model
 		return intval($numero);
 	}
 
-	public function obtener_pagina($numero_por_pagina){ //$numero_por_pagina viene del controlador
+	public function obtener_pagina($numero_por_pagina, $id){ //$numero_por_pagina viene del controlador
 		//$this->db->get();
-		$this->db->where('id_tipo_img', 4);
-		$query = $this->db->get("imagen", $numero_por_pagina, $this->uri->segment(5));
+		/*SELECT * FROM portafolio_imagen RIGHT JOIN imagen ON portafolio_imagen.id_img = imagen.id_img AND portafolio_imagen.id_portafolio = 14 RIGHT JOIN tipo_imagen ON imagen.id_tipo_img = tipo_imagen.id_tipo_img WHERE imagen.id_tipo_img = 4*/
+	
+		$query = $this->db->query("SELECT portafolio_imagen.id_portafolio, 
+			                     portafolio_imagen.id_img, 
+			                     imagen.id_img, 
+			                     imagen.id_tipo_img, 
+			                     imagen.nom_img, 
+			                     imagen.url_img, 
+			                     imagen.url_thu, 
+			                     tipo_imagen.id_tipo_img, 
+			                     tipo_imagen.nom_tipo
+			              FROM portafolio_imagen 
+			              RIGHT JOIN imagen 
+			              ON portafolio_imagen.id_img = imagen.id_img AND portafolio_imagen.id_portafolio = ".$id['id_portafolio']."
+			              RIGHT JOIN tipo_imagen ON imagen.id_tipo_img = tipo_imagen.id_tipo_img WHERE imagen.id_tipo_img = 4", $numero_por_pagina, $this->uri->segment(5));
+        /*$this->db->select('portafolio_imagen.id_portafolio as id_porta, 
+			               portafolio_imagen.id_img as id_imgP, 
+			               imagen.id_img as id_imgI, 
+			               imagen.id_tipo_img as id_tipo_imgI, 
+			               imagen.nom_img as nom_img, 
+			               imagen.url_img as url_img, 
+			               imagen.url_thu as url_thu, 
+			               tipo_imagen.id_tipo_img as id_tipo_imgT, 
+			               tipo_imagen.nom_tipo as nom_tipo');
+		$this->db->from('portafolio_imagen');
+		$this->db->join('imagen', 'portafolio_imagen.id_img = imagen.id_img', 'RIGHT');
+		$this->db->join('imagen', 'portafolio_imagen.id_portafolio ='.$id['id_portafolio'].'', 'RIGHT');
+		$this->db->join('tipo_imagen', 'imagen.id_tipo_img = tipo_imagen.id_tipo_img');
+		$this->db->where('imagen.id_tipo_img = 4');*/
+		/*$query = $this->db->get("portafolio_imagen", $numero_por_pagina, $this->uri->segment(5));*/
 		return $query;
 	}
 

@@ -48,7 +48,7 @@
 
 		$obtenerContenido= $this->grafico->obtenerContenido($id);
 
-		$disponibleContenido = $this->grafico->obtener_pagina($config['per_page']);
+		$disponibleContenido = $this->grafico->obtener_pagina($config['per_page'], $id);
 
 		if($obtenerContenido != FALSE){
 			foreach ($obtenerContenido->result() as $row) {$checkContenido = $row->id_img;}
