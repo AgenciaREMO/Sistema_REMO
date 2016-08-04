@@ -142,7 +142,7 @@
 					</div>				
 				</div>
 				<hr>
-				<<!-->ELEMENTO DE SECCIÓN CONSIDERACIONES-->
+				<!--ELEMENTO DE SECCIÓN CONSIDERACIONES-->
 				<div class="row"> 
 					<h3>Consideraciones</h3>
 					<div class="col-lg-12">
@@ -150,12 +150,12 @@
 						foreach ($consideraciones->result() as $fila) 
 						{ ?>
 							<div class="checkbox">
-							<input type="checkbox" name="check<?= $fila->id_elemento ?>" id="check<?= $fila->id_elemento ?>" value="$fila->id_elemento"><?php echo $fila->descripcion ?>
+							<input type="checkbox" name="check<?= $fila->id_elemento ?>" id="check<?= $fila->id_elemento ?>" value="<?php echo $fila->id_elemento ?>"><?php echo $fila->descripcion ?>
 						</div>
 						<?php } ?>
 					</div>
 				</div>
-				<<!-->ELEMENTO DE SECCIÓN ENTREGABLES-->
+				<!--ELEMENTO DE SECCIÓN ENTREGABLES-->
 				<div class="row">
 					<h3>Entregables</h3>
 					<div class="col-lg-12">
@@ -163,12 +163,12 @@
 						foreach ($entregables->result() as $fila) 
 						{ ?>
 							<div class="checkbox">
-							<input type="checkbox" name="check<?= $fila->id_elemento ?>" id="check<?= $fila->id_elemento ?>" value="$fila->id_elemento"><?php echo $fila->descripcion ?>
+							<input type="checkbox" name="check<?= $fila->id_elemento ?>" id="check<?= $fila->id_elemento ?>" value="<?php echo $fila->id_elemento ?>"><?php echo $fila->descripcion ?>
 						</div>
 						<?php } ?>
 					</div>
 				</div>
-				<<!-->ELEMENTO DE SECCIÓN FORMA DE PAGO-->
+				<!--ELEMENTO DE SECCIÓN FORMA DE PAGO-->
 				<div class="row">
 					<h3>Forma de pago</h3>
 					<div class="col-lg-12">
@@ -176,12 +176,12 @@
 						foreach ($forma_pago->result() as $fila) 
 						{ ?>
 							<div class="checkbox">
-							<input type="checkbox" name="check<?= $fila->id_elemento ?>" id="check<?= $fila->id_elemento ?>" value="$fila->id_elemento"><?php echo $fila->descripcion ?>
+							<input type="checkbox" name="check<?= $fila->id_elemento ?>" id="check<?= $fila->id_elemento ?>" value="<?php echo $fila->id_elemento ?>"><?php echo $fila->descripcion ?>
 						</div>
 						<?php } ?>
 					</div>
 				</div>
-				<<!-->ELEMENTO DE SECCIÓN FECHAS DE ENTREGA-->
+				<!--ELEMENTO DE SECCIÓN FECHAS DE ENTREGA-->
 				<div class="row">
 					<h3>Tiempo estimado de entrega</h3>
 					<div class="col-lg-12">
@@ -189,12 +189,12 @@
 						foreach ($tiempo_entrega->result() as $fila) 
 						{ ?>
 							<div class="checkbox">
-							<input type="checkbox" name="check<?= $fila->id_elemento ?>" id="check<?= $fila->id_elemento ?>" value="$fila->id_elemento"><?php echo $fila->descripcion ?>
+							<input type="checkbox" name="check<?= $fila->id_elemento ?>" id="check<?= $fila->id_elemento ?>" value="<?php echo $fila->id_elemento ?>"><?php echo $fila->descripcion ?>
 						</div>
 						<?php } ?>
 					</div>
 				</div>
-				<<!-->ELEMENTO DE SECCIÓN REQUERIMIENTOS-->
+				<!--ELEMENTO DE SECCIÓN REQUERIMIENTOS-->
 				<div class="row">
 					<h3>Requerimientos</h3>
 					<div class="col-lg-12">
@@ -202,7 +202,7 @@
 						foreach ($requerimientos->result() as $fila) 
 						{ ?>
 							<div class="checkbox">
-							<input type="checkbox" name="check<?= $fila->id_elemento ?>" id="check<?= $fila->id_elemento ?>" value="$fila->id_elemento"><?php echo $fila->descripcion ?>
+							<input type="checkbox" name="check<?= $fila->id_elemento ?>" id="check<?= $fila->id_elemento ?>" value="<?php echo $fila->id_elemento ?>"><?php echo $fila->descripcion ?>
 						</div>
 						<?php } ?>
 					</div>
@@ -253,7 +253,7 @@
     	<div class="modal-content">
 	      	<div class="modal-header">
 	        	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	        	<h4 class="modal-title">Selecciona el proyecto</h4>
+	        	<h4 class="modal-title">Selecciona el concepto</h4>
 	      	</div>
 	      	<div class="modal-body form">
 	      		<form action="#" id="formconcep" class="form-horizontal">
@@ -324,7 +324,7 @@
 			success: function(data){
 				var registro = eval(data);
 				html = "<label><a href='' data-toggle='modal' data-target='#modal_proyecto'>Proyecto</a></label><br>";
-				html += "<div class='row'><div class='col-lg-12'><p><label>Nombre del Proyecto:</label> "+registro[0]["nombre"]+"</p></div></div>";
+				html += "<div class='row'><div class='col-lg-12'><p><label>Nombre del Proyecto:</label> "+registro[0]["nombre"]+"</p><input type='hidden' name='id_proy0' value='"+registro[0]["tipo"]+"'></div></div>";
 				html += "<div class='row'><div class='col-lg-6'><p><label>Cliente:</label> "+registro[0]["cliente"]+" ("+registro[0]["puesto"]+")</p></div>";
 				html += "<div class='col-lg-6'><p><label>Empresa:</label> "+registro[0]["empresa"]+"</p></div></div>";
 				$("#divproyecto").html(html);
@@ -339,8 +339,8 @@
 	{
 		$.ajax({
 			url: "<?= base_url('cotizaciones/mostrarDescripcion') ?>" + "/" + id, 
-			type: "GET",
-			dataType: "JSON",
+			type: "POST",
+			data: {buscar:busqueda},
 			success: function(data){
 				var registro = eval(data);
 				var num = parseInt($("#inputs").val());

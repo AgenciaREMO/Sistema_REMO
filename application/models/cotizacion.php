@@ -487,7 +487,8 @@
 										proyecto.nombre AS nombre, 
 										empresa.nombre AS empresa,
 										cliente.nombre AS cliente,
-										cliente.puesto AS puesto  
+										cliente.puesto AS puesto, 
+										proyecto.id_tipo AS tipo  
 										FROM proyecto 
 										JOIN cliente ON proyecto.id_cliente=cliente.id_cliente
 										JOIN empresa ON cliente.id_empresa=empresa.id_empresa

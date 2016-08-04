@@ -66,7 +66,7 @@
 			$data = array(
 				'consulta' => $resultado,
 				'proyectos' => $datos,
-				'descripciones' => $descrip,
+				//'descripciones' => $descrip,
 				'consideraciones' => $consid, 
 				'entregables' => $entreg,
 				'forma_pago' => $for_pago,
@@ -176,7 +176,8 @@
 		public function mostrarDescripcion($id = '')
 		{
 			$tipo = "cotizacion";
-			$data = $this->concepto->obtenerDescripcionPorId($id, $tipo);
+			$proyecto = $this->input->post("proyecto");
+			$data = $this->concepto->obtenerDescripcionPorId($id, $tipo, $proyecto);
 			echo json_encode($data);
 		}
 	}
