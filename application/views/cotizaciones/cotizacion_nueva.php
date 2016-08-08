@@ -92,6 +92,7 @@
 				</div>
 				<div class="form-group" id="divproyecto">
 					<label><a href="" data-toggle="modal" data-target="#modal_proyecto"> Proyecto <i class="fa fa-search" aria-hidden="true"></i></a></label>
+					<input type="hidden" name="tipo_p" id="tipo_p" value="0">
 				</div>
 				<h3>Descripción del proyecto</h3>
 				<div class="form-group" id="divdescrip">
@@ -257,20 +258,7 @@
 	      	</div>
 	      	<div class="modal-body form">
 	      		<form action="#" id="formconcep" class="form-horizontal">
-					<table id="concep" class="table table-hover"><thead><tr><th></th><th>Concepto</th><th>Descripción</th><th>Costo por hora</th><th>Categoría</th></tr></thead><tbody>
-					<?php 
-						//$i = 1;
-						foreach ($descripciones->result() as $fila) 
-						{ ?>
-							<tr>
-								<td><?php echo form_radio("descripcion", $fila->id_descripcion, FALSE) ?></td>
-								<td><?= $fila->concepto ?></td>
-								<td><?= $fila->detalles ?></td>
-								<td><?= $fila->costo ?></td>
-								<td><?= $fila->tipo ?></td>
-							</tr>
-						<?php /*$i++;*/ } ?>
-					</tbody></table>
+					
 		        </form>
 	      	</div>
 	      	<div class="modal-footer">
@@ -314,6 +302,18 @@
 			$('#formconcep')[0].reset();
 
 		});
+		//Cargar descripciones cuando se elije proyecto
+		$("input[name='tipo_p']").change(function(){
+				tipo_p = $("input[name='tipo_p']" ).val();
+				alert(tipo_p);
+				descripcionesAjax(tipo_p);
+		});
+		/*$("#tipo_p").change(function()
+		{
+			tipo_p = $("#tipo_p").val();
+			alert(tipo_p);
+			descripcionesAjax(tipo_p);
+		});*/
     });
 	function cargarProyecto(id)
 	{
@@ -324,10 +324,13 @@
 			success: function(data){
 				var registro = eval(data);
 				html = "<label><a href='' data-toggle='modal' data-target='#modal_proyecto'>Proyecto</a></label><br>";
-				html += "<div class='row'><div class='col-lg-12'><p><label>Nombre del Proyecto:</label> "+registro[0]["nombre"]+"</p><input type='hidden' name='id_proy0' value='"+registro[0]["tipo"]+"'></div></div>";
+				html += "<div class='row'><div class='col-lg-12'><p><label>Nombre del Proyecto:</label> "+registro[0]["nombre"]+"</p></div></div>";
 				html += "<div class='row'><div class='col-lg-6'><p><label>Cliente:</label> "+registro[0]["cliente"]+" ("+registro[0]["puesto"]+")</p></div>";
 				html += "<div class='col-lg-6'><p><label>Empresa:</label> "+registro[0]["empresa"]+"</p></div></div>";
 				$("#divproyecto").html(html);
+				$("input[name='tipo_p']" ).val(registro[0]["tipo"]).change();
+				var tipo1 = $("input[name='tipo_p']" ).val();
+				alert(tipo1);
 			},
 			error: function(jqXHR, textStatus, errorThrown)
 			{
@@ -457,5 +460,34 @@
 		html = "<tr id='row"+num_concep+"'><td><a class='i-borrar' id='a"+num_concep+"' href='#' onclick='eliminarConcepto("+num_concep+")'><i class='fa fa-times'></i></a></td><td class='col-cantidad'><input type='text' name='cantidad"+num_concep+"' class='form-control input-recal' value='1' id='cantidad"+num_concep+"'></td><td class='col-concepto'><div class='input-group'><input type='text' name='concepto"+num_concep+"' class='form-control'	placeholder='---' id='concepto"+num_concep+"' disabled='disabled'><div id='addon"+num_concep+"' onClick='identificarConcepto("+num_concep+")' class='input-group-addon'><i class='fa fa-search' aria-hidden='true'></i></div></div></td><td class='col-descripcion'><span name='descripcion"+num_concep+"' id='descripcion"+num_concep+"'></span></td><td class='col-horas'><div class='input-group'><input type='text' name='horas"+num_concep+"' class='form-control input-recal' value='1' id='horas"+num_concep+"'><div class='input-group-addon'> x $<span name='costo' id='costo"+num_concep+"'>0.00</span></div></div></td><td class='col-importe'><div class='input-group'><span id='importe"+num_concep+"' name='importe"+num_concep+"'>0.00</span></div></td></tr>";
 		$("#tabla-conceptos tr:last").after(html);
 		num_concep++;
+	}
+	function descripcionesAjax(tipo_p)
+	{
+		$.ajax({
+			url: "<?= base_url('cotizaciones/descripcionesAjax') ?>" + "/" + tipo_p, 
+			type: "GET",
+			dataType: "JSON",
+			success: function(data){
+				var registros = eval(data);
+				alert(registros[0]["concepto"]);
+
+				html = "<table id='concep' class='table table-hover'><thead><tr><th></th><th>Concepto</th><th>Descripción</th><th>Costo por hora</th><th>Categoría</th></tr></thead><tbody>";
+				for (var i = 0; i < registros.length; i++) 
+				{
+					html += "<tr><td><input type='radio' name='"+registros[i]["id_descripcion"]+"'/></td>";
+					html += "<td>"+registros[i]["concepto"]+"</td>";
+					html += "<td>"+registros[i]["detalles"]+"</td>";
+					html += "<td>"+registros[i]["costo"]+"</td>";
+					html += "<td>"+registros[i]["tipo"]+"</td>";
+					html += "</tr>";
+				}
+				html += "</tbody></table>";
+				$("#formconcep").html(html);
+			},
+			error: function(jqXHR, textStatus, errorThrown)
+			{
+				 alert('Error get data from ajax');
+			}
+		});
 	}
 </script>

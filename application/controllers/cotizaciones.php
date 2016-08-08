@@ -180,5 +180,11 @@
 			$data = $this->concepto->obtenerDescripcionPorId($id, $tipo, $proyecto);
 			echo json_encode($data);
 		}
+		public function descripcionesAjax($id = '')
+		{
+			$data = $this->cotizacion->obtenerDescripcionesTipoProyecto($id);
+
+			echo json_encode($data);
+		}
 	}
 ?>

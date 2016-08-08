@@ -516,5 +516,19 @@
 										JOIN cliente ON proyecto.id_cliente=cliente.id_cliente
 										JOIN empresa ON cliente.id_empresa=empresa.id_empresa");
 		}
+		public function obtenerDescripcionesTipoProyecto($tipo)
+		{
+			return $this->db->query("SELECT tipo_proyecto.nombre AS tipo, 
+										concepto.nombre AS concepto, 
+										detalles, costo, id_descripcion, 
+										concepto.id_concepto AS id_concepto 
+										FROM tipo_proyecto 
+										JOIN concepto 
+										ON tipo_proyecto.id_tipo=concepto.id_tipo 
+										JOIN descripcion 
+										ON concepto.id_concepto=descripcion.id_concepto
+										WHERE concepto.id_tipo = " . $tipo . " ORDER BY concepto");
+
+		}
 	}
 ?>
