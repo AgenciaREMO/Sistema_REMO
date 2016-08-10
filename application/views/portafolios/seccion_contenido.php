@@ -4,7 +4,6 @@
       <h4 class="page-header">Contenido gráfico</h4>
     </div>
   </div>
-  <form action"#" method="#" name="form_experiencia">
     <div class="row">
         <div class="col-md-12 col-sm-6">
             <h5>Selecciona las imagenes que se incluirán como contenido gráfico en el portafolio</h5>
@@ -20,63 +19,52 @@
           //botones
           $editar   = array('onClick'=>'activarPor()','style'=>'display:inline','class'=>'btn btn-primary','id'=>'p-editar','content'=>'Editar');
           $cancelar = array('onClick'=>'desactivarPor()','style'=>'display:none','class'=>'btn btn-default','id'=>'p-cancelar','content'=>'Cancelar');
-          $guardar  = array('style'=>'display:none','class'=>'btn btn-primary','id'=>'p-guardar','value'=>'Guardar');
+          $guardar  = array('style'=>'display:inline','class'=>'btn btn-primary','id'=>'p-guardar','value'=>'Guardar');
           $cargar   = array('style'=>'display:inline','class'=>'btn btn-primary','id'=>'p-nueva-s','content'=>'<span class="glyphicon glyphicon-plus"></span> Gráfico','data-toggle'=>'modal','data-target'=>'#cargarGrafico');
           $cargar2  = array('style'=>'display:none','class'=>'btn btn-primary','id'=>'p-nueva-n','content'=>'<span class="glyphicon glyphicon-plus"></span> Gráfico','data-toggle'=>'modal','data-target'=>'#cargarGrafico');
 
 
-            foreach ($disponibleContenido->result() as $fila){ 
-              $id_porta = $fila->$id_porta;
-              $id_imgP = $fila->$id_imgP;
-              $id_imgI = $fila->$id_imgI;
-              $id_tipo_imgI = $fila->$id_tipo_imgI;
-              $nom_img = $fila->$nom_img;
-              $url_img = $fila->$url_img;
-              $url_thu = $fila->$url_thu;
-              $id_tipo_imgT = $fila->$id_tipo_imgT;
-              $nom_tipo = $fila->$nom_tipo;
+          foreach ($disponibleContenido->result() as $fila) {
+            if($checkContenido == $fila->id_img){
+                      ?>
+                      <div class="col-lg-2 col-xs-6 col-sm-4 col-md-3 img-rounded text-center">
+                         <div class="checkbox">
+                            <?= form_checkbox("grafico[]", ''.$fila->id_img.'', set_checkbox("grafico[]", ''.$fila->id_img.'', TRUE)); ?>
+                         </div><br>
+                         <div>  
+                          <img class="img-responsive img-hover img-thumbnail" src="<?= base_url($fila->url_img)?>" alt="<?= $fila->nom_img ?>" title="<?= $fila->nom_img ?>">
+                         </div>
+                      </div>
+                      <?php
 
-              if($id_porta == '' OR $id_porta == NULL OR $id_porta != $id_portafolio){
-                # code...
-                ?>
-                <div class="col-lg-2 col-xs-6 col-sm-4 col-md-3 img-rounded text-center">
-                  <div class="checkbox">
-                    <?= form_checkbox("experiencia[]", ''.$id_imgI.'', set_checkbox("servicio[]", ''.$id_imgI.'', FALSE)); ?>
-                  </div>
-                  <img class="img-responsive img-hover img-thumbnail" src="<?= base_url($url_img)?>" alt="<?= $nom_img ?>" title="<?= $nom_img ?>">
-                </div>
-                <?php
-              }else{
-                # code...
-                if ($id_porta == $id_portafolio) {
-                  # code...
-                  ?>
-                  <div class="col-lg-2 col-xs-6 col-sm-4 col-md-3 img-rounded text-center">
-                    <div class="checkbox">
-                      <?= form_checkbox("experiencia[]", ''.$id_imgP.'', set_checkbox("servicio[]", ''.$id_imgP.'', FALSE)); ?>
-                    </div>
-                    <img class="img-responsive img-hover img-thumbnail" src="<?= base_url($url_img)?>" alt="<?= $nom_img ?>" title="<?= $nom_img ?>">
-                  </div>
-                  <?php
-                }else{
-                  # code...
-                  ?>
-                  <div class="col-lg-2 col-xs-6 col-sm-4 col-md-3 img-rounded text-center">
-                    <div class="checkbox">
-                      <?= form_checkbox("experiencia[]", ''.$id_imgI.'', set_checkbox("servicio[]", ''.$id_imgI.'', FALSE)); ?>
-                    </div>
-                    <img class="img-responsive img-hover img-thumbnail" src="<?= base_url($url_img)?>" alt="<?= $nom_img ?>" title="<?= $nom_img ?>">
-                  </div>
-                  <?php
-                }
-              }
-              $count++; 
-            }
+                      //$checkImg = array('name'=>'grafico[]','id'=>'grafico[]','value'=>''.$fila->id_img.'','type'=>'checkbox',/*'disabled'=>'disabled',*/'checked'=>TRUE);
+                  }else{
+                      ?>
+                      <div class="col-lg-2 col-xs-6 col-sm-4 col-md-3 img-rounded text-center">
+                         <div class="checkbox">
+                            <?= form_checkbox("grafico[]", ''.$fila->id_img.'', set_checkbox("grafico[]", ''.$fila->id_img.'', FALSE)); ?>
+                         </div><br>
+                         <div>
+                           <img class="img-responsive img-hover img-thumbnail" src="<?= base_url($fila->url_img)?>" alt="<?= $fila->nom_img ?>" title="<?= $fila->nom_img ?>">
+                         </div>
+                      </div>
+                      <?php
+
+                      //$checkImg = array('name'=>'grafico[]','id'=>'grafico[]','value'=>''.$fila->id_img.'','type'=>'checkbox',/*'disabled'=>'disabled',*/'checked'=>FALSE);
+                  }
+          //botones
+                  $editar   = array('onClick'=>'activarPor()','style'=>'display:inline','class'=>'btn btn-primary','id'=>'p-editar','content'=>'Editar');
+                  $cancelar = array('onClick'=>'desactivarPor()','style'=>'display:none','class'=>'btn btn-default','id'=>'p-cancelar','content'=>'Cancelar');
+                  $guardar  = array('style'=>'display:inline','class'=>'btn btn-primary','id'=>'p-guardar','value'=>'Guardar');
+                  $cargar   = array('style'=>'display:inline','class'=>'btn btn-primary','id'=>'p-nueva-s','content'=>'<span class="glyphicon glyphicon-plus"></span> Gráfico','data-toggle'=>'modal','data-target'=>'#cargarGrafico');
+                  $cargar2  = array('style'=>'display:none','class'=>'btn btn-primary','id'=>'p-nueva-n','content'=>'<span class="glyphicon glyphicon-plus"></span> Gráfico','data-toggle'=>'modal','data-target'=>'#cargarGrafico');
+        
+          }
         ?>  
     </div> 
     <div class="row">
        <div class="col-lg-12 text-center">
-         <?php //echo $paginationContenido;?>
+         <?php echo $paginationContenido;?>
        </div>
     </div>
      <hr>

@@ -65,6 +65,54 @@
 		$this->load->view("portafolios/form_general", $id);
 		$this->load->view("footer", $id);
 	}
+
+		//Función que permite validar el formulario para insertar los servicios con cierto portafolio
+	public function validarContenido($id_portafolio)
+	{
+		/*
+		//Validaciones del formulario
+		//$this->form_validation->set_rules('name_input', 'Identificador', 'reglas de validación');
+		//$this->form_validation->set_message('regladevalidacion', 'mensajepersonalizado');
+		*/
+		$this->form_validation->set_rules(
+			'grafico[]', 
+			'', 'required', array('¡Debes seleccionar al menos una opción!' )
+		);
+
+		//$this->form_validation->set_message('required', '¡Debes seleccionar al menos una opción!');
+		//$this->form_validation->set_rules('descripcion[]', 'descripción', 'required|max_length[350]');
+		//$this->form_validation->set_message('required', '¡El campo %s no puede ir vacío!');
+		//$this->form_validation->set_message('max_length', '¡El campo %s no puede superar 350 caracteres!');
+		//Si el formulario pasa la validación se procesa el siguiente método
+
+		if ($this->form_validation->run() == FALSE) 
+		{
+			//Si el formulario no se válida se muestran los errores
+	        $this->cargarContenido($id_portafolio);
+	        echo 'fail';
+		}else
+		{
+			//Si es válido se realiza la función de insertar
+		    $this->actualizarContenido($id_portafolio);
+		    echo 'successful';
+		}
+	}
+
+
+	public function actualizarContenido($id_portafolio){
+		$id_portafolio = $id_portafolio;
+		$data = array('id_portafolio' => $id_portafolio);
+		$id_img = array('id_img' => $this->input->post('grafico'));
+		$cont = array('id_img' => implode(", ", $this->input->post('grafico')));
+		print_r($id_img);
+		print_r($cont);
+		print_r($data);
+		$sql = $this->grafico->actualizarContenido($data, $id_img, $cont);
+		//redirect('/portafolios/c_contenido/cargarContenido'.'/'.$id_portafolio); 
+		echo "successful";
+		echo $sql;
+	}
+
  	
  } 
 ?>
