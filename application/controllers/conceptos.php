@@ -63,7 +63,8 @@
 			$this->load->view("head"); 
 			$this->load->view("nav");
 			
-			$fila = $this->concepto->obtenerDescripcionPorId($id);
+			$tipo="descripcion";			
+			$fila = $this->concepto->obtenerDescripcionPorId($id, $tipo);
 			$resultado = $this->concepto->obtenerConcepto();
 
 			$data = array(
@@ -80,7 +81,8 @@
 		}
 		public function detallesDescripcionAjax($id = '')
 		{
-			$data = $this->concepto->obtenerDescripcionPorId($id);
+			$tipo="descripcion";
+			$data = $this->concepto->obtenerDescripcionPorId($id, $tipo);
 
 			echo json_encode($data);
 		}

@@ -84,128 +84,134 @@
 						$fecha = $dia." de ".$mes." de ".$anio;
 						echo "<p>Santiago de Querétaro, Qro., a ".$fecha."</p>";
 					?>
-					<?= form_label('COTIZACIÓN: XXXXXXXXXX') ?> 
+					<?php  ?>
+					<?= form_label('COTIZACIÓN: ') ?> 
 				</div>
 				<div class="form-group">
 					<?= form_label('Elaborada por', 'personal') ?>
 					<?= form_dropdown('personal',$personal,'1', $style) ?>
 				</div>
-				<div class="form-group" id="divproyecto">
+				<div>
 					<label><a href="" data-toggle="modal" data-target="#modal_proyecto"> Proyecto <i class="fa fa-search" aria-hidden="true"></i></a></label>
-					<input type="hidden" name="tipo_p" id="tipo_p" value="0">
-				</div>
-				<h3>Descripción del proyecto</h3>
-				<div class="form-group" id="divdescrip">
-					<table id="tabla-conceptos" class="table table-hover">
-						<tr>
-							<th></th>
-							<th class="col-cantidad">Cant.</th>	
-							<th>Concepto</th>
-							<th>Descripción</th>
-							<th class="col-horas">Horas</th>
-							<th class="col-importe">Importe</th>
-						</tr>
-						<tr>
-							<td><!--<a class="i-borrar" href="#" onclick=""><i class="fa fa-times"></i></a>--></td>
-							<td class="col-cantidad"><?= form_input($cantidad0) ?></td>
-							<td class="col-concepto">
-								<div class="input-group">
-									<?= form_input($concepto0) ?>
-							    	<div class="input-group-addon" id="addon0" onclick="identificarConcepto(0)">
-							    			<i class="fa fa-search" aria-hidden="true"></i>
-							    	</div>
-							    </div>
-							</td>
-							<td class="col-descripcion">
-								<span id="descripcion0" name="descripcion0"></span>
-							</td>
-							<td class="col-horas">
-								<div class="input-group">
-									<?= form_input($horas0) ?>
-							    	<div class="input-group-addon"> x $ <span name="costo0" id="costo0">0.00</span></div>
-							    </div>
-							</td>
-							<td class="col-importe">
-								<div class="input-group">
-									<span id="importe0"name="importe0">0.00</span>
-								</div>
-							</td>
-						</tr>
-					</table>
-					<div class="col-lg-4">
-						<a href="#" class="btn btn-default" onClick="agregarConcepto()">Agregar Concepto <i class="fa fa-plus" aria-hidden="true"></i></a>
+					<div class="form-group" id="divproyecto">
 					</div>
-					<div class="col-lg-5"></div>
-					<div class="col-lg-3">
-						<label for="">SUBTOTAL:</label><span name="subtotal" id="subtotal" class="totales">$ 0.00</span><br>
-						<label for="">IVA:</label><span name="iva" id="iva" class="totales">$ 0.00</span><br>
-						<label for="">*TOTAL:</label><span name="total" id="total" class="totales">$ 0.00</span>
-					</div>				
+				</div>
+				<div id="descripcion" style="display:none">
+					<h3>Descripción del proyecto</h3>
+					<div class="form-group" id="divdescrip" >
+						<table id="tabla-conceptos" class="table table-hover">
+							<tr>
+								<th></th>
+								<th class="col-cantidad">Cant.</th>	
+								<th>Concepto</th>
+								<th>Descripción</th>
+								<th class="col-horas">Horas</th>
+								<th class="col-importe">Importe</th>
+							</tr>
+							<tr>
+								<td><!--<a class="i-borrar" href="#" onclick=""><i class="fa fa-times"></i></a>--></td>
+								<td class="col-cantidad"><?= form_input($cantidad0) ?></td>
+								<td class="col-concepto">
+									<div class="input-group">
+										<?= form_input($concepto0) ?>
+										<div class="input-group-addon" id="addon0" onclick="identificarConcepto(0)">
+											<i class="fa fa-search" aria-hidden="true"></i>
+										</div>
+									</div>
+								</td>
+								<td class="col-descripcion">
+									<span id="descripcion0" name="descripcion0"></span>
+								</td>
+								<td class="col-horas">
+									<div class="input-group">
+										<?= form_input($horas0) ?>
+										<div class="input-group-addon"> x $ <span name="costo0" id="costo0">0.00</span></div>
+									</div>
+								</td>
+								<td class="col-importe">
+									<div class="input-group">
+										<span id="importe0"name="importe0">0.00</span>
+									</div>
+								</td>
+							</tr>
+						</table>
+						<div class="col-lg-4">
+							<a href="#" class="btn btn-default" onClick="agregarConcepto()">Agregar Concepto <i class="fa fa-plus" aria-hidden="true"></i></a>
+						</div>
+						<div class="col-lg-6"></div>
+						<div class="col-lg-2">
+							<label for="">SUBTOTAL:</label><span name="subtotal" id="subtotal" class="totales">$ 0.00</span><br>
+							<label for="">IVA:</label><span name="iva" id="iva" class="totales">$ 0.00</span><br>
+							<label for="">*TOTAL:</label><span name="total" id="total" class="totales">$ 0.00</span>
+						</div>				
+					</div>
 				</div>
 				<hr>
-				<!--ELEMENTO DE SECCIÓN CONSIDERACIONES-->
-				<div class="row"> 
-					<h3>Consideraciones</h3>
-					<div class="col-lg-12">
-						<?php 
-						foreach ($consideraciones->result() as $fila) 
-						{ ?>
+				<div id="elementos" style="display:none"> 
+					<!--ELEMENTO DE SECCIÓN CONSIDERACIONES-->
+					<div class="row"> 
+						<h3>Consideraciones</h3>
+						<div class="col-lg-12">
+							<?php 
+							foreach ($consideraciones->result() as $fila) 
+								{ ?>
 							<div class="checkbox">
-							<input type="checkbox" name="check<?= $fila->id_elemento ?>" id="check<?= $fila->id_elemento ?>" value="<?php echo $fila->id_elemento ?>"><?php echo $fila->descripcion ?>
+								<input type="checkbox" name="check<?= $fila->id_elemento ?>" id="check<?= $fila->id_elemento ?>" value="<?php echo $fila->id_elemento ?>"><?php echo $fila->descripcion ?>
+							</div>
+							<?php } ?>
 						</div>
-						<?php } ?>
 					</div>
-				</div>
-				<!--ELEMENTO DE SECCIÓN ENTREGABLES-->
-				<div class="row">
-					<h3>Entregables</h3>
-					<div class="col-lg-12">
-						<?php 
-						foreach ($entregables->result() as $fila) 
-						{ ?>
+					<!--ELEMENTO DE SECCIÓN ENTREGABLES-->
+					<div class="row">
+						<h3>Entregables</h3>
+						<div class="col-lg-12">
+							<?php 
+							foreach ($entregables->result() as $fila) 
+								{ ?>
 							<div class="checkbox">
-							<input type="checkbox" name="check<?= $fila->id_elemento ?>" id="check<?= $fila->id_elemento ?>" value="<?php echo $fila->id_elemento ?>"><?php echo $fila->descripcion ?>
+								<input type="checkbox" name="check<?= $fila->id_elemento ?>" id="check<?= $fila->id_elemento ?>" value="<?php echo $fila->id_elemento ?>"><?php echo $fila->descripcion ?>
+							</div>
+							<?php } ?>
 						</div>
-						<?php } ?>
 					</div>
-				</div>
-				<!--ELEMENTO DE SECCIÓN FORMA DE PAGO-->
-				<div class="row">
-					<h3>Forma de pago</h3>
-					<div class="col-lg-12">
-						<?php 
-						foreach ($forma_pago->result() as $fila) 
-						{ ?>
+					<!--ELEMENTO DE SECCIÓN FORMA DE PAGO-->
+					<div class="row">
+						<h3>Forma de pago</h3>
+						<div class="col-lg-12">
+							<?php 
+							foreach ($forma_pago->result() as $fila) 
+								{ ?>
 							<div class="checkbox">
-							<input type="checkbox" name="check<?= $fila->id_elemento ?>" id="check<?= $fila->id_elemento ?>" value="<?php echo $fila->id_elemento ?>"><?php echo $fila->descripcion ?>
+								<input type="checkbox" name="check<?= $fila->id_elemento ?>" id="check<?= $fila->id_elemento ?>" value="<?php echo $fila->id_elemento ?>"><?php echo $fila->descripcion ?>
+							</div>
+							<?php } ?>
 						</div>
-						<?php } ?>
 					</div>
-				</div>
-				<!--ELEMENTO DE SECCIÓN FECHAS DE ENTREGA-->
-				<div class="row">
-					<h3>Tiempo estimado de entrega</h3>
-					<div class="col-lg-12">
-						<?php 
-						foreach ($tiempo_entrega->result() as $fila) 
-						{ ?>
+					<!--ELEMENTO DE SECCIÓN FECHAS DE ENTREGA-->
+					<div class="row">
+						<h3>Tiempo estimado de entrega</h3>
+						<div class="col-lg-12">
+							<?php 
+							foreach ($tiempo_entrega->result() as $fila) 
+								{ ?>
 							<div class="checkbox">
-							<input type="checkbox" name="check<?= $fila->id_elemento ?>" id="check<?= $fila->id_elemento ?>" value="<?php echo $fila->id_elemento ?>"><?php echo $fila->descripcion ?>
+								<input type="checkbox" name="check<?= $fila->id_elemento ?>" id="check<?= $fila->id_elemento ?>" value="<?php echo $fila->id_elemento ?>"><?php echo $fila->descripcion ?>
+							</div>
+							<?php } ?>
 						</div>
-						<?php } ?>
 					</div>
-				</div>
-				<!--ELEMENTO DE SECCIÓN REQUERIMIENTOS-->
-				<div class="row">
-					<h3>Requerimientos</h3>
-					<div class="col-lg-12">
-						<?php 
-						foreach ($requerimientos->result() as $fila) 
-						{ ?>
+					<!--ELEMENTO DE SECCIÓN REQUERIMIENTOS-->
+					<div class="row">
+						<h3>Requerimientos</h3>
+						<div class="col-lg-12">
+							<?php 
+							foreach ($requerimientos->result() as $fila) 
+								{ ?>
 							<div class="checkbox">
-							<input type="checkbox" name="check<?= $fila->id_elemento ?>" id="check<?= $fila->id_elemento ?>" value="<?php echo $fila->id_elemento ?>"><?php echo $fila->descripcion ?>
+								<input type="checkbox" name="check<?= $fila->id_elemento ?>" id="check<?= $fila->id_elemento ?>" value="<?php echo $fila->id_elemento ?>"><?php echo $fila->descripcion ?>
+							</div>
+							<?php } ?>
 						</div>
-						<?php } ?>
 					</div>
 				</div>
 				<hr>
@@ -280,12 +286,13 @@
     		$('#seleccionarProy').attr("onClick", "cargarProyecto('"+id+"')");
 
     	});
-    	$('#concep').find('tr').click(function() {
+    	/*$('#concep').find('tr').click(function() {
     		$(this).find('input').prop("checked", true);
     		var id = $('input:radio[name=descripcion]:checked').val();
     		var num_input = $("#inputs").val();
     		$('#seleccionarDescrip').attr("onClick", "cargarDescrip('"+id+"','"+num_input+"')");
-    	});
+    		alert("Hiciste click en un renglon");
+    	});*/
     	$("body").on("keyup", "input[name*='cantidad']", function() {
     		var txt = $(this).attr("id");
 			var id_input = txt.replace(/\D/g,'');
@@ -300,20 +307,7 @@
 		$(document.body).on('hidden.bs.modal', function () {
 			$('#formproy')[0].reset();
 			$('#formconcep')[0].reset();
-
 		});
-		//Cargar descripciones cuando se elije proyecto
-		$("input[name='tipo_p']").change(function(){
-				tipo_p = $("input[name='tipo_p']" ).val();
-				alert(tipo_p);
-				descripcionesAjax(tipo_p);
-		});
-		/*$("#tipo_p").change(function()
-		{
-			tipo_p = $("#tipo_p").val();
-			alert(tipo_p);
-			descripcionesAjax(tipo_p);
-		});*/
     });
 	function cargarProyecto(id)
 	{
@@ -323,18 +317,17 @@
 			dataType: "JSON",
 			success: function(data){
 				var registro = eval(data);
-				html = "<label><a href='' data-toggle='modal' data-target='#modal_proyecto'>Proyecto</a></label><br>";
-				html += "<div class='row'><div class='col-lg-12'><p><label>Nombre del Proyecto:</label> "+registro[0]["nombre"]+"</p></div></div>";
+				html = "<div class='row'><div class='col-lg-12'><p><label>Nombre del Proyecto:</label> "+registro[0]["nombre"]+"</p></div></div>";
 				html += "<div class='row'><div class='col-lg-6'><p><label>Cliente:</label> "+registro[0]["cliente"]+" ("+registro[0]["puesto"]+")</p></div>";
 				html += "<div class='col-lg-6'><p><label>Empresa:</label> "+registro[0]["empresa"]+"</p></div></div>";
 				$("#divproyecto").html(html);
-				$("input[name='tipo_p']" ).val(registro[0]["tipo"]).change();
-				var tipo1 = $("input[name='tipo_p']" ).val();
-				alert(tipo1);
+				$("#descripcion").css("display", "block");
+				var tipo = registro[0]["tipo"];
+				descripcionesAjax(tipo);
 			},
 			error: function(jqXHR, textStatus, errorThrown)
 			{
-				 alert('Error get data from ajax');
+				 alert('Error get data from ajax - cargarProyecto');
 			}
 		});
 	}
@@ -343,7 +336,7 @@
 		$.ajax({
 			url: "<?= base_url('cotizaciones/mostrarDescripcion') ?>" + "/" + id, 
 			type: "POST",
-			data: {buscar:busqueda},
+			dataType: "JSON",
 			success: function(data){
 				var registro = eval(data);
 				var num = parseInt($("#inputs").val());
@@ -369,10 +362,11 @@
 				$("#subtotal").text(subtotal);
 				$("#iva").text(iva);
 				$("#total").text(total);
+				$("#elementos").css("display", "block");
 			},
 			error: function(jqXHR, textStatus, errorThrown)
 			{
-				 alert('Error get data from ajax');
+				 alert('Error get data from ajax - cargarDescrip');
 			}
 		});
 	}
@@ -461,20 +455,18 @@
 		$("#tabla-conceptos tr:last").after(html);
 		num_concep++;
 	}
-	function descripcionesAjax(tipo_p)
+	function descripcionesAjax(tipo)
 	{
 		$.ajax({
-			url: "<?= base_url('cotizaciones/descripcionesAjax') ?>" + "/" + tipo_p, 
+			url: "<?= base_url('cotizaciones/descripcionesAjax') ?>" + "/" + tipo, 
 			type: "GET",
 			dataType: "JSON",
 			success: function(data){
 				var registros = eval(data);
-				alert(registros[0]["concepto"]);
-
 				html = "<table id='concep' class='table table-hover'><thead><tr><th></th><th>Concepto</th><th>Descripción</th><th>Costo por hora</th><th>Categoría</th></tr></thead><tbody>";
 				for (var i = 0; i < registros.length; i++) 
 				{
-					html += "<tr><td><input type='radio' name='"+registros[i]["id_descripcion"]+"'/></td>";
+					html += "<tr><td><input type='radio' name='descripcion' value='"+registros[i]["id_descripcion"]+"'/></td>";
 					html += "<td>"+registros[i]["concepto"]+"</td>";
 					html += "<td>"+registros[i]["detalles"]+"</td>";
 					html += "<td>"+registros[i]["costo"]+"</td>";
@@ -483,10 +475,23 @@
 				}
 				html += "</tbody></table>";
 				$("#formconcep").html(html);
+				//Seleccionar el radio button al hacer click en el TR
+				$('#concep').find('tr').click(function() {
+		    		$(this).find('input').prop("checked", true);
+		    		var id = $('input:radio[name=descripcion]:checked').val();
+		    		//alert(id);
+		    		var num_input = $("#inputs").val();
+		    		$('#seleccionarDescrip').attr("onClick", "cargarDescrip('"+id+"','"+num_input+"')");
+		    	});
+		    	$('#seleccionarDescrip').click(function() {
+		    		var id = $('input:radio[name=descripcion]:checked').val();
+		    		var num_input = $("#inputs").val();
+		    		cargarDescrip(id,num_input);
+		    	});
 			},
 			error: function(jqXHR, textStatus, errorThrown)
 			{
-				 alert('Error get data from ajax');
+				 alert('Error get data from ajax ´- descripcionesAjax');
 			}
 		});
 	}

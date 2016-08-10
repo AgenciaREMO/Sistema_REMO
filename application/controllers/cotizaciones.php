@@ -169,22 +169,48 @@
 
 		public function mostrarProyecto($id = '')
 		{
-			$data = $this->cotizacion->mostrarProyecto($id);
-
-			echo json_encode($data);
+			if($this->input->is_ajax_request())
+			{
+				$data = $this->cotizacion->mostrarProyecto($id);
+				echo json_encode($data);
+			}
+			else
+			{
+				show_404;
+			}
 		}
 		public function mostrarDescripcion($id = '')
 		{
-			$tipo = "cotizacion";
-			$proyecto = $this->input->post("proyecto");
-			$data = $this->concepto->obtenerDescripcionPorId($id, $tipo, $proyecto);
-			echo json_encode($data);
+			if($this->input->is_ajax_request())
+			{
+				$tipo = "cotizacion";
+				$data = $this->concepto->obtenerDescripcionPorId($id, $tipo);
+				echo json_encode($data);
+			}
+			else
+			{
+				show_404;
+			}
 		}
 		public function descripcionesAjax($id = '')
 		{
-			$data = $this->cotizacion->obtenerDescripcionesTipoProyecto($id);
-
-			echo json_encode($data);
+			if($this->input->is_ajax_request())
+			{
+				$data = $this->cotizacion->obtenerDescripcionesTipoProyecto($id);
+				echo json_encode($data);
+			}
+			else
+			{
+				show_404;
+			}
+		}
+		public function recibirDatosCotizacion()
+		{
+			$data = array(
+				$id_proyecto = "",
+				$id_personal = "",
+				$folio
+			);
 		}
 	}
 ?>

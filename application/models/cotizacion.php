@@ -518,16 +518,18 @@
 		}
 		public function obtenerDescripcionesTipoProyecto($tipo)
 		{
-			return $this->db->query("SELECT tipo_proyecto.nombre AS tipo, 
+			$resultado = $this->db->query("SELECT tipo_proyecto.nombre AS tipo, 
 										concepto.nombre AS concepto, 
 										detalles, costo, id_descripcion, 
-										concepto.id_concepto AS id_concepto 
+										concepto.id_concepto AS id_concepto,
+										concepto.id_tipo AS id_tipo 
 										FROM tipo_proyecto 
 										JOIN concepto 
 										ON tipo_proyecto.id_tipo=concepto.id_tipo 
 										JOIN descripcion 
 										ON concepto.id_concepto=descripcion.id_concepto
 										WHERE concepto.id_tipo = " . $tipo . " ORDER BY concepto");
+			return $resultado->result();
 
 		}
 	}
