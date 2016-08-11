@@ -9,7 +9,7 @@
 			  <li class="active">Cotización</li>
 			</ol>
 			<hr>
-			<?= form_open('/cotizaciones/recibirDatosCotizacion') ?>
+			<?= form_open('/cotizaciones/recibirDatosCotizacion/') ?>
 			<?php
 				$style = 'class="form-control"';
 				//Select
@@ -52,6 +52,11 @@
 					'placeholder' => '0',
 					'id' => 'importe0'
 				);
+				$comentario = array(
+					'name' => 'comentario',
+					'class' => 'form-control',
+					'rows' => '5'
+				);
 				//Botón
 				$guardar = array(
 					'class' => 'btn btn-primary',
@@ -85,7 +90,8 @@
 						echo "<p>Santiago de Querétaro, Qro., a ".$fecha."</p>";
 					?>
 					<?php  ?>
-					<?= form_label('COTIZACIÓN: ') ?> 
+					<?= form_label('COTIZACIÓN: ') ?>
+					<span name="folio" id="folio"></span>
 				</div>
 				<div class="form-group">
 					<?= form_label('Elaborada por', 'personal') ?>
@@ -99,6 +105,7 @@
 				<div id="descripcion" style="display:none">
 					<h3>Descripción del proyecto</h3>
 					<div class="form-group" id="divdescrip" >
+						<input type="text" name="cantidades" id="cantidades" style="" value=""><span onclick="calcularCantidades()">Cantidades</span>
 						<table id="tabla-conceptos" class="table table-hover">
 							<tr>
 								<th></th>
@@ -215,6 +222,10 @@
 					</div>
 				</div>
 				<hr>
+				<h3>Comentarios</h3>
+				<div class="form-group">
+					<?= form_textarea($comentario) ?>
+				</div>
 				<?= form_submit($guardar) ?>
 				<a href="<?= base_url('cotizaciones/listaCotizaciones') ?>" class="btn btn-default">Cancelar</a>
 			<?= form_close() ?>
@@ -317,13 +328,16 @@
 			dataType: "JSON",
 			success: function(data){
 				var registro = eval(data);
-				html = "<div class='row'><div class='col-lg-12'><p><label>Nombre del Proyecto:</label> "+registro[0]["nombre"]+"</p></div></div>";
+				html = "<div class='row'><div class='col-lg-12'><p><label>Nombre del Proyecto:</label> "+registro[0]["nombre"]+"</p><input type='text' style='display:none' name='id_proyecto' value='"+id+"'></div></div>";
 				html += "<div class='row'><div class='col-lg-6'><p><label>Cliente:</label> "+registro[0]["cliente"]+" ("+registro[0]["puesto"]+")</p></div>";
 				html += "<div class='col-lg-6'><p><label>Empresa:</label> "+registro[0]["empresa"]+"</p></div></div>";
 				$("#divproyecto").html(html);
 				$("#descripcion").css("display", "block");
 				var tipo = registro[0]["tipo"];
 				descripcionesAjax(tipo);
+				var emp = registro[0]["empresa"];
+				var fol = emp.split("",2);
+				$("#descripcion").val(fol);
 			},
 			error: function(jqXHR, textStatus, errorThrown)
 			{
@@ -363,6 +377,7 @@
 				$("#iva").text(iva);
 				$("#total").text(total);
 				$("#elementos").css("display", "block");
+				
 			},
 			error: function(jqXHR, textStatus, errorThrown)
 			{
@@ -454,6 +469,7 @@
 		html = "<tr id='row"+num_concep+"'><td><a class='i-borrar' id='a"+num_concep+"' href='#' onclick='eliminarConcepto("+num_concep+")'><i class='fa fa-times'></i></a></td><td class='col-cantidad'><input type='text' name='cantidad"+num_concep+"' class='form-control input-recal' value='1' id='cantidad"+num_concep+"'></td><td class='col-concepto'><div class='input-group'><input type='text' name='concepto"+num_concep+"' class='form-control'	placeholder='---' id='concepto"+num_concep+"' disabled='disabled'><div id='addon"+num_concep+"' onClick='identificarConcepto("+num_concep+")' class='input-group-addon'><i class='fa fa-search' aria-hidden='true'></i></div></div></td><td class='col-descripcion'><span name='descripcion"+num_concep+"' id='descripcion"+num_concep+"'></span></td><td class='col-horas'><div class='input-group'><input type='text' name='horas"+num_concep+"' class='form-control input-recal' value='1' id='horas"+num_concep+"'><div class='input-group-addon'> x $<span name='costo' id='costo"+num_concep+"'>0.00</span></div></div></td><td class='col-importe'><div class='input-group'><span id='importe"+num_concep+"' name='importe"+num_concep+"'>0.00</span></div></td></tr>";
 		$("#tabla-conceptos tr:last").after(html);
 		num_concep++;
+
 	}
 	function descripcionesAjax(tipo)
 	{
@@ -494,5 +510,15 @@
 				 alert('Error get data from ajax ´- descripcionesAjax');
 			}
 		});
+	}
+	function calcularCantidades()
+	{
+		var cants = "";
+		for(var i=0; i<num_concep; i++)
+		{
+			alert ($("#cantidad" + i).text());
+			cants += $("#cantidad" + i).val + ",";
+		}
+		$("#cantidades").text(cants);
 	}
 </script>

@@ -62,6 +62,7 @@
 			$tiempo_entrega = $this->cotizacion->obtenerElemento(4);
 			$reque = $this->cotizacion->obtenerElemento(5);
 			$descrip = $this->concepto->obtenerConceptos();
+			$num_cotizacion = $this->cotizacion->ultimoId();
 
 			$data = array(
 				'consulta' => $resultado,
@@ -71,7 +72,8 @@
 				'entregables' => $entreg,
 				'forma_pago' => $for_pago,
 				'tiempo_entrega' => $tiempo_entrega,
-				'requerimientos' => $reque
+				'requerimientos' => $reque,
+				'num_cotizacion' => $num_cotizacion
 			);
 
 			$this->load->view("cotizaciones/cotizacion_nueva", $data);
@@ -207,10 +209,19 @@
 		public function recibirDatosCotizacion()
 		{
 			$data = array(
-				$id_proyecto = "",
-				$id_personal = "",
-				$folio
+				'id_proyecto' => $this->input->post('id_proyecto'),
+				'id_personal' => $this->input->post('personal'),
+				//'folio' => $this->input->post(''),
+				'f_generacion' => date('Y-m-d'),
+				/*'cantidades' => $this->input->post(''),
+				'descripciones' => $this->input->post(''),
+				'horas' => $this->input->post(''),
+				'total' => $this->input->post(''),*/
+				'comentario' => $this->input->post('comentario')
 			);
+			$id_insertado = $this->cotizacion->nuevaCotizacionTemp($data);
+
+			//redirect('cotizaciones/editarCotizacionTemp/'.$id_insertado);
 		}
 	}
 ?>

@@ -532,5 +532,16 @@
 			return $resultado->result();
 
 		}
+		public function ultimoId()
+		{
+			return $this->db->query("SELECT MAX(id_cotizacion)+1 AS id FROM cotizacion");
+		}
+		public function nuevaCotizacionTemp($data)
+		{
+			//$this->db->insert('cotizacion_temp',array('id_proyecto' => $data[''],'id_personal' => $data[''],'folio' => $data[''],'f_generacion' => $data[''],'cantidades' => $data[''],'descripciones' => $data[''],'horas' => $data[''],'total' => $data[''],'comentario' => $data['']));
+			//$id_insertado = $this->db->insert_id();
+			echo "id_proyecto=".$data['id_proyecto']." id_personal=".$data['id_personal']/*." folio=".$data['folio']*/." f_generacion=".$data['f_generacion']/*." cantidades=".$data['cantidades']." descripciones=".$data['descripciones']." horas=".$data['horas']." total=".$data['total']*/." comentario=".$data['comentario'];
+			//return $id_insertado;
+		}
 	}
 ?>
