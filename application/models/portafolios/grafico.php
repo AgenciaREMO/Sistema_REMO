@@ -79,6 +79,12 @@ class Grafico extends CI_Model
 	}
 
 
+
+
+
+
+
+
 	public function eliminarContenido($data){
 		$this->db->query("DELETE portafolio_imagen
 		FROM portafolio_imagen
@@ -88,7 +94,7 @@ class Grafico extends CI_Model
 		ON imagen.id_tipo_img = tipo_imagen.id_tipo_img
 		WHERE tipo_imagen.id_tipo_img = 4 AND portafolio_imagen.id_portafolio = ".$data['id_portafolio']."");
 		$this->db->get();		
-		
+		echo "elimino contenido";
 		/*$this->db->join("imagen", "portafolio_imagen.id_img = imagen.id_img");
 		$this->db->join("tipo_imagen", "imagen.id_tipo_img = tipo_imagen.id_tipo_img");
 		$this->db->where("tipo_imagen.id_tipo_img", 4);
@@ -102,11 +108,10 @@ class Grafico extends CI_Model
 			if(!empty($id_img['id_img'][$i])){
 				$sql = " INSERT INTO portafolio_imagen (id_por_ima, id_portafolio, id_img) 
 					     VALUES ('',".$data['id_portafolio'].",".$id_img['id_img'][$i].")";
+				echo $sql;
 				$this->db->query($sql);
-				echo '<br><br>';
-			}else{
 			}
-		  return $sql;
+		  
 		  echo "<br><br>";   
 		}
 	}
@@ -133,10 +138,19 @@ class Grafico extends CI_Model
 		if($query->num_rows()>0){
 			$this->eliminarContenido($data);
 			$this->insertarContenido($data, $id_img, $cont);
+			echo "eliminara";
 		}else{ 
 			$this->insertarContenido($data, $id_img, $cont);
+			echo "actualizara";
 		}
 	}
+
+
+
+
+
+
+
 
 	//Paginación experiencia
 	public function num_contenido(){

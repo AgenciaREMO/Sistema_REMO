@@ -89,12 +89,12 @@
 		{
 			//Si el formulario no se válida se muestran los errores
 	        $this->cargarContenido($id_portafolio);
-	        echo 'fail';
+	        echo 'fail cargar';
 		}else
 		{
 			//Si es válido se realiza la función de insertar
 		    $this->actualizarContenido($id_portafolio);
-		    echo 'successful';
+		    echo 'successful actualizar';
 		}
 	}
 
@@ -104,13 +104,12 @@
 		$data = array('id_portafolio' => $id_portafolio);
 		$id_img = array('id_img' => $this->input->post('grafico'));
 		$cont = array('id_img' => implode(", ", $this->input->post('grafico')));
-		print_r($id_img);
-		print_r($cont);
-		print_r($data);
-		$sql = $this->grafico->actualizarContenido($data, $id_img, $cont);
+		print_r($id_img);echo '<br><br>';
+		print_r($cont);echo '<br><br>';
+		print_r($data);echo '<br><br>';
+	    $this->grafico->actualizarContenido($data, $id_img, $cont);
 		//redirect('/portafolios/c_contenido/cargarContenido'.'/'.$id_portafolio); 
-		echo "successful";
-		echo $sql;
+		
 	}
 
  	

@@ -90,11 +90,13 @@ public function consultarServicio($id)
 			if(!empty($tipo['id_tipo'][$i])){
 				$sql = " INSERT INTO portafolio_tipo (id_por_tip, id_tipo, id_portafolio, desc_ser) 
 					     VALUES ('',".$tipo['id_tipo'][$i].",".$data['id_portafolio'].",'".$descripcion['descripcion'][$i]."')";
-				$this->db->query($sql);
+				echo $sql;
 				echo '<br><br>';
+				$this->db->query($sql);
+				
 			}else{
 			}
-		  echo $sql;
+		  
 		  echo "<br><br>";   
 		}
 	}

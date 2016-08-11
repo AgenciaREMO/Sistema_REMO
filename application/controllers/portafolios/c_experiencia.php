@@ -43,8 +43,13 @@ class C_experiencia extends MY_Controller
 		$this->pagination->initialize($config);
 
 		$obtenerExperiencia= $this->experiencia->obtenerExperiencia($id);
-
-		$disponibleExperiencia = $this->experiencia->obtener_pagina($config['per_page']);
+		$disponibleExperiencia = $this->experiencia->obtener_pagina($config['per_page'], $id);
+		$paginationExperiencia = $this->pagination->create_links();
+		$dataExperiencia = array('id_portafolio' => $id_portafolio,
+								 'disponibleExperiencia' => $disponibleExperiencia,
+								 'paginationExperiencia' => $paginationExperiencia,
+								 'obtenerExperiencia' => $obtenerExperiencia);
+		/*
 
 		if($obtenerExperiencia != FALSE){
 			foreach ($obtenerExperiencia->result() as $row) {$checkExperiencia = $row->id_img;}
@@ -56,7 +61,7 @@ class C_experiencia extends MY_Controller
 		}else{
 			$id_portafolio = $id_portafolio;
 			return FALSE;
-		}
+		}*/
 		$this->load->view("portafolios/seccion_experiencia", $dataExperiencia);
 		$this->load->view("portafolios/form_general", $id);
 		$this->load->view("footer", $id);

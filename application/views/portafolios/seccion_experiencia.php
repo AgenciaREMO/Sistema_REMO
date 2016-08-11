@@ -4,7 +4,6 @@
       <h4 class="page-header">Experiencia</h4>
     </div>
   </div>
-  <form action"#" method="#" name="form_experiencia">
     <div class="row">
         <div class="col-md-12 col-sm-6">
             <h5>Selecciona las imagenes que se incluirán como experiencia en el portafolio</h5>
@@ -12,30 +11,66 @@
     </div>
     <?=@$error?>
     <?php validation_errors('<div class="alert alert-danger" role="alert">','</div>'); ?>
-    <?= form_open();?>
+    <?= form_open('portafolios/c_experiencia/actualizarExperiencia'.'/'.$id_portafolio);?>
     <div class="row">
         <?php 
-            foreach ($disponibleExperiencia->result() as $fila)
-            { 
-				if($checkExperiencia == $fila->id_img){
-                    $checkImg = array('name'=>'id_img','id'=>'id_img','value'=>''.$fila->id_img.'','type'=>'checkbox','disabled'=>'disabled','checked'=>TRUE);
+
+
+            foreach ($disponibleExperiencia->result() as $fila){ 
+
+              foreach ($obtenerExperiencia->result() as $row){
+                $id_porta = $row->$id_porta;
+                $id_imgP = $row->$id_imgP;
+                $id_imgI = $row->$id_imgI;
+                $id_tipo_imgI = $row->$id_tipo_imgI;
+                $nom_img = $row->$nom_img;
+                $url_img = $row->$url_img;
+                $url_thu = $row->$url_thu;
+                $id_tipo_imgT = $row->$id_tipo_imgT;
+                $nom_tipo = $row->$nom_tipo;
+
+                  if($id_porta == '' OR $id_porta == NULL OR $id_porta != $id_portafolio){
+                  # code...
+                  ?>
+                  <div class="col-lg-2 col-xs-6 col-sm-4 col-md-3 img-rounded text-center">
+                    <div class="checkbox">
+                      <?= form_checkbox("experiencia[]", ''.$id_imgI.'', set_checkbox("experiencia[]", ''.$id_imgI.'', FALSE)); ?>
+                    </div>
+                    <img class="img-responsive img-hover img-thumbnail" src="<?= base_url($url_img)?>" alt="<?= $nom_img ?>" title="<?= $nom_img ?>">
+                  </div>
+                  <?php
                 }else{
-                    $checkImg = array('name'=>'id_img','id'=>'id_img','value'=>''.$fila->id_img.'','type'=>'checkbox','disabled'=>'disabled','checked'=>FALSE);
+                  # code...
+                  if ($id_porta == $id_portafolio) {
+                    # code...
+                    ?>
+                    <div class="col-lg-2 col-xs-6 col-sm-4 col-md-3 img-rounded text-center">
+                      <div class="checkbox">
+                        <?= form_checkbox("experiencia[]", ''.$id_imgP.'', set_checkbox("experiencia[]", ''.$id_imgP.'', FALSE)); ?>
+                      </div>
+                      <img class="img-responsive img-hover img-thumbnail" src="<?= base_url($url_img)?>" alt="<?= $nom_img ?>" title="<?= $nom_img ?>">
+                    </div>
+                    <?php
+                  }else{
+                    # code...
+                    ?>
+                    <div class="col-lg-2 col-xs-6 col-sm-4 col-md-3 img-rounded text-center">
+                      <div class="checkbox">
+                        <?= form_checkbox("experiencia[]", ''.$id_imgI.'', set_checkbox("experiencia[]", ''.$id_imgI.'', FALSE)); ?>
+                      </div>
+                      <img class="img-responsive img-hover img-thumbnail" src="<?= base_url($url_img)?>" alt="<?= $nom_img ?>" title="<?= $nom_img ?>">
+                    </div>
+                    <?php
+                  }
                 }
-				//botones
-                $editar   = array('onClick'=>'activarPor()','style'=>'display:inline','class'=>'btn btn-primary','id'=>'p-editar','content'=>'Editar');
-                $cancelar = array('onClick'=>'desactivarPor()','style'=>'display:none','class'=>'btn btn-default','id'=>'p-cancelar','content'=>'Cancelar');
-                $guardar  = array('style'=>'display:none','class'=>'btn btn-primary','id'=>'p-guardar','value'=>'Guardar');
-                $cargar   = array('style'=>'display:inline','class'=>'btn btn-primary','id'=>'ex-nueva-s','content'=>'<span class="glyphicon glyphicon-plus"></span> Logo','data-toggle'=>'modal','data-target'=>'#cargarExperiencia');
-                $cargar2  = array('style'=>'display:none','class'=>'btn btn-primary','id'=>'ex-nueva-n','content'=>'<span class="glyphicon glyphicon-plus"></span> Logo','data-toggle'=>'modal','data-target'=>'#cargarExperiencia');
-        ?>  
-        <?= form_error('id_img'); ?>
-        <div class="col-lg-2 col-xs-6 col-sm-4 col-md-3 img-rounded text-center">
-            <?= form_checkbox($checkImg);?> 
-            <img class="img-responsive img-hover img-thumbnail" src="<?= base_url($fila->url_img)?>" alt="<?= $fila->nom_img ?>" title="<?= $fila->nom_img ?>">
-        </div>
-        <?php
+              }
+              $count++; 
             }
+
+
+
+
+
         ?>  
     </div> 
     <div class="row">

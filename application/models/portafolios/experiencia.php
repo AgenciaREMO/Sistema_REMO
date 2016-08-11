@@ -12,7 +12,7 @@
 class Experiencia extends CI_Model
 {	
 	//Función que permite consultar si existe un registro en la tabla portafolios-imagen para evaluar
-	public function obtenerExperiencia($id){
+	public function obtenerExperiencias($id){
 		/*
 		//Select * 
 		From portafolio_imagen
@@ -74,9 +74,28 @@ class Experiencia extends CI_Model
 	      	print_r($query);
 	      	echo 'Insertar';    	
       	}
-
+      	$this->db->query("SELECT pi.id_por_ima as id_por_ima, 
+			                     pi.id_portafolio as id_porta, 
+			                     pi.id_img as id_imgP, 
+			                     i.id_img as id_imgI, 
+			                     i.nom_img as nom_img, 
+			                     i.url_img as url_img, 
+			                     i.id_tipo_img as id_tipo_imgI, 
+			                     ti.id_tipo_img as id_tipo_imgT, 
+			                     ti.nom_tipo as nom_tipo 
+			               FROM portafolio_imagen pi 
+			               RIGHT JOIN imagen i 
+			               ON pi.id_img = i.id_img 
+			               AND pi.id_portafolio = ".$id['id_portafolio']."
+			               RIGHT JOIN tipo_imagen ti 
+			               ON i.id_tipo_img = ti.id_tipo_img");
+		$query = $this->db->get();
+		return $query;
 	}
 
+	public function obtenerExperiencia($id){
+
+	}
 	//Paginación experiencia
 	public function num_experiencia(){
 		//SELECT count(*) as number FROM imagen INNER JOIN tipo_imagen ON imagen.id_tipo_img = tipo_imagen.id_tipo_img WHERE imagen.id_tipo_img = 1
