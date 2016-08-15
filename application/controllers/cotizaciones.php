@@ -213,8 +213,8 @@
 				'id_personal' => $this->input->post('personal'),
 				//'folio' => $this->input->post(''),
 				'f_generacion' => date('Y-m-d'),
-				/*'cantidades' => $this->input->post(''),
-				'descripciones' => $this->input->post(''),
+				'cantidades' => $this->input->post('cantidades'),
+				/*'descripciones' => $this->input->post(''),
 				'horas' => $this->input->post(''),
 				'total' => $this->input->post(''),*/
 				'comentario' => $this->input->post('comentario')

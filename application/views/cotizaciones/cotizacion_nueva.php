@@ -60,7 +60,8 @@
 				//Botón
 				$guardar = array(
 					'class' => 'btn btn-primary',
-					'value' => 'Guardar'
+					'value' => 'Guardar',
+					'id' => 'guardar'
 				);
 			?>
 				<h3>Información General</h3>
@@ -105,7 +106,7 @@
 				<div id="descripcion" style="display:none">
 					<h3>Descripción del proyecto</h3>
 					<div class="form-group" id="divdescrip" >
-						<input type="text" name="cantidades" id="cantidades" style="" value=""><span onclick="calcularCantidades()">Cantidades</span>
+						<input type="text" name="cantidades" id="cantidades" style="display:none" value=""><span onclick="calcularCantidades()">Cantidades</span>
 						<table id="tabla-conceptos" class="table table-hover">
 							<tr>
 								<th></th>
@@ -304,6 +305,20 @@
     		$('#seleccionarDescrip').attr("onClick", "cargarDescrip('"+id+"','"+num_input+"')");
     		alert("Hiciste click en un renglon");
     	});*/
+		$("#guardar").click(function(){
+			var cants = "";
+			alert("Entro");
+			for(var i=0; i<num_concep; i++)
+			{
+				cants += $("#cantidad" + i).val();
+				if ((i+1)<num_concep) {
+					cants += ",";
+				};
+				
+			}
+			$("#cantidades").val(cants);
+			alert("Paso por el for");
+		});
     	$("body").on("keyup", "input[name*='cantidad']", function() {
     		var txt = $(this).attr("id");
 			var id_input = txt.replace(/\D/g,'');
@@ -511,14 +526,5 @@
 			}
 		});
 	}
-	function calcularCantidades()
-	{
-		var cants = "";
-		for(var i=0; i<num_concep; i++)
-		{
-			alert ($("#cantidad" + i).text());
-			cants += $("#cantidad" + i).val + ",";
-		}
-		$("#cantidades").text(cants);
-	}
+
 </script>
