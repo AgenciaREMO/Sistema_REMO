@@ -12,7 +12,7 @@
 class Experiencia extends CI_Model
 {	
 	//Función que permite consultar si existe un registro en la tabla portafolios-imagen para evaluar
-	public function obtenerExperiencias($id){
+	public function obtenerExperiencia($id){
 		/*
 		//Select * 
 		From portafolio_imagen
@@ -74,7 +74,7 @@ class Experiencia extends CI_Model
 	      	print_r($query);
 	      	echo 'Insertar';    	
       	}
-      	$this->db->query("SELECT pi.id_por_ima as id_por_ima, 
+      /*	$this->db->query("SELECT pi.id_por_ima as id_por_ima, 
 			                     pi.id_portafolio as id_porta, 
 			                     pi.id_img as id_imgP, 
 			                     i.id_img as id_imgI, 
@@ -89,13 +89,28 @@ class Experiencia extends CI_Model
 			               AND pi.id_portafolio = ".$id['id_portafolio']."
 			               RIGHT JOIN tipo_imagen ti 
 			               ON i.id_tipo_img = ti.id_tipo_img");
-		$query = $this->db->get();
+		$query = $this->db->get(); */
 		return $query;
 	}
 
-	public function obtenerExperiencia($id){
+	public function full($id)
+	{
+		# code...
 
+		$query = $this->db->query("SELECT * FROM portafolio_imagen 
+			              RIGHT JOIN imagen ON portafolio_imagen.id_img = imagen.id_img AND portafolio_imagen.id_portafolio = 16
+			              RIGHT JOIN tipo_imagen ON imagen.id_tipo_img = tipo_imagen.id_tipo_img
+			              WHERE imagen.id_tipo_img = 3");
+		/*$this->db->select("*");
+		$this->db->from("portafolio_imagen");
+		$this->db->join("imagen", "imagen.id_img = portafolio_imagen.id_img");
+		$this->db->join("tipo_imagen", "imagen.id_tipo_img = tipo_imagen.id_tipo_img");
+		$this->db->where("imagen.id_img", 3);
+		$this->db->where("portafolio_imagen.id_portafolio", $id['id_portafolio']);*/
+		echo $query;
+		return $query;
 	}
+
 	//Paginación experiencia
 	public function num_experiencia(){
 		//SELECT count(*) as number FROM imagen INNER JOIN tipo_imagen ON imagen.id_tipo_img = tipo_imagen.id_tipo_img WHERE imagen.id_tipo_img = 1
@@ -103,10 +118,16 @@ class Experiencia extends CI_Model
 		return intval($numero);
 	}
 
-	public function obtener_pagina($numero_por_pagina){ //$numero_por_pagina viene del controlador
+	public function obtener_pagina($numero_por_pagina, $id){ //$numero_por_pagina viene del controlador
 		//$this->db->get();
-		$this->db->where('id_tipo_img', 3);
+		$uri = $this->uri->segment(5);
+		$sql = "SELECT * FROM portafolio_imagen 
+			              RIGHT JOIN imagen ON portafolio_imagen.id_img = imagen.id_img AND portafolio_imagen.id_portafolio = 16
+			              RIGHT JOIN tipo_imagen ON imagen.id_tipo_img = tipo_imagen.id_tipo_img
+			              WHERE imagen.id_tipo_img = 3 ";
+		/*$this->db->where('id_tipo_img', 3);*/
 		$query = $this->db->get("imagen", $numero_por_pagina, $this->uri->segment(5));
+		$query = $this->db->get();
 		return $query;
 	}
 

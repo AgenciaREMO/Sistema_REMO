@@ -93,7 +93,7 @@ class Grafico extends CI_Model
 		INNER JOIN tipo_imagen
 		ON imagen.id_tipo_img = tipo_imagen.id_tipo_img
 		WHERE tipo_imagen.id_tipo_img = 4 AND portafolio_imagen.id_portafolio = ".$data['id_portafolio']."");
-		$this->db->get();		
+		/*$this->db->get();	*/	
 		echo "elimino contenido";
 		/*$this->db->join("imagen", "portafolio_imagen.id_img = imagen.id_img");
 		$this->db->join("tipo_imagen", "imagen.id_tipo_img = tipo_imagen.id_tipo_img");

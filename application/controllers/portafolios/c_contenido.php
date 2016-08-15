@@ -108,7 +108,7 @@
 		print_r($cont);echo '<br><br>';
 		print_r($data);echo '<br><br>';
 	    $this->grafico->actualizarContenido($data, $id_img, $cont);
-		//redirect('/portafolios/c_contenido/cargarContenido'.'/'.$id_portafolio); 
+		redirect('/portafolios/c_contenido/cargarContenido'.'/'.$id_portafolio); 
 		
 	}
 

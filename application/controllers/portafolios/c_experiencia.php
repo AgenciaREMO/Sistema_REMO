@@ -41,14 +41,15 @@ class C_experiencia extends MY_Controller
 		$config['num_tag_close'] = '</li>';
 
 		$this->pagination->initialize($config);
-
-		$obtenerExperiencia= $this->experiencia->obtenerExperiencia($id);
-		$disponibleExperiencia = $this->experiencia->obtener_pagina($config['per_page'], $id);
-		$paginationExperiencia = $this->pagination->create_links();
+		$full = $this->experiencia->full($id);
+		//$obtenerExperiencia= $this->experiencia->obtenerExperiencia($config['per_page'],$id);
+		//$disponibleExperiencia = $this->experiencia->obtener_pagina($config['per_page'], $id);
+		//$paginationExperiencia = $this->pagination->create_links();
 		$dataExperiencia = array('id_portafolio' => $id_portafolio,
-								 'disponibleExperiencia' => $disponibleExperiencia,
+								 'full' => $full
+								 /*'disponibleExperiencia' => $disponibleExperiencia,
 								 'paginationExperiencia' => $paginationExperiencia,
-								 'obtenerExperiencia' => $obtenerExperiencia);
+								 'obtenerExperiencia' => $obtenerExperiencia*/);
 		/*
 
 		if($obtenerExperiencia != FALSE){

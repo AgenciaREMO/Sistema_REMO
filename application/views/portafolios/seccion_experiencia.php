@@ -15,60 +15,13 @@
     <div class="row">
         <?php 
 
+        foreach ($full->result() as $fila){ 
+          $r1 = $fila->url_img;
+          echo $r1 + "<br><br>";
+        }
 
-            foreach ($disponibleExperiencia->result() as $fila){ 
-
-              foreach ($obtenerExperiencia->result() as $row){
-                $id_porta = $row->$id_porta;
-                $id_imgP = $row->$id_imgP;
-                $id_imgI = $row->$id_imgI;
-                $id_tipo_imgI = $row->$id_tipo_imgI;
-                $nom_img = $row->$nom_img;
-                $url_img = $row->$url_img;
-                $url_thu = $row->$url_thu;
-                $id_tipo_imgT = $row->$id_tipo_imgT;
-                $nom_tipo = $row->$nom_tipo;
-
-                  if($id_porta == '' OR $id_porta == NULL OR $id_porta != $id_portafolio){
-                  # code...
-                  ?>
-                  <div class="col-lg-2 col-xs-6 col-sm-4 col-md-3 img-rounded text-center">
-                    <div class="checkbox">
-                      <?= form_checkbox("experiencia[]", ''.$id_imgI.'', set_checkbox("experiencia[]", ''.$id_imgI.'', FALSE)); ?>
-                    </div>
-                    <img class="img-responsive img-hover img-thumbnail" src="<?= base_url($url_img)?>" alt="<?= $nom_img ?>" title="<?= $nom_img ?>">
-                  </div>
-                  <?php
-                }else{
-                  # code...
-                  if ($id_porta == $id_portafolio) {
-                    # code...
-                    ?>
-                    <div class="col-lg-2 col-xs-6 col-sm-4 col-md-3 img-rounded text-center">
-                      <div class="checkbox">
-                        <?= form_checkbox("experiencia[]", ''.$id_imgP.'', set_checkbox("experiencia[]", ''.$id_imgP.'', FALSE)); ?>
-                      </div>
-                      <img class="img-responsive img-hover img-thumbnail" src="<?= base_url($url_img)?>" alt="<?= $nom_img ?>" title="<?= $nom_img ?>">
-                    </div>
-                    <?php
-                  }else{
-                    # code...
-                    ?>
-                    <div class="col-lg-2 col-xs-6 col-sm-4 col-md-3 img-rounded text-center">
-                      <div class="checkbox">
-                        <?= form_checkbox("experiencia[]", ''.$id_imgI.'', set_checkbox("experiencia[]", ''.$id_imgI.'', FALSE)); ?>
-                      </div>
-                      <img class="img-responsive img-hover img-thumbnail" src="<?= base_url($url_img)?>" alt="<?= $nom_img ?>" title="<?= $nom_img ?>">
-                    </div>
-                    <?php
-                  }
-                }
-              }
-              $count++; 
-            }
-
-
-
+                
+print_r($full);
 
 
         ?>  
