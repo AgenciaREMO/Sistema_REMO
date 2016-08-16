@@ -78,13 +78,7 @@ class Grafico extends CI_Model
 
 	}
 
-
-
-
-
-
-
-
+	//Función que permite eliminar el registro de un grafico relacionado con determinado portafolio
 	public function eliminarContenido($data){
 		$this->db->query("DELETE portafolio_imagen
 		FROM portafolio_imagen
@@ -93,26 +87,17 @@ class Grafico extends CI_Model
 		INNER JOIN tipo_imagen
 		ON imagen.id_tipo_img = tipo_imagen.id_tipo_img
 		WHERE tipo_imagen.id_tipo_img = 4 AND portafolio_imagen.id_portafolio = ".$data['id_portafolio']."");
-		/*$this->db->get();	*/	
-		echo "elimino contenido";
-		/*$this->db->join("imagen", "portafolio_imagen.id_img = imagen.id_img");
-		$this->db->join("tipo_imagen", "imagen.id_tipo_img = tipo_imagen.id_tipo_img");
-		$this->db->where("tipo_imagen.id_tipo_img", 4);
-		$this->db->where('portafolio_imagen.id_portafolio', $data['id_portafolio']); 
-   		$this->db->delete('portafolio_imagen');*/
 	}
-
+	//Función que permite insertar el registro de un grafico relacionado con determinado portafolio
 	public function insertarContenido($data, $id_img, $cont){
 		$arrayCont = explode (", " , $cont['id_img']);
 		for($i=0; $i <= count($arrayCont) ;$i++) {
 			if(!empty($id_img['id_img'][$i])){
 				$sql = " INSERT INTO portafolio_imagen (id_por_ima, id_portafolio, id_img) 
 					     VALUES ('',".$data['id_portafolio'].",".$id_img['id_img'][$i].")";
-				echo $sql;
 				$this->db->query($sql);
-			}
-		  
-		  echo "<br><br>";   
+				//echo $sql;
+			}   
 		}
 	}
 
@@ -145,21 +130,39 @@ class Grafico extends CI_Model
 		}
 	}
 
+	//Función que permite desplegar todas las imagenes de graficos además de las que se encuentran relacionadas con un portafolio.
+	public function obtener_pagina($num, $uri, $id)
+	{
+		$query = $this->db->query("SELECT pi.id_por_ima as id_por_ima, 
+			                     pi.id_portafolio as id_porta, 
+			                     pi.id_img as id_imgP, 
+			                     i.id_img as id_imgI, 
+			                     i.nom_img as nom_img, 
+			                     i.url_img as url_img, 
+			                     i.url_thu as url_thu, 
+			                     i.id_tipo_img as id_tipo_imgI, 
+			                     ti.id_tipo_img as id_tipo_imgT, 
+			                     ti.nom_tipo as nom_tipo 
+			                     FROM portafolio_imagen as pi
+					             RIGHT JOIN imagen as i ON pi.id_img = i.id_img AND pi.id_portafolio = ".$id['id_portafolio']."
+					             RIGHT JOIN tipo_imagen as ti ON i.id_tipo_img = ti.id_tipo_img
+					             WHERE i.id_tipo_img = 4 ");
+		                         /*WHERE i.id_tipo_img = 3 LIMIT ".$num.",".$uri."");*/
+		return $query;
+	}
 
-
-
-
-
-
-
-	//Paginación experiencia
+	//Paginación contenido
 	public function num_contenido(){
 		//SELECT count(*) as number FROM imagen INNER JOIN tipo_imagen ON imagen.id_tipo_img = tipo_imagen.id_tipo_img WHERE imagen.id_tipo_img = 1
-		$numero = $this->db->query("SELECT count(*) as number FROM imagen INNER JOIN tipo_imagen ON imagen.id_tipo_img = tipo_imagen.id_tipo_img WHERE imagen.id_tipo_img = 4")->row()->number; //Regresa el número total de filas de una tabla
+		$numero = $this->db->query("SELECT count(*) as number 
+		                            FROM imagen 
+		                            INNER JOIN tipo_imagen 
+		                            ON imagen.id_tipo_img = tipo_imagen.id_tipo_img 
+		                            WHERE imagen.id_tipo_img = 4")->row()->number; //Regresa el número total de filas de una tabla
 		return intval($numero);
 	}
 
-	public function obtener_pagina($numero_por_pagina, $id){ //$numero_por_pagina viene del controlador
+	/*public function obtener_pagina($numero_por_pagina, $id){ //$numero_por_pagina viene del controlador
 		//$this->db->get();
 		/*SELECT * FROM portafolio_imagen RIGHT JOIN imagen ON portafolio_imagen.id_img = imagen.id_img AND portafolio_imagen.id_portafolio = 14 RIGHT JOIN tipo_imagen ON imagen.id_tipo_img = tipo_imagen.id_tipo_img WHERE imagen.id_tipo_img = 4*/
 		/*$uri = $this->uri->segment(5);
@@ -205,11 +208,12 @@ class Grafico extends CI_Model
 		$this->db->from('portafolio_imagen');
 		$this->db->join('imagen', 'portafolio_imagen.id_img = imagen.id_img', 'RIGHT');
 		$this->db->join('imagen', 'portafolio_imagen.id_portafolio ='.$id['id_portafolio'].'', 'RIGHT');
-		$this->db->join('tipo_imagen', 'imagen.id_tipo_img = tipo_imagen.id_tipo_img');*/
+		$this->db->join('tipo_imagen', 'imagen.id_tipo_img = tipo_imagen.id_tipo_img');
 		$this->db->where('id_tipo_img', 4);
 		$query = $this->db->get("imagen", $numero_por_pagina, $this->uri->segment(5));
 		return $query;
 	}
+	*/
 
 
 }

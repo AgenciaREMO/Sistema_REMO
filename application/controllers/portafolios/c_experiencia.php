@@ -41,36 +41,15 @@ class C_experiencia extends MY_Controller
 		$config['num_tag_close'] = '</li>';
 
 		$this->pagination->initialize($config);
-		$full = $this->experiencia->full($id);
-		//$obtenerExperiencia= $this->experiencia->obtenerExperiencia($config['per_page'],$id);
-		//$disponibleExperiencia = $this->experiencia->obtener_pagina($config['per_page'], $id);
-		//$paginationExperiencia = $this->pagination->create_links();
+		$obtener_pagina = $this->experiencia->obtener_pagina($config['per_page'], $config['uri_segment'], $id);
+		$paginationExperiencia = $this->pagination->create_links();
 		$dataExperiencia = array('id_portafolio' => $id_portafolio,
-								 'full' => $full
-								 /*'disponibleExperiencia' => $disponibleExperiencia,
-								 'paginationExperiencia' => $paginationExperiencia,
-								 'obtenerExperiencia' => $obtenerExperiencia*/);
-		/*
-
-		if($obtenerExperiencia != FALSE){
-			foreach ($obtenerExperiencia->result() as $row) {$checkExperiencia = $row->id_img;}
-			$paginationExperiencia = $this->pagination->create_links();
-			$dataExperiencia= array('id_portafolio' => $id_portafolio,
-								'disponibleExperiencia' => $disponibleExperiencia,
-								'paginationExperiencia' => $paginationExperiencia,
-								'checkExperiencia' => $checkExperiencia);
-		}else{
-			$id_portafolio = $id_portafolio;
-			return FALSE;
-		}*/
+								 'obtener_pagina' => $obtener_pagina,
+								 'paginationExperiencia' => $paginationExperiencia);
 		$this->load->view("portafolios/seccion_experiencia", $dataExperiencia);
 		$this->load->view("portafolios/form_general", $id);
 		$this->load->view("footer", $id);
 	}
-	//Función que se carga pór default al estar sobre el controlador de experiencia
-	public function index(){
-			$this->cargar();
-		}
 
 	//Función que válida un formulario para subir un nuevo gráfico para experiencia
 	public function validarExperiencia($id_portafolio){
@@ -113,7 +92,7 @@ class C_experiencia extends MY_Controller
 			$resultado = $this->imagen->obtenerTipoImg();
 			$error = $this->upload->display_errors();
 			$tipos = array('consulta' => $resultado,'error' => $error);
-			$this->load->view('/portafolios/c_experiencia/cargar'.'/'.$id_portafolio, $tipos); //Aqui se tendrá que modificar
+			$this->load->view('/portafolios/c_experiencia/cargarExperiencia'.'/'.$id_portafolio, $tipos); //Aqui se tendrá que modificar
 			$this->load->view("footer");
 		}else{
 			//En otro caso se sube la imagen y se crea la miniatura 
@@ -129,7 +108,7 @@ class C_experiencia extends MY_Controller
 			$url_thu = 'graficos/experiencia/thumbnail/'.$file_info['file_name'];
 			$subir = $this->imagen->subir($nombre, $tipo_img, $url_img, $url_thu);  
 			//$this->load->view('imagen_subida_view', $data);
-			redirect('/portafolios/c_experiencia/cargar'.'/'.$id_portafolio); 
+			redirect('/portafolios/c_experiencia/cargarExperiencia'.'/'.$id_portafolio); 
 		}
 	}
 	//Función para crear la miniatura a la medida especificada
@@ -156,24 +135,32 @@ class C_experiencia extends MY_Controller
 	    $this->image_lib->clear();
 	}
 
+
 	//Función que permite actualizar los registros existentes en relación con un portafolio, y en caso de no existir crea registros nuevos relacionados.
 	public function actualizarExperiencia($id_portafolio)     
     {   
-        //Validación check box
-		$this->form_validation->set_rules('id_img','experiencia','required');
-		$this->form_validation->set_message('required', 'Debes seleccionar una  %s , es obligatorio');
+    	//Reglas de validación
+    	$this->form_validation->set_rules(
+			'experiencia[]', 
+			'', 'required', array('¡Debes seleccionar al menos una opción!' )
+		);
+
 		if ($this->form_validation->run() == FALSE) 
 		{
-			$this->cargarExperiencia($id_portafolio);
-			echo 'fail';
-		}else{
-			$id_portafolio = $id_portafolio;
+			//Si el formulario no se válida se muestran los errores
+	        $this->cargarExperiencia($id_portafolio);
+	        echo 'fail cargar';
+		}else
+		{
+			//Si es válido se realiza la función de insertar
+		    $id_portafolio = $id_portafolio;
 			$data = array('id_portafolio' => $id_portafolio);
-			$tipo = array('id_tipo' => $this->input->post('experiencia'));
-			$cont = array('id_tipo' => implode(", ", $this->input->post('experiencia')));
-			$this->experiencia->actualizarExperiencia($data, $tipo, $cont);
-			redirect('/portafolios/c_portada/cargar'.'/'.$id_portafolio);
-		} 
+			$id_img = array('id_img' => $this->input->post('experiencia'));
+			$cont = array('id_img' => implode(", ", $this->input->post('experiencia')));
+		    $this->experiencia->actualizarExperiencia($data, $id_img, $cont);
+			redirect('/portafolios/c_experiencia/cargarExperiencia'.'/'.$id_portafolio);
+		    echo 'successful actualizar';
+		}
 	}      
 
 }

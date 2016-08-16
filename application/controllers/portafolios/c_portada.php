@@ -180,7 +180,8 @@
 			}else{
 				
 				$id_portafolio = $id_portafolio;
-				$port_img = array('id_portafolio' => $id_portafolio,'id_img' => implode(",",$this->input->post('id_img')));
+				$port_img = array('id_portafolio' => $id_portafolio,
+					              'id_img' => implode(",",$this->input->post('id_img')));
 				$this->portada->insertarPortada($port_img);
 				print_r($port_img);
 				redirect('/portafolios/c_portada/cargarPortada'.'/'.$id_portafolio); 
@@ -199,7 +200,8 @@
 				echo 'fail';
 			}else{
 				$id_portafolio = $id_portafolio;
-				$port_img = array('id_portafolio' => $id_portafolio,'id_img' => $this->input->post('id_img'));
+				$port_img = array('id_portafolio' => $id_portafolio,
+					              'id_img' => $this->input->post('id_img'));
 				$editarPortada = $this->portada->actualizarPortada($port_img);
 				redirect('/portafolios/c_portada/cargarPortada'.'/'.$id_portafolio); 
 			}         

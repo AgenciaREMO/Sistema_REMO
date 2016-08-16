@@ -14,16 +14,61 @@
     <?= form_open('portafolios/c_experiencia/actualizarExperiencia'.'/'.$id_portafolio);?>
     <div class="row">
         <?php 
+          $count= 0;
+          $editar   = array('onClick'=>'activarPor()','style'=>'display:inline','class'=>'btn btn-primary','id'=>'p-editar','content'=>'Editar');
+          $cancelar = array('onClick'=>'desactivarPor()','style'=>'display:none','class'=>'btn btn-default','id'=>'p-cancelar','content'=>'Cancelar');
+          $guardar  = array('style'=>'display:inline','class'=>'btn btn-primary','id'=>'p-guardar','value'=>'Guardar');
+          $cargar   = array('style'=>'display:inline','class'=>'btn btn-primary','id'=>'p-nueva-s','content'=>'<span class="glyphicon glyphicon-plus"></span> Experiencia','data-toggle'=>'modal','data-target'=>'#cargarExperiencia');
+          $cargar2  = array('style'=>'display:none','class'=>'btn btn-primary','id'=>'p-nueva-n','content'=>'<span class="glyphicon glyphicon-plus"></span> Experiencia','data-toggle'=>'modal','data-target'=>'#cargarExperiencia');
 
-        foreach ($full->result() as $fila){ 
-          $r1 = $fila->url_img;
-          echo $r1 + "<br><br>";
+        foreach ($obtener_pagina->result() as $fila){ 
+           $id_porta     = $fila->id_porta;
+           $id_imgP      = $fila->id_imgP;
+           $id_imgI      = $fila->id_imgI;
+           $id_tipo_imgI = $fila->id_tipo_imgI;
+           $nom_img      = $fila->nom_img;
+           $url_img      = $fila->url_img;
+           $url_thu      = $fila->url_thu;
+           $id_tipo_imgT = $fila->id_tipo_imgT;
+           $nom_tipo     = $fila->nom_tipo;
+
+          if($id_porta == '' OR $id_porta == NULL OR $id_porta != $id_portafolio){
+                  ?>
+                  <div class="col-lg-2 col-xs-6 col-sm-4 col-md-3 img-rounded text-center">
+                    <div class="checkbox">
+                      <?= form_checkbox("experiencia[]", ''.$id_imgI.'', set_checkbox("experiencia[]", ''.$id_imgI.'', FALSE)); ?>
+                    </div>
+                    <br/>
+                    <img class="img-responsive img-hover img-thumbnail" src="<?= base_url($url_img)?>" alt="<?= $nom_img ?>" title="<?= $nom_img ?>">
+                  </div>
+                  <?php
+                }else{
+                  # code...
+                  if ($id_porta == $id_portafolio) {
+                    # code...
+                    ?>
+                    <div class="col-lg-2 col-xs-6 col-sm-4 col-md-3 img-rounded text-center">
+                      <div class="checkbox">
+                        <?= form_checkbox("experiencia[]", ''.$id_imgP.'', set_checkbox("experiencia[]", ''.$id_imgP.'', TRUE)); ?>
+                      </div>
+                      <br/>
+                      <img class="img-responsive img-hover img-thumbnail" src="<?= base_url($url_img)?>" alt="<?= $nom_img ?>" title="<?= $nom_img ?>">
+                    </div>
+                    <?php
+                  }else{
+                    # code...
+                    ?>
+                    <div class="col-lg-2 col-xs-6 col-sm-4 col-md-3 img-rounded text-center">
+                      <div class="checkbox">
+                        <?= form_checkbox("experiencia[]", ''.$id_imgI.'', set_checkbox("experiencia[]", ''.$id_imgI.'', FALSE)); ?>
+                      </div>
+                      <br/>
+                      <img class="img-responsive img-hover img-thumbnail" src="<?= base_url($url_img)?>" alt="<?= $nom_img ?>" title="<?= $nom_img ?>">
+                    </div>
+                    <?php
+                  }
+                }
         }
-
-                
-print_r($full);
-
-
         ?>  
     </div> 
     <div class="row">
@@ -52,7 +97,7 @@ print_r($full);
     $form = array('name'=>'form_grafico','id'=>'form_grafico');
     //select option
     $estilo = 'class="form-control"';
-    $tipo_imagen = array('1'=>'Portada');
+    $tipo_imagen = array('3'=>'Experiencia');
     /*foreach ($consulta->result() as $fila) 
     {
       $tipo_imagen[$fila->id_tipo_img] = $fila->nom_tipo;
@@ -76,7 +121,7 @@ print_r($full);
             <h4 class="modal-title">Subir portada</h4>
           </div>
           <div class="modal-body">
-            <?=form_open_multipart(base_url()."portafolios/c_portada/validarPortada"."/".$id_portafolio)?>
+            <?=form_open_multipart(base_url()."portafolios/c_experiencia/validarExperiencia"."/".$id_portafolio)?>
             <div class="row">
               <div class="col-lg-12">
                 <div class="form-group">
@@ -93,7 +138,7 @@ print_r($full);
               </div>
               <div class="col-lg-12">
                 <?= form_label('Tipo de Imagen') ?>
-                <?= form_dropdown('tipo', $tipo_imagen,'1', $estilo, array('value'=>set_value('tipo'),'disabled'=>'disabled')) ?>
+                <?= form_dropdown('tipo', $tipo_imagen,'3', $estilo, array('value'=>set_value('tipo'),'disabled'=>'disabled')) ?>
               </div>
             </div>
             <br>

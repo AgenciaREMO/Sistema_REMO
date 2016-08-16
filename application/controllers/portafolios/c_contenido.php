@@ -45,8 +45,16 @@
 		$config['num_tag_close'] = '</li>';
 
 		$this->pagination->initialize($config);
+		$obtener_pagina = $this->grafico->obtener_pagina($config['per_page'], $config['uri_segment'], $id);
+		$paginationContenido = $this->pagination->create_links();
+		$dataContenido = array('id_portafolio' => $id_portafolio,
+							   'obtener_pagina' => $obtener_pagina,
+							   'paginationContenido' => $paginationContenido);
 
-		$obtenerContenido= $this->grafico->obtenerContenido($id);
+
+
+
+		/*$obtenerContenido= $this->grafico->obtenerContenido($id);
 
 		$disponibleContenido = $this->grafico->obtener_pagina($config['per_page'], $id);
 
@@ -60,7 +68,7 @@
 		}else{
 			$id_portafolio = $id_portafolio;
 			return FALSE;
-		}
+		}*/
 		$this->load->view("portafolios/seccion_contenido", $dataContenido);
 		$this->load->view("portafolios/form_general", $id);
 		$this->load->view("footer", $id);
@@ -99,17 +107,37 @@
 	}
 
 
-	public function actualizarContenido($id_portafolio){
-		$id_portafolio = $id_portafolio;
-		$data = array('id_portafolio' => $id_portafolio);
-		$id_img = array('id_img' => $this->input->post('grafico'));
-		$cont = array('id_img' => implode(", ", $this->input->post('grafico')));
-		print_r($id_img);echo '<br><br>';
-		print_r($cont);echo '<br><br>';
-		print_r($data);echo '<br><br>';
-	    $this->grafico->actualizarContenido($data, $id_img, $cont);
-		redirect('/portafolios/c_contenido/cargarContenido'.'/'.$id_portafolio); 
-		
+	public function actualizarContenido($id_portafolio)
+	{
+		//Reglas de validación
+		$this->form_validation->set_rules(
+			'grafico[]', 
+			'', 'required', array('¡Debes seleccionar al menos una opción!' )
+		);
+
+		if ($this->form_validation->run() == FALSE) 
+		{
+			//Si el formulario no se válida se muestran los errores
+	        $this->cargarContenido($id_portafolio);
+	        echo 'fail cargar';
+		}else
+		{
+			//Si es válido se realiza la función de insertar
+			$id_portafolio = $id_portafolio;
+			$data = array('id_portafolio' => $id_portafolio);
+			$id_img = array('id_img' => $this->input->post('grafico'));
+			$cont = array('id_img' => implode(", ", $this->input->post('grafico')));
+		    $this->grafico->actualizarContenido($data, $id_img, $cont);
+		    redirect('/portafolios/c_contenido/cargarContenido'.'/'.$id_portafolio);
+		    echo 'successful actualizar';
+		}
+
+
+
+
+
+
+
 	}
 
  	
