@@ -27,7 +27,7 @@ class C_equipo extends MY_Controller
 			$this->load->view("footer", $id);
 		}
 
-		public function validarSlider($id_portafolio){
+		public function validarEquipo($id_portafolio){
 		/*
 			//Validaciones del formulario
 			//$this->form_validation->set_rules('name_input', 'Identificador', 'reglas de validación');
@@ -42,14 +42,14 @@ class C_equipo extends MY_Controller
 	        //Si el formulario pasa la validación se procesa el siguiente método
 	        if ($this->form_validation->run() == TRUE) 
 	        {
-	            $this->subirSlider($id_portafolio);
+	            $this->subirEquipo($id_portafolio);
 	        }else{
 	        //Si el formulario no se válida se muestran los errores
 	            $this->cargarEquipo($id_portafolio); //Se modificará para que cargue los alert en el modal
 	        }
 		}
 
-		public function subirSlider($id_portafolio){
+		public function subirEquipo($id_portafolio){
 			$id_portafolio = $id_portafolio;
 			$tipo = $this->input->post('tipo');
 			//Configuración para las imágenes
@@ -67,14 +67,14 @@ class C_equipo extends MY_Controller
 				$resultado = $this->imagen->obtenerTipoImg(); //Asignamos a una variable la función que arroja el resultado de la consulta a base de datos.
 				$error = $this->upload->display_errors();
 				$tipos = array('consulta' => $resultado,'error' => $error);
-				$this->load->view('/portafolios/C_equipo/cargarEquipo'.'/'.$id_portafolio, $tipos); //Aqui se tendrá que modificar
+				$this->load->view('/portafolios/c_equipo/cargarEquipo'.'/'.$id_portafolio, $tipos); //Aqui se tendrá que modificar
 				$this->load->view("footer");
 			} else {
 			    //En otro caso se sube la imagen y se crea la miniatura 
 			    //Se obtiene todas las caracteristicas de la imagen en un arreglo
 			    $file_info = $this->upload->data();
 			    //Se usa la función thumbail y se usa el nombre de la imagen
-			    $this->crearThumbnailSlider($file_info['file_name'], $tipo);
+			    $this->crearThumbnailEquipo($file_info['file_name'], $tipo);
 			    //Se envían los datos al modelo para hacer la inserción
 			    $data = array('upload_data' => $this->upload->data());
 			    $nombre = $this->input->post('nombre');
@@ -83,12 +83,12 @@ class C_equipo extends MY_Controller
 			    $url_thu = 'graficos/equipo/thumbnail/'.$file_info['file_name'];
 			    $subir = $this->imagen->subir($nombre, $tipo_img, $url_img, $url_thu);  
 			    //$this->load->view('imagen_subida_view', $data);
-			    redirect('/portafolios/C_equipo/cargarEquipo'.'/'.$id_portafolio); 
+			    redirect('/portafolios/c_equipo/cargarEquipo'.'/'.$id_portafolio); 
 			}
 		}
 
 		//Función para crear la miniatura a la medida especificada
-	    public function crearThumbnailSlider($filename, $tipo)
+	    public function crearThumbnailEquipo($filename, $tipo)
 	    {
 	    	 //Librería utilizada [GD, GD2, ImageMagick, NetPBM]
 			        $config['image_library'] = 'gd2';

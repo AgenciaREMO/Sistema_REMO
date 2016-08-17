@@ -15,11 +15,37 @@
     <div class="row">
         <?php 
           $count= 0;
-          $editar   = array('onClick'=>'activarPor()','style'=>'display:inline','class'=>'btn btn-primary','id'=>'p-editar','content'=>'Editar');
-          $cancelar = array('onClick'=>'desactivarPor()','style'=>'display:none','class'=>'btn btn-default','id'=>'p-cancelar','content'=>'Cancelar');
-          $guardar  = array('style'=>'display:inline','class'=>'btn btn-primary','id'=>'p-guardar','value'=>'Guardar');
-          $cargar   = array('style'=>'display:inline','class'=>'btn btn-primary','id'=>'p-nueva-s','content'=>'<span class="glyphicon glyphicon-plus"></span> Experiencia','data-toggle'=>'modal','data-target'=>'#cargarExperiencia');
-          $cargar2  = array('style'=>'display:none','class'=>'btn btn-primary','id'=>'p-nueva-n','content'=>'<span class="glyphicon glyphicon-plus"></span> Experiencia','data-toggle'=>'modal','data-target'=>'#cargarExperiencia');
+          //Botones
+          $editar   = array('onClick'=>'activarPor()',
+                            'style'=>'display:inline',
+                            'class'=>'btn btn-primary',
+                            'id'=>'ex-editar',
+                            'content'=>'Editar');
+
+          $cancelar = array('onClick'=>'desactivarPor()',
+                            'style'=>'display:none',
+                            'class'=>'btn btn-default',
+                            'id'=>'ex-cancelar',
+                            'content'=>'Cancelar');
+
+          $guardar  = array('style'=>'display:inline',
+                            'class'=>'btn btn-primary',
+                            'id'=>'ex-guardar',
+                            'value'=>'Guardar');
+
+          $cargar   = array('style'=>'display:inline',
+                            'class'=>'btn btn-primary',
+                            'id'=>'ex-nueva-s',
+                            'content'=>'<span class="glyphicon glyphicon-plus"></span> Experiencia',
+                            'data-toggle'=>'modal',
+                            'data-target'=>'#cargarExperiencia');
+
+          $cargar2  = array('style'=>'display:none',
+                            'class'=>'btn btn-primary',
+                            'id'=>'ex-nueva-n',
+                            'content'=>'<span class="glyphicon glyphicon-plus"></span> Experiencia',
+                            'data-toggle'=>'modal',
+                            'data-target'=>'#cargarExperiencia');
 
         foreach ($obtener_pagina->result() as $fila){ 
            $id_porta     = $fila->id_porta;
@@ -29,17 +55,39 @@
            $nom_img      = $fila->nom_img;
            $url_img      = $fila->url_img;
            $url_thu      = $fila->url_thu;
+           $descripcion  = $fila->descripcion;
            $id_tipo_imgT = $fila->id_tipo_imgT;
            $nom_tipo     = $fila->nom_tipo;
 
           if($id_porta == '' OR $id_porta == NULL OR $id_porta != $id_portafolio){
                   ?>
-                  <div class="col-lg-2 col-xs-6 col-sm-4 col-md-3 img-rounded text-center">
-                    <div class="checkbox">
-                      <?= form_checkbox("experiencia[]", ''.$id_imgI.'', set_checkbox("experiencia[]", ''.$id_imgI.'', FALSE)); ?>
+                  <div class="col-lg-3 col-xs-6 col-sm-4 col-md-3 img-rounded text-center">
+                      <div class="panel panel-default">
+                        <div class="panel-body">
+                          <img class="img-responsive img-hover img-thumbnail" src="<?= base_url($url_img)?>" alt="<?= $nom_img ?>" title="<?= $nom_img ?>">
+                          <br/>
+                          <p><?= $descripcion ?></p>
+                        </div>
+                        <div class="panel-heading">
+                          <div class="row">
+                            <div class="col-lg-4 col-md-4 col-sm-12">
+                              <!--<div class="checkbox">-->
+                                <?= form_checkbox("experiencia[]", ''.$id_imgI.'', set_checkbox("experiencia[]", ''.$id_imgI.'', FALSE)); ?>
+                                <p style="font-size:14px;"><span class="glyphicon glyphicon-ok" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Seleccionar"></span></p>
+                             <!-- </div>-->
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-12">
+                              <?= form_checkbox("experiencia[]", ''.$id_imgI.'', set_checkbox("experiencia[]", ''.$id_imgI.'', FALSE)); ?>
+                                <p style="font-size:14px;"><span class="glyphicon glyphicon-star" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Resaltar"></span></p>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-12">
+                              <?= form_checkbox("experiencia[]", ''.$id_imgI.'', set_checkbox("experiencia[]", ''.$id_imgI.'', FALSE)); ?>
+                                <p style="font-size:14px;"><span class="glyphicon glyphicon-link" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Incluir descripción"></span></p>
+                            </div>
+                          </div>
+                          
+                        </div>
                     </div>
-                    <br/>
-                    <img class="img-responsive img-hover img-thumbnail" src="<?= base_url($url_img)?>" alt="<?= $nom_img ?>" title="<?= $nom_img ?>">
                   </div>
                   <?php
                 }else{
@@ -47,29 +95,68 @@
                   if ($id_porta == $id_portafolio) {
                     # code...
                     ?>
-                    <div class="col-lg-2 col-xs-6 col-sm-4 col-md-3 img-rounded text-center">
-                      <div class="checkbox">
-                        <?= form_checkbox("experiencia[]", ''.$id_imgP.'', set_checkbox("experiencia[]", ''.$id_imgP.'', TRUE)); ?>
+                    <div class="col-lg-3 col-xs-6 col-sm-4 col-md-3 img-rounded text-center">
+                      <div class="panel panel-default">
+                        <div class="panel-body">
+                          <img class="img-responsive img-hover img-thumbnail" src="<?= base_url($url_img)?>" alt="<?= $nom_img ?>" title="<?= $nom_img ?>">
+                          <br/>
+                          <p><?= $descripcion ?></p>
+                        </div>
+                        <div class="panel-footer">
+                          <div class="row">
+                            <div class="col-lg-4 col-md-4 col-sm-12">
+                              <?= form_checkbox("experiencia[]", ''.$id_imgP.'', set_checkbox("experiencia[]", ''.$id_imgP.'', TRUE)); ?>
+                              <p style="font-size:14px;"><span class="glyphicon glyphicon-ok" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Seleccionar"></span></p>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-12">
+                              <?= form_checkbox("experiencia[]", ''.$id_imgP.'', set_checkbox("experiencia[]", ''.$id_imgP.'', TRUE)); ?>
+                              <p style="font-size:14px;"><span class="glyphicon glyphicon-star" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Resaltar"></span></p>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-12">
+                              <?= form_checkbox("experiencia[]", ''.$id_imgP.'', set_checkbox("experiencia[]", ''.$id_imgP.'', TRUE)); ?>
+                              <p style="font-size:14px;"><span class="glyphicon glyphicon-link" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Incluir descripción"></span></p>
+                            </div>
+                          </div>
+                        </div>
                       </div>
-                      <br/>
-                      <img class="img-responsive img-hover img-thumbnail" src="<?= base_url($url_img)?>" alt="<?= $nom_img ?>" title="<?= $nom_img ?>">
                     </div>
                     <?php
                   }else{
                     # code...
                     ?>
-                    <div class="col-lg-2 col-xs-6 col-sm-4 col-md-3 img-rounded text-center">
-                      <div class="checkbox">
-                        <?= form_checkbox("experiencia[]", ''.$id_imgI.'', set_checkbox("experiencia[]", ''.$id_imgI.'', FALSE)); ?>
-                      </div>
-                      <br/>
-                      <img class="img-responsive img-hover img-thumbnail" src="<?= base_url($url_img)?>" alt="<?= $nom_img ?>" title="<?= $nom_img ?>">
+                    <div class="col-lg-3 col-xs-6 col-sm-4 col-md-3 img-rounded text-center">
+                      <div class="panel panel-default">
+                        <div class="panel-body">
+                          <img class="img-responsive img-hover img-thumbnail" src="<?= base_url($url_img)?>" alt="<?= $nom_img ?>" title="<?= $nom_img ?>">
+                          <br/>
+                          <p><?= $descripcion ?></p>
+                        </div>
+                        <div class="panel-heading">
+                          <div class="row">
+                            <div class="col-lg-4 col-md-4 col-sm-12">
+                              <!--<div class="checkbox">-->
+                                <?= form_checkbox("experiencia[]", ''.$id_imgI.'', set_checkbox("experiencia[]", ''.$id_imgI.'', FALSE)); ?>
+                                <p style="font-size:14px;"><span class="glyphicon glyphicon-ok" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Seleccionar"></span></p>
+                             <!-- </div>-->
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-12">
+                              <?= form_checkbox("experiencia[]", ''.$id_imgI.'', set_checkbox("experiencia[]", ''.$id_imgI.'', FALSE)); ?>
+                                <p style="font-size:14px;"><span class="glyphicon glyphicon-star" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Resaltar"></span></p>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-12">
+                              <?= form_checkbox("experiencia[]", ''.$id_imgI.'', set_checkbox("experiencia[]", ''.$id_imgI.'', FALSE)); ?>
+                                <p style="font-size:14px;"><span class="glyphicon glyphicon-link" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Incluir descripción"></span></p>
+                            </div>
+                          </div>
+                          
+                        </div>
                     </div>
+                  </div>
                     <?php
                   }
                 }
         }
-        ?>  
+        ?> 
     </div> 
     <div class="row">
        <div class="col-lg-12 text-center">
@@ -90,6 +177,8 @@
       </div>
       <hr> 
        <?= form_close() ?>
+
+       <!--Form modal carga slider-->
     <!--<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#cargarPortada">Large modal</button>-->
     <?=@$error?>
     <?php
@@ -103,11 +192,30 @@
       $tipo_imagen[$fila->id_tipo_img] = $fila->nom_tipo;
     }*/
     //inputs
-    $nombre    = array('name'=>'nombre','id'=>'nombre','value'=>set_value('nombre'),'maxlength'=>'150','size'=> '50','class'=> 'form-control','placeholder'=>' Ejemplo: Logotipo de REMO');
-    $imagen    = array('name'=>'userfile','id'=>'userfile','value'=> set_value('userfile'),'type'=>'file','class'=>'form-control','rules'=>'required');
+    $nombre    = array('name'=>'nombre',
+                       'id'=>'nombre',
+                       'value'=>set_value('nombre'),
+                       'maxlength'=>'150',
+                       'size'=> '50',
+                       'class'=> 'form-control',
+                       'placeholder'=>' Ejemplo: Logotipo de Kurimexicana');
+
+    $imagen    = array('name'=>'userfile',
+                       'id'=>'userfile',
+                       'value'=> set_value('userfile'),
+                       'type'=>'file',
+                       'class'=>'form-control',
+                       'rules'=>'required');
     //botones
-    $guardar   = array('name'=>'guardar','id'=>'guardarGrafico','class'=>'btn btn-primary','value'=>'Guardar');
-    $cancelar  = array('name'=>'cancelar','id'=>'cancelarCarga','class'=>'btn btn-default','value'=>'Cancelar');
+    $guardar   = array('name'=>'guardar',
+                       'id'=>'guardarGrafico',
+                       'class'=>'btn btn-primary',
+                       'value'=>'Guardar');
+
+    $cancelar  = array('name'=>'cancelar',
+                       'id'=>'cancelarCarga',
+                       'class'=>'btn btn-default',
+                       'value'=>'Cancelar');
     //a
     $contenido = array('title'=>'Contenido Gráfico');
     $subir     = array('title' => 'Subir Gráfico');

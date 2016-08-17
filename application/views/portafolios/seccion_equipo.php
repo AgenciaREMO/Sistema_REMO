@@ -45,15 +45,15 @@
 		                      'id'    => 'eq-nueva-s',
 		                      'content' => '<span class="glyphicon glyphicon-plus"></span> Slider',
 		                      'data-toggle' => 'modal',
-		                      'data-target' => '#cargarSlideEquipo'
+		                      'data-target' => '#cargarEquipo'
 		                      );
 		                    $cargar2 = array(
 		                      'style' => 'display:none',
 		                      'class' => 'btn btn-primary',
 		                      'id'    => 'eq-nueva-n',
-		                      'content' => '<b>Nuevo slider de equipo</b>',
+		                      'content' => '<span class="glyphicon glyphicon-plus"></span> Slider',
 		                      'data-toggle' => 'modal',
-		                      'data-target' => '#cargarSlideEquipo'
+		                      'data-target' => '#cargarEquipo'
 		                      );
                             $cont = 1;
                             foreach ($dataEquipo->result() as $fila) { //Convertimos la consulta de base de datos en una fila
@@ -69,6 +69,7 @@
                           } //Fin de Foreach para lista los portafolios
                         ?>
                       </table>
+                   
                     <?php //form_close(); ?>
             </div>
         </div>
@@ -101,16 +102,35 @@
       $tipo_imagen[$fila->id_tipo_img] = $fila->nom_tipo;
     }*/
     //inputs
-    $nombre    = array('name'=>'nombre','id'=>'nombre','value'=>set_value('nombre'),'maxlength'=>'150','size'=> '50','class'=> 'form-control','placeholder'=>' Ejemplo: Logotipo de REMO');
-    $imagen    = array('name'=>'userfile','id'=>'userfile','value'=> set_value('userfile'),'type'=>'file','class'=>'form-control','rules'=>'required');
+    $nombre    = array('name'=>'nombre',
+                       'id'=>'nombre',
+                       'value'=>set_value('nombre'),
+                       'maxlength'=>'150',
+                       'size'=> '50',
+                       'class'=> 'form-control',
+                       'placeholder'=>' Ejemplo: Agencia REMO');
+
+    $imagen    = array('name'=>'userfile',
+                       'id'=>'userfile',
+                       'value'=> set_value('userfile'),
+                       'type'=>'file',
+                       'class'=>'form-control',
+                       'rules'=>'required');
     //botones
-    $guardar   = array('name'=>'guardar','id'=>'guardarGrafico','class'=>'btn btn-primary','value'=>'Guardar');
-    $cancelar  = array('name'=>'cancelar','id'=>'cancelarCarga','class'=>'btn btn-default','value'=>'Cancelar');
+    $guardar   = array('name'=>'guardar',
+                       'id'=>'guardarGrafico',
+                       'class'=>'btn btn-primary',
+                       'value'=>'Guardar');
+
+    $cancelar  = array('name'=>'cancelar',
+                       'id'=>'cancelarCarga',
+                       'class'=>'btn btn-default',
+                       'value'=>'Cancelar');
     //a
     $contenido = array('title'=>'Contenido Gráfico');
     $subir     = array('title' => 'Subir Gráfico');
     ?>
-    <div id="cargarSlideEquipo"class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+    <div id="cargarEquipo"class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
       <div class="modal-dialog modal-lg">
         <!-- Modal content-->
         <div class="modal-content">
@@ -119,7 +139,7 @@
             <h4 class="modal-title">Subir slider de equipo de REMO</h4>
           </div>
           <div class="modal-body">
-            <?=form_open_multipart(base_url()."portafolios/c_equipo/validarSlider"."/".$id_portafolio)?>
+            <?=form_open_multipart(base_url()."portafolios/c_equipo/validarEquipo"."/".$id_portafolio)?>
             <div class="row">
               <div class="col-lg-12">
                 <div class="form-group">
@@ -160,11 +180,3 @@
 </div>
         <!-- Fin del modal-->
 
-<script type="text/javascript">
- $(document).ready(function(){
-    $("#btn2").click(function(){
-        $("#form2").toggle();
-    });
-});
-
-</script>

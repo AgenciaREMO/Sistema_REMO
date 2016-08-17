@@ -17,11 +17,36 @@
 
           $count = 0;
           //botones
-          $editar   = array('onClick'=>'activarPor()','style'=>'display:inline','class'=>'btn btn-primary','id'=>'p-editar','content'=>'Editar');
-          $cancelar = array('onClick'=>'desactivarPor()','style'=>'display:none','class'=>'btn btn-default','id'=>'p-cancelar','content'=>'Cancelar');
-          $guardar  = array('style'=>'display:inline','class'=>'btn btn-primary','id'=>'p-guardar','value'=>'Guardar');
-          $cargar   = array('style'=>'display:inline','class'=>'btn btn-primary','id'=>'p-nueva-s','content'=>'<span class="glyphicon glyphicon-plus"></span> Gráfico','data-toggle'=>'modal','data-target'=>'#cargarGrafico');
-          $cargar2  = array('style'=>'display:none','class'=>'btn btn-primary','id'=>'p-nueva-n','content'=>'<span class="glyphicon glyphicon-plus"></span> Gráfico','data-toggle'=>'modal','data-target'=>'#cargarGrafico');
+          $editar   = array('onClick'=>'activarPor()',
+                            'style'=>'display:inline',
+                            'class'=>'btn btn-primary',
+                            'id'=>'p-editar',
+                            'content'=>'Editar');
+
+          $cancelar = array('onClick'=>'desactivarPor()',
+                            'style'=>'display:none',
+                            'class'=>'btn btn-default',
+                            'id'=>'p-cancelar',
+                            'content'=>'Cancelar');
+
+          $guardar  = array('style'=>'display:inline',
+                            'class'=>'btn btn-primary',
+                            'id'=>'p-guardar',
+                            'value'=>'Guardar');
+
+          $cargar   = array('style'=>'display:inline',
+                            'class'=>'btn btn-primary',
+                            'id'=>'p-nueva-s',
+                            'content'=>'<span class="glyphicon glyphicon-plus"></span> Gráfico',
+                            'data-toggle'=>'modal',
+                            'data-target'=>'#cargarGrafico');
+
+          $cargar2  = array('style'=>'display:none',
+                            'class'=>'btn btn-primary',
+                            'id'=>'p-nueva-n',
+                            'content'=>'<span class="glyphicon glyphicon-plus"></span> Gráfico',
+                            'data-toggle'=>'modal',
+                            'data-target'=>'#cargarGrafico');
 
                   foreach ($obtener_pagina->result() as $fila){ 
            $id_porta     = $fila->id_porta;
@@ -105,13 +130,33 @@
       $tipo_imagen[$fila->id_tipo_img] = $fila->nom_tipo;
     }*/
     //inputs
-    $nombre    = array('name'=>'nombre','id'=>'nombre','value'=>set_value('nombre'),'maxlength'=>'150','size'=> '50','class'=> 'form-control','placeholder'=>' Ejemplo: Logotipo de REMO');
-    $imagen    = array('name'=>'userfile','id'=>'userfile','value'=> set_value('userfile'),'type'=>'file','class'=>'form-control','rules'=>'required');
+    $nombre    = array('name'=>'nombre',
+                       'id'=>'nombre',
+                       'value'=>set_value('nombre'),
+                       'maxlength'=>'150',
+                       'size'=> '50',
+                       'class'=> 'form-control',
+                       'placeholder'=>' Ejemplo: Logotipo de REMO');
+
+    $imagen    = array('name'=>'userfile',
+                       'id'=>'userfile',
+                       'value'=> set_value('userfile'),
+                       'type'=>'file',
+                       'class'=>'form-control',
+                       'rules'=>'required');
     //botones
-    $guardar   = array('name'=>'guardar','id'=>'guardarGrafico','class'=>'btn btn-primary','value'=>'Guardar');
-    $cancelar  = array('name'=>'cancelar','id'=>'cancelarCarga','class'=>'btn btn-default','value'=>'Cancelar');
+    $guardar   = array('name'=>'guardar',
+                       'id'=>'guardarGrafico',
+                       'class'=>'btn btn-primary',
+                       'value'=>'Guardar');
+
+    $cancelar  = array('name'=>'cancelar',
+                       'id'=>'cancelarCarga',
+                       'class'=>'btn btn-default',
+                       'value'=>'Cancelar');
     //a
     $contenido = array('title'=>'Contenido Gráfico');
+    
     $subir     = array('title' => 'Subir Gráfico');
     ?>
     <div id="cargarGrafico"class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">

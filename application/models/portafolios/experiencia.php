@@ -74,7 +74,8 @@ class Experiencia extends CI_Model
 			                     i.nom_img as nom_img, 
 			                     i.url_img as url_img, 
 			                     i.url_thu as url_thu, 
-			                     i.id_tipo_img as id_tipo_imgI, 
+			                     i.id_tipo_img as id_tipo_imgI,
+			                     i.descripcion as descripcion, 
 			                     ti.id_tipo_img as id_tipo_imgT, 
 			                     ti.nom_tipo as nom_tipo 
 			                     FROM portafolio_imagen as pi
