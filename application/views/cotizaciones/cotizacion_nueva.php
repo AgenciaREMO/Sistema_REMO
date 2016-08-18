@@ -90,9 +90,6 @@
 						$fecha = $dia." de ".$mes." de ".$anio;
 						echo "<p>Santiago de Querétaro, Qro., a ".$fecha."</p>";
 					?>
-					<?php  ?>
-					<?= form_label('COTIZACIÓN: ') ?>
-					<span name="folio" id="folio"></span>
 				</div>
 				<div class="form-group">
 					<?= form_label('Elaborada por', 'personal') ?>
@@ -106,7 +103,9 @@
 				<div id="descripcion" style="display:none">
 					<h3>Descripción del proyecto</h3>
 					<div class="form-group" id="divdescrip" >
-						<input type="text" name="cantidades" id="cantidades" style="display:none" value=""><span onclick="calcularCantidades()">Cantidades</span>
+						<input type="text" name="cantidades" id="cantidades" style="display:none" value="">
+						<input type="text" name="horastot" id="horastot" style="display:none" value="">
+						<input type="text" name="descripciones" id="descripciones" style="display:none" value="">
 						<table id="tabla-conceptos" class="table table-hover">
 							<tr>
 								<th></th>
@@ -128,7 +127,7 @@
 									</div>
 								</td>
 								<td class="col-descripcion">
-									<span id="descripcion0" name="descripcion0"></span>
+									<span id="descripcion0" name="descripcion0"></span><span id="id_desc0" name="id_desc0" style="display:none"></span>
 								</td>
 								<td class="col-horas">
 									<div class="input-group">
@@ -156,6 +155,7 @@
 				</div>
 				<hr>
 				<div id="elementos" style="display:none"> 
+					<input type="text" name="elementos" id="elementos" style="display:none" value="">
 					<!--ELEMENTO DE SECCIÓN CONSIDERACIONES-->
 					<div class="row"> 
 						<h3>Consideraciones</h3>
@@ -307,17 +307,44 @@
     	});*/
 		$("#guardar").click(function(){
 			var cants = "";
-			alert("Entro");
 			for(var i=0; i<num_concep; i++)
 			{
 				cants += $("#cantidad" + i).val();
 				if ((i+1)<num_concep) {
 					cants += ",";
 				};
-				
 			}
 			$("#cantidades").val(cants);
-			alert("Paso por el for");
+
+			var horas = "";
+			for(var i=0; i<num_concep; i++)
+			{
+				horas += $("#horas" + i).val();
+				if ((i+1)<num_concep) {
+					horas += ",";
+				};
+			}
+			$("#horastot").val(horas);
+
+			var descripciones = "";
+			for(var i=0; i<num_concep; i++)
+			{
+				descripciones += $("#id_desc" + i).text();
+				if ((i+1)<num_concep) {
+					descripciones += " | ";
+				};
+			}
+			$("#descripciones").val(descripciones);
+
+			/*var elementos = "";
+			for(var i=0; i<num_concep; i++)
+			{
+				elementos += $("#id_desc" + i).text();
+				if ((i+1)<num_concep) {
+					elementos += " | ";
+				};
+			}
+			$("#elementos").val(elementos);*/
 		});
     	$("body").on("keyup", "input[name*='cantidad']", function() {
     		var txt = $(this).attr("id");
@@ -374,6 +401,7 @@
 				//SE ACTUALIZAN LOS CAMPOS VACIOS CON LA INFORMACION DEL CONCEPTO SELECCIONADO EN LA MODAL
 				$("#concepto" + num).val(registro[0]["concepto"]);
 				$("#descripcion" + num).text(registro[0]["detalles"]);
+				$("#id_desc" + num).text(registro[0]["id_descripcion"]);
 				$("#costo" + num).text(registro[0]["costo"]);
 				var cantidad = parseInt($("#cantidad" + num).val());
 				var horas = parseInt($("#horas" + num).val());
@@ -392,7 +420,6 @@
 				$("#iva").text(iva);
 				$("#total").text(total);
 				$("#elementos").css("display", "block");
-				
 			},
 			error: function(jqXHR, textStatus, errorThrown)
 			{
@@ -481,7 +508,7 @@
 	}
 	function agregarConcepto()
 	{
-		html = "<tr id='row"+num_concep+"'><td><a class='i-borrar' id='a"+num_concep+"' href='#' onclick='eliminarConcepto("+num_concep+")'><i class='fa fa-times'></i></a></td><td class='col-cantidad'><input type='text' name='cantidad"+num_concep+"' class='form-control input-recal' value='1' id='cantidad"+num_concep+"'></td><td class='col-concepto'><div class='input-group'><input type='text' name='concepto"+num_concep+"' class='form-control'	placeholder='---' id='concepto"+num_concep+"' disabled='disabled'><div id='addon"+num_concep+"' onClick='identificarConcepto("+num_concep+")' class='input-group-addon'><i class='fa fa-search' aria-hidden='true'></i></div></div></td><td class='col-descripcion'><span name='descripcion"+num_concep+"' id='descripcion"+num_concep+"'></span></td><td class='col-horas'><div class='input-group'><input type='text' name='horas"+num_concep+"' class='form-control input-recal' value='1' id='horas"+num_concep+"'><div class='input-group-addon'> x $<span name='costo' id='costo"+num_concep+"'>0.00</span></div></div></td><td class='col-importe'><div class='input-group'><span id='importe"+num_concep+"' name='importe"+num_concep+"'>0.00</span></div></td></tr>";
+		html = "<tr id='row"+num_concep+"'><td><a class='i-borrar' id='a"+num_concep+"' href='#' onclick='eliminarConcepto("+num_concep+")'><i class='fa fa-times'></i></a></td><td class='col-cantidad'><input type='text' name='cantidad"+num_concep+"' class='form-control input-recal' value='1' id='cantidad"+num_concep+"'></td><td class='col-concepto'><div class='input-group'><input type='text' name='concepto"+num_concep+"' class='form-control'	placeholder='---' id='concepto"+num_concep+"' disabled='disabled'><div id='addon"+num_concep+"' onClick='identificarConcepto("+num_concep+")' class='input-group-addon'><i class='fa fa-search' aria-hidden='true'></i></div></div></td><td class='col-descripcion'><span name='descripcion"+num_concep+"' id='descripcion"+num_concep+"'></span><span id='id_desc"+num_concep+"' name='id_desc"+num_concep+"' style='display:none'></span></td><td class='col-horas'><div class='input-group'><input type='text' name='horas"+num_concep+"' class='form-control input-recal' value='1' id='horas"+num_concep+"'><div class='input-group-addon'> x $<span name='costo' id='costo"+num_concep+"'>0.00</span></div></div></td><td class='col-importe'><div class='input-group'><span id='importe"+num_concep+"' name='importe"+num_concep+"'>0.00</span></div></td></tr>";
 		$("#tabla-conceptos tr:last").after(html);
 		num_concep++;
 

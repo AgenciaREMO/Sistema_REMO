@@ -211,12 +211,11 @@
 			$data = array(
 				'id_proyecto' => $this->input->post('id_proyecto'),
 				'id_personal' => $this->input->post('personal'),
-				//'folio' => $this->input->post(''),
 				'f_generacion' => date('Y-m-d'),
 				'cantidades' => $this->input->post('cantidades'),
-				/*'descripciones' => $this->input->post(''),
-				'horas' => $this->input->post(''),
-				'total' => $this->input->post(''),*/
+				'descripciones' => $this->input->post('descripciones'),
+				'horas' => $this->input->post('horas'),
+				/*'total' => $this->input->post(''),*/
 				'comentario' => $this->input->post('comentario')
 			);
 			$id_insertado = $this->cotizacion->nuevaCotizacionTemp($data);
