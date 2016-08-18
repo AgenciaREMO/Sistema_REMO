@@ -50,6 +50,8 @@
         foreach ($obtener_pagina->result() as $fila){ 
            $id_porta     = $fila->id_porta;
            $id_imgP      = $fila->id_imgP;
+           $destacado    = $fila->destacado;
+           $mostrar      = $fila->mostrar;
            $id_imgI      = $fila->id_imgI;
            $id_tipo_imgI = $fila->id_tipo_imgI;
            $nom_img      = $fila->nom_img;
@@ -77,11 +79,11 @@
                              <!-- </div>-->
                             </div>
                             <div class="col-lg-4 col-md-4 col-sm-12">
-                              <?= form_checkbox("experiencia[]", ''.$id_imgI.'', set_checkbox("experiencia[]", ''.$id_imgI.'', FALSE)); ?>
+                              <?= form_checkbox("resaltar[]", ''.$id_imgI.'', set_checkbox("resaltar[]", ''.$id_imgI.'', FALSE)); ?>
                                 <p style="font-size:14px;"><span class="glyphicon glyphicon-star" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Resaltar"></span></p>
                             </div>
                             <div class="col-lg-4 col-md-4 col-sm-12">
-                              <?= form_checkbox("experiencia[]", ''.$id_imgI.'', set_checkbox("experiencia[]", ''.$id_imgI.'', FALSE)); ?>
+                              <?= form_checkbox("incluir[]", ''.$id_imgI.'', set_checkbox("incluir[]", ''.$id_imgI.'', FALSE)); ?>
                                 <p style="font-size:14px;"><span class="glyphicon glyphicon-link" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Incluir descripción"></span></p>
                             </div>
                           </div>
@@ -109,11 +111,11 @@
                               <p style="font-size:14px;"><span class="glyphicon glyphicon-ok" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Seleccionar"></span></p>
                             </div>
                             <div class="col-lg-4 col-md-4 col-sm-12">
-                              <?= form_checkbox("experiencia[]", ''.$id_imgP.'', set_checkbox("experiencia[]", ''.$id_imgP.'', TRUE)); ?>
+                              <?= form_checkbox("resaltar[]", ''.$id_imgP.'', set_checkbox("resaltar[]", ''.$id_imgP.'', TRUE)); ?>
                               <p style="font-size:14px;"><span class="glyphicon glyphicon-star" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Resaltar"></span></p>
                             </div>
                             <div class="col-lg-4 col-md-4 col-sm-12">
-                              <?= form_checkbox("experiencia[]", ''.$id_imgP.'', set_checkbox("experiencia[]", ''.$id_imgP.'', TRUE)); ?>
+                              <?= form_checkbox("incluir[]", ''.$id_imgP.'', set_checkbox("incluir[]", ''.$id_imgP.'', TRUE)); ?>
                               <p style="font-size:14px;"><span class="glyphicon glyphicon-link" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Incluir descripción"></span></p>
                             </div>
                           </div>
@@ -140,11 +142,11 @@
                              <!-- </div>-->
                             </div>
                             <div class="col-lg-4 col-md-4 col-sm-12">
-                              <?= form_checkbox("experiencia[]", ''.$id_imgI.'', set_checkbox("experiencia[]", ''.$id_imgI.'', FALSE)); ?>
+                              <?= form_checkbox("resaltar[]", ''.$id_imgI.'', set_checkbox("resaltar[]", ''.$id_imgI.'', FALSE)); ?>
                                 <p style="font-size:14px;"><span class="glyphicon glyphicon-star" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Resaltar"></span></p>
                             </div>
                             <div class="col-lg-4 col-md-4 col-sm-12">
-                              <?= form_checkbox("experiencia[]", ''.$id_imgI.'', set_checkbox("experiencia[]", ''.$id_imgI.'', FALSE)); ?>
+                              <?= form_checkbox("incluir[]", ''.$id_imgI.'', set_checkbox("incluir[]", ''.$id_imgI.'', FALSE)); ?>
                                 <p style="font-size:14px;"><span class="glyphicon glyphicon-link" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Incluir descripción"></span></p>
                             </div>
                           </div>
@@ -267,3 +269,42 @@
       </div>
     </div>
 </div>
+
+
+
+<?php 
+  if (!empty($id_porta)) {
+
+  }
+
+?>
+
+
+                  <div class="col-lg-3 col-xs-6 col-sm-4 col-md-3 img-rounded text-center">
+                      <div class="panel panel-default">
+                        <div class="panel-body">
+                          <img class="img-responsive img-hover img-thumbnail" src="<?= base_url($url_img)?>" alt="<?= $nom_img ?>" title="<?= $nom_img ?>">
+                          <br/>
+                          <p><?= $descripcion ?></p>
+                        </div>
+                        <div class="panel-heading">
+                          <div class="row">
+                            <div class="col-lg-4 col-md-4 col-sm-12">
+                              <!--<div class="checkbox">-->
+                                <?= form_checkbox("experiencia[]", ''.$id_imgI.'', set_checkbox("experiencia[]", ''.$id_imgI.'', FALSE)); ?>
+                                <p style="font-size:14px;"><span class="glyphicon glyphicon-ok" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Seleccionar"></span></p>
+                             <!-- </div>-->
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-12">
+                              <?= form_checkbox("resaltar[]", ''.$id_imgI.'', set_checkbox("resaltar[]", ''.$id_imgI.'', FALSE)); ?>
+                                <p style="font-size:14px;"><span class="glyphicon glyphicon-star" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Resaltar"></span></p>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-12">
+                              <?= form_checkbox("incluir[]", ''.$id_imgI.'', set_checkbox("incluir[]", ''.$id_imgI.'', FALSE)); ?>
+                                <p style="font-size:14px;"><span class="glyphicon glyphicon-link" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Incluir descripción"></span></p>
+                            </div>
+                          </div>
+                          
+                        </div>
+                    </div>
+                  </div>

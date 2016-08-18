@@ -144,6 +144,15 @@ class C_experiencia extends MY_Controller
 			'experiencia[]', 
 			'', 'required', array('¡Debes seleccionar al menos una opción!' )
 		);
+		/*
+		$this->form_validation->set_rules(
+			'resaltar[]', 
+			'', 'required', array('¡Debes seleccionar al menos una opción!' )
+		);
+		$this->form_validation->set_rules(
+			'incluir[]', 
+			'', 'required', array('¡Debes seleccionar al menos una opción!' )
+		);*/
 
 		if ($this->form_validation->run() == FALSE) 
 		{
@@ -156,8 +165,10 @@ class C_experiencia extends MY_Controller
 		    $id_portafolio = $id_portafolio;
 			$data = array('id_portafolio' => $id_portafolio);
 			$id_img = array('id_img' => $this->input->post('experiencia'));
+			$destacado = array('destacado' => $this->input->post('resaltar'));
+			$mostrar = array('mostrar' => $this->input->post('incluir'));
 			$cont = array('id_img' => implode(", ", $this->input->post('experiencia')));
-		    $this->experiencia->actualizarExperiencia($data, $id_img, $cont);
+		    $this->experiencia->actualizarExperiencia($data, $id_img, $destacado, $mostrar, $cont);
 			redirect('/portafolios/c_experiencia/cargarExperiencia'.'/'.$id_portafolio);
 		    echo 'successful actualizar';
 		}
