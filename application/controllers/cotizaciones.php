@@ -37,18 +37,6 @@
 			$this->load->view("cotizaciones/listaCotizaciones", $data);
 			$this->load->view("footer");
 		} 
-		public function detallesCotizacion($id = '')
-		{
-			$this->load->view("head"); 
-			$this->load->view("nav");
-
-			$fila = $this->cotizacion->obtenerCotizacionPorId($id);
-			$data = array(
-				'id_descripcion' => $fila->id_cotizacion
-			);
-			$this->load->view("cotizaciones/editar_cotizacion", $data);
-			$this->load->view("footer");
-		}
 		public function cotizacionNueva()
 		{
 			$this->load->view("head"); 
@@ -214,13 +202,38 @@
 				'f_generacion' => date('Y-m-d'),
 				'cantidades' => $this->input->post('cantidades'),
 				'descripciones' => $this->input->post('descripciones'),
-				'horas' => $this->input->post('horas'),
-				/*'total' => $this->input->post(''),*/
-				'comentario' => $this->input->post('comentario')
+				'horas' => $this->input->post('horastot'),
+				'comentario' => $this->input->post('comentario'),
+				'elementos' => $this->input->post('elementos')
 			);
+			//var_dump($data['elementos']); //Imprime el contenido del arreglo y el tipo de datos en cada posición
 			$id_insertado = $this->cotizacion->nuevaCotizacionTemp($data);
 
-			//redirect('cotizaciones/editarCotizacionTemp/'.$id_insertado);
+			redirect('cotizaciones/detallesTemp/'.$id_insertado);
+		}
+		public function detallesTemp($id = '')
+		{
+			$this->load->view("head"); 
+			$this->load->view("nav");
+
+			$resultado = $this->cotizacion->obtenerPersonal();
+			$fila = $this->cotizacion->obtenerTempPorId($id);
+
+			$data = array(
+				'consulta' => $resultado,
+				'id_temp' => $fila->id_cotizacion_temp,
+				'id_personal' => $fila->id_personal,
+				'nombre_proyecto' => $fila->proyecto,
+				'cliente' => $fila->cliente,			
+				'puesto' => $fila->puesto,
+				'empresa' => $fila->empresa
+			);
+			$this->load->view("cotizaciones/editar_cotizacion_temp", $data);
+			$this->load->view("footer");
+		}
+		public function editarTemp()
+		{
+
 		}
 	}
 ?>

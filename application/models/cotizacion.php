@@ -538,10 +538,33 @@
 		}
 		public function nuevaCotizacionTemp($data)
 		{
-			//$this->db->insert('cotizacion_temp',array('id_proyecto' => $data[''],'id_personal' => $data[''],'folio' => $data[''],'f_generacion' => $data[''],'cantidades' => $data[''],'descripciones' => $data[''],'horas' => $data[''],'total' => $data[''],'comentario' => $data['']));
-			//$id_insertado = $this->db->insert_id();
-			echo "id_proyecto=".$data['id_proyecto']." id_personal=".$data['id_personal']." f_generacion=".$data['f_generacion']." cantidades=".$data['cantidades']." descripciones=".$data['descripciones']." horas=".$data['horas']/*." total=".$data['total']*/." comentario=".$data['comentario'];
-			//return $id_insertado;
+			$this->db->insert('cotizacion_temp',array('id_proyecto' => $data['id_proyecto'],'id_personal' => $data['id_personal'],'f_generacion' => $data['f_generacion'],'cantidades' => $data['cantidades'],'descripciones' => $data['descripciones'],'horas' => $data['horas'],'comentario' => $data['comentario']));
+			$id_insertado = $this->db->insert_id();
+			//echo "id_proyecto=".$data['id_proyecto']." id_personal=".$data['id_personal']." f_generacion=".$data['f_generacion']." cantidades=".$data['cantidades']." descripciones=".$data['descripciones']." horas=".$data['horas']." comentario=".$data['comentario'];
+			$elems = count($data['elementos']);
+			for ($i=0; $i < $elems ; $i++) { 
+				$this->db->insert('elemento_cotizacion',array('id_cotizacion_temp' => $id_insertado,'id_elemento' => $data['elementos'][$i]));
+			}
+			return $id_insertado;
+		}
+		public function obtenerTempPorId($Id)
+		{
+			$resultado = $this->db->query("SELECT cotizacion_temp.id_cotizacion_temp AS id_cotizacion_temp,
+											cotizacion_temp.id_proyecto AS id_proyecto,
+											cotizacion_temp.id_personal AS id_personal,
+											cliente.nombre AS cliente,
+											empresa.nombre AS empresa,
+											proyecto.nombre AS proyecto,
+											f_generacion, cantidades, descripciones, horas, comentario, puesto
+											FROM cotizacion_temp 
+											JOIN proyecto
+											ON proyecto.id_proyecto = cotizacion_temp.id_proyecto
+											JOIN cliente 
+											ON cliente.id_cliente = proyecto.id_cliente
+											JOIN empresa 
+											ON cliente.id_empresa= empresa.id_empresa
+											WHERE id_cotizacion_temp = '" . $Id . "' LIMIT 1");
+			return $resultado->row(); //Convierte el resultado de la consulta a una fila
 		}
 	}
 ?>

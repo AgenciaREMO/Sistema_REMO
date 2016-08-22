@@ -164,7 +164,7 @@
 							foreach ($consideraciones->result() as $fila) 
 								{ ?>
 							<div class="checkbox">
-								<input type="checkbox" name="check<?= $fila->id_elemento ?>" id="check<?= $fila->id_elemento ?>" value="<?php echo $fila->id_elemento ?>"><?php echo $fila->descripcion ?>
+								<input type="checkbox" name="elementos[]" id="check<?= $fila->id_elemento ?>" value="<?php echo $fila->id_elemento ?>"><?php echo $fila->descripcion ?>
 							</div>
 							<?php } ?>
 						</div>
@@ -177,7 +177,7 @@
 							foreach ($entregables->result() as $fila) 
 								{ ?>
 							<div class="checkbox">
-								<input type="checkbox" name="check<?= $fila->id_elemento ?>" id="check<?= $fila->id_elemento ?>" value="<?php echo $fila->id_elemento ?>"><?php echo $fila->descripcion ?>
+								<input type="checkbox" name="elementos[]" id="check<?= $fila->id_elemento ?>" value="<?php echo $fila->id_elemento ?>"><?php echo $fila->descripcion ?>
 							</div>
 							<?php } ?>
 						</div>
@@ -190,7 +190,7 @@
 							foreach ($forma_pago->result() as $fila) 
 								{ ?>
 							<div class="checkbox">
-								<input type="checkbox" name="check<?= $fila->id_elemento ?>" id="check<?= $fila->id_elemento ?>" value="<?php echo $fila->id_elemento ?>"><?php echo $fila->descripcion ?>
+								<input type="checkbox" name="elementos[]" id="check<?= $fila->id_elemento ?>" value="<?php echo $fila->id_elemento ?>"><?php echo $fila->descripcion ?>
 							</div>
 							<?php } ?>
 						</div>
@@ -203,7 +203,7 @@
 							foreach ($tiempo_entrega->result() as $fila) 
 								{ ?>
 							<div class="checkbox">
-								<input type="checkbox" name="check<?= $fila->id_elemento ?>" id="check<?= $fila->id_elemento ?>" value="<?php echo $fila->id_elemento ?>"><?php echo $fila->descripcion ?>
+								<input type="checkbox" name="elementos[]" id="check<?= $fila->id_elemento ?>" value="<?php echo $fila->id_elemento ?>"><?php echo $fila->descripcion ?>
 							</div>
 							<?php } ?>
 						</div>
@@ -216,7 +216,7 @@
 							foreach ($requerimientos->result() as $fila) 
 								{ ?>
 							<div class="checkbox">
-								<input type="checkbox" name="check<?= $fila->id_elemento ?>" id="check<?= $fila->id_elemento ?>" value="<?php echo $fila->id_elemento ?>"><?php echo $fila->descripcion ?>
+								<input type="checkbox" name="elementos[]" id="check<?= $fila->id_elemento ?>" value="<?php echo $fila->id_elemento ?>"><?php echo $fila->descripcion ?>
 							</div>
 							<?php } ?>
 						</div>
@@ -331,7 +331,7 @@
 			{
 				descripciones += $("#id_desc" + i).text();
 				if ((i+1)<num_concep) {
-					descripciones += " | ";
+					descripciones += ",";
 				};
 			}
 			$("#descripciones").val(descripciones);
