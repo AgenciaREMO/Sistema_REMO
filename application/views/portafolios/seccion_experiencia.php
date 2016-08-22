@@ -46,8 +46,7 @@
                             'content'=>'<span class="glyphicon glyphicon-plus"></span> Experiencia',
                             'data-toggle'=>'modal',
                             'data-target'=>'#cargarExperiencia');
-
-        foreach ($obtener_pagina->result() as $fila){ 
+          foreach ($obtener_pagina->result() as $fila){ 
            $id_porta     = $fila->id_porta;
            $id_imgP      = $fila->id_imgP;
            $destacado    = $fila->destacado;
@@ -61,9 +60,72 @@
            $id_tipo_imgT = $fila->id_tipo_imgT;
            $nom_tipo     = $fila->nom_tipo;
 
-          if($id_porta == '' OR $id_porta == NULL OR $id_porta != $id_portafolio){
+
+             if($id_porta == ''  OR $id_imgP == '' OR $destacado == ''  OR $mostrar == ''  ){
+              ?>
+                <div class="col-lg-3 col-xs-6 col-sm-4 col-md-3 img-rounded text-center">
+                  <div class="panel panel-default">
+                    <div class="panel-body">
+                      <img class="img-responsive img-hover img-thumbnail" src="<?= base_url($url_img)?>" alt="<?= $nom_img ?>" title="<?= $nom_img ?>">
+                      <br/>
+                      <p><?= $descripcion ?></p>
+                    </div>
+                    <div class="panel-heading">
+                      <div class="row">
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                          <!--<div class="checkbox">-->
+                            <?= form_checkbox("experiencia[]", ''.$id_imgI.'', set_checkbox("experiencia[]", ''.$id_imgI.'', FALSE)); ?>
+                            <p style="font-size:14px;"><span class="glyphicon glyphicon-ok" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Seleccionar"></span></p>
+                          <!-- </div>-->
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                          <?= form_checkbox("resaltar[]", ''.$id_imgI.'', set_checkbox("resaltar[]", ''.$id_imgI.'', FALSE)); ?>
+                          <p style="font-size:14px;"><span class="glyphicon glyphicon-star" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Resaltar"></span></p>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                          <?= form_checkbox("incluir[]", ''.$id_imgI.'', set_checkbox("incluir[]", ''.$id_imgI.'', FALSE)); ?>
+                          <p style="font-size:14px;"><span class="glyphicon glyphicon-link" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Incluir descripción"></span></p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              <?php
+           }else{
+              if(!empty($id_porta)  AND  $id_porta == $id_portafolio  AND  !empty($id_imgP) AND $destacado == ''  AND $mostrar == ''  ){
+              ?>
+                <div class="col-lg-3 col-xs-6 col-sm-4 col-md-3 img-rounded text-center">
+                  <div class="panel panel-default">
+                    <div class="panel-body">
+                      <img class="img-responsive img-hover img-thumbnail" src="<?= base_url($url_img)?>" alt="<?= $nom_img ?>" title="<?= $nom_img ?>">
+                      <br/>
+                      <p><?= $descripcion ?></p>
+                    </div>
+                    <div class="panel-heading">
+                      <div class="row">
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                          <!--<div class="checkbox">-->
+                            <?= form_checkbox("experiencia[]", ''.$id_imgP.'', set_checkbox("experiencia[]", ''.$id_imgP.'', TRUE)); ?>
+                            <p style="font-size:14px;"><span class="glyphicon glyphicon-ok" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Seleccionar"></span></p>
+                          <!-- </div>-->
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                          <?= form_checkbox("resaltar[]", ''.$id_imgI.'', set_checkbox("resaltar[]", ''.$id_imgI.'', FALSE)); ?>
+                          <p style="font-size:14px;"><span class="glyphicon glyphicon-star" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Resaltar"></span></p>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                          <?= form_checkbox("incluir[]", ''.$id_imgI.'', set_checkbox("incluir[]", ''.$id_imgI.'', FALSE)); ?>
+                          <p style="font-size:14px;"><span class="glyphicon glyphicon-link" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Incluir descripción"></span></p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              <?php
+            }else{
+              if(!empty($id_porta) AND $id_porta == $id_portafolio AND !empty($id_imgP)  AND  !empty($destacado)  AND  !empty($mostrar)){
                   ?>
-                  <div class="col-lg-3 col-xs-6 col-sm-4 col-md-3 img-rounded text-center">
+                    <div class="col-lg-3 col-xs-6 col-sm-4 col-md-3 img-rounded text-center">
                       <div class="panel panel-default">
                         <div class="panel-body">
                           <img class="img-responsive img-hover img-thumbnail" src="<?= base_url($url_img)?>" alt="<?= $nom_img ?>" title="<?= $nom_img ?>">
@@ -74,29 +136,26 @@
                           <div class="row">
                             <div class="col-lg-4 col-md-4 col-sm-12">
                               <!--<div class="checkbox">-->
-                                <?= form_checkbox("experiencia[]", ''.$id_imgI.'', set_checkbox("experiencia[]", ''.$id_imgI.'', FALSE)); ?>
+                                <?= form_checkbox("experiencia[]", ''.$id_imgP.'', set_checkbox("experiencia[]", ''.$id_imgP.'', TRUE)); ?>
                                 <p style="font-size:14px;"><span class="glyphicon glyphicon-ok" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Seleccionar"></span></p>
-                             <!-- </div>-->
+                              <!-- </div>-->
                             </div>
                             <div class="col-lg-4 col-md-4 col-sm-12">
-                              <?= form_checkbox("resaltar[]", ''.$id_imgI.'', set_checkbox("resaltar[]", ''.$id_imgI.'', FALSE)); ?>
-                                <p style="font-size:14px;"><span class="glyphicon glyphicon-star" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Resaltar"></span></p>
+                              <?= form_checkbox("resaltar[]", ''.$id_imgP.'', set_checkbox("resaltar[]", ''.$id_imgP.'', TRUE)); ?>
+                              <p style="font-size:14px;"><span class="glyphicon glyphicon-star" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Resaltar"></span></p>
                             </div>
                             <div class="col-lg-4 col-md-4 col-sm-12">
                               <?= form_checkbox("incluir[]", ''.$id_imgI.'', set_checkbox("incluir[]", ''.$id_imgI.'', FALSE)); ?>
-                                <p style="font-size:14px;"><span class="glyphicon glyphicon-link" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Incluir descripción"></span></p>
+                              <p style="font-size:14px;"><span class="glyphicon glyphicon-link" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Incluir descripción"></span></p>
                             </div>
                           </div>
-                          
                         </div>
+                      </div>
                     </div>
-                  </div>
                   <?php
-                }else{
-                  # code...
-                  if ($id_porta == $id_portafolio) {
-                    # code...
-                    ?>
+              }else{
+                if (!empty($id_porta) AND $id_porta == $id_portafolio AND !empty($id_imgP)  AND  !empty($destacado)  AND  !empty($mostrar)){
+                  ?>
                     <div class="col-lg-3 col-xs-6 col-sm-4 col-md-3 img-rounded text-center">
                       <div class="panel panel-default">
                         <div class="panel-body">
@@ -104,11 +163,13 @@
                           <br/>
                           <p><?= $descripcion ?></p>
                         </div>
-                        <div class="panel-footer">
+                        <div class="panel-heading">
                           <div class="row">
                             <div class="col-lg-4 col-md-4 col-sm-12">
-                              <?= form_checkbox("experiencia[]", ''.$id_imgP.'', set_checkbox("experiencia[]", ''.$id_imgP.'', TRUE)); ?>
-                              <p style="font-size:14px;"><span class="glyphicon glyphicon-ok" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Seleccionar"></span></p>
+                              <!--<div class="checkbox">-->
+                                <?= form_checkbox("experiencia[]", ''.$id_imgP.'', set_checkbox("experiencia[]", ''.$id_imgP.'', TRUE)); ?>
+                                <p style="font-size:14px;"><span class="glyphicon glyphicon-ok" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Seleccionar"></span></p>
+                              <!-- </div>-->
                             </div>
                             <div class="col-lg-4 col-md-4 col-sm-12">
                               <?= form_checkbox("resaltar[]", ''.$id_imgP.'', set_checkbox("resaltar[]", ''.$id_imgP.'', TRUE)); ?>
@@ -122,42 +183,12 @@
                         </div>
                       </div>
                     </div>
-                    <?php
-                  }else{
-                    # code...
-                    ?>
-                    <div class="col-lg-3 col-xs-6 col-sm-4 col-md-3 img-rounded text-center">
-                      <div class="panel panel-default">
-                        <div class="panel-body">
-                          <img class="img-responsive img-hover img-thumbnail" src="<?= base_url($url_img)?>" alt="<?= $nom_img ?>" title="<?= $nom_img ?>">
-                          <br/>
-                          <p><?= $descripcion ?></p>
-                        </div>
-                        <div class="panel-heading">
-                          <div class="row">
-                            <div class="col-lg-4 col-md-4 col-sm-12">
-                              <!--<div class="checkbox">-->
-                                <?= form_checkbox("experiencia[]", ''.$id_imgI.'', set_checkbox("experiencia[]", ''.$id_imgI.'', FALSE)); ?>
-                                <p style="font-size:14px;"><span class="glyphicon glyphicon-ok" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Seleccionar"></span></p>
-                             <!-- </div>-->
-                            </div>
-                            <div class="col-lg-4 col-md-4 col-sm-12">
-                              <?= form_checkbox("resaltar[]", ''.$id_imgI.'', set_checkbox("resaltar[]", ''.$id_imgI.'', FALSE)); ?>
-                                <p style="font-size:14px;"><span class="glyphicon glyphicon-star" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Resaltar"></span></p>
-                            </div>
-                            <div class="col-lg-4 col-md-4 col-sm-12">
-                              <?= form_checkbox("incluir[]", ''.$id_imgI.'', set_checkbox("incluir[]", ''.$id_imgI.'', FALSE)); ?>
-                                <p style="font-size:14px;"><span class="glyphicon glyphicon-link" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Incluir descripción"></span></p>
-                            </div>
-                          </div>
-                          
-                        </div>
-                    </div>
-                  </div>
-                    <?php
-                  }
+                  <?php
                 }
-        }
+              }
+            }
+          }
+    }
         ?> 
     </div> 
     <div class="row">
@@ -270,41 +301,8 @@
     </div>
 </div>
 
-
-
 <?php 
-  if (!empty($id_porta)) {
+ 
 
-  }
 
 ?>
-
-
-                  <div class="col-lg-3 col-xs-6 col-sm-4 col-md-3 img-rounded text-center">
-                      <div class="panel panel-default">
-                        <div class="panel-body">
-                          <img class="img-responsive img-hover img-thumbnail" src="<?= base_url($url_img)?>" alt="<?= $nom_img ?>" title="<?= $nom_img ?>">
-                          <br/>
-                          <p><?= $descripcion ?></p>
-                        </div>
-                        <div class="panel-heading">
-                          <div class="row">
-                            <div class="col-lg-4 col-md-4 col-sm-12">
-                              <!--<div class="checkbox">-->
-                                <?= form_checkbox("experiencia[]", ''.$id_imgI.'', set_checkbox("experiencia[]", ''.$id_imgI.'', FALSE)); ?>
-                                <p style="font-size:14px;"><span class="glyphicon glyphicon-ok" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Seleccionar"></span></p>
-                             <!-- </div>-->
-                            </div>
-                            <div class="col-lg-4 col-md-4 col-sm-12">
-                              <?= form_checkbox("resaltar[]", ''.$id_imgI.'', set_checkbox("resaltar[]", ''.$id_imgI.'', FALSE)); ?>
-                                <p style="font-size:14px;"><span class="glyphicon glyphicon-star" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Resaltar"></span></p>
-                            </div>
-                            <div class="col-lg-4 col-md-4 col-sm-12">
-                              <?= form_checkbox("incluir[]", ''.$id_imgI.'', set_checkbox("incluir[]", ''.$id_imgI.'', FALSE)); ?>
-                                <p style="font-size:14px;"><span class="glyphicon glyphicon-link" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Incluir descripción"></span></p>
-                            </div>
-                          </div>
-                          
-                        </div>
-                    </div>
-                  </div>
