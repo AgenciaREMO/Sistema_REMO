@@ -555,6 +555,7 @@
 											cliente.nombre AS cliente,
 											empresa.nombre AS empresa,
 											proyecto.nombre AS proyecto,
+											proyecto.id_tipo AS id_tipo,
 											f_generacion, cantidades, descripciones, horas, comentario, puesto
 											FROM cotizacion_temp 
 											JOIN proyecto

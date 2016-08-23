@@ -96,7 +96,7 @@
 					<?= form_dropdown('personal',$personal,'1', $style) ?>
 				</div>
 				<div>
-					<label><a href="" data-toggle="modal" data-target="#modal_proyecto"> Proyecto <i class="fa fa-search" aria-hidden="true"></i></a></label>
+					<h3><a href="" data-toggle="modal" data-target="#modal_proyecto"> Proyecto <i class="fa fa-search" aria-hidden="true"></i></a></h3>
 					<div class="form-group" id="divproyecto">
 					</div>
 				</div>

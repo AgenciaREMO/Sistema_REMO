@@ -218,6 +218,7 @@
 
 			$resultado = $this->cotizacion->obtenerPersonal();
 			$fila = $this->cotizacion->obtenerTempPorId($id);
+			$desc = $this->cotizacion->obtenerDescripcionesTipoProyecto($fila->id_tipo);
 
 			$data = array(
 				'consulta' => $resultado,
@@ -226,7 +227,12 @@
 				'nombre_proyecto' => $fila->proyecto,
 				'cliente' => $fila->cliente,			
 				'puesto' => $fila->puesto,
-				'empresa' => $fila->empresa
+				'empresa' => $fila->empresa,
+				'f_generacion' => $fila->f_generacion,
+				'descripciones' => $fila->descripciones,
+				'desc' => $desc,
+				'cants' => $fila->cantidades,
+				'hors' => $fila->horas
 			);
 			$this->load->view("cotizaciones/editar_cotizacion_temp", $data);
 			$this->load->view("footer");
