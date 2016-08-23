@@ -41,7 +41,7 @@ class C_experiencia extends MY_Controller
 		$config['num_tag_close'] = '</li>';
 
 		$this->pagination->initialize($config);
-		$obtener_pagina = $this->experiencia->obtener_pagina($config['per_page'], $config['uri_segment'], $id);
+		$obtener_pagina = $this->experiencia->obtener_pagina(/*$config['per_page'], $config['uri_segment'],*/ $id);
 		$paginationExperiencia = $this->pagination->create_links();
 		$dataExperiencia = array('id_portafolio' => $id_portafolio,
 								 'obtener_pagina' => $obtener_pagina,

@@ -53,9 +53,6 @@ class Experiencia extends CI_Model
 				}
 			}
 
-
-
-
 			/*
 
 			if(!empty($id_img['id_img'][$i])){
@@ -96,7 +93,7 @@ class Experiencia extends CI_Model
 	}
 
 	//Función que permite desplegar todas las imagenes de experiencia además de las que se encuentran relacionadas con un portafolio.
-	public function obtener_pagina($num, $uri, $id)
+	public function obtener_pagina($id)
 	{
 		$query = $this->db->query("SELECT pi.id_por_ima as id_por_ima, 
 			                     pi.id_portafolio as id_porta, 
@@ -118,6 +115,7 @@ class Experiencia extends CI_Model
 		                         /*WHERE i.id_tipo_img = 3 LIMIT ".$num.",".$uri."");*/
 		return $query;
 	}
+
 
 	//Paginación experiencia
 	public function num_experiencia(){

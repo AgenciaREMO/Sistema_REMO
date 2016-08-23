@@ -49,15 +49,15 @@
                             'data-target'=>'#cargarGrafico');
 
                   foreach ($obtener_pagina->result() as $fila){ 
-           $id_porta     = $fila->id_porta;
-           $id_imgP      = $fila->id_imgP;
-           $id_imgI      = $fila->id_imgI;
-           $id_tipo_imgI = $fila->id_tipo_imgI;
-           $nom_img      = $fila->nom_img;
-           $url_img      = $fila->url_img;
-           $url_thu      = $fila->url_thu;
-           $id_tipo_imgT = $fila->id_tipo_imgT;
-           $nom_tipo     = $fila->nom_tipo;
+                     $id_porta     = $fila->id_porta;
+                     $id_imgP      = $fila->id_imgP;
+                     $id_imgI      = $fila->id_imgI;
+                     $id_tipo_imgI = $fila->id_tipo_imgI;
+                     $nom_img      = $fila->nom_img;
+                     $url_img      = $fila->url_img;
+                     $url_thu      = $fila->url_thu;
+                     $id_tipo_imgT = $fila->id_tipo_imgT;
+                     $nom_tipo     = $fila->nom_tipo;
 
           if($id_porta == '' OR $id_porta == NULL OR $id_porta != $id_portafolio){
                   ?>

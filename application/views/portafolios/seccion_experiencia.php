@@ -92,7 +92,7 @@
                 </div>
               <?php
            }else{
-              if(!empty($id_porta)  AND  $id_porta == $id_portafolio  AND  !empty($id_imgP) AND $destacado == ''  AND $mostrar == ''  ){
+              if(!empty($id_porta)  AND  $id_porta == $id_portafolio  AND  !empty($id_imgP) AND empty($destacado) AND empty($mostrar)){
               ?>
                 <div class="col-lg-3 col-xs-6 col-sm-4 col-md-3 img-rounded text-center">
                   <div class="panel panel-default">
