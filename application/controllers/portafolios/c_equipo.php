@@ -45,6 +45,7 @@ class C_equipo extends MY_Controller
 			$config['num_tag_open'] = '<li>';
 			$config['num_tag_close'] = '</li>';
 			$this->pagination->initialize($config);*/
+			$equipoDisponible = $this->equipo->equipoDisponible();
 			$obtenerSlide = $this->equipo->obtenerSlide($id);
 			$obtener_personal = $this->equipo->obtener_personal($id);
 			//$paginationSlide = $this->pagination->create_links();
@@ -52,7 +53,7 @@ class C_equipo extends MY_Controller
 			if($obtenerSlide != false){
 				foreach ($obtenerSlide->result() as $row) {$checkSlide = $row->id_img;}
 				$dataEquipo = array('obtener_personal'=> $obtener_personal,
-				                'obtenerSlide' => $obtenerSlide,
+				                'equipoDisponible' => $equipoDisponible,
 				                'checkSlide' => $checkSlide,
 				                //'paginationSlide' => $paginationSlide,
 								'id_portafolio'=>$id_portafolio);
@@ -61,7 +62,6 @@ class C_equipo extends MY_Controller
 				$checkSlide = '';
 				
 			}
-			
 			$this->load->view("portafolios/seccion_equipo", $dataEquipo);
 			$this->load->view("portafolios/form_general", $id);
 			$this->load->view("footer", $id);

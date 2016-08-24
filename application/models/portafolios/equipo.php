@@ -67,7 +67,12 @@ class Equipo extends CI_Model
 		//Función que permite consultar si existe un registro en la tabla portafolios-imagen para evaluar
 	public function obtenerSlide($id){
 		/*
-		//SELECT * FROM portafolio_imagen WHERE id_portafolio = $id_portafolio
+		//Select * from portafolio_imagen
+		inner join imagen
+		on portafolio_imagen.id_img = imagen.id_img
+		inner join tipo_imagen
+		on imagen.id_tipo_img = tipo_imagen.id_tipo_img
+		where portafolio_imagen.id_portafolio = 16
 		*/
 		$this->db->select('*');
 		$this->db->from('portafolio_imagen');
@@ -89,7 +94,7 @@ class Equipo extends CI_Model
 			$this->db->from('portafolio_imagen pi');
 			$this->db->join('imagen i', 'pi.id_img = i.id_img');
 			$this->db->join('tipo_imagen ti','i.id_tipo_img = ti.id_tipo_img');
-			$this->db->where('i.id_tipo_img', 1);
+			$this->db->where('i.id_tipo_img', 2);
 			$this->db->where('pi.id_portafolio', $id['id_portafolio']);
 			$query = $this->db->get();
 			if($query->num_rows()>0){
@@ -106,8 +111,8 @@ class Equipo extends CI_Model
 			*/
 			$this->db->select('id_img');
 			$this->db->from('imagen');
-			$this->db->where('id_img', 1);
-			$this->db->where('id_tipo_img', 1);
+			$this->db->where('id_img', 16);
+			$this->db->where('id_tipo_img', 2);
 			$query = $this->db->get();
 			if($query->num_rows()>0){
 	        	return $query;
@@ -121,13 +126,12 @@ class Equipo extends CI_Model
 	}
 
 		//Función que trae el id de la de default
-	public function checkDefault(){
+	public function equipoDisponible(){
          	/*
 			//$query = $this->db->query('SELECT nom_img, url_img, url_thu FROM imagen WHERE id_img = 1 AND id_tipo_img = 1');
 			*/
-			$this->db->select('id_img');
+			$this->db->select('*');
 			$this->db->from('imagen');
-			$this->db->where('id_img', '17');
 			$this->db->where('id_tipo_img', '2');
 			$id_img_checked_default = $this->db->get();
 			if($id_img_checked_default->num_rows()>0){
