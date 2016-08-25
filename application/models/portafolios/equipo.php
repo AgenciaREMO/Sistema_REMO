@@ -64,6 +64,8 @@ class Equipo extends CI_Model
 		return $query;
 	}
 
+	
+
 		//Función que permite consultar si existe un registro en la tabla portafolios-imagen para evaluar
 	public function obtenerSlide($id){
 		/*
@@ -78,6 +80,7 @@ class Equipo extends CI_Model
 		$this->db->from('portafolio_imagen');
 		$this->db->join('imagen', 'portafolio_imagen.id_img = imagen.id_img');
 		$this->db->join('tipo_imagen', 'imagen.id_tipo_img = tipo_imagen.id_tipo_img');
+		$this->db->where('imagen.id_tipo_img', 2);
 		$this->db->where('portafolio_imagen.id_portafolio', $id['id_portafolio']);
 		//$this->db->where('tipo_imagen.id_tipo_img', 1);
 		$query = $this->db->get();
@@ -133,9 +136,9 @@ class Equipo extends CI_Model
 			$this->db->select('*');
 			$this->db->from('imagen');
 			$this->db->where('id_tipo_img', '2');
-			$id_img_checked_default = $this->db->get();
-			if($id_img_checked_default->num_rows()>0){
-	        	return $id_img_checked_default;
+			$query = $this->db->get();
+			if($query->num_rows()>0){
+	        	return $query;
 	      	}else{
 	        	return false;
 	      	} 
