@@ -504,6 +504,13 @@
 										ON elemento_seccion.id_tipo_seccion=tipo_seccion.id_tipo_seccion 
 										WHERE tipo_seccion.id_tipo_seccion=".$elem);
 		}
+		public function obtenerElementosPorId($id)
+		{
+			return $this->db->query("SELECT * FROM elemento_seccion 
+										JOIN elemento_cotizacion 
+										ON elemento_seccion.id_elemento=elemento_cotizacion.id_elemento
+										WHERE elemento_cotizacion.id_cotizacion_temp=".$id);
+		}
 
 		public function obtenerPersonal()
 		{

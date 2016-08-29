@@ -216,9 +216,16 @@
 			$this->load->view("head"); 
 			$this->load->view("nav");
 
+			$consid = $this->cotizacion->obtenerElemento(1);
+			$entreg = $this->cotizacion->obtenerElemento(2);
+			$for_pago = $this->cotizacion->obtenerElemento(3);
+			$tiempo_entrega = $this->cotizacion->obtenerElemento(4);
+			$reque = $this->cotizacion->obtenerElemento(5);
+
 			$resultado = $this->cotizacion->obtenerPersonal();
 			$fila = $this->cotizacion->obtenerTempPorId($id);
 			$desc = $this->cotizacion->obtenerDescripcionesTipoProyecto($fila->id_tipo);
+			$elementos = $this->cotizacion->obtenerElementosPorId($id);
 
 			$data = array(
 				'consulta' => $resultado,
@@ -232,7 +239,14 @@
 				'descripciones' => $fila->descripciones,
 				'desc' => $desc,
 				'cants' => $fila->cantidades,
-				'hors' => $fila->horas
+				'hors' => $fila->horas,
+				'comentario' => $fila->comentario,
+				'consideraciones' => $consid, 
+				'entregables' => $entreg,
+				'forma_pago' => $for_pago,
+				'tiempo_entrega' => $tiempo_entrega,
+				'requerimientos' => $reque,
+				'elementos' => 
 			);
 			$this->load->view("cotizaciones/editar_cotizacion_temp", $data);
 			$this->load->view("footer");

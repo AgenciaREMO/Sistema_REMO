@@ -132,12 +132,12 @@
 											<td class="col-horas">
 												<div class="input-group">
 													<input type="text" name="horas<?= $i ?>" id="horas<?= $i ?>" class="form-control input-recal" value ="<?= $hrs[$i] ?>" disabled="disabled">
-													<div class="input-group-addon"> x $ <span name="costo0" id="costo0">0.00</span></div>
+													<div class="input-group-addon"> x $ <span name="costo<?= $i ?>" id="costo<?= $i ?>"><?= $fila->costo ?></span></div>
 												</div>
 											</td>
 											<td class="col-importe">
 												<div class="input-group">
-													<span id="importe<?= $i ?>"name="importe<?= $i ?>">0.00</span>
+													<span id="importe<?= $i ?>"name="importe<?= $i ?>"><?= ($fila->costo)*($cantis[$i])*($hrs[$i]) ?></span>
 												</div>
 											</td>
 										</tr>
@@ -156,6 +156,80 @@
 						<label for="">*TOTAL:</label><span name="total" id="total" class="totales">$ 0.00</span>
 					</div>				
 				</div>
+				<hr>
+				<div id="elementos" style="display:none"> 
+					<input type="text" name="elementos" id="elementos" style="display:none" value="">
+					<!--ELEMENTO DE SECCIÓN CONSIDERACIONES-->
+					<div class="row"> 
+						<h3>Consideraciones</h3>
+						<div class="col-lg-12">
+							<?php 
+							foreach ($consideraciones->result() as $fila) 
+								{ ?>
+							<div class="checkbox">
+								<input type="checkbox" name="elementos[]" id="check<?= $fila->id_elemento ?>" value="<?php echo $fila->id_elemento ?>"><?php echo $fila->descripcion ?>
+							</div>
+							<?php } ?>
+						</div>
+					</div>
+					<!--ELEMENTO DE SECCIÓN ENTREGABLES-->
+					<div class="row">
+						<h3>Entregables</h3>
+						<div class="col-lg-12">
+							<?php 
+							foreach ($entregables->result() as $fila) 
+								{ ?>
+							<div class="checkbox">
+								<input type="checkbox" name="elementos[]" id="check<?= $fila->id_elemento ?>" value="<?php echo $fila->id_elemento ?>"><?php echo $fila->descripcion ?>
+							</div>
+							<?php } ?>
+						</div>
+					</div>
+					<!--ELEMENTO DE SECCIÓN FORMA DE PAGO-->
+					<div class="row">
+						<h3>Forma de pago</h3>
+						<div class="col-lg-12">
+							<?php 
+							foreach ($forma_pago->result() as $fila) 
+								{ ?>
+							<div class="checkbox">
+								<input type="checkbox" name="elementos[]" id="check<?= $fila->id_elemento ?>" value="<?php echo $fila->id_elemento ?>"><?php echo $fila->descripcion ?>
+							</div>
+							<?php } ?>
+						</div>
+					</div>
+					<!--ELEMENTO DE SECCIÓN FECHAS DE ENTREGA-->
+					<div class="row">
+						<h3>Tiempo estimado de entrega</h3>
+						<div class="col-lg-12">
+							<?php 
+							foreach ($tiempo_entrega->result() as $fila) 
+								{ ?>
+							<div class="checkbox">
+								<input type="checkbox" name="elementos[]" id="check<?= $fila->id_elemento ?>" value="<?php echo $fila->id_elemento ?>"><?php echo $fila->descripcion ?>
+							</div>
+							<?php } ?>
+						</div>
+					</div>
+					<!--ELEMENTO DE SECCIÓN REQUERIMIENTOS-->
+					<div class="row">
+						<h3>Requerimientos</h3>
+						<div class="col-lg-12">
+							<?php 
+							foreach ($requerimientos->result() as $fila) 
+								{ ?>
+							<div class="checkbox">
+								<input type="checkbox" name="elementos[]" id="check<?= $fila->id_elemento ?>" value="<?php echo $fila->id_elemento ?>"><?php echo $fila->descripcion ?>
+							</div>
+							<?php } ?>
+						</div>
+					</div>
+				</div>
+				<hr>
+				<h3>Comentarios</h3>
+				<div class="form-group">
+					<textarea name="comentario" class="form-control" rows="5" id="" disabled="disabled"><?php echo $comentario ?></textarea>
+				</div>
 			</div>
 			<?= form_button($editar) ?>
 			<a id="e-volver" href="<?= base_url('cotizaciones/listaCotizaciones') ?>" class="btn btn-default">Volver</a>
@@ -164,3 +238,71 @@
 		<?= form_close() ?>
 	</div>
 </div>
+
+<script type="text/javascript">
+	//Variables globales
+	var num_concep = 1;
+	
+	$(document).ready(function() {
+    	/*$('#proys').find('tr').click(function() {
+    		$(this).find('input').prop("checked", true);
+    		var id = $('input:radio[name=proyecto]:checked').val();
+    		$('#seleccionarProy').attr("onClick", "cargarProyecto('"+id+"')");
+
+    	});
+    	$('#concep').find('tr').click(function() {
+    		$(this).find('input').prop("checked", true);
+    		var id = $('input:radio[name=descripcion]:checked').val();
+    		var num_input = $("#inputs").val();
+    		$('#seleccionarDescrip').attr("onClick", "cargarDescrip('"+id+"','"+num_input+"')");
+    		alert("Hiciste click en un renglon");
+    	});*/
+		/*$("#guardar").click(function(){
+			var cants = "";
+			for(var i=0; i<num_concep; i++)
+			{
+				cants += $("#cantidad" + i).val();
+				if ((i+1)<num_concep) {
+					cants += ",";
+				};
+			}
+			$("#cantidades").val(cants);
+
+			var horas = "";
+			for(var i=0; i<num_concep; i++)
+			{
+				horas += $("#horas" + i).val();
+				if ((i+1)<num_concep) {
+					horas += ",";
+				};
+			}
+			$("#horastot").val(horas);
+
+			var descripciones = "";
+			for(var i=0; i<num_concep; i++)
+			{
+				descripciones += $("#id_desc" + i).text();
+				if ((i+1)<num_concep) {
+					descripciones += ",";
+				};
+			}
+			$("#descripciones").val(descripciones);
+		});
+    	$("body").on("keyup", "input[name*='cantidad']", function() {
+    		var txt = $(this).attr("id");
+			var id_input = txt.replace(/\D/g,'');
+			recalcularImporte(id_input);
+    	});
+    	$("body").on("keyup", "input[name*='horas']", function() {
+    		var txt = $(this).attr("id");
+			var id_input = txt.replace(/\D/g,'');
+			recalcularImporte(id_input);
+    	});
+    	//Limpia la modales cuando se ocultan
+		$(document.body).on('hidden.bs.modal', function () {
+			$('#formproy')[0].reset();
+			$('#formconcep')[0].reset();
+		});*/
+    });
+
+</script>
