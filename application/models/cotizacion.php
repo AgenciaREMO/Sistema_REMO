@@ -496,7 +496,6 @@
 			return $resultado->result();
 		}
 
-
 		public function obtenerElemento($elem)
 		{
 			return $this->db->query("SELECT * FROM elemento_seccion 
@@ -539,10 +538,7 @@
 			return $resultado->result();
 
 		}
-		public function ultimoId()
-		{
-			return $this->db->query("SELECT MAX(id_cotizacion)+1 AS id FROM cotizacion");
-		}
+		
 		public function nuevaCotizacionTemp($data)
 		{
 			$this->db->insert('cotizacion_temp',array('id_proyecto' => $data['id_proyecto'],'id_personal' => $data['id_personal'],'f_generacion' => $data['f_generacion'],'cantidades' => $data['cantidades'],'descripciones' => $data['descripciones'],'horas' => $data['horas'],'comentario' => $data['comentario']));
@@ -572,6 +568,61 @@
 											JOIN empresa 
 											ON cliente.id_empresa= empresa.id_empresa
 											WHERE id_cotizacion_temp = '" . $Id . "' LIMIT 1");
+			return $resultado->row(); //Convierte el resultado de la consulta a una fila
+		}
+		public function editarTemp($data)
+		{
+			$this->db->delete('elemento_cotizacion', array('id_cotizacion_temp' => $data['id_temp']));
+
+			$this->db->where('id_cotizacion_temp', $data['id_temp']);
+			$this->db->update('cotizacion_temp', array('id_personal' => $data['id_personal'],'cantidades' => $data['cantidades'],'descripciones' => $data['descripciones'],'horas' => $data['horas'],'comentario' => $data['comentario']));
+
+			$elems = count($data['elementos']);
+			for ($i=0; $i < $elems ; $i++) { 
+				$this->db->insert('elemento_cotizacion',array('id_cotizacion_temp' => $data['id_temp'],'id_elemento' => $data['elementos'][$i]));
+			}
+		}
+		public function obtenerUltimoFolio()
+		{
+			return $this->db->query("SELECT MAX(id_cotizacion) + 1 AS id_cotizacion FROM cotizacion");
+		}
+
+		public function nuevaCotizacionFija($data)
+		{
+			//Crea la cotización fija
+			$this->db->insert('cotizacion',array('id_proyecto' => $data['id_proyecto'],'id_personal' => $data['id_personal'],'id_estatus' => '2','folio' => $data['folio'],'f_expedicion' => $data['f_expedicion'],'f_generacion' => $data['f_generacion'],'vigencia' => $data['vigencia'],'total' => $data['total'],'comentario' => $data['comentario'],'url_cotizacion' => $data['url']));
+			$id_insertado = $this->db->insert_id();
+
+			//Elimina la cotización temporal y sus registros en elemento_cotizacion
+			$this->db->delete('cotizacion_temp', array('id_cotizacion_temp' => $data['id_temp']));
+
+			return $id_insertado;
+		}		
+		public function obtenerCotizPorId($id)
+		{
+			$resultado = $this->db->query("SELECT cotizacion.id_cotizacion AS id_cotizacion, 
+												cotizacion.id_proyecto AS id_proyecto, 
+												proyecto.nombre AS proyecto, 
+												cotizacion.id_personal AS id_personal, 
+												personal.nombre AS personal, 
+												cliente.nombre AS cliente, 
+												empresa.nombre AS empresa, 
+												proyecto.nombre AS proyecto, 
+												proyecto.id_tipo AS id_tipo, 
+												tipo_proyecto.nombre AS tipo_proyecto,
+												f_generacion, f_expedicion, estatus, folio, comentario, url_cotizacion
+												FROM cotizacion 
+												JOIN proyecto 
+												ON proyecto.id_proyecto = cotizacion.id_proyecto 
+												JOIN tipo_proyecto 
+												ON tipo_proyecto.id_tipo = proyecto.id_tipo 
+												JOIN cliente 
+												ON cliente.id_cliente = proyecto.id_cliente 
+												JOIN empresa 
+												ON cliente.id_empresa = empresa.id_empresa 
+												JOIN personal 
+												ON personal.id_personal=cotizacion.id_personal 
+												WHERE id_cotizacion = '" . $id . "' LIMIT 1");
 			return $resultado->row(); //Convierte el resultado de la consulta a una fila
 		}
 	}

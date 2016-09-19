@@ -95,3 +95,44 @@ var desactivarelemento = function() {
 	cancelar.style.display = 'none';
 	guardar.style.display = 'none';
 };
+
+var activarcot = function() {
+	var cancelar = document.getElementById("e-cancelar");
+	var volver = document.getElementById("e-volver");
+	var guardar = document.getElementById("e-guardar");
+	var editar = document.getElementById("e-editar");
+	var expedir = document.getElementById("e-expedir");
+	var agregar = document.getElementById("agregar");
+
+	$('#container-cotemp').find('input, textarea, button, select').prop('disabled', false);
+	$("[id*=concepto]").prop('disabled', true);
+	$("[class*=i-borrar]").css("display", "inline");
+
+	agregar.style.display = 'inline';
+	expedir.style.display = 'none';
+	editar.style.display = 'none';
+	volver.style.display = 'none';
+	cancelar.style.display = 'inline';
+	guardar.style.display = 'inline';
+};
+
+var desactivarcot = function() {	
+	var cancelar = document.getElementById("e-cancelar");
+	var volver = document.getElementById("e-volver");
+	var guardar = document.getElementById("e-guardar");
+	var editar = document.getElementById("e-editar");
+	var expedir = document.getElementById("e-expedir");
+	var agregar = document.getElementById("agregar");
+
+	$('#container-cotemp').find('input, textarea, button, select, anchor').prop('disabled', true);
+	$("[class*=i-borrar]").css("display", "none");
+	$('#e-editar').prop('disabled', false);
+	$('#e-expedir').prop('disabled', false);
+
+	agregar.style.display = 'none';
+	expedir.style.display = 'inline';
+	editar.style.display = 'inline';
+	volver.style.display = 'inline';
+	cancelar.style.display = 'none';
+	guardar.style.display = 'none';
+};
