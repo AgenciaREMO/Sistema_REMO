@@ -64,7 +64,6 @@
 			$consulta = $this->db->query("SELECT * FROM cotizacion");
 			$num_total = $consulta->num_rows();
 			return $num_total;
-			
 		}
 		public function cotizacionesAceptadas()
 		{
@@ -584,7 +583,8 @@
 		}
 		public function obtenerUltimoFolio()
 		{
-			return $this->db->query("SELECT MAX(id_cotizacion) + 1 AS id_cotizacion FROM cotizacion");
+			$resultado = $this->db->query("SELECT MAX(id_cotizacion) + 1 AS id_cotizacion FROM cotizacion")->row(); //Convierte el resultado en una sola fila
+			return $resultado;
 		}
 
 		public function nuevaCotizacionFija($data)
@@ -623,7 +623,7 @@
 												JOIN personal 
 												ON personal.id_personal=cotizacion.id_personal 
 												WHERE id_cotizacion = '" . $id . "' LIMIT 1");
-			return $resultado->row(); //Convierte el resultado de la consulta a una fila
+			return $resultado->row(); //Retorna el resultado como una sola fila
 		}
 	}
 ?>

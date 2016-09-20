@@ -280,36 +280,59 @@
 				$nom_proyec = str_split($emp);
 				$m = date('m');
 				$y = date('y');
-				$folio = $nom_proyec[0].$nom_proyec[1].$num_folio;
+				$folio = $nom_proyec[0].$nom_proyec[1].$num_folio->id_cotizacion.$m.$y;
 				//Generación de fecha de expedición
 				$f_expedicion = date("Y-m-d");
 				//Generación de vigencia
 				$vigencia = date_create($f_expedicion);
 				date_add($vigencia,date_interval_create_from_date_string("30 days"));
 				$vigencia = date_format($vigencia,"Y-m-d");
-
-				for ($i=1; $i<13; $i++) { 
-					if($mes == $i){$mes = $meses[$i];}
-				}
+				//Generación de fecha de expedición en formato para el PDF
 				$fecha = $dia." de ".$mes." de ".$anio;
-
+				//Generando cadena HTML de descripciones
+				$descrips = explode(",", $fila->descripciones); 
+				$num_descrips = count($descrips);
+				$str_descrips = "";
+				$cantis = explode(",", $fila->descripciones);
+				for($i=0; $i<$num_descrips; $i++){
+					$str_descrips .= "<tr><td>".."</td><td></td><td></td><td></td></tr>";
+				}
 
 		        //PDF GENERATOR: Load the view and saved it into $html variable
 		        $html = 
 		        "<style>@page {
 		        	    background-image: url(".base_url()."/img/machoteRemo.jpg);
-					    margin-top: 70px;
+					    margin-top: 50px;
 					    background-image-resize: 6;
 					}
 				</style>".
 		        "<body>
 		        	<div>
-						<p style='color:#FFF; text-align:right; font-size: 20px; margin-bottom: 15px;'>COTIZACIÓN</p>
-		        		<p style='text-align: right; font-size: 12px; margin-top:0px;'>Santiago de Querétaro, Qro., a ".$fecha."</p>
-		        		<p style='text-align: right; font-size: 12px; margin-top:0px;'><b> COTIZACIÓN ".$folio."</b></p>
+						<p style='font-family: Tahoma; color:#FFF; text-align:right; font-size:20px; margin-bottom:35px;'>COTIZACIÓN</p>
+		        		<p style='font-family: Tahoma; text-align:right; font-size:12px;'>Santiago de Querétaro, Qro., a ".$fecha."<br>
+		        		<b style='font-family: Tahoma; color:#0f76bb;'> COTIZACIÓN ".$folio."</b></p>
 		        	</div>
-		        	Comentario: ".$this->input->post('comentario')."<br>
-		        	Cantidades: ".$this->input->post('cantidades')."
+		        	<div>
+			        	<p style='font-family: Tahoma; text-align:left; font-size: 11px; margin-top:28px; margin-left:163px;'><b>".$fila->cliente."</b><br>
+			        	".$fila->puesto."<br>
+			        	Presente.</p>
+			        	<p style='font-family: Tahoma; color:#0f76bb; text-align:left; font-size: 11px; margin-top:15px; margin-left:163px;'><b>PROYECTO: ".strtoupper($fila->proyecto)."</b></p>
+		        	</div>
+		        	<div>
+						<p style='font-family: Tahoma; text-align:left; font-size: 11px; margin-top:3px; margin-left:163px;'>
+							Por este medio, nos permitimos presentar a su atenta consideración la cotización de la impresión de folders y tarjetas de presentación, como fue solicitada por usted.<br><br>
+							DESCRIPCIÓN DEL PROYECTO <br>
+							<table>
+								<tr>
+									<th>CANT.</th>
+									<th>CONCEPTO</th>
+									<th>DESCRIPCIÓN</th>
+									<th>IMPORTE</th>
+								</tr>"
+								.$descrips.								.
+							"</table>
+						</p>
+		        	</div>
 		        </body>";
 
 		        //this the the PDF filename that user will get to download
@@ -337,9 +360,8 @@
 					'url' =>  $pdfFilePath,
 					'id_temp' => $id
 				);
-				$id_insertado = $this->cotizacion->nuevaCotizacionFija($data);
-				echo $id_insertado;
-				redirect('cotizaciones/detallesCotiz/'.$id_insertado);
+				//$id_insertado = $this->cotizacion->nuevaCotizacionFija($data);
+				//redirect('cotizaciones/detallesCotiz/'.$id_insertado);
 			}
 			else if($this->input->post('guardar') == "Guardar")
 			{

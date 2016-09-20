@@ -202,7 +202,7 @@
 				$resultado = $this->db->get("",$numero_por_pagina, $this->uri->segment(3));
 			}
 			
-			return $resultado->result();
+			return $resultado->row_array(0);
 		}
 
 		//OTROS
