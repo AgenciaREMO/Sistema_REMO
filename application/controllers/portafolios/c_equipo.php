@@ -17,6 +17,7 @@ class C_equipo extends MY_Controller
 			$id = array('id_portafolio' => $id_portafolio);
 			$this->load->view("head", $id);
 			$this->load->view("nav", $id);
+			$this->load->view("portafolios/bread-equipo");
 			$this->load->view("portafolios/port");
 
 			/*Sección de paginación
@@ -71,6 +72,7 @@ class C_equipo extends MY_Controller
 			$this->load->view("footer", $id);
 		}
 
+		//Función que válida el contenido que se esta cargando
 		public function validarEquipo($id_portafolio){
 		/*
 			//Validaciones del formulario
@@ -93,6 +95,7 @@ class C_equipo extends MY_Controller
 	        }
 		}
 
+		//Función que permite subir contenido grafico en la sección de equipo
 		public function subirEquipo($id_portafolio){
 			$id_portafolio = $id_portafolio;
 			$tipo = $this->input->post('tipo');
@@ -154,13 +157,17 @@ class C_equipo extends MY_Controller
 			        // finalmente limpiamos la cache para no saturar nuestro servidor
 			        $this->image_lib->clear();
 	    }
-	
 
-
-
-
-
-
-
-
+	    //Función que permite actualizar el personal seleccionado
+	    public function actualizarEquipo($id_portafolio){
+				//Si es válido se realiza la función de insertar
+				$id_portafolio = $id_portafolio;
+				$data = array('id_portafolio' => $id_portafolio);
+				$cont = array('id_personal' => implode(", ", $this->input->post('id_personal')));
+				$id_personal = array('id_personal' => $this->input->post('id_personal'));
+				$destacado = array('destacado' => $this->input->post('destacado'));
+				$this->equipo->actualizarEquipo($data, $id_personal, $destacado, $cont);
+				//redirect('/portafolios/c_equipo/cargarEquipo'.'/'.$id_portafolio);
+				echo "succesfull"; 
+	    }
 }

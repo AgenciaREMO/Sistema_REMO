@@ -13,6 +13,7 @@ class C_experiencia extends MY_Controller
 		$id = array('id_portafolio' => $id_portafolio);
 		$this->load->view("head", $id);
 		$this->load->view("nav", $id);
+		$this->load->view("portafolios/bread-experiencia");
 		$this->load->view("portafolios/port");
 		//Sección de paginación
 		$config['base_url'] = base_url().'portafolios/c_experiencia/cargarExperiencia'.'/'.$id_portafolio;

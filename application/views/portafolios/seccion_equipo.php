@@ -25,7 +25,7 @@
           'content' => 'Cancelar'
         );
         $guardar = array(
-          'style' => 'display:none',
+          'style' => 'display:inline',
           'class' => 'btn btn-primary',
           'id'    => 'eq-guardar',
           'value' => 'Guardar'
@@ -36,7 +36,7 @@
           'id'    => 'eq-nueva-s',
           'content' => '<span class="glyphicon glyphicon-plus"></span> Slider',
           'data-toggle' => 'modal',
-          'data-target' => ''#cargarEquipo'
+          'data-target' => '#cargarEquipo'
           );
         $cargar2 = array(
           'style' => 'display:none',
@@ -52,8 +52,8 @@
           <td><b>No.</b></td>
           <td><b>Colaborador</b></td>
           <td><b>Puesto</b></td>
-          <td><b>Resaltar</b></td>
           <td><b>Seleccionar</b></td>
+          <td><b>Resaltar</b></td>
         </tr>
       <?php 
         $cont = 1;
@@ -75,12 +75,12 @@
           <td><?= $puesto ?></td>
           <td>
             <div class="checkbox" style="text-align:center">
-              <?= form_checkbox("id_personal[]", ''.$id_personalP.'', set_checkbox("id_personal[]", ''.$id_personalP.'', FALSE)); ?>
+              <?= form_checkbox("id_personal[]", ''.$id_personal.'', set_checkbox("id_personal[]", ''.$id_personal.'', FALSE)); ?>
             </div>
           </td>
           <td>
             <div class="checkbox" style="text-align:center">
-              <?= form_checkbox("destacado[]", ''.$destacado.'', set_checkbox("destacado[]", ''.$destacado.'', FALSE)); ?>
+              <?= form_checkbox("destacado[]", ''.$id_personal.'', set_checkbox("destacado[]", ''.$id_personal.'', FALSE)); ?>
             </div>
           </td>
         </tr>
@@ -99,7 +99,7 @@
                 </td>
                 <td>
                   <div class="checkbox" style="text-align:center">
-                    <?= form_checkbox("destacado[]", ''.$destacado.'', set_checkbox("destacado[]", ''.$destacado.'', FALSE)); ?>
+                    <?= form_checkbox("destacado[]", ''.$id_personal.'', set_checkbox("destacado[]", ''.$id_personal.'', FALSE)); ?>
                   </div>
                 </td>
               </tr>
@@ -126,7 +126,7 @@
                 }
               }
             } 
-          } //Fin de Foreach para lista los portafolios
+          } //Fin de Foreach para lista del personal de la agencia
         ?>
       </table>
     </div>
@@ -313,3 +313,10 @@
       </div>
     </div>
 </div>
+<style type="text/css">
+  $('.id_personal:checked').each(
+    function() {
+        alert("El checkbox con valor " + $(this).val() + " está seleccionado");
+    }
+  );
+</style>

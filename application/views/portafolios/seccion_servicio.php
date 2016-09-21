@@ -16,8 +16,6 @@
             $cancelar = array('onClick' => 'desactivarSer()','style' => 'display:inline','class' => 'btn btn-default','id' => 's-cancelar','content' => 'Cancelar');
             $guardar = array('style' => 'display:inline','class' => 'btn btn-primary','id' => 's-guardar','value' => 'Guardar'); 
      
-
-
             foreach ($consultarServicio->result() as $fila) {
               $id_tipoP =$fila->id_tipoP;
               $id_porta= $fila->id_porta;

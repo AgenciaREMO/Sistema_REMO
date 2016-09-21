@@ -64,8 +64,6 @@ class Equipo extends CI_Model
 		return $query;
 	}
 
-	
-
 		//Función que permite consultar si existe un registro en la tabla portafolios-imagen para evaluar
 	public function obtenerSlide($id){
 		/*
@@ -144,6 +142,70 @@ class Equipo extends CI_Model
 	      	} 
 	      	print_r($query);
 	      	echo 'Insertar'; 
+	}
+
+
+	public function eliminarEquipo($data){
+		$this->db->where('id_portafolio', $data['id_portafolio']); 
+   		$this->db->delete('portafolio_personal');
+	}
+
+	public function insertarEquipo($data, $id_personal, $destacado, $cont){
+		print_r($id_personal);
+		echo "<br><br>";
+		print_r($destacado);
+		echo "<br><br>";
+		print_r($cont);
+		echo "<br><br>";
+		$arrayCont = explode (", " , $cont['id_personal']);
+		for($i=0; $i <= count($arrayCont) ;$i++){
+			if (!empty($id_personal['id_personal'][$i]) && !empty($destacado['destacado'][$i])) {
+				# code...
+				$sql = " INSERT INTO portafolio_personal (id_por_per, id_personal, id_portafolio, destacado) 
+					     VALUES ('',".$id_personal['id_personal'][$i].",".$data['id_portafolio'].", 1)";
+				echo $sql;
+				//$this->db->query($sql);
+			}elseif (!empty($id_personal['id_personal'][$i])) {
+				# code...
+				$sql = " INSERT INTO portafolio_personal (id_por_per, id_personal, id_portafolio, destacado) 
+					     VALUES ('',".$id_personal['id_personal'][$i].",".$data['id_portafolio'].", 0)";
+				echo $sql;
+				//$this->db->query($sql);	
+			}
+
+
+			/*if(!empty($id_personal['id_personal'][$i]) && !empty($destacado['destacado'][$i])){
+				$sql = " INSERT INTO portafolio_personal (id_por_per, id_personal, id_portafolio, destacado) 
+					     VALUES ('',".$id_personal['id_personal'][$i].",".$data['id_portafolio'].", 1)";
+				echo $sql;
+				//$this->db->query($sql);	
+			}else{
+				if(!empty($id_personal['id_personal'][$i]) && empty($destacado['destacado'][$i])){
+					$sql = " INSERT INTO portafolio_personal (id_por_per, id_personal, id_portafolio, destacado) 
+					     VALUES ('',".$id_personal['id_personal'][$i].",".$data['id_portafolio'].", 0)";
+				echo $sql;
+				//$this->db->query($sql);	
+				}
+			} */
+		  echo "<br><br>";   
+		}
+	}
+
+	//Función que permite validar si existen registros en la base de datos donde este relacionado portafolio_tipo y tipo_proyecto 
+	public function actualizarEquipo($data, $destacado, $id_personal, $cont){
+		//SELECT * FROM portafolio_tipo WHERE id_portafolio = $id['id_portafolio']
+		$this->db->select('*');
+		$this->db->from('portafolio_personal');
+		$this->db->where('id_portafolio', $data['id_portafolio']);
+		$query = $this->db->get();
+		if($query->num_rows()>0){
+			$this->eliminarEquipo($data);
+			$this->insertarEquipo($data, $destacado, $id_personal, $cont);
+			echo "elimina e inserta";
+		}else{ 
+			$this->insertarEquipo($data, $destacado, $id_personal, $cont);
+			echo "inserta";
+		}
 	}
 
 }

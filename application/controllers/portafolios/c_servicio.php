@@ -17,6 +17,7 @@ class C_servicio extends MY_Controller
 		$id = array ('id_portafolio' => $id_portafolio);
 		$this->load->view("head", $id);
 		$this->load->view("nav", $id);
+		$this->load->view("portafolios/bread-servicios");
 		$this->load->view("portafolios/port");
 		$consultarServicio = $this->servicio->consultarServicio($id);
 		//$obtenerServicio= $this->servicio->obtenerServicio($id);
