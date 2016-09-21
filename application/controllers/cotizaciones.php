@@ -295,7 +295,7 @@
 				$str_descrips = "";
 				$cantis = explode(",", $fila->descripciones);
 				for($i=0; $i<$num_descrips; $i++){
-					$str_descrips .= "<tr><td>".."</td><td></td><td></td><td></td></tr>";
+					$str_descrips .= "<tr><td>".$cantis[$i]."</td><td>".$cantis[$i]."</td><td></td><td></td></tr>";
 				}
 
 		        //PDF GENERATOR: Load the view and saved it into $html variable
@@ -328,9 +328,8 @@
 									<th>CONCEPTO</th>
 									<th>DESCRIPCIÓN</th>
 									<th>IMPORTE</th>
-								</tr>"
-								.$descrips.								.
-							"</table>
+								</tr>".$str_descrips."
+							</table>
 						</p>
 		        	</div>
 		        </body>";
