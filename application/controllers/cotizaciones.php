@@ -289,48 +289,78 @@
 				$vigencia = date_format($vigencia,"Y-m-d");
 				//Generación de fecha de expedición en formato para el PDF
 				$fecha = $dia." de ".$mes." de ".$anio;
-				//Generando cadena HTML de descripciones
+				//Generando cadena HTML de descripciones y calculando total
 				$descrips = explode(",", $fila->descripciones); 
 				$num_descrips = count($descrips);
 				$str_descrips = "";
-				$cantis = explode(",", $fila->descripciones);
+				$cantis = explode(",", $fila->cantidades);
+				$hrs = explode(",",$fila->horas);
+				$subtotal = 0;
+
 				for($i=0; $i<$num_descrips; $i++){
-					$str_descrips .= "<tr><td>".$cantis[$i]."</td><td>".$cantis[$i]."</td><td></td><td></td></tr>";
+					$con_desc = $this->cotizacion->obtenerConceptoPorDescripcion($descrips[$i]);
+					$importe = $con_desc->costo * $cantis[$i] * $hrs[$i];
+					$str_descrips .= "<tr><td style='font-family:Tahoma; padding:3px 3px; text-align:center;'>".$cantis[$i]."</td><td style='font-family:Tahoma; padding:3px 5px;'>".$con_desc->nombre."</td><td style='font-family:Tahoma; padding:3px 5px; '>".$con_desc->detalles."</td><td style='font-family:Tahoma; text-align:right; padding:3px 5px; '>$ ".number_format($importe).".00</td></tr>";
+					$subtotal += $importe;
 				}
+
+				$iva = ($subtotal * 16)/100;
+				$total = $subtotal + $iva;
 
 		        //PDF GENERATOR: Load the view and saved it into $html variable
 		        $html = 
-		        "<style>@page {
+		        "<style>
+		        	@page {
 		        	    background-image: url(".base_url()."/img/machoteRemo.jpg);
-					    margin-top: 50px;
-					    background-image-resize: 6;
+					    margin-top:50px;
+					    background-image-resize:6;
+					}
+					table, th, td {
+					    border:1px solid black;
+					    border-collapse:collapse;
 					}
 				</style>".
 		        "<body>
 		        	<div>
-						<p style='font-family: Tahoma; color:#FFF; text-align:right; font-size:20px; margin-bottom:35px;'>COTIZACIÓN</p>
-		        		<p style='font-family: Tahoma; text-align:right; font-size:12px;'>Santiago de Querétaro, Qro., a ".$fecha."<br>
-		        		<b style='font-family: Tahoma; color:#0f76bb;'> COTIZACIÓN ".$folio."</b></p>
+						<p style='font-family:Tahoma; color:#FFF; text-align:right; font-size:20px; margin-bottom:35px;'>COTIZACIÓN</p>
+		        		<p style='font-family:Tahoma; text-align:right; font-size:12px;'>Santiago de Querétaro, Qro., a ".$fecha."<br>
+		        		<b style='font-family:Tahoma; color:#0f76bb;'> COTIZACIÓN ".$folio."</b></p>
 		        	</div>
 		        	<div>
-			        	<p style='font-family: Tahoma; text-align:left; font-size: 11px; margin-top:28px; margin-left:163px;'><b>".$fila->cliente."</b><br>
+			        	<p style='font-family:Tahoma; text-align:left; font-size:11px; margin-top:28px; margin-left:163px;'><b>".$fila->cliente."</b><br>
 			        	".$fila->puesto."<br>
 			        	Presente.</p>
-			        	<p style='font-family: Tahoma; color:#0f76bb; text-align:left; font-size: 11px; margin-top:15px; margin-left:163px;'><b>PROYECTO: ".strtoupper($fila->proyecto)."</b></p>
+			        	<p style='font-family:Tahoma; color:#0f76bb; text-align:left; font-size: 11px; margin-top:15px; margin-left:163px;'><b>PROYECTO: ".strtoupper($fila->proyecto)."</b></p>
 		        	</div>
 		        	<div>
-						<p style='font-family: Tahoma; text-align:left; font-size: 11px; margin-top:3px; margin-left:163px;'>
+						<p style='font-family:Tahoma; text-align:left; font-size:11px; margin-top:3px; margin-left:163px; margin-bottom:0px'>
 							Por este medio, nos permitimos presentar a su atenta consideración la cotización de la impresión de folders y tarjetas de presentación, como fue solicitada por usted.<br><br>
-							DESCRIPCIÓN DEL PROYECTO <br>
-							<table>
-								<tr>
-									<th>CANT.</th>
-									<th>CONCEPTO</th>
-									<th>DESCRIPCIÓN</th>
-									<th>IMPORTE</th>
-								</tr>".$str_descrips."
-							</table>
+							<b>DESCRIPCIÓN DEL PROYECTO</b> <br>
 						</p>
+						<table style='margin-top:3px; margin-left:163px; font-size:11px;'>
+							<tr>
+								<th style='font-family:Tahoma; width:43px; padding:4px 0px;'>CANT.</th>
+								<th style='font-family:Tahoma; width:128px; padding:4px 0px;'>CONCEPTO</th>
+								<th style='font-family:Tahoma; width:240px; padding:4px 0px;'>DESCRIPCIÓN</th>
+								<th style='font-family:Tahoma; width:87px; padding:4px 0px;'>IMPORTE</th>
+							</tr>".$str_descrips."
+							<tr>
+								<td colspan='3' style='font-family:Tahoma; font-size:11px; padding:3px 5px; text-align:right;'>
+									<b>
+										SUBTOTAL:<br>
+										IVA:<br>
+										TOTAL:
+									</b>
+								</td>
+								<td style='font-family:Tahoma; font-size:11px; padding:3px 5px; text-align:right;'>
+									<b>
+										$ ".number_format($subtotal).".00<br>
+										$ ".number_format($iva).".00<br>
+										$ ".number_format($total).".00
+									</b>
+								</td>
+							</tr>
+						</table>
 		        	</div>
 		        </body>";
 

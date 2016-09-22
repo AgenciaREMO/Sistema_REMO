@@ -625,5 +625,11 @@
 												WHERE id_cotizacion = '" . $id . "' LIMIT 1");
 			return $resultado->row(); //Retorna el resultado como una sola fila
 		}
+
+		public function  obtenerConceptoPorDescripcion($descrip)
+		{
+			$resultado = $this->db->query("SELECT concepto.nombre, descripcion.detalles, descripcion.costo FROM descripcion JOIN concepto ON descripcion.id_concepto=concepto.id_concepto WHERE id_descripcion ='".$descrip."'")->row(); //Convierte el resultado en una sola fila
+			return $resultado;
+		}
 	}
 ?>
