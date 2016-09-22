@@ -166,8 +166,11 @@ class C_equipo extends MY_Controller
 				$cont = array('id_personal' => implode(", ", $this->input->post('id_personal')));
 				$id_personal = array('id_personal' => $this->input->post('id_personal'));
 				$destacado = array('destacado' => $this->input->post('destacado'));
-				$this->equipo->actualizarEquipo($data, $id_personal, $destacado, $cont);
-				//redirect('/portafolios/c_equipo/cargarEquipo'.'/'.$id_portafolio);
+				$id_img = array('id_img' => $this->input->post('id_img'));
+				$port_img = array('id_portafolio' => $id_portafolio,
+					              'id_img' => $this->input->post('id_img'));
+				$this->equipo->actualizarEquipo($data, $id_personal, $destacado, $cont, $port_img);
+				redirect('/portafolios/c_equipo/cargarEquipo'.'/'.$id_portafolio);
 				echo "succesfull"; 
 	    }
 }

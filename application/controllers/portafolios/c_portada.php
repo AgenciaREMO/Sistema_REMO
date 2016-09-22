@@ -77,8 +77,11 @@
 									'checkPortada' => $checkPortada);
 			//Si no existe devuelte valores falsos
 			}else{
-				$id_portafolio = $id_portafolio;
-				return FALSE;
+				$paginationPortada = $this->pagination->create_links();
+				$dataPortada= array('id_portafolio' => $id_portafolio,
+									'disponiblePortada' => $disponiblePortada,
+									'paginationPortada' => $paginationPortada,
+									'checkPortada' => '1'); 
 			}
 			$this->load->view("portafolios/seccion_portada", $dataPortada);
 			$this->load->view("portafolios/form_general", $id);

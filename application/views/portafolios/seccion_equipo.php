@@ -131,47 +131,33 @@
       </table>
     </div>
   </div>
-  <div class="row">
-    <div class="col-lg-3 col-lg-offset-9 ">
-      <?= form_button($editar) ?>
-      <?= form_button($cargar) ?>
-    </div>
-    <div class="col-lg-4 col-lg-offset-8 ">
-      <?= form_button($cancelar) ?>
-      <?= form_submit($guardar) ?>
-      <?= form_button($cargar2) ?>
-    </div>
-  </div>
-  <?= form_close()?>
   <hr>
-        <?php validation_errors('<div class="alert alert-danger" role="alert">','</div>'); ?>
-        <?= form_open('portafolios/c_equipo/actualizarSlide'.'/'.$id_portafolio);?>
-        <div class="row">
-          <?php
-            foreach ($obtener_slide->result() as $fila){ 
-                     $id_porta     = $fila->id_porta;
-                     $id_imgP      = $fila->id_imgP;
-                     $id_imgI      = $fila->id_imgI;
-                     $id_tipo_imgI = $fila->id_tipo_imgI;
-                     $nom_img      = $fila->nom_img;
-                     $url_img      = $fila->url_img;
-                     $url_thu      = $fila->url_thu;
-                     $id_tipo_imgT = $fila->id_tipo_imgT;
-                     $nom_tipo     = $fila->nom_tipo;
-                     $radioFalse= array('name'=>'id_img','id'=>''.$id_imgI.'','value'=>''.$id_imgI.'','type'=>'radio',/*'disabled'=>'disabled',*/'checked'=>FALSE);
-                     $radioTrue = array('name'=>'id_img','id'=>''.$id_imgP.'','value'=>''.$id_imgP.'','type'=>'radio',/*'disabled'=>'disabled',*/'checked'=>TRUE);
+  <div class="row">
+    <?php
+      foreach ($obtener_slide->result() as $fila){ 
+        $id_porta     = $fila->id_porta;
+        $id_imgP      = $fila->id_imgP;
+        $id_imgI      = $fila->id_imgI;
+        $id_tipo_imgI = $fila->id_tipo_imgI;
+        $nom_img      = $fila->nom_img;
+        $url_img      = $fila->url_img;
+        $url_thu      = $fila->url_thu;
+        $id_tipo_imgT = $fila->id_tipo_imgT;
+        $nom_tipo     = $fila->nom_tipo;
+        $radioFalse= array('name'=>'id_img','id'=>''.$id_imgI.'','value'=>''.$id_imgI.'','type'=>'radio',/*'disabled'=>'disabled',*/'checked'=>FALSE);
+        $radioTrue = array('name'=>'id_img','id'=>''.$id_imgP.'','value'=>''.$id_imgP.'','type'=>'radio',/*'disabled'=>'disabled',*/'checked'=>TRUE);
 
           if($id_porta == '' OR $id_porta == NULL OR $id_porta != $id_portafolio){
-                  ?>
-                  <div class="col-lg-2 col-xs-6 col-sm-4 col-md-3 img-rounded text-center">
-                    <div class="checkbox">
-                      <?= form_radio($radioFalse); ?>
-                    </div>
-                    <br/>
-                    <img class="img-responsive img-hover img-thumbnail" src="<?= base_url($url_img)?>" alt="<?= $nom_img ?>" title="<?= $nom_img ?>">
-                  </div>
-                  <?php
-                }else{
+            ?>
+            <div class="col-lg-2 col-xs-6 col-sm-4 col-md-3 img-rounded text-center">
+              <div class="checkbox">
+                <?= form_radio($radioFalse); ?>
+              </div>
+              <br/>
+              <img class="img-responsive img-hover img-thumbnail" src="<?= base_url($url_img)?>" alt="<?= $nom_img ?>" title="<?= $nom_img ?>">
+            </div>
+            <?php
+          }else{
                   # code...
                   if ($id_porta == $id_portafolio) {
                     # code...
@@ -198,14 +184,6 @@
                   }
                 }
         }
-            /*foreach ($obtenerSlide->result() as $fila){ {
-               //radioButton
-              if($checkPortada == $fila->id_img){
-                $radioImg = array('name'=>'id_img','id'=>'id_img','value'=>''.$fila->id_img.'','type'=>'radio','disabled'=>'disabled','checked'=>TRUE);
-              }else{
-                $radioImg = array('name'=>'id_img','id'=>'id_img','value'=>''.$fila->id_img.'','type'=>'radio','disabled'=>'disabled','checked'=>FALSE);
-              }
-            }*/
           ?>
         </div>
         <hr>

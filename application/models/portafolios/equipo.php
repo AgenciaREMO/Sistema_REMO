@@ -144,19 +144,15 @@ class Equipo extends CI_Model
 	      	echo 'Insertar'; 
 	}
 
-
+	//Funcion que permite eliminar equipo existente para poder insertar nuevamente
 	public function eliminarEquipo($data){
 		$this->db->where('id_portafolio', $data['id_portafolio']); 
    		$this->db->delete('portafolio_personal');
+   		echo "elimino personal <br><br>";
 	}
 
+	//Funcion que permite insertar el equipo seleccionado para el curriculum
 	public function insertarEquipo($data, $id_personal, $destacado, $cont){
-		print_r($id_personal);
-		echo "<br><br>";
-		print_r($destacado);
-		echo "<br><br>";
-		print_r($cont);
-		echo "<br><br>";
 		$arrayCont = explode (", " , $cont['id_personal']);
 		for($i=0; $i <= count($arrayCont) ;$i++){
 			if (!empty($id_personal['id_personal'][$i]) && !empty($destacado['destacado'][$i])) {
@@ -164,48 +160,70 @@ class Equipo extends CI_Model
 				$sql = " INSERT INTO portafolio_personal (id_por_per, id_personal, id_portafolio, destacado) 
 					     VALUES ('',".$id_personal['id_personal'][$i].",".$data['id_portafolio'].", 1)";
 				echo $sql;
-				//$this->db->query($sql);
+				$this->db->query($sql);
 			}elseif (!empty($id_personal['id_personal'][$i])) {
 				# code...
 				$sql = " INSERT INTO portafolio_personal (id_por_per, id_personal, id_portafolio, destacado) 
 					     VALUES ('',".$id_personal['id_personal'][$i].",".$data['id_portafolio'].", 0)";
 				echo $sql;
-				//$this->db->query($sql);	
+				$this->db->query($sql);	
 			}
-
-
-			/*if(!empty($id_personal['id_personal'][$i]) && !empty($destacado['destacado'][$i])){
-				$sql = " INSERT INTO portafolio_personal (id_por_per, id_personal, id_portafolio, destacado) 
-					     VALUES ('',".$id_personal['id_personal'][$i].",".$data['id_portafolio'].", 1)";
-				echo $sql;
-				//$this->db->query($sql);	
-			}else{
-				if(!empty($id_personal['id_personal'][$i]) && empty($destacado['destacado'][$i])){
-					$sql = " INSERT INTO portafolio_personal (id_por_per, id_personal, id_portafolio, destacado) 
-					     VALUES ('',".$id_personal['id_personal'][$i].",".$data['id_portafolio'].", 0)";
-				echo $sql;
-				//$this->db->query($sql);	
-				}
-			} */
 		  echo "<br><br>";   
 		}
+
+		echo "inserto personal <br><br>";
+	}
+
+	//Funciòn que permite editar el slide que se ha insetado
+	public function editarSlide($port_img){
+		//Comentar update
+		$this->db->where('id_portafolio', $port_img['id_portafolio']);
+		$this->db->update('portafolio_imagen', array('id_img' => $port_img['id_img']));
+		echo "edito slider <br><br>";
+	}
+
+	//Funcion que permite inserta un slide seleccionado
+	public function insertarSlide($port_img){
+		//Comentar insert
+		$registro_p_i = $this->db->insert('portafolio_imagen', $port_img);
+		echo "inserto slider <br><br>";
 	}
 
 	//Función que permite validar si existen registros en la base de datos donde este relacionado portafolio_tipo y tipo_proyecto 
-	public function actualizarEquipo($data, $destacado, $id_personal, $cont){
+	public function actualizarEquipo($data, $destacado, $id_personal, $cont, $port_img){
 		//SELECT * FROM portafolio_tipo WHERE id_portafolio = $id['id_portafolio']
-		$this->db->select('*');
-		$this->db->from('portafolio_personal');
-		$this->db->where('id_portafolio', $data['id_portafolio']);
+
+		
+		$this->db->select('portafolio_imagen.id_portafolio');
+		$this->db->from('portafolio_imagen');
+		$this->db->join('imagen', 'portafolio_imagen.id_img = imagen.id_img');
+		$this->db->join('tipo_imagen', 'imagen.id_tipo_img = tipo_imagen.id_tipo_img');
+		$this->db->where('tipo_imagen.id_tipo_img', 2);
+		$this->db->where('portafolio_imagen.id_portafolio', $data['id_portafolio']);
 		$query = $this->db->get();
 		if($query->num_rows()>0){
-			$this->eliminarEquipo($data);
+			echo "encontro personal en la tabla portafolio personal <br><br>";
+			$this->db->select('*');
+			$this->db->from('portafolio_personal');
+			$this->db->where('id_portafolio', $data['id_portafolio']);
+			$query = $this->db->get();
+			if($query->num_rows()>0){	//Si existe hace un update
+				//Actualiza todos los registros, tanto los del personal como el slide que se va a mostrar
+				echo "encontro slider en la tabla portafolio imagen <br><br>";
+				$this->eliminarEquipo($data);
+				$this->insertarEquipo($data, $destacado, $id_personal, $cont);
+				$this->editarSlide($port_img);
+			}else{ //Actualiza sòlo los registros de personal en caso de que no haya slide seleccionado
+				echo "encontro slider pero no personal y modifica <br><br>";
+				$this->insertarEquipo($data, $destacado, $id_personal, $cont);
+				$this->insertarSlide($port_img);
+			}
+		}else{
+			echo "nada";
 			$this->insertarEquipo($data, $destacado, $id_personal, $cont);
-			echo "elimina e inserta";
-		}else{ 
-			$this->insertarEquipo($data, $destacado, $id_personal, $cont);
-			echo "inserta";
+			$this->insertarSlide($port_img);
 		}
+
 	}
 
 }
