@@ -74,12 +74,14 @@ class Portafolio extends CI_Model
 		$this->db->where('id_portafolio', $id_p); //Decimos que obtenga el registro que sea igual el id al que recupero
    		$this->db->delete('portafolio'); //Eliminamos el id que es igual al recuperado
 	}
-	//Función que permite eliminar portafolios de base de datos.
-	public function eliminarPortafolio()
-	{
-
+	public function obtenerPortafolioPorId($Id = ''){
+			$resultado = $this->db->query("SELECT * FROM portafolio WHERE id_portafolio = '" . $Id . "' LIMIT 1");
+			return $resultado->row(); //Convierte el resultado de la consulta a una fila
 	}
-
+	//Función que permite eliminar portafolios de base de datos.
+	public function eliminarPortafolio($id){
+		$this->db->delete('portafolio', array('id_portafolio' => $id));
+	}
 }
 
 ?>

@@ -42,25 +42,25 @@
 			//$this->form_validation->set_message('regladevalidacion', 'mensajepersonalizado');
 			*/
 			$this->form_validation->set_rules('nombre', 'nombre del portafolio', 'trim|required|min_length[10]|max_length[100]|is_unique[portafolio.nombre]');
-			$this->form_validation->set_message('required', 'El campo %s es obligatorio');
-			$this->form_validation->set_message('min_length', 'El campo %s debe tener un mínimo de %d carácteres');
-			$this->form_validation->set_message('max_length', 'El campo %s debe tener un maximo de %d carácteres');
-			$this->form_validation->set_message('is_unique', 'Existe otro campo %s registrado con ese nombre');
+			$this->form_validation->set_message('required', '<div class="alert alert-danger" role="alert"> El campo %s es obligatorio</div>');
+			$this->form_validation->set_message('min_length', '<div class="alert alert-danger" role="alert">El campo %s debe tener un mínimo de %d carácteres</div>');
+			$this->form_validation->set_message('max_length', '<div class="alert alert-danger" role="alert">El campo %s debe tener un maximo de %d carácteres</div>');
+			$this->form_validation->set_message('is_unique', '<div class="alert alert-danger" role="alert">Existe otro campo %s registrado con ese nombre</div>');
 			$this->form_validation->set_rules('comentario', ' comentario del portafolio', 'trim|required|min_length[10]|max_length[100]');
-			$this->form_validation->set_message('required', 'El campo %s es obligatorio');
-			$this->form_validation->set_message('min_length', 'El campo %s debe tener un mínimo de %d carácteres');
-			$this->form_validation->set_message('max_length', 'El campo %s debe tener un maximo de %d carácteres');
+			$this->form_validation->set_message('required', '<div class="alert alert-danger" role="alert">El campo %s es obligatorio</div>');
+			$this->form_validation->set_message('min_length', '<div class="alert alert-danger" role="alert">El campo %s debe tener un mínimo de %d carácteres</div>');
+			$this->form_validation->set_message('max_length', '<div class="alert alert-danger" role="alert">El campo %s debe tener un maximo de %d carácteres</div>');
 
 			//Condición que válida que haya pasado las validaciones el formulario
 			if ($this->form_validation->run() == FALSE)
 			{
 				//Si es falso, recarga la vista del formulario con los errores por corregir
 				$this->nuevoPortafolio();   
-				echo 'fail';
+				//echo 'fail';
 			}
 			else{
 				$this->insertarPortafolio();
-				echo 'successful';
+				//echo 'successful';
 			}
 		}
 		
@@ -80,5 +80,18 @@
 			$this->portafolio->cancelarPortafolio($id); //A la función del modelo se le pasa el arreglo del id
 			redirect('/portafolios/c_portafolios/mostrarPortafolio '); //Redirecciona al mismo controlador pero a otra función
 		}
+
+		public function detallesPortafolioAjax($id = '')
+		{
+			$data = $this->portafolio->obtenerPortafolioPorId($id);
+			
+			echo json_encode($data);
+		}
+		public function eliminarPortafolio($id){
+			$this->portafolio->eliminarPortafolio($id);
+			redirect('portafolios/c_portafolios/mostrarPortafolio');
+		}
+		
+
 	}	
 ?>

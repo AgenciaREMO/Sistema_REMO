@@ -58,14 +58,14 @@
       <?php 
         $cont = 1;
         foreach ($obtener_personal->result() as $fila) { //Convertimos la consulta de base de datos en una fila
-          $id_personalP = $fila->id_personalP;
-          $id_portafolioP = $fila->id_portafolioP;
-          $destacado = $fila->destacado;
-          $id_personal = $fila->id_personal;
-          $nombre = $fila->nombre;
-          $puesto = $fila->puesto;
+          $id_personalP    = $fila->id_personalP;
+          $id_portafolioP  = $fila->id_portafolioP;
+          $destacado       = $fila->destacado;
+          $id_personal     = $fila->id_personal;
+          $nombre          = $fila->nombre;
+          $puesto          = $fila->puesto;
           $especializacion = $fila->especializacion;
-          $desc_cv = $fila->desc_cv;
+          $desc_cv         = $fila->desc_cv;
 
           if($id_portafolioP == '' OR $id_portafolioP == NULL OR $id_portafolioP != $id_portafolio){
       ?>

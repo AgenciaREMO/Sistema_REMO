@@ -9,7 +9,7 @@
 ?>
 <?=@$error?>
 
-<?php validation_errors('<div class="alert alert-danger" role="alert">','</div>'); ?>
+
 
 <?php
 

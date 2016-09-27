@@ -57,7 +57,7 @@
     <?=@$error?>
     <?php
     //form
-    $form = array('name'=>'form_grafico','id'=>'form_grafico');
+    $formcargaportada = array('name'=>'formcargaportada','id'=>'formcargaportada');
     //select option
     $estilo = 'class="form-control"';
     $tipo_imagen = array('1'=>'Portada');
@@ -84,7 +84,7 @@
             <h4 class="modal-title">Subir portada</h4>
           </div>
           <div class="modal-body">
-            <?=form_open_multipart(base_url()."portafolios/c_portada/validarPortada"."/".$id_portafolio)?>
+            <?=form_open_multipart(base_url()."portafolios/c_portada/validarPortada"."/".$id_portafolio, $formcargaportada)?>
             <div class="row">
               <div class="col-lg-12">
                 <div class="form-group">
@@ -122,3 +122,10 @@
       </div>
     </div>
 </div>
+
+<script type="text/javascript">
+  //Limpia la modales cuando se ocultan
+    $(document.body).on('hidden.bs.modal', function () {
+      $('#formcargaportada')[0].reset();
+    });
+</script>

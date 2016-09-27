@@ -44,7 +44,11 @@
             <td><div class="col-lg-2 "><a href="#" ><span class="glyphicon glyphicon-new-window" hidden="true" ></span></a></div></td>
             <!--<td><div class="col-lg-2 "><button type="button" class="btn btn-default" data-toggle="modal" data-target="#modalEnviar">Enviar</button></div></td>-->
             <td><div class="col-lg-2 "><a href="#" ><span class="glyphicon glyphicon-envelope" data-toggle="modal" data-target="#enviar"></span></a></div></td>
-            <td><div class="col-lg-2 "><a href="#" ><span class="glyphicon glyphicon-remove" data-toggle="modal" data-target="#eliminar"></span></a></div></td>
+            <td>
+              <div class="col-lg-2 ">
+                <a class="" href="javascript:void(0)" onclick="eliminarPortafolio('<?= $fila->id_portafolio ?>')"><i class="fa fa-times"></i></a>
+              </div>
+            </td>
           </tr>
         <?php   
           } //Fin de Foreach para lista los portafolios
@@ -86,4 +90,37 @@
   </div>
   <hr>
   <hr>
+</div>
+
+<script type="text/javascript">
+  function eliminarPortafolio(id)
+  {
+    $('#form')[0].reset();
+        $("#eliminar").attr("href", "<?= base_url()?>portafolios/c_portafolios/eliminarPortafolio/"+id);
+
+        $('#modal_portafolio').modal('show');
+  }
+</script>
+
+<!-- Modal concepto -->
+<div class="modal fade" id="modal_portafolio" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">¿Desea eliminar este portafolio?</h4>
+          </div>
+          <div class="modal-body form">
+          <form action="#" id="form" class="form-horizontal">
+            <p class="bg-danger">
+              <strong>RECUERDA: Al eliminar el concepto se eliminaran todas las descripciones asociadas con él.</strong>
+            </p>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+            <a id="eliminar" href="<?= base_url()?>portafolios/c_portafolios/eliminarPortafolio/<?= $fila->id_portafolio ?>" class="btn btn-danger">Eliminar</a>
+          </div>
+      </div>
+    </div>
 </div>

@@ -83,11 +83,11 @@
 		//$this->form_validation->set_rules('name_input', 'Identificador', 'reglas de validación');
 		//$this->form_validation->set_message('regla de validación', 'mensaje personalizado');
 	    $this->form_validation->set_rules('nombre', 'nombre', 'required|min_length[5]|max_length[100]|trim|xss_clean');
-	    $this->form_validation->set_message('required', 'El campo %s no puede ir vacío!');
-	    $this->form_validation->set_message('min_length', 'El campo %s debe tener al menos %d carácteres');
-	    $this->form_validation->set_message('max_length', 'El campo %s no puede tener más de %d carácteres');
+	    $this->form_validation->set_message('required', '<div class="alert alert-danger" role="alert">El campo %s no puede ir vacío!</div>');
+	    $this->form_validation->set_message('min_length', '<div class="alert alert-danger" role="alert">El campo %s debe tener al menos %d carácteres</div>');
+	    $this->form_validation->set_message('max_length', '<div class="alert alert-danger" role="alert">El campo %s no puede tener más de %d carácteres</div>');
 	    $this->form_validation->set_rules('tipo', 'tipo', 'required|trim|xss_clean');
-	    $this->form_validation->set_message('required', 'El campo %s no puede ir vacío!');
+	    $this->form_validation->set_message('required', '<div class="alert alert-danger" role="alert">El campo %s no puede ir vacío!</div>');
 	    //Si el formulario pasa la validación se procesa el siguiente método para subir el gráfico de experiencia
 	    if ($this->form_validation->run() == TRUE) 
 	    {
