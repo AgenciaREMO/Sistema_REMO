@@ -217,8 +217,8 @@
 			$this->load->view("nav");
 
 			$consid = $this->cotizacion->obtenerElemento(1);
-			$entreg = $this->cotizacion->obtenerElemento(2);
-			$for_pago = $this->cotizacion->obtenerElemento(3);
+			$for_pago = $this->cotizacion->obtenerElemento(2);
+			$entreg = $this->cotizacion->obtenerElemento(3);
 			$tiempo_entrega = $this->cotizacion->obtenerElemento(4);
 			$reque = $this->cotizacion->obtenerElemento(5);
 
@@ -306,6 +306,22 @@
 
 				$iva = ($subtotal * 16)/100;
 				$total = $subtotal + $iva;
+				//Elementos de seccion seleccionados
+				$elementos = $this->cotizacion->obtenerElementosPorId($id);
+				$elementos_selec = "";
+				foreach ($elementos->result() as $fila) { 
+					if($fila->id_tipo_seccion == '1'){
+						$elementos_selec.= "<h4 style='font-family:Tahoma; text-align:justify; font-size:12px; margin-left:163px;'>CONSIDERACIONES</h4>";
+					} else if($fila->id_tipo_seccion == '2'){
+						$elementos_selec.= "<h4 style='font-family:Tahoma; text-align:justify; font-size:12px; margin-left:163px;'>FORMAS DE PAGO</h4>";						
+					} else if($fila->id_tipo_seccion == '3'){
+						$elementos_selec.= "<h4 style='font-family:Tahoma; text-align:justify; font-size:12px; margin-left:163px;'>ENTREGABLES</h4>";							
+					} else if($fila->id_tipo_seccion == '4'){
+						$elementos_selec.= "<h4 style='font-family:Tahoma; text-align:justify; font-size:12px; margin-left:163px;'>TIEMPO ESTIMADO DE ENTREGA</h4>";							
+					} else if($fila->id_tipo_seccion == '5'){
+						$elementos_selec.= "<h4 style='font-family:Tahoma; text-align:justify; font-size:12px; margin-left:163px;'>REQUERIMIENTOS</h4>";							
+					}
+				}
 
 		        //PDF GENERATOR: Load the view and saved it into $html variable
 		        $html = 
@@ -333,10 +349,10 @@
 			        	<p style='font-family:Tahoma; color:#0f76bb; text-align:left; font-size: 11px; margin-top:15px; margin-left:163px;'><b>PROYECTO: ".strtoupper($fila->proyecto)."</b></p>
 		        	</div>
 		        	<div>
-						<p style='font-family:Tahoma; text-align:left; font-size:11px; margin-top:3px; margin-left:163px; margin-bottom:0px'>
-							Por este medio, nos permitimos presentar a su atenta consideración la cotización de la impresión de folders y tarjetas de presentación, como fue solicitada por usted.<br><br>
-							<b>DESCRIPCIÓN DEL PROYECTO</b> <br>
+						<p style='font-family:Tahoma; text-align:justify; font-size:11px; margin-top:3px; margin-left:163px; margin-bottom:0px'>
+							Por este medio, nos permitimos presentar a su atenta consideración la cotización de la impresión de folders y tarjetas de presentación, como fue solicitada por usted.
 						</p>
+						<h4 style='font-family:Tahoma; text-align:justify; font-size:12px; margin-left:163px; margin-bottom:0px;'>DESCRIPCIÓN DEL PROYECTO</h4>
 						<table style='margin-top:3px; margin-left:163px; font-size:11px;'>
 							<tr>
 								<th style='font-family:Tahoma; width:43px; padding:4px 0px;'>CANT.</th>
@@ -362,6 +378,16 @@
 							</tr>
 						</table>
 		        	</div>
+		        	<div>
+						<p style='font-family:Tahoma; text-align:justify; font-size:11px; margin-top:10px; margin-left:163px; margin-bottom:0px'>
+							*Estos costos están sujetos a cambio en caso de existir modificaciones en las características del proyecto. El IVA se muestra en el precio final.<br>
+							La entrega de avances y proyecto final están sujetos al tiempo de aprobación por parte del cliente.<br>
+							Una modificación o adición de contenido no mencionado en la descripción del proyecto implica un costo extra.
+						</p>
+					</div>
+					<div>".
+						$elementos_selec
+					."</div>
 		        </body>";
 
 		        //this the the PDF filename that user will get to download

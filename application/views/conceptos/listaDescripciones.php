@@ -148,18 +148,6 @@
 	$(document).on("ready", inicio);
 	function inicio()
 	{
-		//Se resetea la modal cuando esta oculta
-		$(document).ready(function() {
-			$(".modal").on("hidden.bs.modal", function() {
-				$('[name="id_descripcion"]').val(data.id_descripcion)
-				$('[name="categoria"]').text(data.tipo);
-				$('[name="concepto"]').text(data.concepto);
-				$('[name="descripcion"]').text(data.detalles);
-				$('[name="costo"]').text(data.costo);
-				$("a").attr("href", "<?= base_url()?>conceptos/eliminarDescripcion/"+data.id_descripcion);
-		  	});
-		});
-
 		var busc = "";
 		//Evento Focus
 		$("#b-concepto").focus(function()
@@ -270,7 +258,7 @@
 			{
 				$('[name="categoria"]').text(data.tipo);
 				$('[name="concepto"]').text(data.concepto);
-				$("a").attr("href", "<?= base_url()?>conceptos/eliminarConcepto/"+data.id_concepto);
+				$("#a-concep").attr("href", "<?= base_url()?>conceptos/eliminarConcepto/"+data.id_concepto);
 
 				$('#modal_concepto').modal('show');
 			},
@@ -289,12 +277,11 @@
 			dataType: "JSON",
 			success: function(data)
 			{
-				$('[name=" "]').val(data.id_descripcion)
 				$('[name="categoria"]').text(data.tipo);
 				$('[name="concepto"]').text(data.concepto);
 				$('[name="descripcion"]').text(data.detalles);
 				$('[name="costo"]').text(data.costo);
-				$("a").attr("href", "<?= base_url()?>conceptos/eliminarDescripcion/"+data.id_descripcion);
+				$("#a-descrip").attr("href", "<?= base_url()?>conceptos/eliminarDescripcion/"+data.id_descripcion);
 
 				$('#modal_descripcion').modal('show');
 			},
@@ -361,7 +348,7 @@
 	      	</div>
 	      	<div class="modal-footer">
 	        	<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-	        	<a href="<?= base_url()?>conceptos/eliminarConcepto/<?= $fila->id_concepto ?>" class="btn btn-danger">Eliminar</a>
+	        	<a id="a-concep" href="#" class="btn btn-danger">Eliminar</a>
 	      	</div>
     	</div>
   	</div>
@@ -385,7 +372,7 @@
 	      	</div>
 	      	<div class="modal-footer">
 	        	<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-	        	<a href="#" class="btn btn-danger">Eliminar</a>
+	        	<a id="a-descrip" href="#" class="btn btn-danger">Eliminar</a>
 	      	</div>
     	</div>
   	</div>

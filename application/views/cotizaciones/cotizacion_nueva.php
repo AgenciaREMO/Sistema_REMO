@@ -164,7 +164,7 @@
 							foreach ($consideraciones->result() as $fila) 
 								{ ?>
 							<div class="checkbox">
-								<input type="checkbox" name="elementos[]" id="check<?= $fila->id_elemento ?>" value="<?php echo $fila->id_elemento ?>"><?php echo $fila->descripcion ?>
+								<input type="checkbox" name="elementos[]" id="check<?= $fila->id_elemento ?>" value="<?php echo $fila->id_elemento ?>" required><?php echo $fila->descripcion ?>
 							</div>
 							<?php } ?>
 						</div>
@@ -177,7 +177,7 @@
 							foreach ($entregables->result() as $fila) 
 								{ ?>
 							<div class="checkbox">
-								<input type="checkbox" name="elementos[]" id="check<?= $fila->id_elemento ?>" value="<?php echo $fila->id_elemento ?>"><?php echo $fila->descripcion ?>
+								<input type="checkbox" name="elementos[]" id="check<?= $fila->id_elemento ?>" value="<?php echo $fila->id_elemento ?>" required><?php echo $fila->descripcion ?>
 							</div>
 							<?php } ?>
 						</div>
@@ -190,7 +190,7 @@
 							foreach ($forma_pago->result() as $fila) 
 								{ ?>
 							<div class="checkbox">
-								<input type="checkbox" name="elementos[]" id="check<?= $fila->id_elemento ?>" value="<?php echo $fila->id_elemento ?>"><?php echo $fila->descripcion ?>
+								<input type="checkbox" name="elementos[]" id="check<?= $fila->id_elemento ?>" value="<?php echo $fila->id_elemento ?>" required><?php echo $fila->descripcion ?>
 							</div>
 							<?php } ?>
 						</div>
@@ -203,7 +203,7 @@
 							foreach ($tiempo_entrega->result() as $fila) 
 								{ ?>
 							<div class="checkbox">
-								<input type="checkbox" name="elementos[]" id="check<?= $fila->id_elemento ?>" value="<?php echo $fila->id_elemento ?>"><?php echo $fila->descripcion ?>
+								<input type="checkbox" name="elementos[]" id="check<?= $fila->id_elemento ?>" value="<?php echo $fila->id_elemento ?>" required><?php echo $fila->descripcion ?>
 							</div>
 							<?php } ?>
 						</div>
@@ -216,7 +216,7 @@
 							foreach ($requerimientos->result() as $fila) 
 								{ ?>
 							<div class="checkbox">
-								<input type="checkbox" name="elementos[]" id="check<?= $fila->id_elemento ?>" value="<?php echo $fila->id_elemento ?>"><?php echo $fila->descripcion ?>
+								<input type="checkbox" name="elementos[]" id="check<?= $fila->id_elemento ?>" value="<?php echo $fila->id_elemento ?>" required><?php echo $fila->descripcion ?>
 							</div>
 							<?php } ?>
 						</div>
@@ -298,13 +298,17 @@
     		$('#seleccionarProy').attr("onClick", "cargarProyecto('"+id+"')");
 
     	});
-    	/*$('#concep').find('tr').click(function() {
-    		$(this).find('input').prop("checked", true);
-    		var id = $('input:radio[name=descripcion]:checked').val();
-    		var num_input = $("#inputs").val();
-    		$('#seleccionarDescrip').attr("onClick", "cargarDescrip('"+id+"','"+num_input+"')");
-    		alert("Hiciste click en un renglon");
-    	});*/
+
+    	var requiredCheckboxes = $(':checkbox[required]');
+		requiredCheckboxes.change(function(){
+        	if(requiredCheckboxes.is(':checked')) {
+            	requiredCheckboxes.removeAttr('required');
+        	}
+        	else {
+            	requiredCheckboxes.attr('required', 'required');
+        	}
+    	});
+
 		$("#guardar").click(function(){
 			var cants = "";
 			for(var i=0; i<num_concep; i++)
