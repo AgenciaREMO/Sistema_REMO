@@ -507,7 +507,7 @@
 			return $this->db->query("SELECT * FROM elemento_seccion 
 										JOIN elemento_cotizacion 
 										ON elemento_seccion.id_elemento=elemento_cotizacion.id_elemento
-										WHERE elemento_cotizacion.id_cotizacion_temp=".$id);
+										WHERE elemento_cotizacion.id_cotizacion_temp=".$id." ORDER BY id_tipo_seccion ASC");
 		}
 
 		public function obtenerPersonal()
@@ -607,7 +607,6 @@
 												personal.nombre AS personal, 
 												cliente.nombre AS cliente, 
 												empresa.nombre AS empresa, 
-												proyecto.nombre AS proyecto, 
 												proyecto.id_tipo AS id_tipo, 
 												tipo_proyecto.nombre AS tipo_proyecto,
 												f_generacion, f_expedicion, estatus, folio, comentario, url_cotizacion

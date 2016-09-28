@@ -732,4 +732,56 @@
 			}
 		});
 	}
+
+	function eliminar_Cotizacion(id)
+	{
+		$('#form')[0].reset();
+		$.ajax({
+			url : "<?= base_url('cotizaciones/detallesCotizacionAjax') ?>" + "/" + id,
+			type: "GET",
+			dataType: "JSON",
+			success: function(data)
+			{
+				$('[name="modal-folio"]').text(data.folio);
+				$('[name="modal-proyecto"]').text(data.proyecto);
+				$('[name="modal-tipo"]').text(data.tipo_proyecto);
+				$('[name="modal-cliente"]').text(data.cliente);
+				$('[name="modal-empresa"]').text(data.empresa);
+				var expedida = data.f_expedicion;
+				$('[name="modal-expedida"]').text(expedida);
+				$("#a-cotizac").attr("href", "<?= base_url()?>cotizaciones/eliminarCotizacion/"+data.id_cotizacion);
+
+				$('#modal_cotizacion').modal('show');
+			},
+			error: function(jqXHR, textStatus, errorThrown)
+			{
+				 alert('Error get data from ajax');
+			}
+		});
+	}
 </script>
+
+<!-- Modal cotización -->
+<div class="modal fade" id="modal_cotizacion" role="dialog">
+  	<div class="modal-dialog" role="document">
+    	<div class="modal-content">
+	      	<div class="modal-header">
+	        	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        	<h4 class="modal-title">¿Desea eliminar esta cotización?</h4>
+	      	</div>
+	      	<div class="modal-body form">
+	      		<form action="#" id="form" class="form-horizontal">
+					<p><strong>Folio:</strong> <span name="modal-folio"></span></p>
+		          	<p><strong>Proyecto:</strong> <span name="modal-proyecto"></span> (<span name="modal-tipo"></span>)</p>
+		          	<p><strong>Cliente:</strong> <span name="modal-cliente"></span></p>
+		          	<p><strong>Empresa:</strong> <span name="modal-empresa"></span></p>
+		          	<p><strong>Expedida:</strong> <span name="modal-expedida"></span></p>
+		        </form>
+	      	</div>
+	      	<div class="modal-footer">
+	        	<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+	        	<a id="a-cotizac" href="#" class="btn btn-danger">Eliminar</a>
+	      	</div>
+    	</div>
+  	</div>
+</div>

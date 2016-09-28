@@ -22,7 +22,7 @@
 			//Sección de paginación
 			$config['base_url'] = base_url().'conceptos/listaDescripciones/';
 			$config['total_rows'] = $this->concepto->num_descripciones(); //Número de filas que devuelve
-			$config['per_page'] = 2; //Resultados por página
+			$config['per_page'] = 10; //Resultados por página
 			$config['uri_segment'] = 3; //uri->id de la imagen
 			$config['num_links'] = 3;
 			//Aplicación de diseño con bootstrap!
