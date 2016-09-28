@@ -95,11 +95,11 @@
 			//$this->form_validation->set_message('regladevalidacion', 'mensajepersonalizado');
 			*/
 	        $this->form_validation->set_rules('nombre', 'nombre', 'required|min_length[5]|max_length[100]|trim|xss_clean');
-	        $this->form_validation->set_message('required', 'El campo %s no puede ir vacío!');
-	        $this->form_validation->set_message('min_length', 'El campo %s debe tener al menos %d carácteres');
-	        $this->form_validation->set_message('max_length', 'El campo %s no puede tener más de %d carácteres');
+	        $this->form_validation->set_message('required', '<div class="alert alert-danger" role="alert"> El campo %s no puede ir vacío!</div>');
+	        $this->form_validation->set_message('min_length', '<div class="alert alert-danger" role="alert"> El campo %s debe tener al menos %d carácteres</div>');
+	        $this->form_validation->set_message('max_length', '<div class="alert alert-danger" role="alert"> El campo %s no puede tener más de %d carácteres</div>');
 	        $this->form_validation->set_rules('tipo', 'tipo', 'required|trim|xss_clean');
-	        $this->form_validation->set_message('required', 'El campo %s no puede ir vacío!');
+	        $this->form_validation->set_message('required', '<div class="alert alert-danger" role="alert"> El campo %s no puede ir vacío!</div>');
 	        //Si el formulario pasa la validación se procesa el siguiente método
 	        if ($this->form_validation->run() == TRUE) 
 	        {
@@ -114,6 +114,8 @@
 			$id_portafolio = $id_portafolio;
 			$tipo = $this->input->post('tipo');
 			//Configuración para las imágenes
+			$nombre = $this->input->post('nombre');
+	       	$config['file_name'] = $nombre;
 			$config['upload_path'] = './graficos/portada';
 			$config['allowed_types'] = 'gif|jpg|png|jpeg';
 			$config['max_size'] = '2000';
@@ -138,7 +140,6 @@
 			    $this->crearThumbnailPortada($file_info['file_name'], $tipo);
 			    //Se envían los datos al modelo para hacer la inserción
 			    $data = array('upload_data' => $this->upload->data());
-			    $nombre = $this->input->post('nombre');
 			    $tipo_img = '1';
 			    $url_img = 'graficos/portada/'.$file_info['file_name'];
 			    $url_thu = 'graficos/portada/thumbnail/'.$file_info['file_name'];
@@ -176,7 +177,7 @@
 		{
 			//Validación Radio button
 			$this->form_validation->set_rules('id_img','portada','required');
-			$this->form_validation->set_message('required', 'Debes seleccionar una  %s , es obligatorio');
+			$this->form_validation->set_message('required', '<div class="alert alert-danger" role="alert"> Debes seleccionar una  %s , es obligatorio</div>');
 			if ($this->form_validation->run() == FALSE) 
 			{
 				$this->cargarPortada($id_portafolio);
@@ -197,7 +198,7 @@
         {   
            	//Validación Radio button
 			$this->form_validation->set_rules('id_img','portada','required');
-			$this->form_validation->set_message('required', 'Debes seleccionar una  %s , es obligatorio');
+			$this->form_validation->set_message('required', '<div class="alert alert-danger" role="alert"> Debes seleccionar una  %s , es obligatorio</div>');
 			if ($this->form_validation->run() == FALSE) 
 			{
 				$this->cargarPortada($id_portafolio);

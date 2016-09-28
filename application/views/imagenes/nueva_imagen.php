@@ -22,7 +22,10 @@ $form = array(
   'id'   => 'form_grafico'
   );
 //select option
-$estilo = 'class="form-control"';
+$estilo = 'class = "form-control" 
+           id    = "tipo"  
+           value = "set_value(tipo)"
+           ';
 $tipo_imagen = array(
   '1' => 'Portada',
   '2' => 'Equipo',
@@ -42,6 +45,15 @@ $nombre = array(
   'size'        => '50',
   'class'       => 'form-control',
   'placeholder' => ' Ejemplo: Logotipo de REMO'
+  );
+$descripcion = array(
+  'name'        => 'descripcion',
+  'id'          => 'descripcion',
+  'value'       => set_value('descripcion'),
+  'maxlength'   => '300',
+  'size'        => '50',
+  'class'       => 'form-control',
+  'placeholder' => ' Ejemplo: Descripción de la imagen con experiencia'
   );
 $imagen = array(
   'name'        => 'userfile',
@@ -80,7 +92,7 @@ $subir = array(
     <div class="row">
       <div class="col-lg-12">
         <ol class="breadcrumb">
-          <li><?= anchor('c_imagenes/mostrar', 'Contenido Gráfico', $contenido); ?></li>
+          <li><?= anchor('c_imagenes/cargarListaImagenes', 'Contenido Gráfico', $contenido); ?></li>
           <li><?= anchor('active', 'Subir Gráfico', $subir); ?></li>
         </ol>
       </div>
@@ -102,8 +114,15 @@ $subir = array(
         </div>
         <div class="col-lg-12">
               <?= form_label('Tipo de Imagen') ?>
-              <?= form_dropdown('tipo', $tipo_imagen,'1', $estilo, array('value' => set_value('tipo'))) ?>
+              <?= form_dropdown('tipo', $tipo_imagen,'1', $estilo) ?>
         </div>
+        <div class="col-lg-12">
+          <div id="mostrar" style="display:none" class="form-group">
+              <?= form_error('descripcion'); ?>
+              <?= form_label('Descripción: *'); ?>
+              <?= form_input($descripcion);?>
+            </div>
+          </div>
       </div>
       <br>
       <div class="row">
@@ -116,3 +135,18 @@ $subir = array(
       </div>
   <?=form_close()?>
 </div>
+
+
+<script type="text/javascript">
+  $(document).ready(function() {
+
+    $("#tipo").change(function() {
+      var mivalor = $("#tipo").val();
+      if(mivalor == 3){
+        $("#mostrar").css({'display':'block'});
+      }
+    
+    });
+  });
+
+</script>

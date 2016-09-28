@@ -9,45 +9,48 @@
 
 	class C_imagenes extends MY_Controller
 	{
-		function __construct()
-		{
+		function __construct(){
 			parent::__construct();
 			$this->load->helper(array('form', 'url')); //Cargamos helper de validación de formulario y base url
 			$this->load->model('imagen'); //Cargamos el modelo que se usará en todo el controlador
 		}
 		//Función para direccionar a formulario
-	    public function index() 
-	    {
+	    public function index() {
 	        //CARGAMOS LA VISTA DEL FORMULARIO
 	   		//	Cargar demás vistas
 	        $this->nueva();
 	    }
 	    //Función que permite validar el formulari
-	    public function validar()
-	    {
+	    public function validar(){
 	    	/*
 			//Validaciones del formulario
 			//$this->form_validation->set_rules('name_input', 'Identificador', 'reglas de validación');
 			//$this->form_validation->set_message('regladevalidacion', 'mensajepersonalizado');
 			*/
-	        $this->form_validation->set_rules('nombre', 'nombre', 'required|min_length[5]|max_length[100]|trim|xss_clean');
-	        $this->form_validation->set_message('required', 'El campo %s no puede ir vacío!');
-	        $this->form_validation->set_message('min_length', 'El campo %s debe tener al menos %d carácteres');
-	        $this->form_validation->set_message('max_length', 'El campo %s no puede tener más de %d carácteres');
+	        $this->form_validation->set_rules('nombre', 'nombre', 'required|min_length[5]|max_length[60]|trim|xss_clean');
+	        $this->form_validation->set_message('required', '<div class="alert alert-danger" role="alert"> El campo %s no puede ir vacío!</div>');
+	        $this->form_validation->set_message('min_length', '<div class="alert alert-danger" role="alert"> El campo %s debe tener al menos %d carácteres</div>');
+	        $this->form_validation->set_message('max_length', '<div class="alert alert-danger" role="alert"> El campo %s no puede tener más de %d carácteres</div>');
+
+	        $this->form_validation->set_rules('descripcion', 'descripcion', '|min_length[5]|max_length[400]|trim|xss_clean');
+	        $this->form_validation->set_message('min_length', '<div class="alert alert-danger" role="alert"> El campo %s debe tener al menos %d carácteres</div>');
+	        $this->form_validation->set_message('max_length', '<div class="alert alert-danger" role="alert"> El campo %s no puede tener más de %d carácteres</div>');
+
 	        $this->form_validation->set_rules('tipo', 'tipo', 'required|trim|xss_clean');
-	        $this->form_validation->set_message('required', 'El campo %s no puede ir vacío!');
+	        $this->form_validation->set_message('required', '<div class="alert alert-danger" role="alert"> El campo %s no puede ir vacío!</div>');
 	        //Si el formulario pasa la validación se procesa el siguiente método
 	        if ($this->form_validation->run() == TRUE) 
 	        {
 	            $this->subirGrafico();
+	            echo "paso";
 	        }else{
 	        //Si el formulario no se válida se muestran los errores
 	            $this->nueva();
+	            echo "no paso";
 	        }
 	    }
 	    //Función que permite subir el gráfico
-	    public function subirGrafico()
-	    {
+	    public function subirGrafico(){
 	    	$tipo = $this->input->post('tipo');
 	    	/*
 	  		//Inicio de Switch para elegir en que carpeta se almacenará el gráfico
@@ -58,11 +61,14 @@
 	        	*/
 	        	case '1': 
 	   				//Configuración para las imágenes
+	        	    $nombre = $this->input->post('nombre');
+	        	    $config['file_name'] = $nombre;
 			        $config['upload_path'] = './graficos/portada';
 			        $config['allowed_types'] = 'gif|jpg|png|jpeg';
 			        $config['max_size'] = '2000';
 			        $config['max_width'] = '2024';
 			        $config['max_height'] = '2008';
+			        
 			        //Cargamos la librería para subir imagenes "upload"
         			$this->load->library('upload', $config);
 			        //Si la imagen falla al subir se muestra el error en dislay 
@@ -83,17 +89,19 @@
 			            $this->crearThumbnail($file_info['file_name'], $tipo);
 			            //Se envían los datos al modelo para hacer la inserción
 			            $data = array('upload_data' => $this->upload->data());
-			            $nombre = $this->input->post('nombre');
+			            $descripcion = " ";
 			            $tipo_img = '1';
 			            $url_img = 'graficos/portada/'.$file_info['file_name'];
 			            $url_thu = 'graficos/portada/thumbnail/'.$file_info['file_name'];
-			            $subir = $this->imagen->subir($nombre, $tipo_img, $url_img, $url_thu);  
+			            $subir = $this->imagen->subir($nombre, $tipo_img, $url_img, $url_thu, $descripcion);  
 			            //$this->load->view('imagen_subida_view', $data);
-			            redirect('/c_imagenes/mostrar', 'refresh');
+			            redirect('/c_imagenes/cargarListaImagenes', 'refresh');
 			        }
 	        	break;
 	        	case '2': 
 	        		//Configuración para las imágenes
+	        		$nombre = $this->input->post('nombre');
+	        	    $config['file_name'] = $nombre;
 			        $config['upload_path'] = './graficos/equipo';
 			        $config['allowed_types'] = 'gif|jpg|png|jpeg';
 			        $config['max_size'] = '2000';
@@ -119,17 +127,19 @@
 			            $this->crearThumbnail($file_info['file_name'], $tipo);
 			            //Se envían los datos al modelo para hacer la inserción
 			            $data = array('upload_data' => $this->upload->data());
-			            $nombre = $this->input->post('nombre');
+			            $descripcion = " ";
 			            $tipo_img = '2';
 			            $url_img = 'graficos/equipo/'.$file_info['file_name'];
 			            $url_thu = 'graficos/equipo/thumbnail/'.$file_info['file_name'];
-			            $subir = $this->imagen->subir($nombre,$tipo_img, $url_img, $url_thu);  
+			            $subir = $this->imagen->subir($nombre,$tipo_img, $url_img, $url_thu, $descripcion);  
 			            //$this->load->view('imagen_subida_view', $data);
-			            redirect('/c_imagenes/mostrar', 'refresh');
+			            redirect('/c_imagenes/cargarListaImagenes', 'refresh');
 			        }
 	        	break;
 	        	case '3': 
 	        		//Configuración para las imágenes
+	        		$nombre = $this->input->post('nombre');
+	        	    $config['file_name'] = $nombre;
 			        $config['upload_path'] = './graficos/experiencia';
 			        $config['allowed_types'] = 'gif|jpg|png|jpeg';
 			        $config['max_size'] = '2000';
@@ -155,17 +165,19 @@
 			            $this->crearThumbnail($file_info['file_name'], $tipo);
 			            //Se envían los datos al modelo para hacer la inserción
 			            $data = array('upload_data' => $this->upload->data());
-			            $nombre = $this->input->post('nombre');
+			            $descripcion = $this->input->post('descripcion');
 			            $tipo_img = '3';
 			            $url_img = 'graficos/experiencia/'.$file_info['file_name'];
 			            $url_thu = 'graficos/experiencia/thumbnail/'.$file_info['file_name'];
-			            $subir = $this->imagen->subir($nombre,$tipo_img, $url_img, $url_thu);  
+			            $subir = $this->imagen->subir($nombre,$tipo_img, $url_img, $url_thu, $descripcion);  
 			            //$this->load->view('imagen_subida_view', $data);
-			            redirect('/c_imagenes/mostrar', 'refresh');
+			            redirect('/c_imagenes/cargarListaImagenes', 'refresh');
 			        }
 	        	break;
 	        	case '4': 
 	        		//Configuración para las imágenes
+	        		$nombre = $this->input->post('nombre');
+	        	    $config['file_name'] = $nombre;
 			        $config['upload_path'] = './graficos/grafico';
 			        $config['allowed_types'] = 'gif|jpg|png|jpeg';
 			        $config['max_size'] = '2000';
@@ -191,13 +203,13 @@
 			            $this->crearThumbnail($file_info['file_name'], $tipo);
 			            //Se envían los datos al modelo para hacer la inserción
 			            $data = array('upload_data' => $this->upload->data());
-			            $nombre = $this->input->post('nombre');
+			            $descripcion = " ";
 			            $tipo_img = '4';
 			            $url_img = 'graficos/grafico/'.$file_info['file_name'];
 			            $url_thu = 'graficos/grafico/thumbnail/'.$file_info['file_name'];
-			            $subir = $this->imagen->subir($nombre,$tipo_img, $url_img, $url_thu);  
+			            $subir = $this->imagen->subir($nombre,$tipo_img, $url_img, $url_thu, $descripcion);  
 			            //$this->load->view('imagen_subida_view', $data);
-			            redirect('/c_imagenes/mostrar', 'refresh');
+			            redirect('/c_imagenes/cargarListaImagenes', 'refresh');
 			        }
 	        	break;
 	        	default:
@@ -205,8 +217,7 @@
 	    	}
 	    }
 	    //Función para crear la miniatura a la medida especificada
-	    public function crearThumbnail($filename, $tipo)
-	    {
+	    public function crearThumbnail($nombre, $tipo){
 	    	/*
 	  		//Inicio de Switch para elegir en que carpeta se almacenará el gráfico
 	  		*/
@@ -218,7 +229,7 @@
 			        //Librería utilizada [GD, GD2, ImageMagick, NetPBM]
 			        $config['image_library'] = 'gd2';
 			        //Ruta de la imagen original
-			        $config['source_image'] = 'graficos/portada/'.$filename;
+			        $config['source_image'] = 'graficos/portada/'.$nombre;
 			        //Activación de la creación de miniaturas
 			        $config['create_thumb'] = TRUE;
 			        //Configuración para que mantenga la proporción
@@ -239,7 +250,7 @@
 	        		//Librería utilizada [GD, GD2, ImageMagick, NetPBM]
 			        $config['image_library'] = 'gd2';
 			        //Ruta de la imagen original
-			        $config['source_image'] = 'graficos/equipo/'.$filename;
+			        $config['source_image'] = 'graficos/equipo/'.$nombre;
 			        //Activación de la creación de miniaturas
 			        $config['create_thumb'] = TRUE;
 			        //Configuración para que mantenga la proporción
@@ -260,7 +271,7 @@
 	        		//Librería utilizada [GD, GD2, ImageMagick, NetPBM]
 			        $config['image_library'] = 'gd2';
 			        //Ruta de la imagen original
-			        $config['source_image'] = 'graficos/experiencia/'.$filename;
+			        $config['source_image'] = 'graficos/experiencia/'.$nombre;
 			        //Activación de la creación de miniaturas
 			        $config['create_thumb'] = TRUE;
 			        //Configuración para que mantenga la proporción
@@ -281,7 +292,7 @@
 	        		//Librería utilizada [GD, GD2, ImageMagick, NetPBM]
 			        $config['image_library'] = 'gd2';
 			        //Ruta de la imagen original
-			        $config['source_image'] = 'graficos/grafico/'.$filename;
+			        $config['source_image'] = 'graficos/grafico/'.$nombre;
 			        //Activación de la creación de miniaturas
 			        $config['create_thumb'] = TRUE;
 			        //Configuración para que mantenga la proporción
@@ -302,8 +313,7 @@
 	        }
 	    }
 	    //Función que permite listas las imagenes disponibles
-		public function mostrar()
-		{
+		public function mostrar(){
 			$this->load->view("head");
 			$this->load->view("nav");
 			//$result1 = $this->imagen->mostrarImagen(); //Asignamos a una variable la función que arroja el resultado de la consulta a base de datos.
@@ -316,8 +326,7 @@
 			$this->load->view("footer");
 		}
 		//Función que carga la vista del formulario de nuevo grafico
-		public function nueva()
-		{
+		public function nueva(){
 			$this->load->view("head");
 			$this->load->view("nav");
 			$resultado = $this->imagen->obtenerTipoImg(); //Asignamos a una variable la función que arroja el resultado de la consulta a base de datos.
@@ -325,7 +334,7 @@
 			$this->load->view("imagenes/nueva_imagen", $tipos);
 			$this->load->view("footer");
 		}	
-
+		//Función que permite cargar el listado de las imagenes.
 		public function cargarListaImagenes(){
 			$this->load->view("head");
 			$this->load->view("nav");
@@ -366,11 +375,15 @@
 			$this->load->view("imagenes/lista_imagen", $dataImagen);
 			$this->load->view("footer");
 		}
-
-		public function eliminar($id_img)
-		{
+		//Función que permite eliminar imagenes
+		public function eliminarImagen($id_img){
 			$this->imagen->eliminarImagen($id_img); //A la función del modelo se le pasa el arreglo del id
-			redirect('/c_imagenes/mostrar'); 
+			redirect('/c_imagenes/cargarListaImagenes'); 
+		}
+		//Función que permite mostrar las imagenes de forma individual
+		public function detallesImagenAjax($id = ''){
+			$data = $this->imagen->obtenerImagenPorId($id);
+			echo json_encode($data);
 		}
 
 

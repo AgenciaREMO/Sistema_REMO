@@ -40,8 +40,19 @@
           <td><?= $cont++ ?></td>
           <td><?= $fila->nom_img ?></td>  <!-- Accedemos al nombre -->
           <td><?= $fila->nom_tipo ?></td>
-          <td><div class="col-lg-2 "><a href="#"><span class="glyphicon glyphicon-new-window" hidden="true" ></span></a></div></td>
-          <td><div class="col-lg-2 "><a href="#"><span class="glyphicon glyphicon-remove" hidden="true"></span></a></div></td>
+          <td>
+            <div class="col-lg-2 ">
+              <a class="" href="javascript:void(0)" onclick="mostrarImagen('<?= $fila->id_img ?>')">
+                <span class="glyphicon glyphicon-new-window" hidden="true"></span>
+              </a>
+            </div>
+          <td>
+            <div class="col-lg-2 ">
+              <a class="" href="javascript:void(0)" onclick="eliminarImagen('<?= $fila->id_img ?>')">
+                <span class="glyphicon glyphicon-remove" hidden="true"></span>
+              </a>
+            </div>
+          </td>
         </tr>
         <?php   
           } //Fin de Foreach para lista los portafolios
@@ -56,4 +67,83 @@
   </div>
   <hr>
   <hr>
+</div>
+
+
+<script type="text/javascript">
+  function eliminarImagen(id)
+  {
+    $('#form')[0].reset();
+    $("#eliminar").attr("href", "<?= base_url()?>c_imagenes/eliminarImagen/"+id);
+    $('#modal_imagen').modal('show');
+  }
+  function mostrarImagen(id)
+  {
+    $('#form')[0].reset();
+    $.ajax({
+      url : "<?= base_url('c_imagenes/detallesImagenAjax') ?>" + "/" + id,
+      type: "GET",
+      dataType: "JSON",
+      success: function(data)
+      {
+        $('[name="nombre"]').text(data.nom_img);
+        $("#ver").attr('src', "<?= base_url()?>" + data.url_img);
+        $("#ver").attr('alt', data.nom_img);
+        $("#ver").attr('title', data.nom_img);
+        $('#modal_mostrar').modal('show');
+      },
+      error: function(jqXHR, textStatus, errorThrown)
+      {
+         alert('Error get data from ajax');
+      }
+    });
+  }
+</script>
+
+<!-- Modal concepto -->
+<div class="modal fade" id="modal_imagen" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Confirmación</h4>
+          </div>
+          <div class="modal-body form text-center">
+          <form action="#" id="form" class="form-horizontal">
+            <p class="">
+              <strong>
+                ¿Seguro que desea eliminar la imagen?
+              </strong>
+            </p>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+            <a id="eliminar" href="<?= base_url()?>c_imagenes/eliminarImagen/<?= $fila->id_img ?>" class="btn btn-danger">Eliminar</a>
+          </div>
+      </div>
+    </div>
+</div>
+
+<!-- Modal concepto -->
+<div class="modal fade" id="modal_mostrar" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <form action="#" id="form" class="form-horizontal">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title"><span name="nombre"></span></h4>
+          </div>
+          <div class="modal-body form">
+          <br>
+             <div id="ma" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 img-rounded img-thumbnail">
+              <img id="ver" class="img-responsive img-hover" src="" alt="" title="">
+            </div>
+            <div class="text-right">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
 </div>

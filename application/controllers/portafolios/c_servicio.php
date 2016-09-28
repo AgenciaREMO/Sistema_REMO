@@ -58,12 +58,12 @@ class C_servicio extends MY_Controller
 		*/
 		$this->form_validation->set_rules(
 			'servicio[]', 
-			'', 'required', array('¡Debes seleccionar al menos una opción!' )
+			'', 'required', array('<div class="alert alert-danger" role="alert"> ¡Debes seleccionar al menos una opción!</div>' )
 		);
 
 		$this->form_validation->set_rules(
 			'descripcion[]', 
-			'', 'required', array('¡Debes escribir un mensaje!' )
+			'', 'required', array('<div class="alert alert-danger" role="alert"> ¡Debes escribir un mensaje!</div>' )
 		);
 
 		//$this->form_validation->set_message('required', '¡Debes seleccionar al menos una opción!');

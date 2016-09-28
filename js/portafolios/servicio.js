@@ -43,3 +43,5 @@ var activarSer = function() {
 	cancelar.style.display = 'inline';
 	guardar.style.display = 'inline';
 };
+
+

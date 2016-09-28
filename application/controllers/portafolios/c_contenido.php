@@ -103,6 +103,8 @@
 		$id_portafolio = $id_portafolio;
 		$tipo = $this->input->post('tipo');
 		//Configuración para las imágenes
+		$nombre = $this->input->post('nombre');
+	    $config['file_name'] = $nombre;
 		$config['upload_path'] = './graficos/grafico';
 		$config['allowed_types'] = 'gif|jpg|png|jpeg';
 		$config['max_size'] = '2000';
@@ -127,7 +129,6 @@
 			$this->crearThumbnailContenido($file_info['file_name'], $tipo);
 			//Se envían los datos al modelo para hacer la inserción
 			$data = array('upload_data' => $this->upload->data());
-			$nombre = $this->input->post('nombre');
 			$tipo_img = '4';
 			$url_img = 'graficos/grafico/'.$file_info['file_name'];
 			$url_thu = 'graficos/grafico/thumbnail/'.$file_info['file_name'];

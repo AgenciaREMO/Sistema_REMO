@@ -148,18 +148,6 @@
 	$(document).on("ready", inicio);
 	function inicio()
 	{
-		//Se resetea la modal cuando esta oculta
-		$(document).ready(function() {
-			$(".modal").on("hidden.bs.modal", function() {
-				$('[name="id_descripcion"]').val(data.id_descripcion)
-				$('[name="categoria"]').text(data.tipo);
-				$('[name="concepto"]').text(data.concepto);
-				$('[name="descripcion"]').text(data.detalles);
-				$('[name="costo"]').text(data.costo);
-				$("a").attr("href", "<?= base_url()?>conceptos/eliminarDescripcion/"+data.id_descripcion);
-		  	});
-		});
-
 		var busc = "";
 		//Evento Focus
 		$("#b-concepto").focus(function()
@@ -270,8 +258,7 @@
 			{
 				$('[name="categoria"]').text(data.tipo);
 				$('[name="concepto"]').text(data.concepto);
-				$("a").attr("href", "<?= base_url()?>conceptos/eliminarConcepto/"+data.id_concepto);
-
+				$("#a-concep").attr("href", "<?= base_url()?>conceptos/eliminarConcepto/"+data.id_concepto);
 				$('#modal_concepto').modal('show');
 			},
 			error: function(jqXHR, textStatus, errorThrown)
@@ -289,13 +276,11 @@
 			dataType: "JSON",
 			success: function(data)
 			{
-				$('[name=" "]').val(data.id_descripcion)
 				$('[name="categoria"]').text(data.tipo);
 				$('[name="concepto"]').text(data.concepto);
 				$('[name="descripcion"]').text(data.detalles);
 				$('[name="costo"]').text(data.costo);
-				$("a").attr("href", "<?= base_url()?>conceptos/eliminarDescripcion/"+data.id_descripcion);
-
+				$("#a-descrip").attr("href", "<?= base_url()?>conceptos/eliminarDescripcion/"+data.id_descripcion);
 				$('#modal_descripcion').modal('show');
 			},
 			error: function(jqXHR, textStatus, errorThrown)
@@ -314,11 +299,9 @@
 				var registros = eval(respuesta);
 				var concepto = null;
 				var j = 1;
-
 				html = "";
 				html += "<table class='table table-hover'><thead><tr><th>#</th><th>Concepto</th><th>Descripción</th><th>Costo por hora</th><th>Categoria</th></tr></thead>";
 				html += "<tbody>";
-
 				for (var i = 0; i < registros.length; i++) 
 				{
 					if(concepto != registros[i]["concepto"])
@@ -335,7 +318,6 @@
 					html += "</td><td>"+registros[i]["costo"]+"</td><td>"+registros[i]["tipo"]+"</td></tr>";
 					concepto = registros[i]["concepto"]; 
 				};
-
 				html += "<tr><td></td><td><a href='<?= base_url("conceptos/conceptoNuevo") ?>' class='btn btn-primary'>Nuevo Concepto</a></td><td><a href='<?= base_url("conceptos/descripcionNueva") ?>' class='btn btn-primary'>Nueva Descripción</a></td><td></td><td></td></tr>";
 				html += "</tbody></table>";
 				$("#lista").html(html);
@@ -361,7 +343,7 @@
 	      	</div>
 	      	<div class="modal-footer">
 	        	<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-	        	<a href="<?= base_url()?>conceptos/eliminarConcepto/<?= $fila->id_concepto ?>" class="btn btn-danger">Eliminar</a>
+	        	<a id="a-concep" href="#" class="btn btn-danger">Eliminar</a>
 	      	</div>
     	</div>
   	</div>
@@ -385,7 +367,7 @@
 	      	</div>
 	      	<div class="modal-footer">
 	        	<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-	        	<a href="#" class="btn btn-danger">Eliminar</a>
+	        	<a id="a-descrip" href="#" class="btn btn-danger">Eliminar</a>
 	      	</div>
     	</div>
   	</div>

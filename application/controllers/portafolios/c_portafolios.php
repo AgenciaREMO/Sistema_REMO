@@ -41,12 +41,12 @@
 			//$this->form_validation->set_rules('name_input', 'Identificador', 'reglas de validación');
 			//$this->form_validation->set_message('regladevalidacion', 'mensajepersonalizado');
 			*/
-			$this->form_validation->set_rules('nombre', 'nombre del portafolio', 'trim|required|min_length[10]|max_length[100]|is_unique[portafolio.nombre]');
+			$this->form_validation->set_rules('nombre', 'nombre del portafolio', 'trim|required|min_length[10]|max_length[150]|is_unique[portafolio.nombre]');
 			$this->form_validation->set_message('required', '<div class="alert alert-danger" role="alert"> El campo %s es obligatorio</div>');
 			$this->form_validation->set_message('min_length', '<div class="alert alert-danger" role="alert">El campo %s debe tener un mínimo de %d carácteres</div>');
 			$this->form_validation->set_message('max_length', '<div class="alert alert-danger" role="alert">El campo %s debe tener un maximo de %d carácteres</div>');
 			$this->form_validation->set_message('is_unique', '<div class="alert alert-danger" role="alert">Existe otro campo %s registrado con ese nombre</div>');
-			$this->form_validation->set_rules('comentario', ' comentario del portafolio', 'trim|required|min_length[10]|max_length[100]');
+			$this->form_validation->set_rules('comentario', ' comentario del portafolio', 'trim|required|min_length[10]|max_length[300]');
 			$this->form_validation->set_message('required', '<div class="alert alert-danger" role="alert">El campo %s es obligatorio</div>');
 			$this->form_validation->set_message('min_length', '<div class="alert alert-danger" role="alert">El campo %s debe tener un mínimo de %d carácteres</div>');
 			$this->form_validation->set_message('max_length', '<div class="alert alert-danger" role="alert">El campo %s debe tener un maximo de %d carácteres</div>');
