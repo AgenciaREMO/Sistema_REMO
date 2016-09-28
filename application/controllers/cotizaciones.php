@@ -217,8 +217,8 @@
 			$this->load->view("nav");
 
 			$consid = $this->cotizacion->obtenerElemento(1);
-			$for_pago = $this->cotizacion->obtenerElemento(2);
-			$entreg = $this->cotizacion->obtenerElemento(3);
+			$entreg = $this->cotizacion->obtenerElemento(2);
+			$for_pago = $this->cotizacion->obtenerElemento(3);
 			$tiempo_entrega = $this->cotizacion->obtenerElemento(4);
 			$reque = $this->cotizacion->obtenerElemento(5);
 
@@ -273,6 +273,9 @@
 					'11' => 'Noviembre',
 					'12' => 'Diciembre'
 				);
+				for ($i=1; $i<13; $i++) { 
+					if($mes == $i){ $mes = $meses[$i]; }
+				}
 				//Generación de folio
 				$num_folio = $this->cotizacion->obtenerUltimoFolio();
 				$emp = (string) $fila->empresa;
@@ -309,17 +312,54 @@
 				//Elementos de seccion seleccionados
 				$elementos = $this->cotizacion->obtenerElementosPorId($id);
 				$elementos_selec = "";
-				foreach ($elementos->result() as $fila) { 
-					if($fila->id_tipo_seccion == '1'){
-						$elementos_selec.= "<h4 style='font-family:Tahoma; text-align:justify; font-size:12px; margin-left:163px;'>CONSIDERACIONES</h4>";
-					} else if($fila->id_tipo_seccion == '2'){
-						$elementos_selec.= "<h4 style='font-family:Tahoma; text-align:justify; font-size:12px; margin-left:163px;'>FORMAS DE PAGO</h4>";						
-					} else if($fila->id_tipo_seccion == '3'){
-						$elementos_selec.= "<h4 style='font-family:Tahoma; text-align:justify; font-size:12px; margin-left:163px;'>ENTREGABLES</h4>";							
-					} else if($fila->id_tipo_seccion == '4'){
-						$elementos_selec.= "<h4 style='font-family:Tahoma; text-align:justify; font-size:12px; margin-left:163px;'>TIEMPO ESTIMADO DE ENTREGA</h4>";							
-					} else if($fila->id_tipo_seccion == '5'){
-						$elementos_selec.= "<h4 style='font-family:Tahoma; text-align:justify; font-size:12px; margin-left:163px;'>REQUERIMIENTOS</h4>";							
+				$secciones = array(
+					'1' => 'CONSIDERACIONES',
+					'2' => 'ENTREGABLES',
+					'3' => 'FORMAS DE PAGO',
+					'4' => 'TIEMPO ESTIMADO DE ENTREGA',
+					'5' => 'REQUERIMIENTOS'
+				);
+				$bandera_cons = false;
+				$bandera_entr = false;
+				$bandera_pago = false;
+				$bandera_tiem = false;
+				$bandera_reqs = false;	
+
+				foreach ($elementos->result() as $fila1) {
+					if($fila1->id_tipo_seccion == '1'){
+					 	if($bandera_cons == false){
+					 		$elementos_selec.= "<h4 style='font-family:Tahoma; text-align:justify; font-size:11px; margin-left:163px; margin-bottom:0px'>CONSIDERACIONES:</h4>";
+					 		$bandera_cons = true;
+					 	}
+					 	$elementos_selec.= "<p style='font-family:Tahoma; text-align:justify; font-size:11px; margin-top:3px; margin-left:163px; margin-bottom:0px'>- ".$fila1->descripcion."</p>";
+					} 
+					else if($fila1->id_tipo_seccion == '2'){
+						if($bandera_entr == false){
+					 		$elementos_selec.= "<h4 style='font-family:Tahoma; text-align:justify; font-size:11px; margin-left:163px; margin-bottom:0px'>ENTREGABLES:</h4>";
+					 		$bandera_entr = true;
+					 	}
+					 	$elementos_selec.= "<p style='font-family:Tahoma; text-align:justify; font-size:11px; margin-top:3px; margin-left:163px; margin-bottom:0px'>- ".$fila1->descripcion."</p>";						
+					} 
+					else if($fila1->id_tipo_seccion == '3'){
+						if($bandera_pago == false){
+					 		$elementos_selec.= "<h4 style='font-family:Tahoma; text-align:justify; font-size:11px; margin-left:163px; margin-bottom:0px'>FORMAS DE PAGO:</h4>";
+					 		$bandera_pago = true;
+					 	}
+					 	$elementos_selec.= "<p style='font-family:Tahoma; text-align:justify; font-size:11px; margin-top:3px; margin-left:163px; margin-bottom:0px'>- ".$fila1->descripcion."</p>";							
+					} 
+					else if($fila1->id_tipo_seccion == '4'){
+						if($bandera_tiem == false){
+					 		$elementos_selec.= "<h4 style='font-family:Tahoma; text-align:justify; font-size:11px; margin-left:163px; margin-bottom:0px'>TIEMPO ESTIMADO DE ENTREGA:</h4>";
+					 		$bandera_tiem = true;
+					 	}
+					 	$elementos_selec.= "<p style='font-family:Tahoma; text-align:justify; font-size:11px; margin-top:3px; margin-left:163px; margin-bottom:0px'>- ".$fila1->descripcion."</p>";							
+					} 
+					else if($fila1->id_tipo_seccion == '5'){
+						if($bandera_reqs == false){
+					 		$elementos_selec.= "<h4 style='font-family:Tahoma; text-align:justify; font-size:11px; margin-left:163px; margin-bottom:0px'>REQUERIMIENTOS:</h4>";
+					 		$bandera_reqs = true;
+					 	}
+					 	$elementos_selec.= "<p style='font-family:Tahoma; text-align:justify; font-size:11px; margin-top:3px; margin-left:163px; margin-bottom:0px'>- ".$fila1->descripcion."</p>";							
 					}
 				}
 
@@ -327,7 +367,7 @@
 		        $html = 
 		        "<style>
 		        	@page {
-		        	    background-image: url(".base_url()."/img/machoteRemo.jpg);
+		        	    background-image: url(".base_url()."/img/machoteRemoBco.jpg);
 					    margin-top:50px;
 					    background-image-resize:6;
 					}
@@ -338,7 +378,7 @@
 				</style>".
 		        "<body>
 		        	<div>
-						<p style='font-family:Tahoma; color:#FFF; text-align:right; font-size:20px; margin-bottom:35px;'>COTIZACIÓN</p>
+						<p style='font-family:Tahoma; color:#FFF; text-align:right; font-size:20px; margin-bottom:35px;'><i>COTIZACIÓN</i></p>
 		        		<p style='font-family:Tahoma; text-align:right; font-size:12px;'>Santiago de Querétaro, Qro., a ".$fecha."<br>
 		        		<b style='font-family:Tahoma; color:#0f76bb;'> COTIZACIÓN ".$folio."</b></p>
 		        	</div>
@@ -346,22 +386,22 @@
 			        	<p style='font-family:Tahoma; text-align:left; font-size:11px; margin-top:28px; margin-left:163px;'><b>".$fila->cliente."</b><br>
 			        	".$fila->puesto."<br>
 			        	Presente.</p>
-			        	<p style='font-family:Tahoma; color:#0f76bb; text-align:left; font-size: 11px; margin-top:15px; margin-left:163px;'><b>PROYECTO: ".strtoupper($fila->proyecto)."</b></p>
 		        	</div>
+			        <p style='font-family:Tahoma; color:#0f76bb; text-align:left; font-size:12px; position:absolute; top:228px; left:220px;'><b>PROYECTO: ".strtoupper($fila->proyecto)."</b></p>
 		        	<div>
-						<p style='font-family:Tahoma; text-align:justify; font-size:11px; margin-top:3px; margin-left:163px; margin-bottom:0px'>
+						<p style='font-family:Tahoma; text-align:justify; font-size:11px; margin-top:47px; margin-left:163px; margin-bottom:0px'>
 							Por este medio, nos permitimos presentar a su atenta consideración la cotización de la impresión de folders y tarjetas de presentación, como fue solicitada por usted.
 						</p>
-						<h4 style='font-family:Tahoma; text-align:justify; font-size:12px; margin-left:163px; margin-bottom:0px;'>DESCRIPCIÓN DEL PROYECTO</h4>
+						<h4 style='font-family:Tahoma; text-align:justify; font-size:11px; margin-left:163px; margin-bottom:0px;'>DESCRIPCIÓN DEL PROYECTO</h4>
 						<table style='margin-top:3px; margin-left:163px; font-size:11px;'>
 							<tr>
-								<th style='font-family:Tahoma; width:43px; padding:4px 0px;'>CANT.</th>
-								<th style='font-family:Tahoma; width:128px; padding:4px 0px;'>CONCEPTO</th>
-								<th style='font-family:Tahoma; width:240px; padding:4px 0px;'>DESCRIPCIÓN</th>
-								<th style='font-family:Tahoma; width:87px; padding:4px 0px;'>IMPORTE</th>
+								<th style='font-family:Tahoma; width:43px; padding:4px 0px; background-color:#efefef'>CANT.</th>
+								<th style='font-family:Tahoma; width:128px; padding:4px 0px; background-color:#efefef'>CONCEPTO</th>
+								<th style='font-family:Tahoma; width:240px; padding:4px 0px; background-color:#efefef'>DESCRIPCIÓN</th>
+								<th style='font-family:Tahoma; width:87px; padding:4px 0px; background-color:#efefef'>IMPORTE</th>
 							</tr>".$str_descrips."
 							<tr>
-								<td colspan='3' style='font-family:Tahoma; font-size:11px; padding:3px 5px; text-align:right;'>
+								<td colspan='3' style='font-family:Tahoma; font-size:11px; padding:3px 5px; text-align:right; background-color:#efefef'>
 									<b>
 										SUBTOTAL:<br>
 										IVA:<br>
@@ -379,7 +419,7 @@
 						</table>
 		        	</div>
 		        	<div>
-						<p style='font-family:Tahoma; text-align:justify; font-size:11px; margin-top:10px; margin-left:163px; margin-bottom:0px'>
+						<p style='font-family:Tahoma; text-align:justify; font-size:11px; margin-top:10px; margin-left:163px; margin-bottom:0px;'>
 							*Estos costos están sujetos a cambio en caso de existir modificaciones en las características del proyecto. El IVA se muestra en el precio final.<br>
 							La entrega de avances y proyecto final están sujetos al tiempo de aprobación por parte del cliente.<br>
 							Una modificación o adición de contenido no mencionado en la descripción del proyecto implica un costo extra.
@@ -388,19 +428,31 @@
 					<div>".
 						$elementos_selec
 					."</div>
+					<div style='margin-top:15px;'>
+						<h4 style='font-family:Tahoma; text-align:center; font-size:11px; margin-left:163px; margin-bottom:0px;'>ATENTAMENTE:</h4>
+						<p style='text-align:center; margin-left:163px;'><img src='".base_url()."/img/firma.png'></p>
+						<p style='font-family:Tahoma; text-align:center; font-size:11px; margin-left:163px; margin-bottom:0px;'>
+							JUAN CARLOS REYES GARCÍA<br>
+							Director de Estrategia e Inovación
+						</p>
+					</div>
+					<div style='position:absolute; margin-left:-30px; left:50%; bottom:60px;'>
+						 <p style='font-family:Tahoma; color:#0f76bb; text-align:center; font-size:11px;'><i>Tel. 5 27 02 02 &nbsp; &nbsp; &nbsp; <b>www.remo.mx</b></i></p>
+					</div>
 		        </body>";
 
-		        //this the the PDF filename that user will get to download
-		        $pdfFilePath = "cotizacion_".$folio.".pdf";
+		        //Asignación de ubicación y nombre del archivo
+		        $pdfFilePath = "pdf-cotizaciones/cotizacion_".$folio.".pdf";
 		 
-		        //load mPDF library
+		        //Se carga mPDF libreria
 		        $this->load->library('M_pdf');
+		        $mpdf = new mPDF();
 		 
-		       //generate the PDF from the given html
-		        $this->m_pdf->pdf->WriteHTML($html);
-		 
-		        //download it.
-		     	$this->m_pdf->pdf->Output($pdfFilePath, "D"); 
+		       	//Generación del PDF apartir de la cadena html
+		        $mpdf->WriteHTML($html);
+
+		 		//Se almacena.
+		     	$mpdf->Output($pdfFilePath, "F");
 
 		        //Cotizacion fija es dada de alta
 				$data = array(
@@ -413,10 +465,13 @@
 					'total' => $this->input->post('totalcot'),
 					'comentario' => $this->input->post('comentario'),
 					'url' =>  $pdfFilePath,
-					'id_temp' => $id
+					'id_temp' => $id, 
+					'total' => $total,
+					'comentario' => $fila->comentario
 				);
-				//$id_insertado = $this->cotizacion->nuevaCotizacionFija($data);
-				//redirect('cotizaciones/detallesCotiz/'.$id_insertado);
+				$id_insertado = $this->cotizacion->nuevaCotizacionFija($data);
+				
+				redirect('cotizaciones/detallesCotiz/'.$id_insertado);
 			}
 			else if($this->input->post('guardar') == "Guardar")
 			{
@@ -451,6 +506,13 @@
 			);
 			$this->load->view("cotizaciones/detalles_cotizacion_fija", $data);
 			$this->load->view("footer");
+
+		}
+		public function detallesCotizacionAjax($id = '')
+		{
+			$data = $this->cotizacion->obtenerCotizacionPorId($id);
+
+			echo json_encode($data);
 		}
 	}
 ?>
