@@ -10,12 +10,9 @@
         </div>
     </div>
     <?=@$error?>
-    <?php validation_errors('<div class="alert alert-danger" role="alert">','</div>'); ?>
-    <?= form_open('portafolios/c_experiencia/actualizarExperiencia'.'/'.$id_portafolio);?>
-    <div class="row">
-        <?php 
-          $count= 0;
-          //Botones
+    <?php validation_errors('<div class="alert alert-danger" role="alert">','</div>'); 
+      $count= 0;
+      //Botones
           $editar   = array('onClick'=>'activarPor()',
                             'style'=>'display:inline',
                             'class'=>'btn btn-primary',
@@ -45,7 +42,23 @@
                             'id'=>'ex-nueva-n',
                             'content'=>'<span class="glyphicon glyphicon-plus"></span> Experiencia',
                             'data-toggle'=>'modal',
-                            'data-target'=>'#cargarExperiencia');
+                            'data-target'=>'#cargarExperiencia');   
+    ?>
+
+    <?= form_open('portafolios/c_experiencia/actualizarExperiencia'.'/'.$id_portafolio);?>
+    <div class="row">
+        <?php 
+        if($obtener_pagina != FALSE){
+
+        }else{
+
+        }
+
+
+
+
+
+
           foreach ($obtener_pagina->result() as $fila){ 
            $id_porta     = $fila->id_porta;
            $id_imgP      = $fila->id_imgP;

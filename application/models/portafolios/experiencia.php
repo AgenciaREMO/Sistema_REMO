@@ -113,7 +113,11 @@ class Experiencia extends CI_Model
 					             RIGHT JOIN tipo_imagen as ti ON i.id_tipo_img = ti.id_tipo_img
 					             WHERE i.id_tipo_img = 3 ");
 		                         /*WHERE i.id_tipo_img = 3 LIMIT ".$num.",".$uri."");*/
-		return $query;
+		if($query->num_rows()>0){
+	        return $query;
+	    }else{
+	        return false;
+	    }
 	}
 
 
@@ -125,7 +129,12 @@ class Experiencia extends CI_Model
 		                            INNER JOIN tipo_imagen 
 		                            ON imagen.id_tipo_img = tipo_imagen.id_tipo_img 
 		                            WHERE imagen.id_tipo_img = 3")->row()->number; //Regresa el número total de filas de una tabla
-		return intval($numero);
+		if($numero>0){
+	        	return intval($numero);
+	        	//return $query->row();
+	    }else{
+	        return false;
+	    }
 	}
 
 	/*public function obtener_pagina($numero_por_pagina, $id){ //$numero_por_pagina viene del controlador

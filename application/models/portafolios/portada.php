@@ -196,15 +196,25 @@ class Portada extends CI_Model
 	public function num_portadas(){
 		//SELECT count(*) as number FROM imagen INNER JOIN tipo_imagen ON imagen.id_tipo_img = tipo_imagen.id_tipo_img WHERE imagen.id_tipo_img = 1
 		$numero = $this->db->query("SELECT count(*) as number FROM imagen INNER JOIN tipo_imagen ON imagen.id_tipo_img = tipo_imagen.id_tipo_img WHERE imagen.id_tipo_img = 1")->row()->number; //Regresa el número total de filas de una tabla
-		return intval($numero);
+		if($numero>0){
+	        	return intval($numero);
+	        	//return $query->row();
+	    }else{
+	        return false;
+	    }
+		
 	}
 
 	public function obtener_pagina($numero_por_pagina){
 		//$this->db->get();
 		$this->db->where('id_tipo_img', 1);
 		$query = $this->db->get("imagen", $numero_por_pagina, $this->uri->segment(5));
-		
-		return $query;
+		if($query->num_rows()>0){
+	        	return $query;
+	        	//return $query->row();
+	      	}else{
+	        	return false;
+	      	}
 	}
 
 
