@@ -23,48 +23,24 @@ class Experiencia extends CI_Model
 	}
 
 	//Función que permite insertar el registro de un logo de experiencia relacionado con determinado portafolio
-	public function insertarExperiencia($data, $id_img, $destacado, $mostrar, $cont){
-		$arrayCont = explode (", " , $cont['id_img']); //Cuentas el arreglo
-		//For que permite generar la consulta dinamicamente con valores de arreglo y el tamaño del arreglo
-		for($i=0; $i <= count($arrayCont) ;$i++) {
-			if(!empty($id_img['id_img'][$i]) && !empty($destacado['destacado'][$i]) && !empty($mostrar['mostrar'][$i])){
-				$sql = " INSERT INTO portafolio_imagen (id_por_ima, id_portafolio, id_img, destacado, mostrar) 
-						 VALUES ('',".$data['id_portafolio'].",".$id_img['id_img'][$i].", 1, 1)";
-						 $this->db->query($sql);
+	public function insertarExperiencia($data, $insert2){
+		foreach ($insert2 as $key => $value) {
+			$bin = decbin($value);
+			if ($value == 1 || $value == 0) {
+				$bin = "0".$bin;
 			}
-			else{
-				if (!empty($id_img['id_img'][$i]) && !empty($destacado['destacado'][$i]) && $mostrar['mostrar'][$i] == '') {
-					$sql = " INSERT INTO portafolio_imagen (id_por_ima, id_portafolio, id_img, destacado, mostrar) 
-						     VALUES ('',".$data['id_portafolio'].",".$id_img['id_img'][$i].", 1, 0 )";
-						     $this->db->query($sql);
-				}
-				else{
-					if (!empty($id_img['id_img'][$i]) && $destacado['destacado'][$i] == '' && $mostrar['mostrar'][$i] == '') {
-						$sql = " INSERT INTO portafolio_imagen (id_por_ima, id_portafolio, id_img, destacado, mostrar) 
-						     VALUES ('',".$data['id_portafolio'].",".$id_img['id_img'][$i].", 0, 0 )";
-						     $this->db->query($sql);
-					}else{
-						if(!empty($id_img['id_img'][$i]) && $destacado['destacado'][$i] == '' && !empty($mostrar['mostrar'][$i])){
-							$sql = " INSERT INTO portafolio_imagen (id_por_ima, id_portafolio, id_img, destacado, mostrar) 
-									 VALUES ('',".$data['id_portafolio'].",".$id_img['id_img'][$i].", 0, 1)";
-									 $this->db->query($sql);
-						}
-					}
-				}
-			}
-
-			/*
-
-			if(!empty($id_img['id_img'][$i])){
-				$sql = " INSERT INTO portafolio_imagen (id_por_ima, id_portafolio, id_img, destacado, mostrar) 
-					     VALUES ('',".$data['id_portafolio'].",".$id_img['id_img'][$i].",".$destacado['destacado'][$i].",".$mostrar['mostrar'][$i].")";
-				$this->db->query($sql);
-				//echo $sql;
-			} */
-		}
+			//echo $bin;
+			$binarray = str_split($bin);
+			print_r($binarray);
+			$sql = " INSERT INTO portafolio_imagen (id_por_ima, id_portafolio, id_img, destacado, mostrar) 
+						 VALUES ('',".$data['id_portafolio'].",".$key.", $binarray[1],$binarray[0])";
+						 //$this->db->query($sql);
+						 echo $sql;
+						 echo "</br>";
+	    }
 	}
 	//Función que permite validar si existen registros en la base de datos donde este relacionado portafolio imagen y alguna imagen de experiencia 
-	public function actualizarExperiencia($data, $id_img, $destacado, $mostrar, $cont){
+	public function actualizarExperiencia($data, $insert2){
 		/*
 		SELECT * 
 		FROM portafolio_imagen
@@ -84,10 +60,10 @@ class Experiencia extends CI_Model
 
 		if($query->num_rows()>0){
 			$this->eliminarExperiencia($data);
-			$this->insertarExperiencia($data, $id_img, $destacado, $mostrar, $cont);
+			$this->insertarExperiencia($data, $insert2);
 			echo "eliminara";
 		}else{ 
-			$this->insertarExperiencia($data, $id_img, $destacado, $mostrar, $cont);
+			$this->insertarExperiencia($data, $insert2);
 			echo "actualizara";
 		}
 	}

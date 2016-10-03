@@ -48,17 +48,6 @@
     <?= form_open('portafolios/c_experiencia/actualizarExperiencia'.'/'.$id_portafolio);?>
     <div class="row">
         <?php 
-        if($obtener_pagina != FALSE){
-
-        }else{
-
-        }
-
-
-
-
-
-
           foreach ($obtener_pagina->result() as $fila){ 
            $id_porta     = $fila->id_porta;
            $id_imgP      = $fila->id_imgP;
@@ -87,16 +76,16 @@
                       <div class="row">
                         <div class="col-lg-4 col-md-4 col-sm-12">
                           <!--<div class="checkbox">-->
-                            <?= form_checkbox("experiencia[]", ''.$id_imgI.'', set_checkbox("experiencia[]", ''.$id_imgI.'', FALSE)); ?>
+                            <?= form_checkbox("experiencia[0][]", ''.$id_imgI.'', set_checkbox("experiencia[]", ''.$id_imgI.'', FALSE)); ?>
                             <p style="font-size:14px;"><span class="glyphicon glyphicon-ok" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Seleccionar"></span></p>
                           <!-- </div>-->
                         </div>
                         <div class="col-lg-4 col-md-4 col-sm-12">
-                          <?= form_checkbox("resaltar[]", ''.$id_imgI.'', set_checkbox("resaltar[]", ''.$id_imgI.'', FALSE)); ?>
+                          <?= form_checkbox("experiencia[1][]", ''.$id_imgI.'', set_checkbox("resaltar[]", ''.$id_imgI.'', FALSE)); ?>
                           <p style="font-size:14px;"><span class="glyphicon glyphicon-star" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Resaltar"></span></p>
                         </div>
                         <div class="col-lg-4 col-md-4 col-sm-12">
-                          <?= form_checkbox("incluir[]", ''.$id_imgI.'', set_checkbox("incluir[]", ''.$id_imgI.'', FALSE)); ?>
+                          <?= form_checkbox("experiencia[2][]", ''.$id_imgI.'', set_checkbox("incluir[]", ''.$id_imgI.'', FALSE)); ?>
                           <p style="font-size:14px;"><span class="glyphicon glyphicon-link" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Incluir descripción"></span></p>
                         </div>
                       </div>

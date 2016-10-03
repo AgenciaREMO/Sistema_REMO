@@ -143,7 +143,7 @@ class C_experiencia extends MY_Controller
     {   
     	//Reglas de validación
     	$this->form_validation->set_rules(
-			'experiencia[]', 
+			'experiencia[1][]', 
 			'', 'required', array('¡Debes seleccionar al menos una opción!' )
 		);
 		/*
@@ -162,18 +162,27 @@ class C_experiencia extends MY_Controller
 	        $this->cargarExperiencia($id_portafolio);
 	        echo 'fail cargar';
 		}else
-		{
+		{	
 			//Si es válido se realiza la función de insertar
 		    $id_portafolio = $id_portafolio;
 			$data = array('id_portafolio' => $id_portafolio);
 			$id_img = array('id_img' => $this->input->post('experiencia'));
-			$destacado = array('destacado' => $this->input->post('resaltar'));
-			$mostrar = array('mostrar' => $this->input->post('incluir'));
-			$cont = array('id_img' => implode(", ", $this->input->post('experiencia')));
-		    $this->experiencia->actualizarExperiencia($data, $id_img, $destacado, $mostrar, $cont);
-			redirect('/portafolios/c_experiencia/cargarExperiencia'.'/'.$id_portafolio);
+			foreach ($this->input->post('experiencia') as $key => $value) {
+				//print_r($key);
+				foreach ($value as $key2 => $value2) {
+					//$insert [$value2][] = $key; 
+					if (!isset($insert2[$value2])) {
+						$insert2 [$value2] = 0 ;
+					}
+					$insert2 [$value2] = ($insert2 [$value2] + $key); //valor sumado "binario"
+				}
+			}
+			echo "</br>";
+		    $this->experiencia->actualizarExperiencia($data, $insert2);
+			//redirect('/portafolios/c_experiencia/cargarExperiencia'.'/'.$id_portafolio);
 		    echo 'successful actualizar';
 		}
 	}      
 
 }
+
