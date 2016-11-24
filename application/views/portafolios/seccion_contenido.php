@@ -110,9 +110,9 @@
           <?= form_button($cargar) ?>
         </div>
         <div class="col-lg-4 col-lg-offset-8 ">
-          <?= form_button($cancelar) ?>
+          <!--<?= form_button($cancelar) ?>
           <?= form_submit($guardar) ?>
-          <?= form_button($cargar2) ?>
+          <?= form_button($cargar2) ?>-->
         </div>
       </div>
       <hr>   

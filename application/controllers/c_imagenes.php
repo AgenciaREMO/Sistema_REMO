@@ -32,6 +32,9 @@
 	        $this->form_validation->set_message('min_length', '<div class="alert alert-danger" role="alert"> El campo %s debe tener al menos %d carácteres</div>');
 	        $this->form_validation->set_message('max_length', '<div class="alert alert-danger" role="alert"> El campo %s no puede tener más de %d carácteres</div>');
 
+	        $this->form_validation->set_rules('userfile', 'archivo adjunto', 'required');
+	        $this->form_validation->set_message('required', '<div class="alert alert-danger" role="alert"> El campo %s no puede ir vacío!</div>');
+
 	        $this->form_validation->set_rules('descripcion', 'descripcion', '|min_length[5]|max_length[400]|trim|xss_clean');
 	        $this->form_validation->set_message('min_length', '<div class="alert alert-danger" role="alert"> El campo %s debe tener al menos %d carácteres</div>');
 	        $this->form_validation->set_message('max_length', '<div class="alert alert-danger" role="alert"> El campo %s no puede tener más de %d carácteres</div>');
@@ -42,11 +45,9 @@
 	        if ($this->form_validation->run() == TRUE) 
 	        {
 	            $this->subirGrafico();
-	            echo "paso";
 	        }else{
 	        //Si el formulario no se válida se muestran los errores
 	            $this->nueva();
-	            echo "no paso";
 	        }
 	    }
 	    //Función que permite subir el gráfico
@@ -76,7 +77,7 @@
 			            $this->load->view("head");
 						$this->load->view("nav");
 						$resultado = $this->imagen->obtenerTipoImg(); //Asignamos a una variable la función que arroja el resultado de la consulta a base de datos.
-						$error = $this->upload->display_errors();
+						$error = '<div class="container"><div class="alert alert-danger" role="alert">'.$this->upload->display_errors().'</div></div>';
 						$tipos = array('consulta' => $resultado,
 									   'error' => $error);
 						$this->load->view("imagenes/nueva_imagen", $tipos);

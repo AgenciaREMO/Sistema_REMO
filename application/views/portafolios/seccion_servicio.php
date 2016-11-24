@@ -86,11 +86,11 @@
           <hr>
           <div class="row">
             <div class="col-lg-1 col-lg-offset-10 ">
-              <!--<?= form_button($editar) ?>-->
+              <?= form_button($editar) ?>
             </div>
             <div class="col-lg-3 col-lg-offset-9 ">
               <!--<?= form_button($cancelar) ?>-->
-              <?= form_submit($guardar) ?>
+              <!--<?= form_submit($guardar) ?>-->
             </div>
           </div>
           <hr>

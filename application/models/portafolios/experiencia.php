@@ -34,7 +34,7 @@ class Experiencia extends CI_Model
 			print_r($binarray);
 			$sql = " INSERT INTO portafolio_imagen (id_por_ima, id_portafolio, id_img, destacado, mostrar) 
 						 VALUES ('',".$data['id_portafolio'].",".$key.", $binarray[1],$binarray[0])";
-						 //$this->db->query($sql);
+						 $this->db->query($sql);
 						 echo $sql;
 						 echo "</br>";
 	    }

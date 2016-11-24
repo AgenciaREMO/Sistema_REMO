@@ -14,7 +14,7 @@
 <link href="<?= base_url('css/bootstrap.min.css') ?>" rel="stylesheet" media="screen">
 <link href="<?= base_url('css/modern-business.css') ?>" rel="stylesheet">
 <link href="<?= base_url('font-awesome/css/font-awesome.min.css') ?>" rel="stylesheet" type="text/css">
-<?=@$error?>
+
 <?php
 //form
 $form = array(
@@ -108,6 +108,8 @@ $subir = array(
         </div>
         <div class="col-lg-12">
           <div class="form-group">
+              <?=@$error?>
+              <?= form_error('userfile'); ?>
               <?= form_label('Selecciona una imagen');?>
               <?= form_upload($imagen); ?>
           </div>

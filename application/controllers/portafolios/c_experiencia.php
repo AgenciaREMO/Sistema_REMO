@@ -179,7 +179,7 @@ class C_experiencia extends MY_Controller
 			}
 			echo "</br>";
 		    $this->experiencia->actualizarExperiencia($data, $insert2);
-			//redirect('/portafolios/c_experiencia/cargarExperiencia'.'/'.$id_portafolio);
+			redirect('/portafolios/c_experiencia/cargarExperiencia'.'/'.$id_portafolio);
 		    echo 'successful actualizar';
 		}
 	}      
