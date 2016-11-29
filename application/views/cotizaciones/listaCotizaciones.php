@@ -654,15 +654,15 @@
 					var registros = eval(respuesta);
 
 					html = "";
-					html += "<table class='table table-hover'><thead><tr><th>#</th><th>Folio</th><th>Vigencia</th><th>Proyecto</th><th>Creada por</th><th>Estatus</th><th>Generada</th><th>Empresa</th><th>Importe</th></tr></thead>";
+					html += "<table class='table table-hover'><thead><tr><th>#</th><th></th><th>Proyecto</th><th>Creada por</th><th>Estatus</th><th>Generada</th><th>Empresa</th></tr></thead>";
 					html += "<tbody>";
 
 					for (var i = 0; i < registros.length; i++) 
 					{
 						html += "<tr><td>"+(i+1)+"</td>";
-						html += "<td><a class='i-borrar' href='javascript:void(0)' onclick='eliminar_Cotizacion("+registros[i]["id_cotización"]+")'><i class='fa fa-times'></i></a> <a href='<?= base_url()?>cotizaciones/detallesCotizacion/"+registros[i]["id_cotización"]+"'>"+registros[i]["folio"]+"</td>";
-						html += "<td></td><td>"+registros[i]["proyecto"]+"</td><td>"+registros[i]["personal"]+"</td><td>En revisión</td>";
-						html += "</td><td>"+registros[i]["f_generacion"]+"</td><td>"+registros[i]["empresa"]+"</td><td>"+registros[i]["total"]+"</td></tr>";
+						html += "<td><a class='i-borrar' href='javascript:void(0)' onclick='eliminar_Cotizacion("+registros[i]["id_cotización"]+")'><i class='fa fa-times'></i></a> <a href='<?= base_url()?>cotizaciones/detallesCotizacion/"+registros[i]["id_cotización"]+"'> Revisar</a></td>";
+						html += "<td>"+registros[i]["proyecto"]+"</td><td>"+registros[i]["personal"]+"</td><td>En revisión</td>";
+						html += "</td><td>"+registros[i]["f_generacion"]+"</td><td>"+registros[i]["empresa"]+"</td></tr>";
 					};
 
 					html += "<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>";

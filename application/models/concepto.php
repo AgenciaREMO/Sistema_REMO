@@ -156,7 +156,7 @@
 			}
 			else if($tipo_bus=="b-costos")
 			{
-				/*$resultado = $this->db->query("SELECT tipo_proyecto.nombre AS tipo, 
+				$resultado = $this->db->query("SELECT tipo_proyecto.nombre AS tipo, 
 												concepto.nombre AS concepto, 
 												detalles, costo, id_descripcion, 
 												concepto.id_concepto AS id_concepto 
@@ -165,8 +165,8 @@
 												ON tipo_proyecto.id_tipo=concepto.id_tipo 
 												JOIN descripcion 
 												ON concepto.id_concepto=descripcion.id_concepto 
-												WHERE costo >= ".$costo1." AND costo <= ".$costo2." ORDER BY concepto");*/
-				$this->db->select('tipo_proyecto.nombre AS tipo, 
+												WHERE costo >= ".$costo1." AND costo <= ".$costo2." ORDER BY concepto");
+				/*$this->db->select('tipo_proyecto.nombre AS tipo, 
 									concepto.nombre AS concepto, 
 									detalles, costo, id_descripcion, 
 									concepto.id_concepto AS id_concepto');
@@ -176,11 +176,11 @@
 				$this->db->where('costo >=',$costo1);
 				$this->db->where('costo <=', $costo2);
 				$this->db->order_by('concepto','asc');
-				$resultado = $this->db->get("",$numero_por_pagina, $this->uri->segment(3));
+				$resultado = $this->db->get("",$numero_por_pagina, $this->uri->segment(3));*/
 			}
 			else if($tipo_bus=="b-categoria")
 			{
-				/*$resultado = $this->db->query("SELECT tipo_proyecto.nombre AS tipo, 
+				$resultado = $this->db->query("SELECT tipo_proyecto.nombre AS tipo, 
 												concepto.nombre AS concepto, 
 												detalles, costo, id_descripcion, 
 												concepto.id_concepto AS id_concepto 
@@ -189,8 +189,8 @@
 												ON tipo_proyecto.id_tipo=concepto.id_tipo 
 												JOIN descripcion 
 												ON concepto.id_concepto=descripcion.id_concepto 
-												WHERE tipo_proyecto.nombre LIKE '%".$busqueda."%' ORDER BY concepto");*/
-				$this->db->select('tipo_proyecto.nombre AS tipo, 
+												WHERE tipo_proyecto.nombre LIKE '%".$busqueda."%' ORDER BY concepto");
+				/*$this->db->select('tipo_proyecto.nombre AS tipo, 
 									concepto.nombre AS concepto, 
 									detalles, costo, id_descripcion, 
 									concepto.id_concepto AS id_concepto');
@@ -199,10 +199,10 @@
 				$this->db->join('descripcion ', 'concepto.id_concepto=descripcion.id_concepto');
 				$this->db->like('tipo_proyecto.nombre',$busqueda);
 				$this->db->order_by('concepto','asc');
-				$resultado = $this->db->get("",$numero_por_pagina, $this->uri->segment(3));
+				$resultado = $this->db->get("",$numero_por_pagina, $this->uri->segment(3));*/
 			}
 			
-			return $resultado->row_array(0);
+			return $resultado->result();
 		}
 
 		//OTROS

@@ -33,13 +33,16 @@
 											personal.nombre AS personal, 
 											estatus_cotizacion.estatus AS estatus, 
 											proyecto.nombre AS proyecto, 
-											empresa.nombre AS empresa 
+											empresa.nombre AS empresa,
+                                            cliente.nombre AS cliente,
+											tipo_proyecto.nombre AS tipo
 											FROM cotizacion 
 											JOIN personal ON cotizacion.id_personal=personal.id_personal 
 											JOIN proyecto ON cotizacion.id_proyecto=proyecto.id_proyecto 
 											JOIN estatus_cotizacion ON cotizacion.id_estatus=estatus_cotizacion.id_estatus 
 											JOIN cliente ON proyecto.id_cliente=cliente.id_cliente 
 											JOIN empresa ON cliente.id_empresa=empresa.id_empresa 
+                                            JOIN tipo_proyecto ON tipo_proyecto.id_tipo = proyecto.id_tipo
 											WHERE id_cotizacion='".$Id."' LIMIT 1");
 			return $resultado->row(); 
 		}
@@ -428,7 +431,7 @@
 				$resultado = $this->db->query("SELECT cotizacion_temp.id_cotizacion_temp AS id_cotizacion, 
 												cotizacion_temp.id_proyecto AS id_proyecto, 
 												cotizacion_temp.id_personal AS id_personal, 
-												folio, total, f_generacion,
+												f_generacion,
 												personal.nombre AS personal,
 												proyecto.nombre AS proyecto, 
 												empresa.nombre AS empresa 
@@ -558,6 +561,7 @@
 											empresa.nombre AS empresa,
 											proyecto.nombre AS proyecto,
 											proyecto.id_tipo AS id_tipo,
+											tipo_proyecto.nombre AS tipo,
 											f_generacion, cantidades, descripciones, horas, comentario, puesto
 											FROM cotizacion_temp 
 											JOIN proyecto
@@ -565,7 +569,9 @@
 											JOIN cliente 
 											ON cliente.id_cliente = proyecto.id_cliente
 											JOIN empresa 
-											ON cliente.id_empresa= empresa.id_empresa
+											ON cliente.id_empresa = empresa.id_empresa
+											JOIN tipo_proyecto
+											ON tipo_proyecto.id_tipo = proyecto.id_tipo
 											WHERE id_cotizacion_temp = '" . $Id . "' LIMIT 1");
 			return $resultado->row(); //Convierte el resultado de la consulta a una fila
 		}
@@ -629,6 +635,15 @@
 		{
 			$resultado = $this->db->query("SELECT concepto.nombre, descripcion.detalles, descripcion.costo FROM descripcion JOIN concepto ON descripcion.id_concepto=concepto.id_concepto WHERE id_descripcion ='".$descrip."'")->row(); //Convierte el resultado en una sola fila
 			return $resultado;
+		}
+
+		public function eliminarCotizacion($id)
+		{
+			$this->db->delete('cotizacion', array('id_cotizacion' => $id));
+		}
+		public function eliminarTemporal($id)
+		{
+			$this->db->delete('cotizacion_temp', array('id_cotizacion_temp' => $id));
 		}
 	}
 ?>

@@ -514,5 +514,22 @@
 
 			echo json_encode($data);
 		}
+		public function detallesTemporalAjax($id = '')
+		{
+			$data = $this->cotizacion->obtenerTempPorId($id);
+
+			echo json_encode($data);
+		}
+
+		public function eliminarCotizacion($id)
+		{
+			$this->cotizacion->eliminarCotizacion($id);
+			redirect('cotizaciones/listaCotizaciones');
+		}
+		public function eliminarTemporal($id)
+		{
+			$this->cotizacion->eliminarTemporal($id);
+			redirect('cotizaciones/listaCotizaciones');
+		}
 	}
 ?>
