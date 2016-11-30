@@ -4,9 +4,9 @@
 			<h2>Cotización Nueva</h2>
 			<ol class="breadcrumb" style="margin-bottom: 5px;">
 			  <li><a href="<?= base_url()?>">Inicio</a></li>
-			  <li class="active">Cotizaciones</li>
-			  <li><a href="<?= base_url()?>cotizaciones/listaCotizaciones">Gestor de Cotizaciones</a></li>
-			  <li class="active">Cotización</li>
+			  <li class="active">Admistrador de Cotizaciones</li>
+			  <li><a href="<?= base_url()?>cotizaciones/listaCotizaciones">Cotizaciones emitidas</a></li>
+			  <li class="active">Cotización Nueva</li>
 			</ol>
 			<hr>
 			<?= form_open('/cotizaciones/recibirDatosCotizacion/') ?>

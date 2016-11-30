@@ -36,7 +36,23 @@
 
 			$this->load->view("cotizaciones/listaCotizaciones", $data);
 			$this->load->view("footer");
-		} 
+		}
+		public function listaCotizacionesPendientes()
+		{
+			$this->load->view("head");
+			$this->load->view("nav");
+
+			$cotizaciones = $this->cotizacion->obtenerCotizacionesTemp();
+			$num_revision = $this->cotizacion->cotizacionesRevision();
+			$fecha_actual = date('Y-m-d');
+			$data = array(
+				'consulta' => $cotizaciones,
+				'num_revision' => $num_revision,
+			);
+
+			$this->load->view("cotizaciones/listaCotizacionesPendientes", $data);
+			$this->load->view("footer");
+		}
 		public function cotizacionNueva()
 		{
 			$this->load->view("head"); 

@@ -51,7 +51,6 @@
 			return $this->db->query("SELECT cotizacion_temp.id_cotizacion_temp AS id_cotizacion_temp, 
 											cotizacion_temp.id_proyecto AS id_proyecto, 
 											cotizacion_temp.id_personal AS id_personal,  
-											folio, total, 
 											personal.nombre AS personal, 
 											proyecto.nombre AS proyecto, 
 											empresa.nombre AS empresa 

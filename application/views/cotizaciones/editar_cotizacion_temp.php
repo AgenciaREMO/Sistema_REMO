@@ -3,9 +3,9 @@
 		<h2>Editar Cotización Temporal</h2>
 		<ol class="breadcrumb" style="margin-bottom: 5px;">
 		  	<li><a href="<?= base_url()?>">Inicio</a></li>
-			<li>Cotizaciones</li>
-		  	<li><a href="<?= base_url()?>cotizaciones/listaCotizaciones">Gestor de Cotizaciones</a></li>
-		  	<li class="active">Cotización</li> 
+			<li>Admistrador de Cotizaciones</li>
+		  	<li><a href="<?= base_url()?>cotizaciones/listaCotizaciones">Cotizaciones Emitidas</a></li>
+		  	<li class="active">Editar Cotización</li> 
 		</ol>
 		<hr>
 		<?= form_open('cotizaciones/editarTemp/'. $id_temp) ?>
