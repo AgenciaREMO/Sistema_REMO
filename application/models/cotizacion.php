@@ -50,7 +50,8 @@
 		{
 			return $this->db->query("SELECT cotizacion_temp.id_cotizacion_temp AS id_cotizacion_temp, 
 											cotizacion_temp.id_proyecto AS id_proyecto, 
-											cotizacion_temp.id_personal AS id_personal,  
+											cotizacion_temp.id_personal AS id_personal,
+											cotizacion_temp.f_generacion AS f_generacion,
 											personal.nombre AS personal, 
 											proyecto.nombre AS proyecto, 
 											empresa.nombre AS empresa 
@@ -363,6 +364,75 @@
 												JOIN cliente ON proyecto.id_cliente=cliente.id_cliente 
 												JOIN empresa ON cliente.id_empresa=empresa.id_empresa 
 												WHERE vigencia BETWEEN '".$busqueda1."' AND '".$busqueda2."' ORDER BY vigencia DESC");
+			}
+
+			return $resultado->result();
+		}
+		public function mostrarBusquedaTemporal($busqueda, $tipo_bus)
+		{
+			if($tipo_bus=="b-personal")
+			{
+				$resultado = $this->db->query("SELECT cotizacion_temp.id_cotizacion_temp AS id_cotizacion, 
+												cotizacion_temp.id_proyecto AS id_proyecto, 
+												cotizacion_temp.id_personal AS id_personal,
+												f_generacion, 
+												personal.nombre AS personal,
+												proyecto.nombre AS proyecto, 
+												empresa.nombre AS empresa 
+												FROM cotizacion_temp 
+												JOIN personal ON cotizacion_temp.id_personal=personal.id_personal 
+												JOIN proyecto ON cotizacion_temp.id_proyecto=proyecto.id_proyecto
+												JOIN cliente ON proyecto.id_cliente=cliente.id_cliente 
+												JOIN empresa ON cliente.id_empresa=empresa.id_empresa 
+												WHERE personal.nombre LIKE '%".$busqueda."%' ORDER BY f_generacion DESC");
+			}
+			else if($tipo_bus=="b-proyecto")
+			{
+				$resultado = $this->db->query("SELECT cotizacion_temp.id_cotizacion_temp AS id_cotizacion, 
+												cotizacion_temp.id_proyecto AS id_proyecto, 
+												cotizacion_temp.id_personal AS id_personal,
+												f_generacion, 
+												personal.nombre AS personal, 
+												proyecto.nombre AS proyecto, 
+												empresa.nombre AS empresa 
+												FROM cotizacion_temp 
+												JOIN personal ON cotizacion_temp.id_personal=personal.id_personal 
+												JOIN proyecto ON cotizacion_temp.id_proyecto=proyecto.id_proyecto
+												JOIN cliente ON proyecto.id_cliente=cliente.id_cliente 
+												JOIN empresa ON cliente.id_empresa=empresa.id_empresa 
+												WHERE proyecto.nombre LIKE '%".$busqueda."%' ORDER BY f_generacion DESC");
+			}
+			else if($tipo_bus=="b-empresa")
+			{
+				$resultado = $this->db->query("SELECT cotizacion_temp.id_cotizacion_temp AS id_cotizacion, 
+												cotizacion_temp.id_proyecto AS id_proyecto, 
+												cotizacion_temp.id_personal AS id_personal, 
+												f_generacion, 
+												personal.nombre AS personal, 
+												proyecto.nombre AS proyecto, 
+												empresa.nombre AS empresa 
+												FROM cotizacion_temp 
+												JOIN personal ON cotizacion_temp.id_personal=personal.id_personal 
+												JOIN proyecto ON cotizacion_temp.id_proyecto=proyecto.id_proyecto
+												JOIN cliente ON proyecto.id_cliente=cliente.id_cliente 
+												JOIN empresa ON cliente.id_empresa=empresa.id_empresa  
+												WHERE empresa.nombre LIKE '%".$busqueda."%' ORDER BY f_generacion DESC");
+			}
+			else if($tipo_bus=="b-todos")
+			{
+				$resultado = $this->db->query("SELECT cotizacion_temp.id_cotizacion_temp AS id_cotizacion, 
+												cotizacion_temp.id_proyecto AS id_proyecto, 
+												cotizacion_temp.id_personal AS id_personal, 
+												f_generacion, 
+												personal.nombre AS personal, 
+												proyecto.nombre AS proyecto, 
+												empresa.nombre AS empresa 
+												FROM cotizacion_temp 
+												JOIN personal ON cotizacion_temp.id_personal=personal.id_personal 
+												JOIN proyecto ON cotizacion_temp.id_proyecto=proyecto.id_proyecto
+												JOIN cliente ON proyecto.id_cliente=cliente.id_cliente 
+												JOIN empresa ON cliente.id_empresa=empresa.id_empresa  
+												ORDER BY f_generacion DESC");
 			}
 
 			return $resultado->result();

@@ -1,11 +1,11 @@
 <div class="container">
 	<div class="row">
 		<div class="col-lg-12">
-			<h2>Cotizaciones Emitidas</h2>
+			<h2>Cotizaciones Pendientes</h2>
 			<ol class="breadcrumb" style="margin-bottom: 5px;">
 			  <li><a href="<?= base_url()?>">Inicio</a></li>
 			  <li>Admistrador de Cotizaciones</li>
-			  <li><a href="#">Cotizaciones Emitidas</a></li>
+			  <li><a href="#">Cotizaciones Pendientes</a></li>
 			</ol>
 			<hr>
 
@@ -24,50 +24,6 @@
 						'placeholder' => 'Proyecto...',
 						'id' => 'b-proyecto'
 					);
-					$folio = array(
-						'name' => 'folio',
-						'class' => 'form-control',
-						'placeholder' => 'Folio...',
-						'id' => 'b-folio'
-					);
-					$expedicioninf = array(
-						'name' => 'expedicioninf',
-						'class' => 'form-control',
-						'id' => 'b-expedicioninf',
-						'type' => 'date'
-					);
-					$expedicionsup = array(
-						'name' => 'expedicionsup',
-						'class' => 'form-control',
-						'id' => 'b-expedicionsup',
-						'type' => 'date'
-					);
-					$vigenciainf = array(
-						'name' => 'vigenciainf',
-						'class' => 'form-control',
-						'id' => 'b-vigenciainf',
-						'type' => 'date'
-					);
-					$vigenciasup = array(
-						'name' => 'vigenciasup',
-						'class' => 'form-control',
-						'id' => 'b-vigenciasup',
-						'type' => 'date'
-					);
-					$importeinf = array(
-						'name' => 'importeinf',
-						'class' => 'form-control',
-						'placeholder' => 'Desde...',
-						'id' => 'b-importeinf',
-						'type' => 'number'
-					);
-					$importesup = array(
-						'name' => 'importesup',
-						'class' => 'form-control',
-						'placeholder' => 'Hasta...',
-						'id' => 'b-importesup',
-						'type' => 'number'
-					);
 					$empresa = array(
 						'name' => 'empresa',
 						'class' => 'form-control',
@@ -83,28 +39,6 @@
 					</div>
 				</div>
 				<div class="collapse" id="collapseBuscar">
-					<div class="row">
-						<div class="col-lg-5">
-							<div class="form-group">
-								<?= form_label('Folio', 'folio') ?>
-								<?= form_input($folio) ?>
-							</div>
-						</div>
-						<div class="col-lg-2"></div>
-						<div class="col-lg-5">
-							<div class="form-group">
-									<?= form_label('Expedición') ?>
-								<div class="row">
-									<div class="col-lg-6">
-										<?= form_input($expedicioninf) ?>
-									</div>
-									<div class="col-lg-6">
-										<?= form_input($expedicionsup) ?>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
 					<div class="row">
 						<div class="col-lg-5">
 							<div class="form-group">
@@ -128,34 +62,6 @@
 							</div>
 						</div>
 						<div class="col-lg-2"></div>
-						<div class="col-lg-5">
-							<div class="form-group">
-									<?= form_label('Importe') ?>
-								<div class="row">
-									<div class="col-lg-6">
-										<?= form_input($importeinf) ?>
-									</div>
-									<div class="col-lg-6">
-										<?= form_input($importesup) ?>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-lg-5">
-							<div class="form-group">
-									<?= form_label('Vigencia') ?>
-								<div class="row">
-									<div class="col-lg-6">
-										<?= form_input($vigenciainf) ?>
-									</div>
-									<div class="col-lg-6">
-										<?= form_input($vigenciasup) ?>
-									</div>
-								</div>
-							</div>
-						</div>
 					</div>
 				</div>
 			</form>
@@ -165,12 +71,7 @@
 			<div class="row">
 				<div class="col-lg-12">
 					<ul class="nav nav-pills" role="tablist">
-						<li role="presentation"><a href="#" id="f-total" data-toggle="tooltip" title="Cotizaciónes que ya pasarón por revisión.">Todas <span class="badge"><?= $num_total ?></span></a></li>
-					  	<li role="presentation"><a href="#" id="f-aceptada">Aceptadas <span class="badge"><?= $num_aceptadas ?></span></a></li>
 					  	<li role="presentation"><a href="#" id="f-revision">En revisión <span class="badge"><?= $num_revision ?></span></a></li>
-					  	<li role="presentation"><a href="#" id="f-expedida">Expedidas <span class="badge"><?= $num_expedidas ?></span></a></li>
-					  	<li role="presentation"><a href="#" id="f-rechazada">Rechazadas <span class="badge"><?= $num_rechazadas ?></span></a></li>
-					  	<li role="presentation"><a href="#" id="f-vencida">Vencidas <span class="badge"><?= $num_vencidas ?></span></a></li>
 					</ul>
 				</div>
 			</div>
@@ -188,32 +89,27 @@
 					<table class="table table-hover">
 						<tr>
 							<th>#</th>	
-							<th>Folio</th>
-							<th>Vigencia</th>
+							<th></th>
 							<th>Proyecto</th>
 							<th>Creada por</th>
 							<th>Estatus</th>
-							<th>Expedida</th>
+							<th>Generada</th>
 							<th>Empresa</th>
-							<th>Importe</th>
 						</tr>
 						<?php 
 						$i = 1;
 						foreach ($consulta->result() as $fila) 
 						{ ?>
 						<tr>
-							<td><?= $i ?></td>
+							<td><a class="i-borrar" href="javascript:void(0)" onclick="eliminar_Cotizacion('<?= $fila->id_cotizacion_temp ?>')"><i class="fa fa-times"></i></a> <?= $i ?></td>
 							<td>
-								<a class="i-borrar" href="javascript:void(0)" onclick="eliminar_Cotizacion('<?= $fila->id_cotizacion ?>')"><i class="fa fa-times"></i></a>
-								<a href="<?= base_url()?>cotizaciones/detallesCotizacion/<?= $fila->id_cotizacion ?>"><?= $fila->folio ?></a>
+								<a href="<?= base_url()?>cotizaciones/detallesCotizacion/<?= $fila->id_cotizacion_temp ?>">Continuar</a>
 							</td>
-							<td><?= $fila->vigencia ?></td>
 							<td><?= $fila->proyecto ?></td>
 							<td><?= $fila->personal ?></td>
-							<td><?= $fila->estatus ?></td>
-							<td><?= $fila->f_expedicion ?></td>
+							<td>En revisión</td>
+							<td><?= $fila->f_generacion ?></td>
 							<td><?= $fila->empresa ?></td>
-							<td><?= $fila->total ?></td>
 						</tr>
 						<?php
 							$i++; 
@@ -230,21 +126,13 @@
 	function inicio()
 	{
 		var busc = "";
-
 		$('[data-toggle="tooltip"]').tooltip(); 
 		
 		//Evento Focus
 		$("#b-personal").focus(function()
 		{
 			$("#b-proyecto").val("");
-			$("#b-folio").val("");
-			$("#b-expedicioninf").val("");
-			$("#b-expedicionsup").val("");
-			$("#b-vigenciainf").val("");
-			$("#b-vigenciasup").val("");
 			$("#b-empresa").val("");
-			$("#b-importeinf").val("");
-			$("#b-importesup").val("");
 			if ($("#b-personal").val().length < 1) 
 			{
 				busc = "";
@@ -255,33 +143,8 @@
 		$("#b-proyecto").focus(function()
 		{
 			$("#b-personal").val("");
-			$("#b-folio").val("");
-			$("#b-expedicioninf").val("");
-			$("#b-expedicionsup").val("");
-			$("#b-vigenciainf").val("");
-			$("#b-vigenciasup").val("");
 			$("#b-empresa").val("");
-			$("#b-importeinf").val("");
-			$("#b-importesup").val("");
 			if ($("#b-proyecto").val().length < 1) 
-			{
-				busc = "";
-				tipo_busqueda = "b-todos";
-				buscar(busc, tipo_busqueda);
-			}
-		});
-		$("#b-folio").focus(function()
-		{
-			$("#b-personal").val("");
-			$("#b-proyecto").val("");
-			$("#b-expedicioninf").val("");
-			$("#b-expedicionsup").val("");
-			$("#b-vigenciainf").val("");
-			$("#b-vigenciasup").val("");
-			$("#b-empresa").val("");
-			$("#b-importeinf").val("");
-			$("#b-importesup").val("");
-			if ($("#b-folio").val().length < 1) 
 			{
 				busc = "";
 				tipo_busqueda = "b-todos";
@@ -291,86 +154,13 @@
 		$("#b-empresa").focus(function()
 		{
 			$("#b-personal").val("");
-			$("#b-folio").val("");
-			$("#b-expedicioninf").val("");
-			$("#b-expedicionsup").val("");
-			$("#b-vigenciainf").val("");
-			$("#b-vigenciasup").val("");
 			$("#b-proyecto").val("");
-			$("#b-importeinf").val("");
-			$("#b-importesup").val("");
 			if ($("#b-empresa").val().length < 1) 
 			{
 				busc = "";
 				tipo_busqueda = "b-todos";
 				buscar(busc, tipo_busqueda);
 			}
-		});
-		$("#b-expedicioninf").focus(function()
-		{
-			$("#b-personal").val("");
-			$("#b-folio").val("");
-			$("#b-empresa").val("");
-			$("#b-vigenciainf").val("");
-			$("#b-vigenciasup").val("");
-			$("#b-proyecto").val("");
-			$("#b-importeinf").val("");
-			$("#b-importesup").val("");
-		});
-		$("#b-expedicionsup").focus(function()
-		{
-			$("#b-personal").val("");
-			$("#b-folio").val("");
-			$("#b-empresa").val("");
-			$("#b-vigenciainf").val("");
-			$("#b-vigenciasup").val("");
-			$("#b-proyecto").val("");
-			$("#b-importeinf").val("");
-			$("#b-importesup").val("");
-		});
-		$("#b-vigenciainf").focus(function()
-		{
-			$("#b-personal").val("");
-			$("#b-folio").val("");
-			$("#b-empresa").val("");
-			$("#b-expedicioninf").val("");
-			$("#b-expedicionsup").val("");
-			$("#b-proyecto").val("");
-			$("#b-importeinf").val("");
-			$("#b-importesup").val("");
-		});
-		$("#b-vigenciasup").focus(function()
-		{
-			$("#b-personal").val("");
-			$("#b-folio").val("");
-			$("#b-empresa").val("");
-			$("#b-expedicioninf").val("");
-			$("#b-expedicionsup").val("");
-			$("#b-proyecto").val("");
-			$("#b-importeinf").val("");
-			$("#b-importesup").val("");
-		});
-		$("#b-importeinf").focus(function()
-		{
-			$("#b-personal").val("");
-			$("#b-folio").val("");
-			$("#b-empresa").val("");
-			$("#b-expedicioninf").val("");
-			$("#b-expedicionsup").val("");
-			$("#b-proyecto").val("");
-			$("#b-vigenciainf").val("");
-			$("#b-vigenciasup").val("");	
-		});
-		$("#b-importesup").focus(function()
-		{
-			$("#b-personal").val("");
-			$("#b-folio").val("");
-			$("#b-empresa").val("");
-			$("#b-expedicioninf").val("");
-			$("#b-expedicionsup").val("");
-			$("#b-proyecto").val("");
-			$("#b-vigenciainf").val("");
-			$("#b-vigenciasup").val("");
 		});
 
 		//Evento KeyUp
@@ -386,347 +176,35 @@
 			tipo_busqueda = "b-proyecto";
 			buscar(busc, tipo_busqueda);
 		});
-		$("#b-folio").keyup(function()
-		{
-			busc = $("#b-folio").val();
-			tipo_busqueda = "b-folio";
-			buscar(busc, tipo_busqueda);
-		});
 		$("#b-empresa").keyup(function()
 		{
 			busc = $("#b-empresa").val();
 			tipo_busqueda = "b-empresa";
 			buscar(busc, tipo_busqueda);
 		});
-		$("#b-importeinf").keyup(function()
-		{
-			if ($("#b-importeinf").val().length > 0)
-			{
-				if ($("#b-importesup").val().length < 1) 
-				{
-					busc = $("#b-importeinf").val();
-					tipo_busqueda = "b-importeinf";
-					buscar(busc, tipo_busqueda);
-				}
-				else
-				{
-					if ($("#b-importeinf").val().length > 0)
-					{
-						importeinf = $("#b-importeinf").val();
-						importesup = $("#b-importesup").val();
-						tipo_busqueda = "b-importes";
-						buscar(busc, tipo_busqueda, importeinf, importesup);
-					}
-				}
-			}
-			else
-			{
-				if($("#b-importesup").val().length > 0)
-				{
-					busc = $("#b-importesup").val();
-					tipo_busqueda = "b-importesup";
-					buscar(busc, tipo_busqueda);
-				}
-				else
-				{
-					busc = "";
-					tipo_busqueda = "b-todos";
-					buscar(busc, tipo_busqueda);
-				}
-			}
-		});
-		$("#b-importesup").keyup(function()
-		{
-			if ($("#b-importesup").val().length > 0)
-			{
-				if ($("#b-importeinf").val().length < 1) 
-				{
-					busc = $("#b-importesup").val();
-					tipo_busqueda = "b-importesup";
-					buscar(busc, tipo_busqueda);
-				}
-				else
-				{
-					if ($("#b-importesup").val().length > 0)
-					{
-						importeinf = $("#b-importeinf").val();
-						importesup = $("#b-importesup").val();
-						tipo_busqueda = "b-importes";
-						buscar(busc, tipo_busqueda, importeinf, importesup);
-					}
-				}
-			}
-			else
-			{
-				if($("#b-importesup").val().length > 0)
-				{
-					busc = $("#b-importesup").val();
-					tipo_busqueda = "b-importesup";
-					buscar(busc, tipo_busqueda);
-				}
-				else
-				{
-					busc = "";
-					tipo_busqueda = "b-todos";
-					buscar(busc, tipo_busqueda);
-				}
-			}
-		});
-
-		//Evento change
-		$("#b-expedicioninf").change(function()
-		{
-			if ($("#b-expedicioninf").val().length > 0)
-			{
-				if ($("#b-expedicionsup").val().length < 1) 
-				{
-					busc = $("#b-expedicioninf").val();
-					tipo_busqueda = "b-expedicioninf";
-					buscar(busc, tipo_busqueda);
-				}
-				else
-				{
-					if ($("#b-expedicioninf").val().length > 0)
-					{
-						expedicioninf = $("#b-expedicioninf").val();
-						expedicionsup = $("#b-expedicionsup").val();
-						tipo_busqueda = "b-expediciones";
-						buscar(busc, tipo_busqueda, expedicioninf, expedicionsup);
-					}
-				}
-			}
-			else
-			{
-				if($("#b-expedicionsup").val().length > 0)
-				{
-					busc = $("#b-expedicionsup").val();
-					tipo_busqueda = "b-expedicionsup";
-					buscar(busc, tipo_busqueda);
-				}
-				else
-				{
-					busc = "";
-					tipo_busqueda = "b-todos";
-					buscar(busc, tipo_busqueda);
-				}
-			}
-		});
-		$("#b-expedicionsup").change(function()
-		{
-			if ($("#b-expedicionsup").val().length > 0)
-			{
-				if ($("#b-expedicioninf").val().length < 1) 
-				{
-					busc = $("#b-expedicionsup").val();
-					tipo_busqueda = "b-expedicionsup";
-					buscar(busc, tipo_busqueda);
-				}
-				else
-				{
-					if ($("#b-expedicionsup").val().length > 0)
-					{
-						expedicioninf = $("#b-expedicioninf").val();
-						expedicionsup = $("#b-expedicionsup").val();
-						tipo_busqueda = "b-expediciones";
-						buscar(busc, tipo_busqueda, expedicioninf, expedicionsup);
-					}
-				}
-			}
-			else
-			{
-				if($("#b-expedicioninf").val().length > 0)
-				{
-					busc = $("#b-expedicioninf").val();
-					tipo_busqueda = "b-expedicioninf";
-					buscar(busc, tipo_busqueda);
-				}
-				else
-				{
-					busc = "";
-					tipo_busqueda = "b-todos";
-					buscar(busc, tipo_busqueda);
-				}
-			}
-		});
-		$("#b-vigenciainf").change(function()
-		{
-			if ($("#b-vigenciainf").val().length > 0)
-			{
-				if ($("#b-vigenciasup").val().length < 1) 
-				{
-					busc = $("#b-vigenciainf").val();
-					tipo_busqueda = "b-vigenciainf";
-					buscar(busc, tipo_busqueda);
-				}
-				else
-				{
-					if ($("#b-vigenciainf").val().length > 0)
-					{
-						vigenciainf = $("#b-vigenciainf").val();
-						vigenciasup = $("#b-vigenciasup").val();
-						tipo_busqueda = "b-vigencias";
-						buscar(busc, tipo_busqueda, vigenciainf, vigenciasup);
-					}
-				}
-			}
-			else
-			{
-				if($("#b-vigenciasup").val().length > 0)
-				{
-					busc = $("#b-vigenciasup").val();
-					tipo_busqueda = "b-vigenciasup";
-					buscar(busc, tipo_busqueda);
-				}
-				else
-				{
-					busc = "";
-					tipo_busqueda = "b-todos";
-					buscar(busc, tipo_busqueda);
-				}
-			}
-		});
-		$("#b-vigenciasup").change(function()
-		{
-			if ($("#b-vigenciasup").val().length > 0)
-			{
-				if ($("#b-vigenciainf").val().length < 1) 
-				{
-					busc = $("#b-vigenciasup").val();
-					tipo_busqueda = "b-vigenciasup";
-					buscar(busc, tipo_busqueda);
-				}
-				else
-				{
-					if ($("#b-vigenciasup").val().length > 0)
-					{
-						vigenciainf = $("#b-vigenciainf").val();
-						vigenciasup = $("#b-vigenciasup").val();
-						tipo_busqueda = "b-vigencias";
-						buscar(busc, tipo_busqueda, vigenciainf, vigenciasup);
-					}
-				}
-			}
-			else
-			{
-				if($("#b-vigenciainf").val().length > 0)
-				{
-					busc = $("#b-vigenciainf").val();
-					tipo_busqueda = "b-vigenciainf";
-					buscar(busc, tipo_busqueda);
-				}
-				else
-				{
-					busc = "";
-					tipo_busqueda = "b-todos";
-					buscar(busc, tipo_busqueda);
-				}
-			}
-		});
-
-		//Evento onclick
-		$("#f-total").click(function(){
-			tipo_filtro = "f-total";
-			filtrar(tipo_filtro);
-		});
-		$("#f-aceptada").click(function()
-		{
-			tipo_filtro = "f-aceptada";
-			filtrar(tipo_filtro);
-		});
-		$("#f-expedida").click(function()
-		{
-			tipo_filtro = "f-expedida";
-			filtrar(tipo_filtro);
-		});
-		$("#f-rechazada").click(function()
-		{
-			tipo_filtro = "f-rechazada";
-			filtrar(tipo_filtro);
-		});
-		$("#f-revision").click(function() 
-		{
-			tipo_filtro = "f-revision";
-			$.ajax({
-				url: "<?= base_url('cotizaciones/mostrarFiltro') ?>", 
-				type: "POST",
-				data: {filtro:tipo_filtro},
-				success: function(respuesta){
-					var registros = eval(respuesta);
-
-					html = "";
-					html += "<table class='table table-hover'><thead><tr><th>#</th><th></th><th>Proyecto</th><th>Creada por</th><th>Estatus</th><th>Generada</th><th>Empresa</th></tr></thead>";
-					html += "<tbody>";
-
-					for (var i = 0; i < registros.length; i++) 
-					{
-						html += "<tr><td>"+(i+1)+"</td>";
-						html += "<td><a class='i-borrar' href='javascript:void(0)' onclick='eliminar_Cotizacion("+registros[i]["id_cotización"]+")'><i class='fa fa-times'></i></a> <a href='<?= base_url()?>cotizaciones/detallesCotizacion/"+registros[i]["id_cotización"]+"'> Revisar</a></td>";
-						html += "<td>"+registros[i]["proyecto"]+"</td><td>"+registros[i]["personal"]+"</td><td>En revisión</td>";
-						html += "</td><td>"+registros[i]["f_generacion"]+"</td><td>"+registros[i]["empresa"]+"</td></tr>";
-					};
-
-					html += "<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>";
-					html += "</tbody></table>";
-					$("#lista").html(html);
-				}
-			});
-		});
-		$("#f-vencida").click(function()
-		{
-			tipo_filtro = "f-vencida";
-			filtrar(tipo_filtro);
-		});
 	}
-	function buscar(busqueda, tipo_bus, buscinf, buscsup)
+	function buscar(busqueda, tipo_bus)
 	{
 		$.ajax({
-			url: "<?= base_url('cotizaciones/mostrarBusqueda') ?>", 
+			url: "<?= base_url('cotizaciones/mostrarBusquedaTemp') ?>", 
 			type: "POST",
-			data: {buscar:busqueda, tipo_busqueda:tipo_bus, busqueda_inf:buscinf, busqueda_sup: buscsup},
+			data: {buscar:busqueda, tipo_busqueda:tipo_bus},
 			success: function(respuesta){
 				var registros = eval(respuesta);
 
 				html = "";
-				html += "<table class='table table-hover'><thead><tr><th>#</th><th>Folio</th><th>Vigencia</th><th>Proyecto</th><th>Creada por</th><th>Estatus</th><th>Expedida</th><th>Empresa</th><th>Importe</th></tr></thead>";
+				html += "<table class='table table-hover'><thead><tr><th>#</th><th></th><th>Proyecto</th><th>Creada por</th><th>Estatus</th><th>Generada</th><th>Empresa</th></tr></thead>";
 				html += "<tbody>";
 
 				for (var i = 0; i < registros.length; i++) 
 				{
-					html += "<tr><td>"+(i+1)+"</td>";
-					html += "<td><a class='i-borrar' href='javascript:void(0)' onclick='eliminar_Cotizacion("+registros[i]["id_cotización"]+")'><i class='fa fa-times'></i></a> <a href='<?= base_url()?>cotizaciones/detallesCotizacion/"+registros[i]["id_cotización"]+"'>"+registros[i]["folio"]+"</td>";
-					html += "<td>"+registros[i]["vigencia"]+"</td><td>"+registros[i]["proyecto"]+"</td><td>"+registros[i]["personal"]+"</td><td>"+registros[i]["estatus"]+"</td>";
-					html += "</td><td>"+registros[i]["f_expedicion"]+"</td><td>"+registros[i]["empresa"]+"</td><td>"+registros[i]["total"]+"</td></tr>";
+					html += "<tr><td><a class='i-borrar' href='javascript:void(0)' onclick='eliminar_Cotizacion("+registros[i]["id_cotizacion_temp"]+")'><i class='fa fa-times'></i></a>"+(i+1)+"</td>";
+					html += "<td><a href='<?= base_url()?>cotizaciones/detallesCotizacion/"+registros[i]["id_cotizacion_temp"]+"'>Continuar</td>";
+					html += "<td>"+registros[i]["proyecto"]+"</td><td>"+registros[i]["personal"]+"</td><td>En revisión</td>";
+					html += "<td>"+registros[i]["f_generacion"]+"</td><td>"+registros[i]["empresa"]+"</td></tr>";
 				};
 
-				html += "<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>";
-				html += "</tbody></table>";
-				$("#lista").html(html);
-			}
-		});
-	}
-
-	function filtrar(tipo_fil)
-	{
-		$.ajax({
-			url: "<?= base_url('cotizaciones/mostrarFiltro') ?>", 
-			type: "POST",
-			data: {filtro:tipo_fil},
-			success: function(respuesta){
-				var registros = eval(respuesta);
-
-				html = "";
-				html += "<table class='table table-hover'><thead><tr><th>#</th><th>Folio</th><th>Vigencia</th><th>Proyecto</th><th>Creada por</th><th>Estatus</th><th>Expedida</th><th>Empresa</th><th>Importe</th></tr></thead>";
-				html += "<tbody>";
-
-				for (var i = 0; i < registros.length; i++) 
-				{
-					html += "<tr><td>"+(i+1)+"</td>";
-					html += "<td><a class='i-borrar' href='javascript:void(0)' onclick='eliminar_Cotizacion("+registros[i]["id_cotización"]+")'><i class='fa fa-times'></i></a> <a href='<?= base_url()?>cotizaciones/detallesCotizacion/"+registros[i]["id_cotización"]+"'>"+registros[i]["folio"]+"</td>";
-					html += "<td>"+registros[i]["vigencia"]+"</td><td>"+registros[i]["proyecto"]+"</td><td>"+registros[i]["personal"]+"</td><td>"+registros[i]["estatus"]+"</td>";
-					html += "</td><td>"+registros[i]["f_expedicion"]+"</td><td>"+registros[i]["empresa"]+"</td><td>"+registros[i]["total"]+"</td></tr>";
-				};
-
-				html += "<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>";
+				html += "<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>";
 				html += "</tbody></table>";
 				$("#lista").html(html);
 			}
@@ -737,19 +215,18 @@
 	{
 		$('#form')[0].reset();
 		$.ajax({
-			url : "<?= base_url('cotizaciones/detallesCotizacionAjax') ?>" + "/" + id,
+			url : "<?= base_url('cotizaciones/detallesTemporalAjax') ?>" + "/" + id,
 			type: "GET",
 			dataType: "JSON",
 			success: function(data)
 			{
-				$('[name="modal-folio"]').text(data.folio);
 				$('[name="modal-proyecto"]').text(data.proyecto);
 				$('[name="modal-tipo"]').text(data.tipo_proyecto);
 				$('[name="modal-cliente"]').text(data.cliente);
 				$('[name="modal-empresa"]').text(data.empresa);
-				var expedida = data.f_expedicion;
-				$('[name="modal-expedida"]').text(expedida);
-				$("#a-cotizac").attr("href", "<?= base_url()?>cotizaciones/eliminarCotizacion/"+data.id_cotizacion);
+				var generada = data.f_generada;
+				$('[name="modal-generada"]').text(expedida);
+				$("#a-cotizac").attr("href", "<?= base_url()?>cotizaciones/eliminarTemporal/"+data.id_cotizacion_temp);
 
 				$('#modal_cotizacion').modal('show');
 			},
@@ -771,11 +248,10 @@
 	      	</div>
 	      	<div class="modal-body form">
 	      		<form action="#" id="form" class="form-horizontal">
-					<p><strong>Folio:</strong> <span name="modal-folio"></span></p>
 		          	<p><strong>Proyecto:</strong> <span name="modal-proyecto"></span> (<span name="modal-tipo"></span>)</p>
 		          	<p><strong>Cliente:</strong> <span name="modal-cliente"></span></p>
 		          	<p><strong>Empresa:</strong> <span name="modal-empresa"></span></p>
-		          	<p><strong>Expedida:</strong> <span name="modal-expedida"></span></p>
+		          	<p><strong>Generada:</strong> <span name="modal-generada"></span></p>
 		        </form>
 	      	</div>
 	      	<div class="modal-footer">

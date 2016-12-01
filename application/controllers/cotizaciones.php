@@ -142,6 +142,31 @@
 				show_404;
 			}
 		}
+		public function mostrarBusquedaTemp()
+		{
+			if($this->input->is_ajax_request())
+			{
+				$buscar = $this->input->post("buscar");
+				$tipo_bus = $this->input->post("tipo_busqueda");
+				if ($tipo_bus == "b-personal") {
+					$datos = $this->cotizacion->mostrarBusquedaTemporal($buscar, $tipo_bus);
+				}
+				else if ($tipo_bus == "b-proyecto") {
+					$datos = $this->cotizacion->mostrarBusquedaTemporal($buscar, $tipo_bus);
+				}
+				else if ($tipo_bus == "b-empresa") {
+					$datos = $this->cotizacion->mostrarBusquedaTemporal($buscar, $tipo_bus);
+				}
+				else if ($tipo_bus == "b-todos") {
+					$datos = $this->cotizacion->mostrarBusquedaTemporal($buscar, $tipo_bus);
+				}
+				echo json_encode($datos);
+			}
+			else
+			{
+				show_404;
+			}
+		}
 		public function mostrarFiltro()
 		{
 			if($this->input->is_ajax_request())
