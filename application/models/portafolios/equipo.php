@@ -9,8 +9,7 @@
 /**
 * 
 */
-class Equipo extends CI_Model
-{	
+class Equipo extends CI_Model{	
 	//Función que permite mostrar el personal disponible para insertar en el portafolio.
 	public function mostrarPersonal()
 	{
@@ -21,7 +20,8 @@ class Equipo extends CI_Model
 	public function obtener_personal ($id){
 		$query = $this->db->query("SELECT pp.id_personal as id_personalP, 
 							       pp.id_portafolio as id_portafolioP, 
-							       pp.destacado as destacado, 
+							       pp.destacado as destacado,
+							       pp.seleccion as seleccion,  
 							       p.id_personal as id_personal, 
 							       p.nombre as nombre, 
 							       p.telefono as telefono, 
@@ -144,6 +144,7 @@ class Equipo extends CI_Model
 	      	echo 'Insertar'; 
 	}
 
+	/*
 	//Funcion que permite eliminar equipo existente para poder insertar nuevamente
 	public function eliminarEquipo($data){
 		$this->db->where('id_portafolio', $data['id_portafolio']); 
@@ -172,7 +173,7 @@ class Equipo extends CI_Model
 		}
 
 		echo "inserto personal <br><br>";
-	}
+	}*/
 
 	//Funciòn que permite editar el slide que se ha insetado
 	public function editarSlide($port_img){
@@ -190,7 +191,7 @@ class Equipo extends CI_Model
 	}
 
 	//Función que permite validar si existen registros en la base de datos donde este relacionado portafolio_tipo y tipo_proyecto 
-	public function actualizarEquipo($data, $destacado, $id_personal, $cont, $port_img){
+	/*public function actualizarEquipo($data, $destacado, $id_personal, $cont, $port_img){
 		//SELECT * FROM portafolio_tipo WHERE id_portafolio = $id['id_portafolio']
 
 		
@@ -222,8 +223,88 @@ class Equipo extends CI_Model
 			echo "nada";
 			$this->insertarEquipo($data, $destacado, $id_personal, $cont);
 			$this->insertarSlide($port_img);
-		}
+		}*/
+		//Función que permite validar si existen registros en la base de datos donde este relacionado portafolio imagen y alguna imagen de experiencia 
+	public function actualizarEquipo($data, $insert2, $port_img){
+		/*SELECT * FROM portafolio_imagen WHERE id_portafolio = $data['id_portafolio'] */
+		$this->db->select('*');
+		$this->db->from('portafolio_personal');
+		$this->db->where('id_portafolio', $data['id_portafolio']);
+		$query_personal = $this->db->get();
 
+		/*SELECT portafolio_imagen.id_portafolio FROM portafolio_imagen INNER JOIN imagen ON portafolio_imagen.id_img = imagen.id_img INNER JOIN tipo_imagen ON imagen.id_tipo_img = tipo_imagen.id_tipo_img WHERE tipo_imagen.id_tipo_img = 2 AND portafolio_imagen.id_portafolio = $data['id_portafolio']*/
+		$this->db->select('portafolio_imagen.id_portafolio');
+		$this->db->from('portafolio_imagen');
+		$this->db->join('imagen', 'portafolio_imagen.id_img = imagen.id_img');
+		$this->db->join('tipo_imagen', 'imagen.id_tipo_img = tipo_imagen.id_tipo_img');
+		$this->db->where('tipo_imagen.id_tipo_img', 2);
+		$this->db->where('portafolio_imagen.id_portafolio', $data['id_portafolio']);
+		$query_slider = $this->db->get();
+
+		if(($query_personal->num_rows()>0) && ($query_slider->num_rows()>0)){
+			//Encontro personal
+			$this->eliminarEquipo($data);
+			$this->eliminarImagen($data);
+			$this->insertarEquipo($data, $insert2);
+			$this->insertarImagen($data, $port_img);
+			echo "Encontro personal e imagen";
+		}else{
+			if(($query_personal->num_rows()>0) && ($query_slider->num_rows()<1)){
+				//Encontro personal pero no imagen slider
+				$this->eliminarEquipo($data);
+				$this->insertarEquipo($data, $insert2);
+				$this->insertarImagen($data, $port_img);
+				echo "Encontro personal pero no imagen slider";
+			}else{
+				//No encontro ni personal ni slider
+				$this->insertarEquipo($data, $insert2);
+				$this->insertarImagen($data, $port_img);
+				echo "No encontro ni personal ni slider";
+			}
+		}
+	}
+
+	//Funcion que permite eliminar equipo existente para poder insertar nuevamente
+	public function eliminarEquipo($data){
+		/*$this->db->where('id_portafolio', $data['id_portafolio']); 
+   		$this->db->delete('portafolio_personal');*/
+   		echo "elimino personal <br><br>";
+	}
+
+	public function eliminarImagen($data){
+   		/*$this->db->query("DELETE portafolio_imagen
+						  FROM portafolio_imagen
+						  INNER JOIN imagen 
+						  ON portafolio_imagen.id_img = imagen.id_img
+						  INNER JOIN tipo_imagen
+						  ON imagen.id_tipo_img = tipo_imagen.id_tipo_img
+						  WHERE tipo_imagen.id_tipo_img = 2 AND portafolio_imagen.id_portafolio = ".$data['id_portafolio']."");*/
+   		echo "elimino imagen <br><br>";
+	}
+
+	public function insertarEquipo($data, $insert2){
+
+		foreach ($insert2 as $key => $value) {
+			$bin = decbin($value);
+			if ($value == 1 || $value == 0) {
+				$bin = "0".$bin;
+			}
+			echo $bin;
+			$binarray = str_split($bin);
+			print_r($binarray);
+			$sql = " INSERT INTO portafolio_personal (id_por_per, id_personal, id_portafolio, seleccion, destacado) 
+					 VALUES ('', ".$key." , ".$data['id_portafolio'].", ".$key." , $binarray[1])";
+						 //$this->db->query($sql);
+						 echo $sql;
+						 //echo "</br>";
+						 echo "inserto personal <br><br>";
+	    }
+	}
+
+	public function insertarImagen($data, $port_img){
+		//Comentar insert
+		//$registro_p_i = $this->db->insert('portafolio_imagen', $port_img);
+		echo "inserto imagen <br><br>";
 	}
 
 }

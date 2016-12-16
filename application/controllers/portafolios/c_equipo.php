@@ -160,18 +160,30 @@ class C_equipo extends MY_Controller
 	    }
 
 	    //Función que permite actualizar el personal seleccionado
-	    public function actualizarEquipo($id_portafolio){
-				//Si es válido se realiza la función de insertar
-				$id_portafolio = $id_portafolio;
+	    public function actualizarEquipo($id_portafolio){//Reglas de validación
+			$this->form_validation->set_rules(
+				'personal[0][]', 
+				'', 'required', array('¡Debes seleccionar al menos una opción!')
+			);
+			if ($this->form_validation->run() == FALSE){//Si el formulario no se válida se muestran los errores
+		        $this->cargarEquipo($id_portafolio);//echo 'fail cargar';
+			}else{//Si es válido se realiza la función de insertar
+			    $id_portafolio = $id_portafolio;
 				$data = array('id_portafolio' => $id_portafolio);
-				$cont = array('id_personal' => implode(", ", $this->input->post('id_personal')));
-				$id_personal = array('id_personal' => $this->input->post('id_personal'));
-				$destacado = array('destacado' => $this->input->post('destacado'));
-				$id_img = array('id_img' => $this->input->post('id_img'));
+				/*$id_img = array('id_img' => $this->input->pos('id_img'));*/
 				$port_img = array('id_portafolio' => $id_portafolio,
 					              'id_img' => $this->input->post('id_img'));
-				$this->equipo->actualizarEquipo($data, $id_personal, $destacado, $cont, $port_img);
-				redirect('/portafolios/c_equipo/cargarEquipo'.'/'.$id_portafolio);
-				echo "succesfull"; 
+				/*$personal = array('personal' => $this->input->post('personal'));*/
+				foreach ($this->input->post('personal') as $key => $value){//print_r($key);
+					foreach ($value as $key2 => $value2){//$insert [$value2][] = $key; 
+						if (!isset($insert2[$value2])){
+							$insert2 [$value2] = 0 ;
+						}
+						$insert2 [$value2] = ($insert2 [$value2] + $key); //valor sumado para  calcular el valor "binario"
+					}
+				}
+			    $this->equipo->actualizarEquipo($data, $insert2, $port_img);
+				//redirect('/portafolios/c_equipo/cargarEquipo'.'/'.$id_portafolio);
+			} 
 	    }
 }

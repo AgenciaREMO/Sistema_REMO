@@ -18,7 +18,7 @@ class C_experiencia extends MY_Controller
 		//Sección de paginación
 		$config['base_url'] = base_url().'portafolios/c_experiencia/cargarExperiencia'.'/'.$id_portafolio;
 		$config['total_rows'] = $this->experiencia->num_experiencia(); //Número de filas que devuelve
-		$config['per_page'] = 10; //Resultados por página
+		$config['per_page'] = 8; //Resultados por página
 		$config['uri_segment'] = 5; //uri->id de la imagen
 		$config['num_links'] = 5;
 		//Aplicación de diseño con bootstrap!
@@ -42,7 +42,7 @@ class C_experiencia extends MY_Controller
 		$config['num_tag_close'] = '</li>';
 
 		$this->pagination->initialize($config);
-		$obtener_pagina = $this->experiencia->obtener_pagina(/*$config['per_page'], $config['uri_segment'],*/ $id);
+		$obtener_pagina = $this->experiencia->obtener_pagina($id_portafolio);
 		$paginationExperiencia = $this->pagination->create_links();
 		$dataExperiencia = array('id_portafolio' => $id_portafolio,
 								 'obtener_pagina' => $obtener_pagina,
@@ -62,6 +62,10 @@ class C_experiencia extends MY_Controller
 	    $this->form_validation->set_message('required', '<div class="alert alert-danger" role="alert"> El campo %s no puede ir vacío!</div>');
 	    $this->form_validation->set_message('min_length', '<div class="alert alert-danger" role="alert"> El campo %s debe tener al menos %d carácteres</div>');
 	    $this->form_validation->set_message('max_length', '<div class="alert alert-danger" role="alert"> El campo %s no puede tener más de %d carácteres</div>');
+
+	    $this->form_validation->set_rules('descripcion', 'descripcion', '|min_length[5]|max_length[400]|trim|xss_clean');
+	        $this->form_validation->set_message('min_length', '<div class="alert alert-danger" role="alert"> El campo %s debe tener al menos %d carácteres</div>');
+
 	    $this->form_validation->set_rules('tipo', 'tipo', 'required|trim|xss_clean');
 	    $this->form_validation->set_message('required', '<div class="alert alert-danger" role="alert"> El campo %s no puede ir vacío!</div>');
 	    //Si el formulario pasa la validación se procesa el siguiente método para subir el gráfico de experiencia
@@ -108,7 +112,7 @@ class C_experiencia extends MY_Controller
 			$tipo_img = '3';
 			$url_img = 'graficos/experiencia/'.$file_info['file_name'];
 			$url_thu = 'graficos/experiencia/thumbnail/'.$file_info['file_name'];
-			$subir = $this->imagen->subir($nombre, $tipo_img, $url_img, $url_thu);  
+			$subir = $this->imagen->subir($nombre, $tipo_img, $url_img, $url_thu, $descripcion);  
 			//$this->load->view('imagen_subida_view', $data);
 			redirect('/portafolios/c_experiencia/cargarExperiencia'.'/'.$id_portafolio); 
 		}
@@ -139,50 +143,36 @@ class C_experiencia extends MY_Controller
 
 
 	//Función que permite actualizar los registros existentes en relación con un portafolio, y en caso de no existir crea registros nuevos relacionados.
-	public function actualizarExperiencia($id_portafolio)     
-    {   
-    	//Reglas de validación
+	public function actualizarExperiencia($id_portafolio){//Reglas de validación
     	$this->form_validation->set_rules(
 			'experiencia[1][]', 
 			'', 'required', array('¡Debes seleccionar al menos una opción!' )
 		);
-		/*
-		$this->form_validation->set_rules(
-			'resaltar[]', 
-			'', 'required', array('¡Debes seleccionar al menos una opción!' )
-		);
-		$this->form_validation->set_rules(
-			'incluir[]', 
-			'', 'required', array('¡Debes seleccionar al menos una opción!' )
-		);*/
 
-		if ($this->form_validation->run() == FALSE) 
-		{
-			//Si el formulario no se válida se muestran los errores
-	        $this->cargarExperiencia($id_portafolio);
-	        echo 'fail cargar';
-		}else
-		{	
-			//Si es válido se realiza la función de insertar
+		if ($this->form_validation->run() == FALSE) {//Si el formulario no se válida se muestran los errores
+	        $this->cargarExperiencia($id_portafolio);//echo 'fail cargar';
+		}else{//Si es válido se realiza la función de insertar
 		    $id_portafolio = $id_portafolio;
 			$data = array('id_portafolio' => $id_portafolio);
 			$id_img = array('id_img' => $this->input->post('experiencia'));
-			foreach ($this->input->post('experiencia') as $key => $value) {
-				//print_r($key);
-				foreach ($value as $key2 => $value2) {
-					//$insert [$value2][] = $key; 
-					if (!isset($insert2[$value2])) {
+			foreach ($this->input->post('experiencia') as $key => $value){//print_r($key);
+				foreach ($value as $key2 => $value2) {//$insert [$value2][] = $key; 
+					if (!isset($insert2[$value2])){
 						$insert2 [$value2] = 0 ;
 					}
 					$insert2 [$value2] = ($insert2 [$value2] + $key); //valor sumado "binario"
 				}
 			}
-			echo "</br>";
 		    $this->experiencia->actualizarExperiencia($data, $insert2);
 			redirect('/portafolios/c_experiencia/cargarExperiencia'.'/'.$id_portafolio);
-		    echo 'successful actualizar';
+			//echo 'successful actualizar';
 		}
 	}      
 
 }
+
+
+?>
+
+
 

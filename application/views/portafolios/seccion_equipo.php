@@ -60,6 +60,7 @@
         foreach ($obtener_personal->result() as $fila) { //Convertimos la consulta de base de datos en una fila
           $id_personalP    = $fila->id_personalP;
           $id_portafolioP  = $fila->id_portafolioP;
+          $seleccion       = $fila->seleccion;
           $destacado       = $fila->destacado;
           $id_personal     = $fila->id_personal;
           $nombre          = $fila->nombre;
@@ -67,7 +68,7 @@
           $especializacion = $fila->especializacion;
           $desc_cv         = $fila->desc_cv;
 
-          if($id_portafolioP == '' OR $id_portafolioP == NULL OR $id_portafolioP != $id_portafolio){
+          if($id_portafolioP == '' || $id_portafolioP == NULL || empty($id_portafolioP)){
       ?>
         <tr>
           <td><?= $cont++ ?></td>
@@ -75,18 +76,18 @@
           <td><?= $puesto ?></td>
           <td>
             <div class="checkbox" style="text-align:center">
-              <?= form_checkbox("id_personal[]", ''.$id_personal.'', set_checkbox("id_personal[]", ''.$id_personal.'', FALSE)); ?>
+              <?= form_checkbox("personal[0][]", ''.$id_personal.'', set_checkbox("personal[0][]", ''.$id_personal.'', FALSE)); ?>
             </div>
           </td>
           <td>
             <div class="checkbox" style="text-align:center">
-              <?= form_checkbox("destacado[]", ''.$id_personal.'', set_checkbox("destacado[]", ''.$id_personal.'', FALSE)); ?>
+              <?= form_checkbox("personal[1][]", ''.$id_personal.'', set_checkbox("personal[1][]", ''.$id_personal.'', FALSE)); ?>
             </div>
           </td>
         </tr>
       <?php
         }else{
-          if (!empty($id_portafolioP) AND !empty($id_personalP) AND empty($destacado)) {
+          if (($id_portafolioP == $id_portafolio) && (!empty($id_personalP) && $id_personalP == $id_personal) && (!empty($seleccion) && $seleccion == $id_personalP)  && ($destacado == '' || $destacado == NULL || empty($destacado) || $destacado == 0)) {
             ?>
               <tr>
                 <td><?= $cont++ ?></td>
@@ -94,18 +95,18 @@
                 <td><?= $puesto ?></td>
                 <td>
                   <div class="checkbox" style="text-align:center">
-                    <?= form_checkbox("id_personal[]", ''.$id_personalP.'', set_checkbox("id_personal[]", ''.$id_personalP.'', TRUE)); ?>
+                    <?= form_checkbox("personal[0][]", ''.$id_personal.'', set_checkbox("personal[0][]", ''.$id_personal.'', TRUE)); ?>
                   </div>
                 </td>
                 <td>
                   <div class="checkbox" style="text-align:center">
-                    <?= form_checkbox("destacado[]", ''.$id_personal.'', set_checkbox("destacado[]", ''.$id_personal.'', FALSE)); ?>
+                    <?= form_checkbox("personal[1][]", ''.$id_personal.'', set_checkbox("personal[1][]", ''.$id_personal.'', FALSE)); ?>
                   </div>
                 </td>
               </tr>
             <?php
               }else{
-                if (!empty($id_portafolioP) AND !empty($id_personalP) AND !empty($destacado)) {
+                if (($id_portafolioP == $id_portafolio) && (!empty($id_personalP) && $id_personalP == $id_personal) && !empty($destacado) && $destacado == 1) {
                   ?>
                     <tr>
                       <td><?= $cont++ ?></td>
@@ -113,12 +114,12 @@
                       <td><?= $puesto ?></td>
                       <td>
                         <div class="checkbox" style="text-align:center">
-                          <?= form_checkbox("id_personal[]", ''.$id_personalP.'', set_checkbox("id_personal[]", ''.$id_personalP.'', TRUE)); ?>
+                          <?= form_checkbox("personal[0][]", ''.$id_personal.'', set_checkbox("personal[0][]", ''.$id_personal.'', TRUE)); ?>
                         </div>
                       </td>
                       <td>
                         <div class="checkbox" style="text-align:center">
-                          <?= form_checkbox("destacado[]", ''.$destacado.'', set_checkbox("destacado[]", ''.$destacado.'', TRUE)); ?>
+                          <?= form_checkbox("personal[1][]", ''.$destacado.'', set_checkbox("personal[1][]", ''.$destacado.'', TRUE)); ?>
                         </div>
                       </td>
                     </tr>
@@ -193,9 +194,9 @@
                 <?= form_button($cargar) ?>
             </div>
             <div class="col-lg-4 col-lg-offset-8 ">
-                <!--<?= form_button($cancelar) ?>
+                <?= form_button($cancelar) ?>
                 <?= form_submit($guardar) ?>
-                <?= form_button($cargar2) ?>-->
+                <?= form_button($cargar2) ?>
             </div>
         </div>
         <?= form_close()?>
@@ -244,7 +245,7 @@
     $contenido = array('title'=>'Contenido Gráfico');
     $subir     = array('title' => 'Subir Gráfico');
     ?>
-    <div id="cargarEquipo"class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+    <div id="cargarEquipo" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
       <div class="modal-dialog modal-lg">
         <!-- Modal content-->
         <div class="modal-content">
