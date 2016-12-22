@@ -82,6 +82,108 @@ class Portafolio extends CI_Model
 	public function eliminarPortafolio($id){
 		$this->db->delete('portafolio', array('id_portafolio' => $id));
 	}
+
+	/*
+	---------FUNCIONES QUE RECUPERAN LA INFORMACIÓN QUE CONTENDRÁ EL PORTAFOLIO--------
+	*/
+	//Función que permite obtener la portada que se eligio para determinado portafolio
+	public function consultaPortada($data){
+		/*SELECT * FROM portafolio_imagen 
+		  INNER JOIN imagen 
+		  ON portafolio_imagen.id_img = imagen.id_img 
+		  INNER JOIN tipo_imagen
+		  ON imagen.id_tipo_img  = tipo_imagen.id_tipo_img
+		  WHERE portafolio_imagen.id_portafolio = $data['id_portafolio'] AND imagen.id_tipo_img = 1 LIMIT 1*/
+
+		  $this->db->select('*');
+		  $this->db->from('portafolio_imagen');
+		  $this->db->join('imagen','portafolio_imagen.id_img = imagen.id_img');
+		  $this->db->join('tipo_imagen','tipo_imagen.id_tipo_img = imagen.id_tipo_img');
+		  $this->db->where('portafolio_imagen.id_portafolio', $data["id_portafolio"]);
+		  $this->db->where('imagen.id_tipo_img', 1);
+		  $this->db->limit(1);
+		  $portada = $this->db->get();
+		  return $portada->row(); 
+	}
+	//Función que permite obtener los servicios que se eligieron para determinado portafolio
+	public function consultaServicios($data){
+		/*
+		SELECT * FROM portafolio_tipo
+		INNER JOIN tipo_proyecto
+		ON portafolio_tipo.id_tipo = tipo_proyecto.id_tipo
+		WHERE portafolio_tipo.id_portafolio = $data['id_portafolio'] 
+		LIMIT 4
+		*/
+		$this->db->select('*');
+		$this->db->from('portafolio_tipo');
+		$this->db->join('tipo_proyecto','portafolio_tipo.id_tipo = tipo_proyecto.id_tipo');
+		$this->db->where('portafolio_tipo.id_portafolio',  $data['id_portafolio']);
+		$this->db->limit(4);
+		$servicios = $this->db->get();
+		 return $servicios->row();
+	}
+	//Función que permite obtener los miembros del equipo a integrar en el portafolio
+	public function consultaPersonal($data){
+		/*
+		SELECT * FROM portafolio_personal
+		INNER JOIN personal
+		ON portafolio_personal.id_personal = personal.id_personal
+		WHERE portafolio_personal.id_portafolio = $data['id_portafolio']
+		*/
+		$this->db->select('*');
+		$this->db->from('portafolio_personal');
+		$this->db->join('personal','portafolio_personal.id_personal = personal.id_personal');
+		$this->db->where('portafolio_personal.id_portafolio',  $data['id_portafolio']);
+		$this->db->limit('4');
+		$personal = $this->db->get();
+		return $personal->row();
+	}
+	//Función que permite obtener el slide que se integrará al portafolio 
+	public function consultaSlidePersonal($data){
+		/*
+		SELECT * FROM portafolio_imagen 
+		INNER JOIN imagen 
+		ON portafolio_imagen.id_img = imagen.id_img 
+		INNER JOIN tipo_imagen
+		ON imagen.id_tipo_img  = tipo_imagen.id_tipo_img
+		WHERE portafolio_imagen.id_portafolio = $data['id_portafolio'] AND imagen.id_tipo_img = 2
+		*/
+		$this->db->select('*');
+		$this->db->from('portafolio_imagen');
+		$this->db->join('imagen','imagen.id_img = tipo_imagen.id_img');
+		$this->db->join('tipo_imagen','imagen.id_tipo_img = tipo_imagen.id_img');
+		$this->db->where('portafolio_imagen.id_portafolio', $data['id_portafolio']);
+		$this->db->where('imagen.id_tipo_img', 2);
+		$this->db->limit(1);
+		$sliderPersonal = $this->db->get();
+		return $sliderPersonal->row();
+
+	}
+	//Función que permite obtener la experiencia seleccionada para el portafolio
+	public function consultaExperiencia($data){
+	/*
+	SELECT * FROM portafolio_imagen 
+	INNER JOIN imagen 
+	ON portafolio_imagen.id_img = imagen.id_img 
+	INNER JOIN tipo_imagen
+	ON imagen.id_tipo_img  = tipo_imagen.id_tipo_img
+	WHERE portafolio_imagen.id_portafolio = $data['id_portafolio'] AND imagen.id_tipo_img = 3
+	*/	
+	$this->db->select('*');
+	$this->db->from('portafolio_imagen');
+	$this->db->join('');
+	}
+	//Función que permite obtener el contenido gráfico seleccionado para el portafolio
+	public function consultaGrafico($data){
+	/*
+	SELECT * FROM portafolio_imagen 
+	INNER JOIN imagen 
+	ON portafolio_imagen.id_img = imagen.id_img 
+	INNER JOIN tipo_imagen
+	ON imagen.id_tipo_img  = tipo_imagen.id_tipo_img
+	WHERE portafolio_imagen.id_portafolio = $data['id_portafolio'] AND imagen.id_tipo_img = 4
+	*/	
+	}
 }
 
 ?>

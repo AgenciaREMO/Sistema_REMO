@@ -92,6 +92,10 @@
 			redirect('portafolios/c_portafolios/mostrarPortafolio');
 		}
 		
+		public function generarPDFPortafolio($id)
+		{
+			$fila = $this->cotizacion->obtenerTempPorId($id);
+		}
 
 	}	
 ?>
