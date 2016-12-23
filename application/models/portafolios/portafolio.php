@@ -161,28 +161,44 @@ class Portafolio extends CI_Model
 	}
 	//Función que permite obtener la experiencia seleccionada para el portafolio
 	public function consultaExperiencia($data){
-	/*
-	SELECT * FROM portafolio_imagen 
-	INNER JOIN imagen 
-	ON portafolio_imagen.id_img = imagen.id_img 
-	INNER JOIN tipo_imagen
-	ON imagen.id_tipo_img  = tipo_imagen.id_tipo_img
-	WHERE portafolio_imagen.id_portafolio = $data['id_portafolio'] AND imagen.id_tipo_img = 3
-	*/	
-	$this->db->select('*');
-	$this->db->from('portafolio_imagen');
-	$this->db->join('');
+		/*
+		SELECT * FROM portafolio_imagen 
+		INNER JOIN imagen 
+		ON portafolio_imagen.id_img = imagen.id_img 
+		INNER JOIN tipo_imagen
+		ON imagen.id_tipo_img  = tipo_imagen.id_tipo_img
+		WHERE portafolio_imagen.id_portafolio = $data['id_portafolio'] AND imagen.id_tipo_img = 3
+		*/	
+		$this->db->select('*');
+		$this->db->from('portafolio_imagen');
+		$this->db->join('imagen', 'portafolio_imagen.id_img = imagen.id_img');
+		$this->db->join('tipo_imagen','imagen.id_tipo_img = tipo_imagen.id_tipo_img');
+		$this->db->where('portafolio_imagen.id_portafolio', $data['id_portafolio']);
+		$this->db->where('imagen.id_tipo_img', 3);
+		$this->db->limit('12');
+		$experiencia = $this->db->get();
+		return $experiencia->row();
+
 	}
 	//Función que permite obtener el contenido gráfico seleccionado para el portafolio
 	public function consultaGrafico($data){
-	/*
-	SELECT * FROM portafolio_imagen 
-	INNER JOIN imagen 
-	ON portafolio_imagen.id_img = imagen.id_img 
-	INNER JOIN tipo_imagen
-	ON imagen.id_tipo_img  = tipo_imagen.id_tipo_img
-	WHERE portafolio_imagen.id_portafolio = $data['id_portafolio'] AND imagen.id_tipo_img = 4
-	*/	
+		/*
+		SELECT * FROM portafolio_imagen 
+		INNER JOIN imagen 
+		ON portafolio_imagen.id_img = imagen.id_img 
+		INNER JOIN tipo_imagen
+		ON imagen.id_tipo_img  = tipo_imagen.id_tipo_img
+		WHERE portafolio_imagen.id_portafolio = $data['id_portafolio'] AND imagen.id_tipo_img = 4
+		*/	
+		$this->db->select('*');
+		$this->db->from('portafolio_imagen');
+		$this->db->join('imagen', 'portafolio_imagen.id_img = imagen.id_img');
+		$this->db->join('tipo_imagen', 'imagen.id_tipo_img = tipo_imagen.id_tipo_img');
+		$this->db->where('portafolio_imagen.id_portafolio', $data['id_portafolio']);
+		$this->db->where('imagen.id_tipo_img', 4);
+		$this->db->limit('3');
+		$grafico = $this->db->get();
+		return $grafico->row();
 	}
 }
 

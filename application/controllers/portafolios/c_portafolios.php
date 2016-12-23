@@ -94,7 +94,59 @@
 		
 		public function generarPDFPortafolio($id)
 		{
-			$fila = $this->cotizacion->obtenerTempPorId($id);
+
+			//VARIABLES DE PDF
+			/*PORTADA*/
+			$portada = $this->portafolio->consultaPortada($id);
+			$htmlPortada ="
+				@page {
+		  			size: 8.5in 11in; margin: 0cm| auto | landscape 
+					header: html_myHTMLHeaderOdd;
+					footer: html_myHTMLFooterOdd;
+					background: #ffffff;
+				}
+				<!--Estilo de portada -->
+				<style>
+					.portada{
+						width:100%;
+						height:auto;
+					}
+				</style>
+				<!--Fin de estilo de portada -->
+				<body>
+					<div>
+						<img class='portada' src='<?=base_url(".base_url()."/".$portada.")?>'>
+					</div>
+				</body>"
+			;
+
+
+			$servicios = $this->portafolio->consultaServicios($id);
+			$htmlPortada ="
+				@page {
+		  			size: 8.5in 11in; margin: 0cm| auto | landscape 
+					header: html_myHTMLHeaderOdd;
+					footer: html_myHTMLFooterOdd;
+					background: #ffffff;
+				}
+				<!--Estilo de portada -->
+				<style>
+					.servicios{
+						
+					}
+				</style>
+				<!--Fin de estilo de portada -->
+				<body>
+					<div>
+						
+					</div>
+				</body>"
+			;
+
+			$personal = $this->portafolio->consultaPersonal($id);
+			$slider = $this->portafolio->consultaSlidePersonal($id);
+			$experiencia = $this->portafolio->consultaExperiencia($id);
+			$grafico = $this->portafolio->consultaGrafico($id);
 		}
 
 	}	
